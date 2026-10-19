@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4. RPi를 위한 전자회로 기초 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="04-circuit.html" class="active">4. 전자회로 기초</a></li>
+<li><a href="05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="4-rpi를-위한-전자회로-기초">4. RPi를 위한 전자회로 기초<a class="headerlink" href="#4-rpi를-위한-전자회로-기초" title="Permanent link">#</a></h1>
+<h2 id="전기회로의-기본">전기회로의 기본<a class="headerlink" href="#전기회로의-기본" title="Permanent link">#</a></h2>
+<p>배터리와 전구를 전선으로 연결하면 배터리의 <strong>전기에너지 → 빛에너지</strong>로 전환된다.</p>
+<ul>
+<li><strong>전구</strong>: 전기에너지를 소모하므로 <strong>부하</strong>, 전류의 흐름을 방해하므로 <strong>저항</strong>이라고 할 수 있음</li>
+<li><strong>열린 회로(open circuit)</strong>: 전선이 중간에 끊어져 <strong>전류가 흐를 수 없는</strong> 회로</li>
+<li><strong>닫힌 회로/폐회로(closed circuit)</strong>: 전선이 연결되어 있는 회로. <strong>전기회로 = 닫힌 회로</strong></li>
+</ul>
+<hr />
+<h2 id="전류-전압-저항">전류 · 전압 · 저항<a class="headerlink" href="#전류-전압-저항" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>기호</th>
+<th>단위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>전압</td>
+<td><strong>V</strong> (voltage)</td>
+<td><strong>V</strong> (볼트)</td>
+</tr>
+<tr>
+<td>전류</td>
+<td><strong>I</strong> (intensity)</td>
+<td><strong>A</strong> (암페어)</td>
+</tr>
+<tr>
+<td>저항</td>
+<td><strong>R</strong> (resistance)</td>
+<td><strong>Ω</strong> (옴)</td>
+</tr>
+</tbody>
+</table>
+<dl>
+<dt><strong>전류(current)</strong></dt>
+<dd>전선을 통해 흐르는 전기의 양. (+)와 (−) 성질을 띠는 입자를 <strong>전하</strong>라 하고, 전하의 이동이 전류를 만든다.</dd>
+</dl>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>전류는 (+)극에서 (−)극으로 흐른다</strong> — 이는 <strong>전자의 흐름과 반대 방향</strong>이다.
+실제로 이동하는 것은 (−)전하를 띠는 <strong>전자</strong>이며, 전자는 <strong>(−)극에서 (+)극으로</strong> 이동한다.</p>
+</div>
+<dl>
+<dt><strong>전압(voltage)</strong></dt>
+<dd>전류가 흐를 때의 힘, 즉 <strong>전류의 압력</strong>. 전류는 <strong>전압이 높은 곳에서 낮은 곳으로</strong> 흐른다.</dd>
+<dt><strong>저항(resistance)</strong></dt>
+<dd>전류의 흐름을 방해하는 요소</dd>
+</dl>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>도체</strong></td>
+<td>저항이 작아서 전기가 잘 흐르는 물질</td>
+</tr>
+<tr>
+<td><strong>부도체</strong></td>
+<td>저항이 커서 전기가 잘 흐르지 않는 물질</td>
+</tr>
+<tr>
+<td><strong>반도체</strong></td>
+<td>도체와 부도체의 중간 물질</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="옴ohm의-법칙">옴(Ohm)의 법칙<a class="headerlink" href="#옴ohm의-법칙" title="Permanent link">#</a></h2>
+<p><strong>1827년 독일의 물리학자 Georg Ohm</strong>: 일정한 온도에서 도체를 흐르는 전류는 도체 양단의 전압에 <strong>비례</strong>한다.</p>
+<div class="codehilite"><pre><span></span><code>V = I × R
+</code></pre></div>
+
+<p>전류는 <strong>저항에 반비례</strong>하고 <strong>전압에 비례</strong>한다. (<code>I ∝ V/R</code>)</p>
+<blockquote>
+<p><strong>예제</strong>: 12V 배터리에 저항 6Ω → <code>I = 12V / 6Ω = 2A</code></p>
+</blockquote>
+<h3 id="단선과-단락">단선과 단락<a class="headerlink" href="#단선과-단락" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>용어</th>
+<th>상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>단선 (open)</strong></td>
+<td>저항이 <strong>무한대</strong>라서 전류가 <strong>흐르지 않는</strong> 상태</td>
+</tr>
+<tr>
+<td><strong>단락 (short, 합선)</strong></td>
+<td>저항이 <strong>0에 가까워</strong> 높은 전류가 흐르는 상태</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p>전기회로에서 <strong>절대로 +선과 −선이 합선되지 않도록</strong> +와 − 극 사이에 <strong>저항이나 부품을 넣어야</strong> 한다.</p>
+</div>
+<hr />
+<h2 id="키르히호프kirchhoff의-법칙">키르히호프(Kirchhoff)의 법칙<a class="headerlink" href="#키르히호프kirchhoff의-법칙" title="Permanent link">#</a></h2>
+<h3 id="전류-법칙">전류 법칙<a class="headerlink" href="#전류-법칙" title="Permanent link">#</a></h3>
+<p>폐회로의 <strong>접속점(node)</strong> 으로 들어오는 전류의 합 = 나가는 전류의 합</p>
+<div class="codehilite"><pre><span></span><code>ΣI_in = ΣI_out
+I1 + I2 + I3 = I4 + I5
+</code></pre></div>
+
+<p><strong>Node</strong>: 회로에서 전선이나 저항 같은 부품들로 연결된 <strong>교차점</strong></p>
+<h3 id="전압-법칙">전압 법칙<a class="headerlink" href="#전압-법칙" title="Permanent link">#</a></h3>
+<p>폐회로의 <strong>전원 전압의 합</strong> = 폐회로 내의 <strong>전압 강하의 합</strong></p>
+<div class="codehilite"><pre><span></span><code>Vs = V1 + V2 = I·R1 + I·R2 = I(R1 + R2)
+전체 저항 Rt = R1 + R2        (직렬)
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>계산 문제 유형</strong></p>
+<p>12V 전원에 R1=10Ω, R2=20Ω, R3=30Ω 직렬 연결. 전류 I와 R2의 전압강하 V2는?</p>
+<div class="codehilite"><pre><span></span><code>12V = I × (10 + 20 + 30) = I × 60Ω
+I = 0.2A
+V2 = I × R2 = 0.2A × 20Ω = 4V
+</code></pre></div>
+
+</div>
+<h3 id="저항의-병렬-연결">저항의 병렬 연결<a class="headerlink" href="#저항의-병렬-연결" title="Permanent link">#</a></h3>
+<p>여러 저항을 여러 줄로 연결하는 것. <strong>전체 저항의 굵기가 굵어지는 효과</strong>가 나서 <strong>전체 저항은 작아진다</strong>.</p>
+<div class="codehilite"><pre><span></span><code>1/R = 1/R1 + 1/R2        (전체 저항)
+V  = V1 = V2             (전압은 모두 같음)
+I  = I1 + I2             (전류는 합 — 키르히호프 전류 법칙)
+</code></pre></div>
+
+<blockquote>
+<p><strong>예제</strong>: 2Ω에 5A, 5Ω에 2A가 흐르면 전체 전류는 <strong>7A</strong>.
+전류는 <strong>저항에 반비례</strong>하여 나뉜다.</p>
+</blockquote>
+<hr />
+<h2 id="브레드보드">브레드보드<a class="headerlink" href="#브레드보드" title="Permanent link">#</a></h2>
+<p>전자회로의 <strong>임시 시제품</strong>을 만드는 데 사용하는 <strong>재사용 가능한 무납땜 장치</strong>.</p>
+<ul>
+<li><strong>양쪽 가장자리(A, D)의 <code>+</code> <code>−</code> 표시</strong> → <strong>전원</strong>을 연결하는 곳 (세로로 연결)</li>
+<li><strong>가운데 부분(B, C)</strong> → <strong>가로로 5칸씩 연결</strong>되어 있음. 여기에 전선·부품을 꽂아 회로 구성</li>
+</ul>
+<hr />
+<h2 id="저항-resistor">저항 (resistor)<a class="headerlink" href="#저항-resistor" title="Permanent link">#</a></h2>
+<p>고정저항은 용량을 <strong>표면의 색띠</strong>로 표시한다.</p>
+<h3 id="4개-띠">4개 띠<a class="headerlink" href="#4개-띠" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>띠</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1번째</td>
+<td><strong>십의 자릿수</strong></td>
+</tr>
+<tr>
+<td>2번째</td>
+<td><strong>일의 자릿수</strong></td>
+</tr>
+<tr>
+<td>3번째</td>
+<td><strong>10의 n승을 곱하는 배수</strong></td>
+</tr>
+<tr>
+<td>4번째</td>
+<td><strong>허용 범위(오차)</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>예</strong>: <code>10 × 1000 = 10000Ω = 10kΩ ± 5%</code></p>
+</blockquote>
+<h3 id="5개-띠">5개 띠<a class="headerlink" href="#5개-띠" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>띠</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1번째</td>
+<td><strong>백의 자릿수</strong></td>
+</tr>
+<tr>
+<td>2번째</td>
+<td><strong>십의 자릿수</strong></td>
+</tr>
+<tr>
+<td>3번째</td>
+<td><strong>일의 자릿수</strong></td>
+</tr>
+<tr>
+<td>4번째</td>
+<td><strong>10의 n승 배수</strong></td>
+</tr>
+<tr>
+<td>5번째</td>
+<td><strong>허용 범위</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="led-light-emitting-diode">LED (light emitting diode)<a class="headerlink" href="#led-light-emitting-diode" title="Permanent link">#</a></h2>
+<p><strong>발광다이오드</strong> — 전류가 흐르면 빛을 내는 <strong>반도체 다이오드</strong>.</p>
+<ul>
+<li>용도: 제품이 켜지거나 동작 중임을 나타내는 <strong>인디케이터(indicator)</strong></li>
+<li>LED를 여러 개 합쳐 만든 <strong>FND</strong>(flexible numeric display)는 <strong>숫자 표현</strong>용</li>
+</ul>
+<h3 id="극성">극성<a class="headerlink" href="#극성" title="Permanent link">#</a></h3>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>다리가 긴 쪽 = +극(anode)</strong>, <strong>짧은 쪽 = −극(cathode)</strong>
+기호에서 <strong>삼각형 꼭대기에 <code>|</code> 기호가 있는 쪽이 −극</strong>, 반대쪽이 +극</p>
+</div>
+<h3 id="데이터시트-datasheet">데이터시트 (datasheet)<a class="headerlink" href="#데이터시트-datasheet" title="Permanent link">#</a></h3>
+<p><strong>데이터시트</strong> = 전자부품의 <strong>사양(specification) 설명서</strong></p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Absolute maximum rating</strong></td>
+<td>제품의 <strong>최대 정격</strong>. 그 이하로 사용해야 안전하다고 제조사가 정해놓은 규격</td>
+</tr>
+<tr>
+<td><strong>Forward current (I_F)</strong></td>
+<td><strong>순방향 전류</strong> (+극 anode → −극 cathode). 예: 20mA 이하로 사용</td>
+</tr>
+<tr>
+<td><strong>Forward voltage (V_F)</strong></td>
+<td><strong>순방향 전압</strong>. 예: 전류가 20mA일 때 1.8V~2.2V</td>
+</tr>
+</tbody>
+</table>
+<h3 id="저항값-계산-시험-단골">저항값 계산 (시험 단골)<a class="headerlink" href="#저항값-계산-시험-단골" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>LED 보호 저항 구하기</strong></p>
+<p>조건: 전원 5V, LED의 V_F ≈ 2V, 정격 전류 20mA</p>
+<div class="codehilite"><pre><span></span><code>저항에 걸리는 전압 = 5V − 2V = 3V
+R = V / I = 3V / 0.02A = 150Ω
+</code></pre></div>
+
+<p>→ 저항은 <strong>150Ω 이상</strong>, 실제로는 <strong>150Ω ~ 1kΩ</strong> 정도를 선택</p>
+</div>
+<hr />
+<h2 id="푸시버튼-스위치-tact-스위치">푸시버튼 스위치 (Tact 스위치)<a class="headerlink" href="#푸시버튼-스위치-tact-스위치" title="Permanent link">#</a></h2>
+<p>Tact 스위치는 <strong>4개의 핀 중 거리가 먼 핀들이 서로 연결</strong>되어 있고, <strong>스위치를 누르면 모든 핀이 연결</strong>되는 구조.</p>
+<hr />
+<h2 id="콘덴서-condenser-capacitor">콘덴서 (condenser / capacitor)<a class="headerlink" href="#콘덴서-condenser-capacitor" title="Permanent link">#</a></h2>
+<p><strong>축전기</strong>라고도 하며 <strong>전기를 저장할 수 있는 장치</strong>.</p>
+<ul>
+<li>내부에 <strong>두 개의 도체판</strong>이 마주보는 구조. 음극에 (−)전하, 양극에 (+)전하가 모여 전기에너지 저장</li>
+<li><strong>순간적으로 높거나 낮은 전압 잡음을 제거</strong>하여 안정적인 전기 공급</li>
+</ul>
+<h3 id="직류-전원에서">직류 전원에서<a class="headerlink" href="#직류-전원에서" title="Permanent link">#</a></h3>
+<ul>
+<li>전기에너지가 <strong>저장(충전)되는 동안 전류가 흐르고</strong>, 용량만큼 저장된 이후에는 <strong>전류가 흐르지 않음</strong></li>
+<li>외부 전압이 높을 때 충전 → 외부 전압이 콘덴서 내부 전압보다 낮아지면 <strong>저장된 전류를 내보냄</strong> → <strong>직류 전기의 안정적 공급</strong></li>
+<li>라즈베리파이는 초소형 PC이므로 <strong>직류 전원</strong> 사용</li>
+</ul>
+<h3 id="교류-전원에서">교류 전원에서<a class="headerlink" href="#교류-전원에서" title="Permanent link">#</a></h3>
+<ul>
+<li>+, −로 극성이 규칙적으로 변하므로 <strong>충전과 방전을 반복</strong>하면서 전류가 흐름</li>
+<li><strong>직류는 차단하고 교류는 통과</strong>시켜 교류 전기의 안정적 공급</li>
+</ul>
+<h3 id="종류와-극성">종류와 극성<a class="headerlink" href="#종류와-극성" title="Permanent link">#</a></h3>
+<ul>
+<li>필름·세라믹·오일 콘덴서 등 다양하지만 <strong>전해 콘덴서가 가장 많이 사용</strong>됨</li>
+<li><strong>극성이 있는 콘덴서</strong>와 <strong>없는 콘덴서</strong>가 있음</li>
+</ul>
+<h3 id="용량-단위">용량 단위<a class="headerlink" href="#용량-단위" title="Permanent link">#</a></h3>
+<p><strong>패럿(farad, F)</strong> — 영국 물리학자 <strong>마이클 패러데이</strong>의 이름에서 유래</p>
+<p><strong>1F</strong>: 1V의 전위차를 걸어주었을 때 <strong>1쿨롱(coulomb)의 전하를 충전</strong>시키는 전기용량</p>
+<table>
+<thead>
+<tr>
+<th>단위</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>마이크로패럿 (μF)</td>
+<td>10⁻⁶ F</td>
+</tr>
+<tr>
+<td>나노패럿 (nF)</td>
+<td>10⁻⁹ F</td>
+</tr>
+<tr>
+<td>피코패럿 (pF)</td>
+<td>10⁻¹² F</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>실습</strong>: 콘덴서를 직류회로에 <strong>병렬</strong>로 연결 → 전압이 높을 때 충전, 떨어질 때 방전 → <strong>전압을 안정시키는 백업 전원</strong> 용도. 스위치를 잠깐 눌렀다 떼면 LED가 <strong>서서히 꺼진다</strong>.</p>
+</div>
+<hr />
+<h2 id="트랜지스터-transistor">트랜지스터 (transistor)<a class="headerlink" href="#트랜지스터-transistor" title="Permanent link">#</a></h2>
+<p>게르마늄·규소 등 <strong>반도체를 이용해 전자신호 및 전력을 증폭하거나 스위치</strong>하는 데 사용되는 반도체 소자.</p>
+<h3 id="3개의-다리-밸브-비유">3개의 다리 (밸브 비유)<a class="headerlink" href="#3개의-다리-밸브-비유" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>핀</th>
+<th>비유</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Collector (C)</strong></td>
+<td>밸브의 <strong>물이 들어가는 입구</strong></td>
+<td>전류 유입</td>
+</tr>
+<tr>
+<td><strong>Emitter (E)</strong></td>
+<td>밸브의 <strong>물이 나가는 출구</strong></td>
+<td>전류 유출</td>
+</tr>
+<tr>
+<td><strong>Base (B)</strong></td>
+<td>밸브를 <strong>열어주는 손잡이</strong></td>
+<td>제어</td>
+</tr>
+</tbody>
+</table>
+<p>밸브를 열면 <strong>C → E로 전류가 흐른다</strong>.</p>
+<h3 id="두-가지-기능">두 가지 기능<a class="headerlink" href="#두-가지-기능" title="Permanent link">#</a></h3>
+<dl>
+<dt><strong>증폭 기능</strong></dt>
+<dd>B에서 밸브를 조금만 돌려도 물(전류)이 많이 나옴</dd>
+</dl>
+<p><strong>스위치 기능</strong></p>
+<table>
+<thead>
+<tr>
+<th>상태</th>
+<th>조건</th>
+<th>모드</th>
+<th>상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ON</strong></td>
+<td>B에 <strong>작은 전류가 흐르면</strong> C→E로 전류가 흐름</td>
+<td><strong>saturation(포화)</strong></td>
+<td><strong>short</strong></td>
+</tr>
+<tr>
+<td><strong>OFF</strong></td>
+<td>B에 <strong>전류가 흐르지 않으면</strong> C→E로 전류가 흐르지 않음</td>
+<td><strong>cut-off(차단)</strong></td>
+<td><strong>open</strong></td>
+</tr>
+</tbody>
+</table>
+<p>ON일 때 B→E로 흐르는 전류는 아주 작으므로 <strong>C에서 E로만 전류가 흐른다</strong>고 본다.</p>
+<h3 id="종류">종류<a class="headerlink" href="#종류" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>종류</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NPN형</strong></td>
+<td><strong>B → E</strong>로 전류가 흐르면 <strong>C → E</strong>로 전류가 흐름</td>
+</tr>
+<tr>
+<td><strong>PNP형</strong></td>
+<td><strong>E → B</strong>로 전류가 흐르면 <strong>E → C</strong>로 전류가 흐름</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="다이오드-diode">다이오드 (diode)<a class="headerlink" href="#다이오드-diode" title="Permanent link">#</a></h2>
+<p><strong>+극(anode) → −극(cathode)</strong> 으로만 전류를 흐르게 하고 <strong>반대로는 흐르지 않게</strong> 한다.
+(순방향으로는 잘 흐르고 <strong>역방향은 막음</strong>)</p>
+<h3 id="순방향-전압-forward-voltage-v-f">순방향 전압 (Forward voltage, V_F)<a class="headerlink" href="#순방향-전압-forward-voltage-v-f" title="Permanent link">#</a></h3>
+<p>순방향으로 전류가 흐를 때 다이오드에서 <strong>0.2V ~ 0.7V 정도의 전압 강하</strong>가 일어난다.</p>
+<blockquote>
+<p><strong>예</strong>: 5V 전원에 V_F = 0.7V인 다이오드를 순방향 연결 → 다이오드를 지난 후 <strong>4.3V</strong></p>
+</blockquote>
+<h3 id="항복-전압-breakdown-voltage-v-br">항복 전압 (Breakdown voltage, V_BR)<a class="headerlink" href="#항복-전압-breakdown-voltage-v-br" title="Permanent link">#</a></h3>
+<p>역방향 전압이 매우 크면 다이오드가 견디지 못하고 <strong>역방향으로 전류를 흘리게</strong> 되는데, 이때 걸리는 역전압.</p>
+<h3 id="데이터시트-읽기-1n4148-예시">데이터시트 읽기 (1N4148 예시)<a class="headerlink" href="#데이터시트-읽기-1n4148-예시" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>값</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>순방향 전압</td>
+<td>최대 약 <strong>1V</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>항복 전압</strong></td>
+<td><strong>100V</strong></td>
+<td>100V 이상의 역전압이 걸리면 역방향으로 전류가 흐름</td>
+</tr>
+<tr>
+<td><strong>Forward continuous current</strong></td>
+<td><strong>300mA</strong></td>
+<td>연속 사용 가능 전류. 이보다 큰 전류가 흐르면 <strong>더 큰 전류를 견디는 다이오드로 교체</strong> 필요</td>
+</tr>
+</tbody>
+</table>
+  <footer class="page-footer"><code>content/embedded/04-circuit.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#전기회로의-기본">전기회로의 기본</a></li>
+<li><a href="#전류-전압-저항">전류 · 전압 · 저항</a></li>
+<li><a href="#옴ohm의-법칙">옴(Ohm)의 법칙</a><ul>
+<li><a href="#단선과-단락">단선과 단락</a></li>
+</ul>
+</li>
+<li><a href="#키르히호프kirchhoff의-법칙">키르히호프(Kirchhoff)의 법칙</a><ul>
+<li><a href="#전류-법칙">전류 법칙</a></li>
+<li><a href="#전압-법칙">전압 법칙</a></li>
+<li><a href="#저항의-병렬-연결">저항의 병렬 연결</a></li>
+</ul>
+</li>
+<li><a href="#브레드보드">브레드보드</a></li>
+<li><a href="#저항-resistor">저항 (resistor)</a><ul>
+<li><a href="#4개-띠">4개 띠</a></li>
+<li><a href="#5개-띠">5개 띠</a></li>
+</ul>
+</li>
+<li><a href="#led-light-emitting-diode">LED (light emitting diode)</a><ul>
+<li><a href="#극성">극성</a></li>
+<li><a href="#데이터시트-datasheet">데이터시트 (datasheet)</a></li>
+<li><a href="#저항값-계산-시험-단골">저항값 계산 (시험 단골)</a></li>
+</ul>
+</li>
+<li><a href="#푸시버튼-스위치-tact-스위치">푸시버튼 스위치 (Tact 스위치)</a></li>
+<li><a href="#콘덴서-condenser-capacitor">콘덴서 (condenser / capacitor)</a><ul>
+<li><a href="#직류-전원에서">직류 전원에서</a></li>
+<li><a href="#교류-전원에서">교류 전원에서</a></li>
+<li><a href="#종류와-극성">종류와 극성</a></li>
+<li><a href="#용량-단위">용량 단위</a></li>
+</ul>
+</li>
+<li><a href="#트랜지스터-transistor">트랜지스터 (transistor)</a><ul>
+<li><a href="#3개의-다리-밸브-비유">3개의 다리 (밸브 비유)</a></li>
+<li><a href="#두-가지-기능">두 가지 기능</a></li>
+<li><a href="#종류">종류</a></li>
+</ul>
+</li>
+<li><a href="#다이오드-diode">다이오드 (diode)</a><ul>
+<li><a href="#순방향-전압-forward-voltage-v-f">순방향 전압 (Forward voltage, V_F)</a></li>
+<li><a href="#항복-전압-breakdown-voltage-v-br">항복 전압 (Breakdown voltage, V_BR)</a></li>
+<li><a href="#데이터시트-읽기-1n4148-예시">데이터시트 읽기 (1N4148 예시)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

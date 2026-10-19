@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1. 과목 개요와 AI Agent의 역사 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="01-course-overview.html" class="active">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="1-과목-개요와-ai-agent의-역사">1. 과목 개요와 AI Agent의 역사<a class="headerlink" href="#1-과목-개요와-ai-agent의-역사" title="Permanent link">#</a></h1>
+<p>첫 주차 오리엔테이션입니다. 이 장에서 할 일은 두 가지입니다.</p>
+<ol>
+<li><strong>이 과목이 결국 무엇을 배우는지</strong> 큰 그림 잡기 → "챗봇"과 "에이전트"는 뭐가 다른가</li>
+<li><strong>AI Agent가 어떤 순서로 발전해 왔는지</strong> 외우기 → 시험에 "각 단계의 특징을 쓰시오"로 나오기 좋음</li>
+</ol>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>처음이라면 <a href="00-math-basics.html">0장 수학·용어 기초</a>를 먼저 훑고 오세요. 벡터, 확률, 파라미터 같은 말이 뒤에서 계속 나옵니다.</p>
+</div>
+<hr />
+<h2 id="평가-방식">평가 방식<a class="headerlink" href="#평가-방식" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>배점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>중간고사 (필기시험만)</strong></td>
+<td><strong>40점</strong></td>
+</tr>
+<tr>
+<td>기말 Project</td>
+<td>40점</td>
+</tr>
+<tr>
+<td>실습 및 과제</td>
+<td>10점</td>
+</tr>
+<tr>
+<td>수업 참여도·태도</td>
+<td>10점</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<ul>
+<li>중간고사·기말 Project <strong>미응시 시 F</strong></li>
+<li>공결 등은 <strong>사전에 이메일로</strong> 허락받아야 하며, 긴급상황을 제외하면 <strong>당일 통보는 인정되지 않음</strong></li>
+<li>중간고사는 <strong>오직 필기시험(only written test)</strong> → 코드를 치는 게 아니라 <strong>개념을 글로 설명</strong>해야 합니다.</li>
+</ul>
+<p>그러니 공부 전략은 <strong>"용어의 정의 + 왜 필요한지 + 비교"를 내 말로 쓸 수 있게</strong> 하는 것입니다. 이 노트의 노란 박스(시험 포인트)가 그 연습용입니다.</p>
+</div>
+<h2 id="강의-일정">강의 일정<a class="headerlink" href="#강의-일정" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>주차</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Introduction</td>
+</tr>
+<tr>
+<td>2</td>
+<td>LLM Basic with practice</td>
+</tr>
+<tr>
+<td>3</td>
+<td>AI Agent Concepts and Architecture</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Agent Planning and ReAct</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Structured Output and Tool Use</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Loop Engineering and Recovery</td>
+</tr>
+<tr>
+<td>7</td>
+<td>From Context to Harness Engineering</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td><strong>MidTerm Exam</strong></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Workflow 패턴·evaluator loop</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Graph engineering with LangGraph 기초</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Stateful Graph, Checkpoint, and HITL</td>
+</tr>
+<tr>
+<td>12</td>
+<td>RAG, Memory, and Context Policy</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Multi-agent orchestration</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Agent Optimization and Deployment</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Final Presentation</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>교재: <strong>『AI 에이전트 엔지니어링』(한빛미디어)</strong> 를 보조 교재로 사용, 그 외 최신 기사·논문 PDF</li>
+<li>강의 시간: <strong>화요일 13:00~16:00</strong></li>
+<li>후반부 일정은 학생들의 학습 성취도에 따라 바뀔 수 있음</li>
+</ul>
+<hr />
+<h2 id="현재-ai-issues-지금-왜-이걸-배우나">현재 AI Issues? — "지금 왜 이걸 배우나"<a class="headerlink" href="#현재-ai-issues-지금-왜-이걸-배우나" title="Permanent link">#</a></h2>
+<h3 id="2026년-가트너-선정-10대-기술-트렌드">2026년 가트너 선정 10대 기술 트렌드<a class="headerlink" href="#2026년-가트너-선정-10대-기술-트렌드" title="Permanent link">#</a></h3>
+<p>가트너(Gartner)는 <strong>IT 시장 조사 회사</strong>입니다. 매년 "앞으로 뜰 기술 10개"를 발표합니다.
+2026년 발표는 세 묶음으로 나뉘고, 시기는 <strong>Now(1~3년 안)</strong> 와 <strong>Near(3~5년 안)</strong> 로 구분됩니다.</p>
+<table>
+<thead>
+<tr>
+<th>묶음</th>
+<th>뜻</th>
+<th>기술</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>The Architect</strong> (설계자)</td>
+<td>AI를 돌릴 <strong>기반</strong></td>
+<td>① AI-native development platforms ② AI supercomputing platforms ③ Confidential computing</td>
+</tr>
+<tr>
+<td><strong>The Synthesist</strong> (종합자) 🔴</td>
+<td>AI를 <strong>엮어서 쓰기</strong></td>
+<td>④ <strong>Multiagent systems</strong> ⑤ <strong>Domain-specific language models</strong> ⑥ <strong>Physical AI</strong></td>
+</tr>
+<tr>
+<td><strong>The Vanguard</strong> (선봉)</td>
+<td>AI를 <strong>지키기</strong></td>
+<td>⑦ Preemptive cybersecurity ⑧ Digital provenance ⑨ AI security platforms ⑩ Geopatriation</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>강의에서 <strong>The Synthesist</strong>에 빨간 박스를 쳤습니다. 이유는 이 과목 주제와 직결되기 때문입니다.
+- <strong>Multiagent systems</strong> = 여러 AI가 팀을 이뤄 일하는 것 → <a href="12-agent-architectures.html">12장</a>
+- <strong>Domain-specific language models</strong> = 특정 분야(법률, 의료 등)에 특화된 언어 모델
+- <strong>Physical AI</strong> = 로봇처럼 실제 세상에서 몸을 움직이는 AI</p>
+</div>
+<h3 id="기존-ai-챗봇-vs-ai-에이전트">기존 AI (챗봇) vs AI 에이전트 ★<a class="headerlink" href="#기존-ai-챗봇-vs-ai-에이전트" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>이 비교가 과목 전체의 출발점</strong>입니다. "AI 에이전트란 무엇인가"를 가장 쉽게 설명하는 방법이기도 합니다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>기존 AI (Chatbot)</strong></th>
+<th><strong>AI 에이전트</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>사용자가 하는 말</strong></td>
+<td>"내일 날씨 어때?"</td>
+<td>"내일 시애틀행 비행기 <strong>예약해 줘</strong>."</td>
+</tr>
+<tr>
+<td><strong>AI가 하는 일</strong></td>
+<td>"서울 날씨는 맑습니다." → <strong>끝</strong></td>
+<td>① <strong>목표 수립</strong> → ② 비행기 <strong>검색</strong> → ③ 가격 <strong>비교</strong> → ④ 최적 옵션 <strong>선택</strong> → ⑤ <strong>예약 완료</strong></td>
+</tr>
+<tr>
+<td><strong>비유</strong></td>
+<td>질문하면 답해주는 <strong>'백과사전'</strong> 혹은 <strong>'1인 전문가'</strong></td>
+<td>목표를 주면 <strong>스스로 계획 세우고 실행까지</strong> 하는 <strong>'비서'</strong> 혹은 <strong>'팀 프로젝트 매니저'</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>쉽게 말하면:</strong></p>
+<ul>
+<li>챗봇은 <strong>말만</strong> 합니다. "비행기는 이런 게 있어요"까지만 알려주고, 예약은 내가 해야 합니다.</li>
+<li>에이전트는 <strong>일을 끝냅니다.</strong> 직접 사이트에 들어가서 검색하고, 비교하고, 결제까지 합니다.</li>
+</ul>
+<p><strong>Before agent → After agent</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>구성</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Before agent</strong></td>
+<td>Claude, ChatGPT, perplexity</td>
+<td><strong>AI 모델 하나</strong>만 덩그러니 있음</td>
+</tr>
+<tr>
+<td><strong>After agent</strong></td>
+<td><strong>Public API + DB + LLM model + Agent</strong></td>
+<td>모델에 <strong>도구(API)·저장소(DB)</strong> 가 붙어서 하나의 시스템이 됨</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>API</strong>가 뭔가요? <strong>프로그램끼리 대화하는 창구</strong>입니다.
+예를 들어 "항공사 API"가 있으면, AI가 항공사 홈페이지에 사람처럼 클릭하지 않아도 <strong>"서울→시애틀 내일 항공편 줘"</strong> 라고 요청하면 데이터를 받을 수 있습니다.
+<strong>DB(Database)</strong> 는 <strong>데이터를 저장해 두는 창고</strong>입니다. 사용자의 예전 기록 등을 보관합니다.</p>
+</div>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>핵심 차이는 <strong>"답을 주느냐"</strong> vs <strong>"일을 끝내주느냐"</strong>.
+이 차이를 만드는 것이 <strong>Tool(손발) + Memory(기억) + Planning(계획)</strong> 입니다. (아래 "기본 구조"에서 다시 나옵니다)</p>
+</div>
+<hr />
+<h2 id="오늘의-hot-issue-agentic-ai-분야">오늘의 Hot Issue — Agentic AI 분야<a class="headerlink" href="#오늘의-hot-issue-agentic-ai-분야" title="Permanent link">#</a></h2>
+<p>LLM 강의 첫 슬라이드에 나온 최신 동향입니다. <strong>시험 문제로 나올 내용은 아니고</strong>, "업계가 지금 '행동하는 AI'로 경쟁 중"이라는 분위기만 알면 됩니다.</p>
+<p><strong>GPT-6 Astra (OpenAI) vs Claude Fable 5.1 (Anthropic)</strong> — 2026 벤치마크 비교</p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>벤치마크(benchmark)</strong> = AI 성능을 비교하기 위한 <strong>표준 시험지</strong>입니다. 같은 시험을 보게 해서 점수를 비교합니다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>평가 항목</th>
+<th>무엇을 재나</th>
+<th>GPT-6 Astra</th>
+<th>Claude Fable 5.1</th>
+<th>우세</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>종합 지능 지수</td>
+<td>전반적인 똑똑함</td>
+<td>61.2</td>
+<td><strong>65.7</strong> 🏆</td>
+<td>Fable · 범용 추론·지식</td>
+</tr>
+<tr>
+<td>코딩 에이전트 인덱스</td>
+<td>코딩을 혼자 해내는 능력</td>
+<td>67</td>
+<td><strong>70</strong> 🏆</td>
+<td>Fable · 장기 코딩</td>
+</tr>
+<tr>
+<td>Terminal-Bench Science 0.1</td>
+<td>과학 연구 작업</td>
+<td><strong>64.6%</strong> 🏆</td>
+<td>52.6%</td>
+<td>Astra · 도구 활용·분석·연구</td>
+</tr>
+<tr>
+<td>Terminal-Bench 4.0</td>
+<td>터미널(명령창) 작업</td>
+<td><strong>57.9%</strong> 🏆</td>
+<td>55.8%</td>
+<td>Astra 근소 · 다단계 작업</td>
+</tr>
+<tr>
+<td>ARC-AGI-3</td>
+<td>처음 보는 규칙 찾기</td>
+<td><strong>62.7%</strong> / 99.9% 🏆</td>
+<td>공개값 없음</td>
+<td>Astra · 새 환경 적응</td>
+</tr>
+<tr>
+<td>OSWorld 2.0</td>
+<td>마우스로 컴퓨터 쓰기</td>
+<td><strong>72.6%</strong> 🏆</td>
+<td>비교 제한</td>
+<td>Astra · 실제 GUI 작업</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Fable 5.1 강점</strong>: 종합 지능, 장기 코딩 → <em>"더 깊은 지식이 더 큰 가능성을 만듭니다."</em></li>
+<li><strong>GPT-6 Astra 강점</strong>: 적응형 추론, 에이전트 실행, 컴퓨터 사용 → <em>"추론을 넘어, 행동하는 AI로."</em></li>
+<li><strong>정리: Fable 5.1은 '깊은 지식·추론', GPT-6 Astra는 '추론을 행동으로 연결하는 Agentic AI'에 강점</strong></li>
+<li>(주의: 일부 항목은 완전한 1:1 비교가 아니므로 해석에 주의)</li>
+</ul>
+<hr />
+<h2 id="ai-agent의-역사-에이전트-유형의-발전">AI Agent의 역사 (에이전트 유형의 발전) ★<a class="headerlink" href="#ai-agent의-역사-에이전트-유형의-발전" title="Permanent link">#</a></h2>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>이 표는 <strong>"AI가 얼마나 스스로 할 수 있게 되었는가"</strong> 를 옛날 → 지금 순서로 늘어놓은 것입니다.</p>
+<p><strong>한 줄 흐름</strong>: 규칙만 따름 → 계획을 세움 → 말로 생각하고 도구를 씀 → 혼자 반복해서 일함 → 여럿이 팀으로 일함</p>
+<p>아래에서 하나씩 쉽게 풀고, 맨 끝에 원본 표를 그대로 둡니다.</p>
+</div>
+<h3 id="1-rule-based-agent-규칙-기반-에이전트-매뉴얼대로만-하는-직원">① Rule-based Agent (규칙 기반 에이전트) — "매뉴얼대로만 하는 직원"<a class="headerlink" href="#1-rule-based-agent-규칙-기반-에이전트-매뉴얼대로만-하는-직원" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>AI가 아닙니다.</strong> 사람이 <strong>"만약 A면 B를 해라(If-Then)"</strong> 규칙을 미리 잔뜩 적어 놓은 프로그램</li>
+<li>예: "온도가 25도 넘으면 → 에어컨 켜기"</li>
+<li><strong>대표 기술</strong></li>
+<li><strong>Expert Systems (전문가 시스템)</strong>: 전문가의 지식을 규칙으로 옮겨 적은 프로그램 (예: "기침+열 → 감기 의심")</li>
+<li><strong>RPA (Robotic Process Automation, 예: UiPath)</strong>: 사람이 하던 <strong>반복 클릭 작업을 녹화해서 자동 재생</strong>하는 프로그램</li>
+<li><strong>특징</strong></li>
+<li>입력에 <strong>정해진 규칙으로만</strong> 반응</li>
+<li><strong>지능적 추론이나 적응 불가</strong> → 매뉴얼에 없는 상황이 오면 멈춤</li>
+<li>대신 <strong>미리 정해둔 환경에서는 안정적</strong>으로 작동 (예측 가능함)</li>
+<li><strong>지금도 일부 통제용 rule logic으로 사용</strong> (예: "결제 금액 100만원 넘으면 무조건 사람 확인")</li>
+</ul>
+<h3 id="2-planning-agent-계획-기반-고전-ai-길찾기-내비게이션">② Planning Agent (계획 기반 고전 AI) — "길찾기 내비게이션"<a class="headerlink" href="#2-planning-agent-계획-기반-고전-ai-길찾기-내비게이션" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>목표를 주면 거기까지 가는 행동 순서를 스스로 계획</strong></li>
+<li>예: 게임 캐릭터가 "적을 잡아라"는 목표를 받으면 → 무기 줍기 → 이동 → 공격 순서를 스스로 짬</li>
+<li><strong>대표 기술</strong>: <strong>STRIPS, GOAP, HTN Planning</strong> (전부 "목표 → 행동 순서"를 계산하는 고전 알고리즘 이름. 이름만 알면 됩니다)</li>
+<li><strong>특징</strong></li>
+<li>행동 시퀀스(순서)를 <strong>스스로 계획</strong></li>
+<li>게임·로봇·로직 기반 AI에 활용</li>
+<li><strong>자연어는 아님</strong> (사람 말을 알아듣지 못함. 정해진 기호로만 동작)</li>
+<li><strong>현대 Agent Planner 구조의 뿌리</strong> (오늘날 AI 에이전트가 "계획 세우기"를 하는 방식의 조상)</li>
+</ul>
+<h3 id="3-llm-based-reactive-agent-반응형-llm-에이전트-생각하고-도구를-쓰는-직원">③ LLM-based Reactive Agent (반응형 LLM 에이전트) — "생각하고 도구를 쓰는 직원"<a class="headerlink" href="#3-llm-based-reactive-agent-반응형-llm-에이전트-생각하고-도구를-쓰는-직원" title="Permanent link">#</a></h3>
+<ul>
+<li>ChatGPT 같은 <strong>LLM이 사람 말을 이해하고, 생각한 뒤, 도구를 사용</strong></li>
+<li>핵심 방식: <strong>ReAct</strong> (= Reasoning 생각 + Acting 행동, <a href="08-react-tool.html">8장</a>에서 자세히)</li>
+<li><strong>대표 기술</strong>: <strong>ReAct, LangChain</strong> (LangChain = LLM에 도구를 붙이기 쉽게 해주는 개발 도구)</li>
+<li><strong>특징</strong></li>
+<li><strong>입력 → 추론 → 도구 사용</strong> 흐름</li>
+<li><strong>LLM 하나</strong>가 도구 호출까지 전부 처리</li>
+<li><strong>간단한 task loop 구조</strong> (생각 → 행동 → 결과 보기 → 다시 생각)</li>
+<li><strong>초기 LLM Agent의 핵심 틀</strong></li>
+</ul>
+<h3 id="4-autonomous-agent-자율형-반복-에이전트-혼자-알아서-계속-일하는-직원">④ Autonomous Agent (자율형 반복 에이전트) — "혼자 알아서 계속 일하는 직원"<a class="headerlink" href="#4-autonomous-agent-자율형-반복-에이전트-혼자-알아서-계속-일하는-직원" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>목표 하나만 주면, 스스로 할 일 목록을 만들고, 하나씩 하고, 다시 목록을 고치고… 반복</strong></li>
+<li><strong>대표 기술</strong>: <strong>AutoGPT, BabyAGI, AgentGPT</strong> (2023년 화제가 됐던 프로그램들)</li>
+<li><strong>특징</strong></li>
+<li>목표 설정 후 <strong>작업 분해를 반복</strong></li>
+<li><strong>외부 API, 파일 시스템 조작 가능</strong> (진짜로 파일을 만들고 지우고 인터넷을 씀)</li>
+<li><strong>실행 불안정성, 무한 루프 문제</strong> ← 중요!</li>
+<li><strong>"행동하는 AI" 인식의 분기점</strong> (사람들이 "AI가 진짜로 일을 하네?" 하고 느낀 전환점)</li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>"무한 루프 문제"가 뭔가요?</strong>
+스스로 일을 쪼개서 반복하다 보니, <strong>"이제 다 끝났다"를 스스로 판단하지 못하고</strong> 같은 검색을 계속 하거나 같은 파일을 계속 고치는 문제입니다.
+비유: 시험공부를 하는데 <strong>"완벽하게 정리하자"며 노트 정리만 무한 반복</strong>하는 상황.
+이 문제 때문에 뒤에서 <strong>Loop Engineering(반복 제어), evaluator(평가자)</strong> 같은 기술이 필요해집니다.</p>
+</div>
+<h3 id="5-multi-agent-graph-based-agent-역할-기반-협업-팀으로-일하는-회사">⑤ Multi-Agent / Graph-based Agent (역할 기반 협업) — "팀으로 일하는 회사"<a class="headerlink" href="#5-multi-agent-graph-based-agent-역할-기반-협업-팀으로-일하는-회사" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>여러 개의 AI가 각자 역할을 맡아 협업</strong> (기획자 AI, 개발자 AI, 검토자 AI …)</li>
+<li><strong>대표 기술</strong>: <strong>AutoGen, LangGraph, CrewAI, Agentic RAG</strong></li>
+<li><strong>특징</strong></li>
+<li>여러 LLM이 <strong>역할 분업 및 협업</strong></li>
+<li><strong>그래프 기반 워크플로우 (LangGraph)</strong>: 일의 흐름을 <strong>순서도(그래프)</strong> 로 그려서 관리</li>
+<li><strong>직무 중심 구성 (CrewAI)</strong>: "너는 작가, 너는 편집자" 처럼 <strong>직업 단위</strong>로 AI를 배치</li>
+<li><strong>로깅 및 디버깅 도구와 통합</strong>: 누가 무슨 일을 했는지 <strong>기록(로그)</strong> 이 남아 문제를 찾기 쉬움</li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Orchestration(오케스트레이션)</strong> = 오케스트라 <strong>지휘자</strong>처럼 여러 에이전트를 <strong>조율</strong>하는 것.
+<strong>상태 추적</strong> = "지금 어디까지 진행됐는지"를 계속 기록하는 것.</p>
+</div>
+<h3 id="원본-표-그대로-외우기용">원본 표 (그대로 외우기용)<a class="headerlink" href="#원본-표-그대로-외우기용" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>에이전트 유형</th>
+<th>주요 개념</th>
+<th>대표 기술/프레임워크</th>
+<th>특징 및 설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rule-based Agent</strong> (규칙 기반 에이전트)</td>
+<td>조건-행동 규칙 기반 (<strong>AI 적용 X</strong>) (If-Then Rules)</td>
+<td>Expert Systems, RPA (UiPath 등)</td>
+<td>입력에 정해진 규칙으로 반응 / 지능적 추론이나 적응 불가 / 사전 정의된 환경에서 안정 작동 / 여전히 일부 통제용 rule logic에 사용</td>
+</tr>
+<tr>
+<td><strong>Planning Agent</strong> (계획 기반 고전 AI)</td>
+<td>목표 기반 행동 계획 (Task Planning)</td>
+<td>STRIPS, GOAP, HTN Planning</td>
+<td>행동 시퀀스를 스스로 계획 / 게임·로봇·로직 기반 AI에 활용 / <strong>자연어는 아님</strong> / 현대 Agent Planner 구조의 뿌리</td>
+</tr>
+<tr>
+<td><strong>LLM-based Reactive Agent</strong> (반응형 LLM 에이전트)</td>
+<td>자연어 추론 + 도구 사용 (<strong>ReAct</strong>)</td>
+<td>ReAct, LangChain</td>
+<td>입력 → 추론 → 도구 사용 / 단일 LLM이 툴 호출 포함 처리 / 간단한 task loop 구조 / 초기 LLM Agent의 핵심 틀</td>
+</tr>
+<tr>
+<td><strong>Autonomous Agent</strong> (자율형 반복 Agent)</td>
+<td>목표 → 계획 → 반복 실행 (<strong>Loop 구조</strong>)</td>
+<td>AutoGPT, BabyAGI, AgentGPT</td>
+<td>목표 설정 후 작업 분해 반복 / 외부 API, 파일 시스템 조작 가능 / <strong>실행 불안정성, 무한 루프 문제</strong> / <strong>"행동하는 AI" 인식의 분기점</strong></td>
+</tr>
+<tr>
+<td><strong>Multi-Agent / Graph-based Agent</strong> (역할 기반 협업 구조)</td>
+<td>역할 분리, 협업, 상태 추적 (Agent orchestration)</td>
+<td>AutoGen, LangGraph, CrewAI, Agentic RAG</td>
+<td>여러 LLM 역할 분업 및 협업 / 그래프 기반 워크플로우 (LangGraph) / 직무 중심 구성 (CrewAI) / 로깅 및 디버깅 도구와 통합됨</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>예상 문제: "Rule-based Agent와 LLM-based Agent의 차이를 설명하시오"</strong></p>
+<p><strong>모범 답안</strong>: Rule-based Agent는 사람이 미리 작성한 <strong>If-Then 규칙</strong>대로만 반응하므로, 규칙에 없는 상황에서는 <strong>추론·적응이 불가능</strong>하고 <strong>새 도메인마다 규칙을 새로 만들어야</strong> 한다. 반면 LLM-based Agent는 <strong>자연어로 추론</strong>하여 사전에 정의되지 않은 상황에도 대응할 수 있고, <strong>도구를 호출</strong>해 능력을 확장할 수 있다.</p>
+</div>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>예상 문제: "Autonomous Agent의 한계를 쓰시오"</strong></p>
+<p><strong>모범 답안</strong>: 목표를 스스로 하위 작업으로 분해해 반복 실행하는 구조이므로 <strong>실행이 불안정</strong>하고, 종료 조건을 스스로 판단하지 못해 <strong>무한 루프</strong>에 빠질 수 있다.</p>
+</div>
+<hr />
+<h2 id="ai-agent의-기본-구조-이-과목의-뼈대">AI Agent의 기본 구조 (이 과목의 뼈대) ★<a class="headerlink" href="#ai-agent의-기본-구조-이-과목의-뼈대" title="Permanent link">#</a></h2>
+<p><strong>이 표가 학기 전체의 지도</strong>입니다. 앞으로 나오는 모든 내용은 이 4개 중 하나를 깊게 파는 것입니다.</p>
+<table>
+<thead>
+<tr>
+<th>구성요소</th>
+<th>사람에 비유하면</th>
+<th>하는 일</th>
+<th>자세히는</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LLM Model</strong></td>
+<td><strong>머리 (두뇌)</strong></td>
+<td>말을 이해하고 생각(추론)한다</td>
+<td>2~6장</td>
+</tr>
+<tr>
+<td><strong>Tool / Public API</strong></td>
+<td><strong>손, 발 (행동 도구)</strong></td>
+<td>실제로 검색하고, 계산하고, 예약한다</td>
+<td>8장</td>
+</tr>
+<tr>
+<td><strong>DB / Memory</strong></td>
+<td><strong>기억 (상태 저장)</strong></td>
+<td>▷ <strong>Short term</strong> (지금 하는 대화) ▷ <strong>Long term</strong> (예전 경험)</td>
+<td>9장, 11장</td>
+</tr>
+<tr>
+<td><strong>Planning</strong></td>
+<td><strong>작업 계획</strong></td>
+<td>복잡한 목표를 <strong>작은 단위 작업들로 분해</strong></td>
+<td>9장, 11장</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Planning 예시 (슬라이드 그대로)</strong></p>
+<blockquote>
+<p><strong>"웹사이트 만들어줘"</strong> → <code>시장조사</code> → <code>구조설계</code> → <code>코드 작성</code> 등으로 분해</p>
+</blockquote>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Short-term vs Long-term 메모리</strong> 쉬운 예:
+- <strong>Short-term</strong>: 지금 친구와 대화하면서 "아까 네가 말한 그 식당" 하고 기억하는 것 (대화 끝나면 잊어도 됨)
+- <strong>Long-term</strong>: "이 친구는 매운 걸 못 먹는다"처럼 <strong>오래 기억하는 것</strong></p>
+</div>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>AI Agent의 4대 구성요소</strong> — 가장 기본적인 단답·서술 문제입니다.
+<strong>LLM(두뇌) / Tool·API(손발) / DB·Memory(기억, Short·Long term) / Planning(복잡한 목표를 작은 작업으로 분해)</strong></p>
+<p>슬라이드 끝에 <strong>"우리가 고민해봐야 할 사항들은 뭘까?"</strong> 라는 질문이 있습니다. 답은 이 4개를 <strong>어떻게 잘 설계하고 연결할까</strong>이며, 그게 이 과목 전체의 내용입니다.</p>
+</div>
+<hr />
+<h2 id="ai-agent-파트-커리큘럼-ai-agent-강의-자료-목차">AI Agent 파트 커리큘럼 (AI Agent 강의 자료 목차)<a class="headerlink" href="#ai-agent-파트-커리큘럼-ai-agent-강의-자료-목차" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>No.</th>
+<th>Contents</th>
+<th>이 노트</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>AI 에이전트의 기초 개념과 정의</td>
+<td><a href="07-ai-agent.html">7장</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Cognitive Architectures 개론 및 Reasoning</td>
+<td><a href="11-cognitive-architecture.html">11장</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>ReAct &amp; Agent Loop Engineering</td>
+<td><a href="08-react-tool.html">8장</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Tool Use &amp; Function Calling</td>
+<td><a href="08-react-tool.html">8장</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Context Engineering</td>
+<td>(학기 계획)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Memory &amp; State Management</td>
+<td><a href="09-agent-structure.html">9장</a>, <a href="11-cognitive-architecture.html">11장</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Single Agent Practice</td>
+<td><a href="10-agent-practice.html">10장</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Harness &amp; Graph Engineering</td>
+<td>(학기 계획)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Multi-Agent Architecture</td>
+<td><a href="12-agent-architectures.html">12장</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Multi-Agent / Subagents 실습</td>
+<td><a href="12-agent-architectures.html">12장</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td>에이전트 평가와 벤치마킹</td>
+<td>(학기 계획)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="각-파트에서-배우는-것-강의-안내-그대로">각 파트에서 배우는 것 (강의 안내 그대로)<a class="headerlink" href="#각-파트에서-배우는-것-강의-안내-그대로" title="Permanent link">#</a></h3>
+<p><strong>✓ AI Agent의 이해</strong></p>
+<ul>
+<li><strong>LLM과 에이전트의 근본적 차이점인 자율성(Autonomy) / 능동성(Proactivity)에 대한 이해</strong></li>
+<li>자율성 = 시키지 않아도 스스로 함 / 능동성 = 먼저 나서서 목표를 향해 움직임</li>
+<li><strong>LLM이 agent로 진화하기 위한 다층적 처리 구조</strong></li>
+</ul>
+<p><strong>✓ Cognitive Architectures (인지 구조)</strong></p>
+<ul>
+<li><strong>AI Agent의 목표 달성을 위한 인지 구조 설계 필요</strong></li>
+<li><strong>기억(memory), 목표 및 계획 수립(Goal &amp; Planning), 지각 및 행동 인터페이스(Perception &amp; Action)로 구성</strong></li>
+</ul>
+<p><strong>✓ LLM Reasoning (추론)</strong></p>
+<ul>
+<li><strong>큰 문제를 작은 단위로 분해하여 순차적으로 해결하는 과정</strong></li>
+<li><strong>Agent Reasoning의 추적 가능성 향상</strong> (AI가 왜 그렇게 판단했는지 따라가 볼 수 있게)</li>
+<li><strong>Reasoning trace의 깊이와 폭을 모두 넓히는 방법론</strong> (생각을 더 깊게, 더 다양하게)</li>
+<li><strong>구체적인 예시를 통해 새로운 도메인에 즉시 적용 가능한 능력</strong></li>
+</ul>
+<p><strong>✓ Action (행동)</strong></p>
+<ul>
+<li><strong>Tool use를 위한 외부 API 도입</strong> — <strong>어떻게 도구를 정확히 호출할 것인가?</strong></li>
+<li><strong>RAG: 검색 기반 생성으로 할루시네이션 방지 및 Agent별 지식 베이스를 생성하고 업데이트</strong></li>
+<li>할루시네이션(hallucination) = AI가 <strong>모르는 걸 그럴듯하게 지어내는 현상</strong> ("환각")</li>
+</ul>
+<p><strong>✓ ReAct</strong></p>
+<ul>
+<li><strong>ReAct = Reasoning + Action</strong></li>
+<li><strong>추론과 동시에 환경과 상호작용하는 Reasoning Agent</strong></li>
+</ul>
+<p><strong>✓ Single- and Multi-Agent system</strong></p>
+<ul>
+<li><strong>광범위한 협업과 집단지능이 필요한 문제에서의 한계점 해결</strong></li>
+<li><strong>단일 시스템의 오버로드 방지 및 분산된 에이전트의 전문성 유지</strong> (한 AI에게 일을 몰아주지 않고 나눠서 전문화)</li>
+<li><strong>Agentic AI</strong></li>
+</ul>
+<p><strong>✓ 평가 &amp; 벤치마크</strong></p>
+<ul>
+<li><strong>연속적인 상호작용 하에서 평가</strong> (한 번 묻고 끝이 아니라, 여러 번 주고받는 상황에서 평가)</li>
+<li><strong>최종 목표 완수 여부 평가 및 동적 환경에서 적응적 의사결정 능력 검증</strong></li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>위 표의 "(학기 계획)" 항목은 걱정하지 않아도 됩니다. 이 목록은 <strong>학기 전체 계획</strong>이고, 실제 배포된 강의 자료는 <strong>Orientation / LLM / AI Agent 3개가 전부</strong>입니다.
+<strong>이 노트가 다루는 범위 = 중간고사 범위 전부</strong>입니다.</p>
+</div>
+  <footer class="page-footer"><code>content/isw/01-course-overview.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#평가-방식">평가 방식</a></li>
+<li><a href="#강의-일정">강의 일정</a></li>
+<li><a href="#현재-ai-issues-지금-왜-이걸-배우나">현재 AI Issues? — "지금 왜 이걸 배우나"</a><ul>
+<li><a href="#2026년-가트너-선정-10대-기술-트렌드">2026년 가트너 선정 10대 기술 트렌드</a></li>
+<li><a href="#기존-ai-챗봇-vs-ai-에이전트">기존 AI (챗봇) vs AI 에이전트 ★</a></li>
+</ul>
+</li>
+<li><a href="#오늘의-hot-issue-agentic-ai-분야">오늘의 Hot Issue — Agentic AI 분야</a></li>
+<li><a href="#ai-agent의-역사-에이전트-유형의-발전">AI Agent의 역사 (에이전트 유형의 발전) ★</a><ul>
+<li><a href="#1-rule-based-agent-규칙-기반-에이전트-매뉴얼대로만-하는-직원">① Rule-based Agent (규칙 기반 에이전트) — "매뉴얼대로만 하는 직원"</a></li>
+<li><a href="#2-planning-agent-계획-기반-고전-ai-길찾기-내비게이션">② Planning Agent (계획 기반 고전 AI) — "길찾기 내비게이션"</a></li>
+<li><a href="#3-llm-based-reactive-agent-반응형-llm-에이전트-생각하고-도구를-쓰는-직원">③ LLM-based Reactive Agent (반응형 LLM 에이전트) — "생각하고 도구를 쓰는 직원"</a></li>
+<li><a href="#4-autonomous-agent-자율형-반복-에이전트-혼자-알아서-계속-일하는-직원">④ Autonomous Agent (자율형 반복 에이전트) — "혼자 알아서 계속 일하는 직원"</a></li>
+<li><a href="#5-multi-agent-graph-based-agent-역할-기반-협업-팀으로-일하는-회사">⑤ Multi-Agent / Graph-based Agent (역할 기반 협업) — "팀으로 일하는 회사"</a></li>
+<li><a href="#원본-표-그대로-외우기용">원본 표 (그대로 외우기용)</a></li>
+</ul>
+</li>
+<li><a href="#ai-agent의-기본-구조-이-과목의-뼈대">AI Agent의 기본 구조 (이 과목의 뼈대) ★</a></li>
+<li><a href="#ai-agent-파트-커리큘럼-ai-agent-강의-자료-목차">AI Agent 파트 커리큘럼 (AI Agent 강의 자료 목차)</a><ul>
+<li><a href="#각-파트에서-배우는-것-강의-안내-그대로">각 파트에서 배우는 것 (강의 안내 그대로)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

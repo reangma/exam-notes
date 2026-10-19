@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0. 수학·용어 기초 (하나도 모르는 사람용) · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="00-math-basics.html" class="active">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="0-수학용어-기초-하나도-모르는-사람용">0. 수학·용어 기초 (하나도 모르는 사람용)<a class="headerlink" href="#0-수학용어-기초-하나도-모르는-사람용" title="Permanent link">#</a></h1>
+<p>이 과목 슬라이드에는 <code>log</code>, <code>벡터</code>, <code>파라미터</code>, <code>softmax</code> 같은 말이 설명 없이 툭툭 나옵니다.
+<strong>여기만 읽고 가면 뒤의 모든 장이 술술 읽힙니다.</strong> 수학 지식은 0으로 가정하고 씁니다.</p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>이 장은 <strong>시험에 직접 나오는 내용이 아닙니다.</strong> 뒤의 내용을 이해하기 위한 준비물입니다.
+다 외울 필요 없고, 뒤에서 막히는 단어가 나오면 여기로 돌아와서 찾아보세요.</p>
+</div>
+<hr />
+<h2 id="1-벡터-vector">1. 벡터 (vector)<a class="headerlink" href="#1-벡터-vector" title="Permanent link">#</a></h2>
+<p><strong>숫자를 쭉 늘어놓은 것.</strong> 그게 전부입니다.</p>
+<div class="codehilite"><pre><span></span><code>[0.1, 0.5, 0.9]
+</code></pre></div>
+
+<p>이게 벡터입니다. 숫자 3개짜리니까 <strong>"3차원 벡터"</strong> 라고 부릅니다.</p>
+<dl>
+<dt>차원 (dimension)</dt>
+<dd><strong>숫자가 몇 개 들어 있는가</strong>. <code>[0.1, 0.5]</code> 는 2차원, 숫자 300개가 들어 있으면 300차원.</dd>
+</dl>
+<h3 id="왜-벡터를-쓰나">왜 벡터를 쓰나?<a class="headerlink" href="#왜-벡터를-쓰나" title="Permanent link">#</a></h3>
+<p>컴퓨터는 "사과"라는 <strong>글자</strong>를 이해하지 못합니다. 숫자만 압니다.
+그래서 "사과"를 <code>[0.8, 0.1, 0.3, ...]</code> 같은 숫자 묶음으로 바꿔줍니다. <strong>이 작업이 임베딩</strong>입니다 (<a href="02-embedding.html">2장</a>).</p>
+<h3 id="벡터를-화살표로-상상하기">벡터를 "화살표"로 상상하기<a class="headerlink" href="#벡터를-화살표로-상상하기" title="Permanent link">#</a></h3>
+<p>2차원 벡터 <code>[3, 4]</code> 는 <strong>그래프 위의 한 점</strong>, 또는 <strong>원점에서 그 점으로 향하는 화살표</strong>입니다.</p>
+<div class="codehilite"><pre><span></span><code>  y
+  4 |        ● [3, 4]
+  3 |      /
+  2 |    /
+  1 |  /
+  0 +--------- x
+    0  1  2  3
+</code></pre></div>
+
+<ul>
+<li>벡터가 <strong>비슷한 방향</strong>을 가리키면 → <strong>의미가 비슷한 단어</strong></li>
+<li>벡터가 <strong>다른 방향</strong>을 가리키면 → <strong>의미가 다른 단어</strong></li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>이 과목에서 "단어를 벡터로 바꾼다"는 말이 수십 번 나옵니다.
+<strong>= "단어를 숫자 목록으로 바꿔서, 비슷한 단어끼리 가까운 곳에 모이게 한다"</strong> 는 뜻입니다.</p>
+</div>
+<hr />
+<h2 id="2-코사인-유사도-두-화살표가-이루는-각도">2. 코사인 유사도 — 두 화살표가 이루는 각도<a class="headerlink" href="#2-코사인-유사도-두-화살표가-이루는-각도" title="Permanent link">#</a></h2>
+<p>두 벡터(화살표)가 <strong>얼마나 같은 방향을 보는지</strong>를 숫자 하나로 나타낸 것입니다.</p>
+<table>
+<thead>
+<tr>
+<th>두 화살표의 각도</th>
+<th>코사인 유사도</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0도</strong> (완전히 같은 방향)</td>
+<td><strong>1</strong></td>
+<td>아주 비슷함</td>
+</tr>
+<tr>
+<td><strong>90도</strong> (직각)</td>
+<td><strong>0</strong></td>
+<td>아무 관계 없음</td>
+</tr>
+<tr>
+<td><strong>180도</strong> (정반대)</td>
+<td><strong>−1</strong></td>
+<td>정반대 의미</td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span><code>   같은 방향 →→        직각  →        반대 →←
+      값 = 1           값 = 0        값 = −1
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>왜 "길이"가 아니라 "각도"를 보나요?</strong>
+문서가 길면 단어가 많이 나와서 벡터가 길어집니다. 하지만 <strong>긴 문서라고 의미가 다른 건 아니죠.</strong>
+각도만 보면 <strong>길이(문서 분량)는 무시하고 내용만</strong> 비교할 수 있습니다.</p>
+</div>
+<hr />
+<h2 id="3-log-로그-큰-숫자를-납작하게-눌러주는-도구">3. log (로그) — "큰 숫자를 납작하게 눌러주는 도구"<a class="headerlink" href="#3-log-로그-큰-숫자를-납작하게-눌러주는-도구" title="Permanent link">#</a></h2>
+<p>이 과목에서 <code>log</code>가 나오는 곳은 딱 하나, <strong>TF-IDF 공식</strong>입니다. 그 하나만 이해하면 됩니다.</p>
+<h3 id="log가-뭔가">log가 뭔가?<a class="headerlink" href="#log가-뭔가" title="Permanent link">#</a></h3>
+<p><strong>"몇 번 곱해야 이 숫자가 되나?"</strong> 를 묻는 것입니다.</p>
+<div class="codehilite"><pre><span></span><code>log(10)        = 1     ← 10을 1번 곱하면 10
+log(100)       = 2     ← 10을 2번 곱하면 100
+log(1,000)     = 3     ← 10을 3번 곱하면 1000
+log(1,000,000) = 6     ← 10을 6번 곱하면 100만
+</code></pre></div>
+
+<h3 id="핵심-성질-이것만-기억하세요">핵심 성질 — 이것만 기억하세요<a class="headerlink" href="#핵심-성질-이것만-기억하세요" title="Permanent link">#</a></h3>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>log는 "엄청나게 큰 숫자"를 "작고 다루기 쉬운 숫자"로 눌러줍니다.</strong></p>
+<table>
+<thead>
+<tr>
+<th>원래 숫자</th>
+<th>log를 씌우면</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>10</td>
+<td>1</td>
+</tr>
+<tr>
+<td>100</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1,000</td>
+<td>3</td>
+</tr>
+<tr>
+<td>1,000,000</td>
+<td><strong>6</strong></td>
+</tr>
+</tbody>
+</table>
+<p>원래는 <strong>1과 100만의 차이가 100만 배</strong>인데, log를 씌우면 <strong>0과 6의 차이</strong>로 줄어듭니다.</p>
+</div>
+<h3 id="왜-tf-idf에서-쓰나-2장-선행-설명">왜 TF-IDF에서 쓰나? (2장 선행 설명)<a class="headerlink" href="#왜-tf-idf에서-쓰나-2장-선행-설명" title="Permanent link">#</a></h3>
+<p>TF-IDF에서 IDF는 <strong>"이 단어가 얼마나 희귀한가"</strong> 를 재는 값이고, 대략 <code>전체 문서 수 ÷ 그 단어가 나온 문서 수</code> 입니다.</p>
+<p>문제 상황을 봅시다. 문서가 <strong>100만 개</strong>인데 "AI"라는 단어가 1개 문서에만 나왔다면:</p>
+<div class="codehilite"><pre><span></span><code>log 없이:   1,000,000 ÷ 1 = 1,000,000   ← 너무 큼!
+log 씌우면: log(1,000,000) = 6           ← 적당함
+</code></pre></div>
+
+<p><code>1,000,000</code> 같은 값이 그대로 들어가면, 이 단어 하나가 <strong>다른 모든 계산을 압도해 버립니다.</strong> log로 눌러서 <strong>점잖은 숫자</strong>로 만드는 것입니다.</p>
+<p><strong>보너스로 생기는 좋은 성질:</strong></p>
+<div class="codehilite"><pre><span></span><code>모든 문서에 다 나오는 흔한 단어 ('그리고', '하다')
+  → 전체 문서 수 ÷ 그 단어가 나온 문서 수 = 1
+  → log(1) = 0
+  → 중요도 0점!
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>그래서 슬라이드의 <strong>"Why log?"</strong> 에 대한 답이 <strong>"가중치를 적절히 조절하기 위해서"</strong> 인 것입니다.
+여기에 <strong>"분모가 0이 되는 것을 방지"</strong>(공식의 <code>1 + df(t)</code> 부분)가 더해져 2가지 이유가 됩니다.</p>
+</div>
+<hr />
+<h2 id="4-확률과-조건부-확률-pab">4. 확률과 조건부 확률 <code>P(A|B)</code><a class="headerlink" href="#4-확률과-조건부-확률-pab" title="Permanent link">#</a></h2>
+<p><code>P</code> 는 <strong>Probability(확률)</strong> 의 P입니다. <code>P(비)</code> = "비가 올 확률".</p>
+<h3 id="세로줄-은-일-때-라는-뜻">세로줄 <code>|</code> 은 "~일 때" 라는 뜻<a class="headerlink" href="#세로줄-은-일-때-라는-뜻" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>P(A | B)   =   "B라는 조건에서, A일 확률"
+</code></pre></div>
+
+<p>읽는 법: <strong>"B일 때 A"</strong> 또는 <strong>"B가 주어졌을 때 A"</strong></p>
+<p>예시:</p>
+<div class="codehilite"><pre><span></span><code>P(우산을 챙긴다 | 비가 온다)   = "비가 올 때 우산을 챙길 확률" → 높음
+P(우산을 챙긴다 | 맑다)        = "맑을 때 우산을 챙길 확률"   → 낮음
+</code></pre></div>
+
+<h3 id="언어-모델에서의-쓰임">언어 모델에서의 쓰임<a class="headerlink" href="#언어-모델에서의-쓰임" title="Permanent link">#</a></h3>
+<p>LLM이 하는 일은 딱 하나입니다. <strong>"앞의 단어들을 보고, 다음 단어를 맞히기."</strong></p>
+<div class="codehilite"><pre><span></span><code>P(going | Where are we)  =  "Where are we" 다음에 "going"이 올 확률
+</code></pre></div>
+
+<p>문장 전체의 확률은 이걸 <strong>곱해서</strong> 구합니다.</p>
+<div class="codehilite"><pre><span></span><code>S = "Where are we going"
+
+P(S) = P(Where) × P(are|Where) × P(we|Where are) × P(going|Where are we)
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><a href="07-ai-agent.html">7장</a>에 이 수식이 그대로 나옵니다. 어려워 보이지만 내용은
+<strong>"첫 단어가 나올 확률 × 그 다음 단어가 나올 확률 × …를 쭉 곱한 것"</strong> 일 뿐입니다.</p>
+</div>
+<h3 id="gpt-1-vs-gpt-2-수식도-이제-읽을-수-있습니다">GPT-1 vs GPT-2 수식도 이제 읽을 수 있습니다<a class="headerlink" href="#gpt-1-vs-gpt-2-수식도-이제-읽을-수-있습니다" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>GPT-1:  P(Output | Input)          = "입력이 주어졌을 때 출력일 확률"
+GPT-2:  P(Output | Input, Task)    = "입력 + 어떤 과제인지가 주어졌을 때 출력일 확률"
+</code></pre></div>
+
+<p>→ GPT-2는 <strong>"무슨 일을 해야 하는지(Task)"까지 조건에 넣었다</strong>는 뜻입니다. 그래서 같은 입력이라도 과제가 다르면 다른 답이 나옵니다. (<a href="04-llm-gpt.html">4장</a>)</p>
+<hr />
+<h2 id="5-σ-시그마-전부-더하라">5. Σ (시그마) — "전부 더하라"<a class="headerlink" href="#5-σ-시그마-전부-더하라" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code>Σ  =  다 더해라
+</code></pre></div>
+
+<p>그리스 문자 시그마입니다. <strong>합계(Sum)</strong> 의 S에 해당합니다. 그 이상의 의미는 없습니다.</p>
+<p>TF-IDF 공식의 <code>Σₖ f(k,d)</code> 는 → <strong>"문서 d에 나온 모든 단어의 횟수를 전부 더한 것"</strong> = 그 문서의 총 단어 수.</p>
+<hr />
+<h2 id="6-행렬-matrix-숫자를-표로-늘어놓은-것">6. 행렬 (matrix) — "숫자를 표로 늘어놓은 것"<a class="headerlink" href="#6-행렬-matrix-숫자를-표로-늘어놓은-것" title="Permanent link">#</a></h2>
+<p>벡터가 <strong>한 줄</strong>이라면, 행렬은 <strong>표(엑셀 시트)</strong> 입니다.</p>
+<div class="codehilite"><pre><span></span><code>벡터:   [1, 2, 3]
+
+행렬:   [1, 2, 3]
+        [4, 5, 6]
+        [7, 8, 9]     ← 3×3 행렬 (가로 3, 세로 3)
+</code></pre></div>
+
+<ul>
+<li><code>d × d</code> 행렬 = <strong>가로 d개, 세로 d개</strong> → 숫자가 총 <code>d × d</code>개</li>
+<li><code>1024 × 1024</code> 행렬이면 숫자가 <strong>1,048,576개</strong> (약 100만 개)</li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><a href="05-adaptation-tuning.html">5장</a>의 LoRA 계산에 <code>1024 × 1024 = 1,048,576개</code> 가 나오는데,
+<strong>그냥 "100만 칸짜리 표"</strong> 라는 뜻입니다.</p>
+</div>
+<h3 id="희소-행렬-sparse-matrix-대부분이-0인-표">희소 행렬 (Sparse matrix) — "대부분이 0인 표"<a class="headerlink" href="#희소-행렬-sparse-matrix-대부분이-0인-표" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>[0, 0, 0, 1, 0, 0, 0, 0, 0, 0]   ← 10칸 중 1칸만 1, 나머지는 0
+</code></pre></div>
+
+<p><strong>텅 비어 있다(sparse)</strong> 는 뜻입니다. 2장의 One-hot encoding이 바로 이 모양이고,
+<strong>"20,000칸 중 19,999칸이 0"</strong> 이라 <strong>낭비가 심하다</strong>는 게 그 한계입니다.</p>
+<p>반대말이 <strong>밀집(dense)</strong> 으로, <code>[0.12, 0.84, 0.11, 0.34]</code> 처럼 <strong>모든 칸이 의미 있는 값으로 꽉 차 있는 것</strong>입니다.</p>
+<hr />
+<h2 id="7-파라미터-parameter-모델이-돌리는-다이얼">7. 파라미터 (parameter) — "모델이 돌리는 다이얼"<a class="headerlink" href="#7-파라미터-parameter-모델이-돌리는-다이얼" title="Permanent link">#</a></h2>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>라디오의 <strong>주파수 다이얼</strong>을 상상해 보세요. 돌리면 소리가 달라집니다.
+AI 모델 안에는 이런 다이얼이 <strong>수억~수천억 개</strong> 있고, 학습이란 <strong>이 다이얼들을 하나씩 돌려서 맞추는 과정</strong>입니다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>모델</th>
+<th>다이얼 개수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPT-1</td>
+<td><strong>117M</strong> = 1억 1,700만 개</td>
+</tr>
+<tr>
+<td>GPT-2</td>
+<td><strong>1.5B</strong> = 15억 개</td>
+</tr>
+<tr>
+<td>GPT-3</td>
+<td><strong>175B</strong> = 1,750억 개</td>
+</tr>
+</tbody>
+</table>
+<p>읽는 법: <strong>M = Million(백만)</strong>, <strong>B = Billion(십억)</strong></p>
+<p>다이얼이 많을수록 <strong>더 복잡한 것을 기억하고 표현할 수 있지만</strong>, 그만큼 <strong>저장할 메모리와 학습 비용이 커집니다.</strong> → 이게 <a href="05-adaptation-tuning.html">5장</a> PEFT·양자화가 필요한 이유입니다.</p>
+<p><strong>가중치(weight)</strong> 도 거의 같은 말입니다. 다이얼 하나하나의 현재 값입니다.</p>
+<hr />
+<h2 id="8-학습training이란-무엇인가">8. 학습(training)이란 무엇인가<a class="headerlink" href="#8-학습training이란-무엇인가" title="Permanent link">#</a></h2>
+<p>딱 네 단계의 반복입니다.</p>
+<div class="codehilite"><pre><span></span><code>① 모델이 답을 내놓는다        →  "고양이가 상자 위에 있다"
+② 정답과 비교한다              →  정답은 "고양이가 상자 안에 있다"
+③ 얼마나 틀렸는지 잰다         →  '위' 대신 '안'이어야 했음
+④ 다이얼(파라미터)을 조금 돌린다 →  다음엔 '안'이 나올 확률을 살짝 올림
+
+   이걸 수십억 번 반복
+</code></pre></div>
+
+<ul>
+<li>③ 얼마나 틀렸는지 재는 값을 <strong>손실(loss)</strong> 이라고 합니다.</li>
+<li>④ 다이얼을 돌리는 방법을 <strong>역전파(backpropagation)</strong> 라고 합니다.</li>
+</ul>
+<h3 id="경사하강법-안개-낀-산에서-내려오기">경사하강법 — "안개 낀 산에서 내려오기"<a class="headerlink" href="#경사하강법-안개-낀-산에서-내려오기" title="Permanent link">#</a></h3>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>안개가 자욱한 산에 서 있고, 아래로 내려가야 합니다. 앞이 안 보입니다.
+할 수 있는 건 <strong>발밑이 어느 쪽으로 기울었는지 느끼고, 그쪽으로 한 걸음 내딛는 것</strong>뿐입니다.
+이걸 계속 반복하면 결국 골짜기(= 손실이 가장 작은 지점)에 도착합니다.</p>
+<p>이때 <strong>"기울기"</strong> 를 영어로 <strong>gradient</strong> 라고 합니다.</p>
+</div>
+<h3 id="기울기-소실-vanishing-gradient-귓속말-전달-게임">기울기 소실 (Vanishing Gradient) — "귓속말 전달 게임"<a class="headerlink" href="#기울기-소실-vanishing-gradient-귓속말-전달-게임" title="Permanent link">#</a></h3>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><a href="03-transformer.html">3장</a>에 RNN의 한계로 나오는 용어입니다.</p>
+<p><strong>귓속말 전달 게임</strong>을 상상하세요. 30명이 줄을 서서 말을 전달하면, 뒷사람에게 갈수록 말이 뭉개져서 마지막엔 아무 말도 안 들립니다.</p>
+<p>RNN도 똑같습니다. "여기가 틀렸어!"라는 신호를 <strong>문장 뒤에서 앞으로</strong> 전달하는데,
+단어를 하나씩 거칠 때마다 <strong>신호가 점점 작아져서(vanishing)</strong>, 문장 <strong>앞부분까지 가면 거의 0</strong>이 됩니다.
+→ <strong>긴 문장의 앞부분을 제대로 못 배웁니다.</strong> 이게 "기울기 소실 문제"입니다.</p>
+</div>
+<hr />
+<h2 id="9-softmax-점수를-확률로-바꾸는-기계">9. Softmax — "점수를 확률로 바꾸는 기계"<a class="headerlink" href="#9-softmax-점수를-확률로-바꾸는-기계" title="Permanent link">#</a></h2>
+<p>Transformer 마지막 단계에 나옵니다 (<a href="03-transformer.html">3장</a>).</p>
+<p>모델이 다음 단어 후보들에 점수를 매겼다고 합시다.</p>
+<div class="codehilite"><pre><span></span><code>"고양이"  →  2.0점
+"강아지"  →  1.0점
+"자동차"  →  0.1점
+</code></pre></div>
+
+<p>이 점수를 <strong>"합이 100%가 되는 확률"</strong> 로 바꿔주는 것이 softmax입니다.</p>
+<div class="codehilite"><pre><span></span><code>"고양이"  →  66%
+"강아지"  →  24%
+"자동차"  →  10%
+               ───
+               100%
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>왜 필요한가?</strong> "2.0점"은 그 자체로 의미를 알기 어렵습니다. 하지만 <strong>"66% 확률"</strong> 이라고 하면 바로 와닿죠.
+또 확률로 바꿔야 <strong>"66% 확률로 고양이를 고르되 가끔은 다른 것도 고르기"</strong> 같은 조절이 가능해집니다.</p>
+<p>특징: <strong>점수가 큰 것은 더 크게, 작은 것은 더 작게</strong> 벌어집니다. (soft하게 max를 고른다는 뜻)</p>
+</div>
+<hr />
+<h2 id="10-sigmoid-무슨-숫자든-01-사이로-눌러주는-s자">10. Sigmoid — "무슨 숫자든 0~1 사이로 눌러주는 S자"<a class="headerlink" href="#10-sigmoid-무슨-숫자든-01-사이로-눌러주는-s자" title="Permanent link">#</a></h2>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>이 과목 슬라이드에 직접 나오지는 않지만, AI 글을 읽으면 계속 마주치는 용어라 같이 적어 둡니다.</p>
+</div>
+<p>어떤 숫자가 들어와도 <strong>0과 1 사이</strong>로 바꿔 줍니다.</p>
+<div class="codehilite"><pre><span></span><code>       1 ┤          ╭─────────
+         │       ╭──╯
+     0.5 ┤─────●
+         │  ╭──╯
+       0 ┤──╯
+         └──────────────────
+        -5    0    5
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>넣는 값</th>
+<th>나오는 값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>아주 큰 양수 (예: 100)</td>
+<td><strong>거의 1</strong></td>
+</tr>
+<tr>
+<td>0</td>
+<td><strong>정확히 0.5</strong></td>
+</tr>
+<tr>
+<td>아주 큰 음수 (예: −100)</td>
+<td><strong>거의 0</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>왜 쓰나?</strong> "이 메일이 스팸일 확률"처럼 <strong>답을 0~1 확률로 내고 싶을 때</strong> 씁니다.</p>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>Softmax vs Sigmoid 한 줄 구분</strong>
+- <strong>Sigmoid</strong>: 선택지가 <strong>둘 중 하나</strong>일 때 (스팸이다 / 아니다)
+- <strong>Softmax</strong>: 선택지가 <strong>여럿</strong>일 때 (다음 단어가 5만 개 후보 중 무엇인가)</p>
+</div>
+<hr />
+<h2 id="11-세-가지-학습-방식-지도-비지도-강화">11. 세 가지 학습 방식 — 지도 / 비지도 / 강화<a class="headerlink" href="#11-세-가지-학습-방식-지도-비지도-강화" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>이 구분은 5장(RLHF)과 2장(AutoEncoder)을 이해하는 데 꼭 필요합니다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>방식</th>
+<th>비유</th>
+<th>정답(label)이 있나?</th>
+<th>이 과목에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>지도학습</strong> (Supervised)</td>
+<td><strong>문제집 + 정답지</strong>로 공부</td>
+<td><strong>있음</strong></td>
+<td>Fine-tuning, Instruction Tuning</td>
+</tr>
+<tr>
+<td><strong>비지도학습</strong> (Unsupervised)</td>
+<td>정답 없이 <strong>자료만 잔뜩 보며 패턴 찾기</strong></td>
+<td><strong>없음</strong></td>
+<td>Pre-training, AutoEncoder</td>
+</tr>
+<tr>
+<td><strong>강화학습</strong> (Reinforcement)</td>
+<td><strong>게임하듯 해보고 점수 받기</strong>, 점수 높은 쪽으로</td>
+<td>점수(보상)만 있음</td>
+<td><strong>RLHF</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>"GPT는 왜 pre-training이 비지도학습인가?"</strong>
+정답지를 사람이 만들어 준 게 아니라, <strong>인터넷 글 자체가 정답</strong>이기 때문입니다.
+"오늘 날씨가 ___" 에서 뒷단어를 가리고 맞히게 하면, <strong>정답은 원래 글에 이미 있습니다.</strong>
+사람이 라벨을 붙이는 수고가 전혀 없으므로 비지도(정확히는 자기지도) 학습입니다.</p>
+</div>
+<hr />
+<h2 id="12-과적합-overfitting-기출문제만-달달-외운-학생">12. 과적합 (Overfitting) — "기출문제만 달달 외운 학생"<a class="headerlink" href="#12-과적합-overfitting-기출문제만-달달-외운-학생" title="Permanent link">#</a></h2>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><a href="04-llm-gpt.html">4장</a> "Fine-tuning의 한계"에 나옵니다.</p>
+<p>기출문제 100개를 통째로 외운 학생이 있습니다. <strong>기출은 100점</strong>인데, <strong>시험에 처음 보는 문제가 나오면 0점</strong>입니다.
+<strong>원리를 배운 게 아니라 답을 외운 것</strong>이죠. 이게 <strong>과적합</strong>입니다.</p>
+<p>모델도 똑같습니다. 좁은 데이터로 fine-tuning을 세게 하면 <strong>그 데이터에만 강해지고, 처음 보는 데이터(분포 밖, out-of-distribution)에는 약해집니다.</strong></p>
+</div>
+<dl>
+<dt>일반화 (Generalization)</dt>
+<dd>과적합의 <strong>반대말</strong>. <strong>처음 보는 문제도 잘 푸는 능력.</strong> 모델 평가에서 가장 중요한 성질입니다.</dd>
+</dl>
+<hr />
+<h2 id="13-토큰-token-ai가-글을-자르는-단위">13. 토큰 (token) — "AI가 글을 자르는 단위"<a class="headerlink" href="#13-토큰-token-ai가-글을-자르는-단위" title="Permanent link">#</a></h2>
+<p>AI는 글을 <strong>단어가 아니라 토큰 단위</strong>로 읽습니다. 대략 <strong>단어 조각</strong>이라고 보면 됩니다.</p>
+<div class="codehilite"><pre><span></span><code>"안녕하세요"        →  ["안녕", "하세요"]          (토큰 2개)
+"unbelievable"     →  ["un", "believ", "able"]   (토큰 3개)
+</code></pre></div>
+
+<ul>
+<li><strong>Tokenization</strong>: 글을 토큰으로 자르는 작업</li>
+<li><strong>Vocabulary(단어 사전)</strong>: 그렇게 만들어진 토큰 전체 목록</li>
+<li><strong>next token prediction</strong>: <strong>다음 토큰 맞히기</strong> = LLM이 하는 일 그 자체</li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Context Window(컨텍스트 윈도우)</strong> 는 <strong>"한 번에 읽을 수 있는 토큰 수"</strong> 입니다.
+<a href="04-llm-gpt.html">4장</a>의 "Context Window k가 커질수록 성능 향상"은
+<strong>"예시를 더 많이 넣어줄수록 잘한다"</strong> 는 뜻입니다.</p>
+</div>
+<hr />
+<h2 id="14-lora를-위한-준비-행렬-쪼개기">14. LoRA를 위한 준비 — "행렬 쪼개기"<a class="headerlink" href="#14-lora를-위한-준비-행렬-쪼개기" title="Permanent link">#</a></h2>
+<p><a href="05-adaptation-tuning.html">5장</a>의 LoRA가 이 과목에서 가장 수식처럼 보이는 부분이라, 미리 풀어 둡니다.</p>
+<h3 id="상황">상황<a class="headerlink" href="#상황" title="Permanent link">#</a></h3>
+<p>모델 안에 <strong>1024 × 1024 = 약 100만 칸짜리 표</strong>가 있습니다. 새 과제를 배우려면 이 100만 칸을 전부 다시 조절해야 합니다. <strong>너무 비쌉니다.</strong></p>
+<h3 id="아이디어">아이디어<a class="headerlink" href="#아이디어" title="Permanent link">#</a></h3>
+<p><strong>세로로 긴 표 하나</strong>와 <strong>가로로 긴 표 하나</strong>를 곱하면, <strong>큰 표를 만들어 낼 수 있습니다.</strong></p>
+<div class="codehilite"><pre><span></span><code> A (1024 × 8)      ×      B (8 × 1024)      =     1024 × 1024
+ 숫자 8,192개              숫자 8,192개            숫자 100만 개
+
+ 저장은 16,384개만 하면 되는데, 효과는 100만 칸짜리!
+</code></pre></div>
+
+<h3 id="공식의-의미">공식의 의미<a class="headerlink" href="#공식의-의미" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>W0 + ΔW = W0 + A·B
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>기호</th>
+<th>읽는 법</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>W0</code></td>
+<td>더블유 제로</td>
+<td><strong>원래 모델의 가중치</strong> (손대지 않고 그대로 둠 = freeze)</td>
+</tr>
+<tr>
+<td><code>ΔW</code></td>
+<td>델타 더블유</td>
+<td><strong>"변화량"</strong>. 새 과제를 배우려면 얼마나 바꿔야 하는지</td>
+</tr>
+<tr>
+<td><code>A·B</code></td>
+<td>에이 곱하기 비</td>
+<td>그 변화량을 <strong>작은 표 두 개의 곱으로</strong> 표현한 것</td>
+</tr>
+<tr>
+<td><code>m</code> (= rank)</td>
+<td>랭크</td>
+<td><strong>얼마나 얇게 쪼갤지</strong> 정하는 숫자. 작을수록 더 싸고 거침</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>슬라이드의 <strong>"ΔW의 의미 → 새로운 task에 적응하기 위해 필요한 변화량만 학습하면 된다"</strong> 가 핵심 문장입니다.</p>
+<p>쉽게 말하면: <strong>원본은 건드리지 말고, "얼마나 바꿀지"만 따로 조그맣게 적어 두자.</strong>
+책에 직접 낙서하지 말고 <strong>포스트잇을 붙이는 것</strong>과 같습니다.</p>
+</div>
+<hr />
+<h2 id="15-비트와-정밀도-fp32-int4가-뭔가">15. 비트와 정밀도 — FP32, INT4가 뭔가<a class="headerlink" href="#15-비트와-정밀도-fp32-int4가-뭔가" title="Permanent link">#</a></h2>
+<p><a href="05-adaptation-tuning.html">5장</a> 양자화(Quantization)에 나옵니다.</p>
+<p><strong>비트(bit)</strong> 는 <strong>숫자 하나를 저장할 때 쓰는 칸의 개수</strong>입니다. 칸이 많으면 정밀하게, 적으면 대충 저장합니다.</p>
+<div class="codehilite"><pre><span></span><code>원래 값:  3.14159265358979...
+
+FP32 (32칸):  3.14159265   ← 아주 정밀, 자리 많이 차지
+FP16 (16칸):  3.1416       ← 적당
+INT8  (8칸):  3.14         ← 거침
+INT4  (4칸):  3            ← 아주 거침, 자리 적게 차지
+</code></pre></div>
+
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>양자화 = 반올림해서 저장하기.</strong>
+정밀도를 조금 포기하는 대신 <strong>메모리를 확 줄입니다.</strong> 32칸 → 4칸이면 <strong>용량이 1/8</strong>입니다.
+그래서 <strong>"큰 모델도 개인 GPU에서 돌릴 수 있게"</strong> 되는 것입니다.</p>
+</div>
+<hr />
+<h2 id="16-차원-축소-t-sne-pca-그림자-만들기">16. 차원 축소 (t-SNE, PCA) — "그림자 만들기"<a class="headerlink" href="#16-차원-축소-t-sne-pca-그림자-만들기" title="Permanent link">#</a></h2>
+<p><a href="02-embedding.html">2장</a>에 "저차원으로 시각화"라고 나옵니다.</p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>단어 벡터는 보통 <strong>300차원</strong>입니다. 숫자 300개짜리죠. <strong>사람 눈으로는 볼 수가 없습니다.</strong></p>
+<p>그래서 <strong>2차원이나 3차원으로 줄여서</strong> 그림으로 그립니다.
+입체적인 손을 벽에 비추면 <strong>납작한 그림자</strong>가 생기죠? 정보는 좀 잃지만 <strong>모양은 알아볼 수 있습니다.</strong></p>
+<p>이 "그림자 만드는 기술"의 이름이 <strong>t-SNE</strong>와 <strong>PCA</strong>입니다. 이름만 알면 됩니다.</p>
+</div>
+<hr />
+<h2 id="17-자주-나오는-영어-약어-모음">17. 자주 나오는 영어 약어 모음<a class="headerlink" href="#17-자주-나오는-영어-약어-모음" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>약어 뜻을 묻는 문제가 나올 수 있어, 풀네임을 같이 적어 둡니다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>약어</th>
+<th>풀네임</th>
+<th>쉬운 뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NLP</strong></td>
+<td>Natural Language Processing</td>
+<td>자연어 처리</td>
+</tr>
+<tr>
+<td><strong>NLU</strong></td>
+<td>Natural Language Understanding</td>
+<td>자연어 <strong>이해</strong></td>
+</tr>
+<tr>
+<td><strong>NLG</strong></td>
+<td>Natural Language Generation</td>
+<td>자연어 <strong>생성</strong></td>
+</tr>
+<tr>
+<td><strong>LM / LLM</strong></td>
+<td>(Large) Language Model</td>
+<td>(거대) 언어 모델</td>
+</tr>
+<tr>
+<td><strong>PLM</strong></td>
+<td>Pre-trained Language Model</td>
+<td><strong>미리 학습된</strong> 언어 모델</td>
+</tr>
+<tr>
+<td><strong>SFT</strong></td>
+<td>Supervised Fine-Tuning</td>
+<td>정답지를 주고 하는 미세조정</td>
+</tr>
+<tr>
+<td><strong>RLHF</strong></td>
+<td>Reinforcement Learning with Human Feedback</td>
+<td>사람 피드백으로 하는 강화학습</td>
+</tr>
+<tr>
+<td><strong>PEFT</strong></td>
+<td>Parameter-Efficient Fine-Tuning</td>
+<td>파라미터 적게 쓰는 미세조정</td>
+</tr>
+<tr>
+<td><strong>LoRA</strong></td>
+<td>Low-Rank Adaptation</td>
+<td>행렬을 얇게 쪼개서 적응시키기</td>
+</tr>
+<tr>
+<td><strong>CoT</strong></td>
+<td>Chain-of-Thought</td>
+<td>생각의 사슬 (단계별 풀이)</td>
+</tr>
+<tr>
+<td><strong>RAG</strong></td>
+<td>Retrieval-Augmented Generation</td>
+<td>검색해서 가져온 걸로 생성하기</td>
+</tr>
+<tr>
+<td><strong>ReAct</strong></td>
+<td>Reasoning + Acting</td>
+<td>추론하면서 행동하기</td>
+</tr>
+<tr>
+<td><strong>QA</strong></td>
+<td>Question Answering</td>
+<td>질의응답</td>
+</tr>
+<tr>
+<td><strong>API</strong></td>
+<td>Application Programming Interface</td>
+<td>프로그램끼리 대화하는 창구</td>
+</tr>
+<tr>
+<td><strong>DB</strong></td>
+<td>Database</td>
+<td>데이터 저장소</td>
+</tr>
+<tr>
+<td><strong>PPO</strong></td>
+<td>Proximal Policy Optimization</td>
+<td><strong>"조금씩만 바꿔라"</strong> 는 안전장치가 달린 강화학습 방법</td>
+</tr>
+<tr>
+<td><strong>MoE</strong></td>
+<td>Mixture of Experts</td>
+<td>전문가 여럿을 두고 필요한 것만 쓰는 구조</td>
+</tr>
+<tr>
+<td><strong>AGI</strong></td>
+<td>Artificial General Intelligence</td>
+<td>사람 수준의 범용 인공지능</td>
+</tr>
+<tr>
+<td><strong>HITL</strong></td>
+<td>Human In The Loop</td>
+<td>중간에 사람이 끼어서 확인하는 방식</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="다-읽었다면">다 읽었다면<a class="headerlink" href="#다-읽었다면" title="Permanent link">#</a></h2>
+<p>이제 <a href="01-course-overview.html">1장</a>부터 순서대로 읽으면 됩니다.
+읽다가 모르는 단어가 나오면 <strong>상단 검색창(<code>/</code>)</strong> 에 쳐 보세요. 대부분 이 장에 설명이 있습니다.</p>
+  <footer class="page-footer"><code>content/isw/00-math-basics.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#1-벡터-vector">1. 벡터 (vector)</a><ul>
+<li><a href="#왜-벡터를-쓰나">왜 벡터를 쓰나?</a></li>
+<li><a href="#벡터를-화살표로-상상하기">벡터를 "화살표"로 상상하기</a></li>
+</ul>
+</li>
+<li><a href="#2-코사인-유사도-두-화살표가-이루는-각도">2. 코사인 유사도 — 두 화살표가 이루는 각도</a></li>
+<li><a href="#3-log-로그-큰-숫자를-납작하게-눌러주는-도구">3. log (로그) — "큰 숫자를 납작하게 눌러주는 도구"</a><ul>
+<li><a href="#log가-뭔가">log가 뭔가?</a></li>
+<li><a href="#핵심-성질-이것만-기억하세요">핵심 성질 — 이것만 기억하세요</a></li>
+<li><a href="#왜-tf-idf에서-쓰나-2장-선행-설명">왜 TF-IDF에서 쓰나? (2장 선행 설명)</a></li>
+</ul>
+</li>
+<li><a href="#4-확률과-조건부-확률-pab">4. 확률과 조건부 확률 P(A|B)</a><ul>
+<li><a href="#세로줄-은-일-때-라는-뜻">세로줄 | 은 "~일 때" 라는 뜻</a></li>
+<li><a href="#언어-모델에서의-쓰임">언어 모델에서의 쓰임</a></li>
+<li><a href="#gpt-1-vs-gpt-2-수식도-이제-읽을-수-있습니다">GPT-1 vs GPT-2 수식도 이제 읽을 수 있습니다</a></li>
+</ul>
+</li>
+<li><a href="#5-σ-시그마-전부-더하라">5. Σ (시그마) — "전부 더하라"</a></li>
+<li><a href="#6-행렬-matrix-숫자를-표로-늘어놓은-것">6. 행렬 (matrix) — "숫자를 표로 늘어놓은 것"</a><ul>
+<li><a href="#희소-행렬-sparse-matrix-대부분이-0인-표">희소 행렬 (Sparse matrix) — "대부분이 0인 표"</a></li>
+</ul>
+</li>
+<li><a href="#7-파라미터-parameter-모델이-돌리는-다이얼">7. 파라미터 (parameter) — "모델이 돌리는 다이얼"</a></li>
+<li><a href="#8-학습training이란-무엇인가">8. 학습(training)이란 무엇인가</a><ul>
+<li><a href="#경사하강법-안개-낀-산에서-내려오기">경사하강법 — "안개 낀 산에서 내려오기"</a></li>
+<li><a href="#기울기-소실-vanishing-gradient-귓속말-전달-게임">기울기 소실 (Vanishing Gradient) — "귓속말 전달 게임"</a></li>
+</ul>
+</li>
+<li><a href="#9-softmax-점수를-확률로-바꾸는-기계">9. Softmax — "점수를 확률로 바꾸는 기계"</a></li>
+<li><a href="#10-sigmoid-무슨-숫자든-01-사이로-눌러주는-s자">10. Sigmoid — "무슨 숫자든 0~1 사이로 눌러주는 S자"</a></li>
+<li><a href="#11-세-가지-학습-방식-지도-비지도-강화">11. 세 가지 학습 방식 — 지도 / 비지도 / 강화</a></li>
+<li><a href="#12-과적합-overfitting-기출문제만-달달-외운-학생">12. 과적합 (Overfitting) — "기출문제만 달달 외운 학생"</a></li>
+<li><a href="#13-토큰-token-ai가-글을-자르는-단위">13. 토큰 (token) — "AI가 글을 자르는 단위"</a></li>
+<li><a href="#14-lora를-위한-준비-행렬-쪼개기">14. LoRA를 위한 준비 — "행렬 쪼개기"</a><ul>
+<li><a href="#상황">상황</a></li>
+<li><a href="#아이디어">아이디어</a></li>
+<li><a href="#공식의-의미">공식의 의미</a></li>
+</ul>
+</li>
+<li><a href="#15-비트와-정밀도-fp32-int4가-뭔가">15. 비트와 정밀도 — FP32, INT4가 뭔가</a></li>
+<li><a href="#16-차원-축소-t-sne-pca-그림자-만들기">16. 차원 축소 (t-SNE, PCA) — "그림자 만들기"</a></li>
+<li><a href="#17-자주-나오는-영어-약어-모음">17. 자주 나오는 영어 약어 모음</a></li>
+<li><a href="#다-읽었다면">다 읽었다면</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

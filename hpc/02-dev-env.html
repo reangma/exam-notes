@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2. 개발 환경 구축 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="02-dev-env.html" class="active">2. 개발 환경 구축</a></li>
+<li><a href="03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="2-개발-환경-구축">2. 개발 환경 구축<a class="headerlink" href="#2-개발-환경-구축" title="Permanent link">#</a></h1>
+<h2 id="hpc-클러스터-원격-접속-termius">HPC 클러스터 원격 접속 (Termius)<a class="headerlink" href="#hpc-클러스터-원격-접속-termius" title="Permanent link">#</a></h2>
+<p><strong>Termius</strong>: SSH를 이용한 <strong>원격 접속(로그인) 및 파일 송수신</strong> 기능 제공</p>
+<h3 id="호스트-접속-정보-설정-항목">호스트 접속 정보 설정 항목<a class="headerlink" href="#호스트-접속-정보-설정-항목" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Address</strong></td>
+<td>호스트의 <strong>IP 주소</strong>(예: 192.168.0.40) 또는 <strong>도메인 이름</strong></td>
+</tr>
+<tr>
+<td><strong>General</strong></td>
+<td>호스트 이름 설정</td>
+</tr>
+<tr>
+<td><strong>SSH</strong></td>
+<td>호스트 내 서버의 <strong>port 번호</strong></td>
+</tr>
+<tr>
+<td><strong>Credentials</strong></td>
+<td>사용자 계정 이름과 암호</td>
+</tr>
+</tbody>
+</table>
+<h3 id="본-강의-hpc-클러스터-접속-정보">본 강의 HPC 클러스터 접속 정보<a class="headerlink" href="#본-강의-hpc-클러스터-접속-정보" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>설정값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IP address</strong></td>
+<td><strong>203.237.178.18</strong></td>
+</tr>
+<tr>
+<td>General</td>
+<td>HPC</td>
+</tr>
+<tr>
+<td><strong>Port</strong></td>
+<td><strong>19134</strong></td>
+</tr>
+<tr>
+<td>User ID</td>
+<td><code>user##</code></td>
+</tr>
+<tr>
+<td>Password</td>
+<td>핸드폰 번호 뒤 4자리</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p><strong>Port가 22가 아니라 19134</strong>다. 기본 SSH 포트를 그대로 쓰면 접속되지 않는다.</p>
+</div>
+<h3 id="파일-송수신">파일 송수신<a class="headerlink" href="#파일-송수신" title="Permanent link">#</a></h3>
+<p>화면 상단의 <strong>SFTP</strong> 클릭 → 접속할 호스트 선택 → 좌측(내 컴퓨터) / 우측(접속한 호스트) 파일 시스템을 오가며 전송.</p>
+<hr />
+<h2 id="passwd-비밀번호-변경">passwd — 비밀번호 변경<a class="headerlink" href="#passwd-비밀번호-변경" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>passwd
+Changing<span class="w"> </span>password<span class="w"> </span><span class="k">for</span><span class="w"> </span>user<span class="w"> </span>kjsung.
+Current<span class="w"> </span>password:
+</code></pre></div>
+
+<hr />
+<h2 id="디스크-할당량-quota">디스크 할당량 (quota)<a class="headerlink" href="#디스크-할당량-quota" title="Permanent link">#</a></h2>
+<p><strong>quota</strong>: 사용자의 <strong>디스크 사용량</strong>과 <strong>생성할 수 있는 파일의 수(inode 수)</strong> 를 제한하는 것</p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Hard limit vs Soft limit</strong> — 둘의 차이와 유예기간(grace time) 동작이 핵심</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hard limit</strong></td>
+<td>사용자/그룹의 디스크 사용량과 생성 가능한 파일 개수의 <strong>최대값</strong>. 절대 초과 불가</td>
+</tr>
+<tr>
+<td><strong>Soft limit</strong></td>
+<td>초과하더라도 <strong>hard limit를 넘지 않는다면</strong>, <strong>유예기간(grace time) 동안만</strong> 경고를 받으며 <strong>초과한 값을 사용 가능</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>유예기간 동안 사용량이 다시 <strong>soft limit보다 작아지면 유예기간 타이머는 리셋</strong>된다.</li>
+<li><strong>유예기간의 초기값은 7일</strong>이다.</li>
+</ul>
+</div>
+<h3 id="본-강의에서-할당되는-quota">본 강의에서 할당되는 quota<a class="headerlink" href="#본-강의에서-할당되는-quota" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>대상</th>
+<th>Soft limit</th>
+<th>Hard limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>홈 디렉토리 <strong>디스크 공간</strong></td>
+<td><strong>9GB</strong></td>
+<td><strong>10GB</strong></td>
+</tr>
+<tr>
+<td>홈 디렉토리 <strong>생성 가능 파일 수</strong></td>
+<td><strong>190,000</strong></td>
+<td><strong>200,000</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="quota-확인">quota 확인<a class="headerlink" href="#quota-확인" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>quota<span class="w"> </span>-s
+Disk<span class="w"> </span>quotas<span class="w"> </span><span class="k">for</span><span class="w"> </span>user<span class="w"> </span>kjsung<span class="w"> </span><span class="o">(</span>uid<span class="w"> </span><span class="m">1000</span><span class="o">)</span>:
+Filesystem<span class="w">   </span>space<span class="w">   </span>quota<span class="w">   </span>limit<span class="w">   </span>grace<span class="w">   </span>files<span class="w">   </span>quota<span class="w">   </span>limit<span class="w">   </span>grace
+/dev/mapper/rl-home
+<span class="w">             </span>2172K<span class="w">   </span>9216M<span class="w">  </span>10240M<span class="w">              </span><span class="m">43</span><span class="w">    </span>190k<span class="w">    </span>200k
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>열</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>space</code></td>
+<td>현재 디스크 공간 사용량</td>
+</tr>
+<tr>
+<td><code>quota</code></td>
+<td><strong>Soft limit</strong></td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td><strong>Hard limit</strong></td>
+</tr>
+<tr>
+<td><code>grace</code></td>
+<td>soft limit 초과 시 <strong>남은 유예기간</strong></td>
+</tr>
+<tr>
+<td><code>files</code></td>
+<td>현재 생성한 파일 수</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>표에서 <strong><code>quota</code> 열이 soft limit, <code>limit</code> 열이 hard limit</strong>이다. 이름이 헷갈리게 되어 있으니 주의.</p>
+</div>
+<hr />
+<h2 id="리눅스-명령어">리눅스 명령어<a class="headerlink" href="#리눅스-명령어" title="Permanent link">#</a></h2>
+<p>이 강의의 리눅스 명령어 부분은 <strong>임베디드 IoT 프로그래밍 3강과 내용이 완전히 동일</strong>하다.</p>
+<p>→ <a href="../embedded/03-linux.html">임베디드 3. 리눅스 기초</a> 참고</p>
+<p>다루는 내용:</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>디렉토리 구조</td>
+<td><code>/</code>, <code>/bin</code>, <code>/sbin</code>, <code>/dev</code>, <code>/lib</code>, <code>/root</code>, <code>/etc</code>, <code>/proc</code>, <code>/usr/*</code>, <code>/home</code></td>
+</tr>
+<tr>
+<td>파일 목록</td>
+<td><code>ls</code> 와 옵션 <code>-l -a -h -r -t -F -R</code></td>
+</tr>
+<tr>
+<td>이동</td>
+<td><code>cd</code>, 메타심볼 <code>.</code> <code>..</code> <code>~</code> <code>-</code>, <code>pwd</code>, <code>echo $HOME</code></td>
+</tr>
+<tr>
+<td>생성/삭제</td>
+<td><code>mkdir -p</code>, <code>rm -rf</code></td>
+</tr>
+<tr>
+<td>복사/이동</td>
+<td><code>cp</code>, <code>cp -r</code>, <code>mv</code></td>
+</tr>
+<tr>
+<td>내용 출력</td>
+<td><code>cat</code>, <code>tail</code>, <code>tail -n</code>, <code>tail -f</code></td>
+</tr>
+<tr>
+<td>압축</td>
+<td><code>tar -cvf/-xvf</code>, <code>-zcvf</code>(gzip), <code>-jcvf</code>(bzip2), <code>zip -r</code>, <code>unzip</code></td>
+</tr>
+<tr>
+<td>프로세스</td>
+<td><code>ps -f</code>, <code>ps -ef</code>, <code>kill PID</code>, <code>kill -9 PID</code>, Ctrl+C(SIGINT)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>HPC 강의에서 <strong>추가로 나오는 것은 <code>passwd</code> 와 <code>quota -s</code> 두 가지</strong>뿐이다.</p>
+</div>
+  <footer class="page-footer"><code>content/hpc/02-dev-env.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#hpc-클러스터-원격-접속-termius">HPC 클러스터 원격 접속 (Termius)</a><ul>
+<li><a href="#호스트-접속-정보-설정-항목">호스트 접속 정보 설정 항목</a></li>
+<li><a href="#본-강의-hpc-클러스터-접속-정보">본 강의 HPC 클러스터 접속 정보</a></li>
+<li><a href="#파일-송수신">파일 송수신</a></li>
+</ul>
+</li>
+<li><a href="#passwd-비밀번호-변경">passwd — 비밀번호 변경</a></li>
+<li><a href="#디스크-할당량-quota">디스크 할당량 (quota)</a><ul>
+<li><a href="#본-강의에서-할당되는-quota">본 강의에서 할당되는 quota</a></li>
+<li><a href="#quota-확인">quota 확인</a></li>
+</ul>
+</li>
+<li><a href="#리눅스-명령어">리눅스 명령어</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

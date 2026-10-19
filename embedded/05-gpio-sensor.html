@@ -1,0 +1,1972 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5. RPi GPIO 및 센서 활용 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="05-gpio-sensor.html" class="active">5. GPIO 및 센서 활용</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="5-rpi-gpio-및-센서-활용">5. RPi GPIO 및 센서 활용<a class="headerlink" href="#5-rpi-gpio-및-센서-활용" title="Permanent link">#</a></h1>
+<h2 id="gpio-general-purpose-input-output">GPIO (General Purpose Input Output)<a class="headerlink" href="#gpio-general-purpose-input-output" title="Permanent link">#</a></h2>
+<p><strong>GPIO</strong>: 마이크로프로세서가 <strong>주변장치와 통신하기 위해 범용으로 사용되는 입출력 포트</strong></p>
+<h3 id="gpio-핀의-성질">GPIO 핀의 성질<a class="headerlink" href="#gpio-핀의-성질" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>3.3V를 기본 전압</strong>으로 사용</li>
+<li><strong>입력 또는 출력으로 설정</strong>하여 사용</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>입력</strong></td>
+<td>0V(Low, False, 0) 또는 3.3V(High, True, 1)를 <strong>입력받음</strong></td>
+</tr>
+<tr>
+<td><strong>출력</strong></td>
+<td>0V(Low, False, 0) 또는 3.3V(High, True, 1)를 <strong>출력함</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="40핀-구성">40핀 구성<a class="headerlink" href="#40핀-구성" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>종류</th>
+<th>개수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>3.3V 전원용 핀</strong></td>
+<td><strong>2개</strong></td>
+</tr>
+<tr>
+<td><strong>5V 전원용 핀</strong></td>
+<td><strong>2개</strong></td>
+</tr>
+<tr>
+<td><strong>GND (0V, −극) 핀</strong></td>
+<td><strong>8개</strong></td>
+</tr>
+<tr>
+<td>SPI, I2C, UART 통신용 핀</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gpio-pinout-rpi-3-4-동일">GPIO Pinout (RPi 3 / 4 동일)<a class="headerlink" href="#gpio-pinout-rpi-3-4-동일" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Functions</th>
+<th>GPIO</th>
+<th>Pin</th>
+<th>Pin</th>
+<th>GPIO</th>
+<th>Functions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>3.3V</td>
+<td>1</td>
+<td>2</td>
+<td>5V</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>SDA1 (I²C)</strong></td>
+<td><strong>GPIO2</strong></td>
+<td>3</td>
+<td>4</td>
+<td>5V</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>SCL1 (I²C)</strong></td>
+<td><strong>GPIO3</strong></td>
+<td>5</td>
+<td>6</td>
+<td>GND</td>
+<td></td>
+</tr>
+<tr>
+<td>GCLK</td>
+<td>GPIO4</td>
+<td>7</td>
+<td>8</td>
+<td>GPIO14</td>
+<td>TXD0 (UART)</td>
+</tr>
+<tr>
+<td></td>
+<td>GND</td>
+<td>9</td>
+<td>10</td>
+<td>GPIO15</td>
+<td>RXD0 (UART)</td>
+</tr>
+<tr>
+<td></td>
+<td>GPIO17</td>
+<td>11</td>
+<td>12</td>
+<td><strong>GPIO18</strong></td>
+<td><strong>PWM0</strong>, CLK (PCM)</td>
+</tr>
+<tr>
+<td></td>
+<td>GPIO27</td>
+<td>13</td>
+<td>14</td>
+<td>GND</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>GPIO22</td>
+<td>15</td>
+<td>16</td>
+<td>GPIO23</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>3.3V</td>
+<td>17</td>
+<td>18</td>
+<td>GPIO24</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>MOSI (SPI)</strong></td>
+<td><strong>GPIO10</strong></td>
+<td>19</td>
+<td>20</td>
+<td>GND</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>MISO (SPI)</strong></td>
+<td><strong>GPIO9</strong></td>
+<td>21</td>
+<td>22</td>
+<td>GPIO25</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>SCLK (SPI)</strong></td>
+<td><strong>GPIO11</strong></td>
+<td>23</td>
+<td>24</td>
+<td><strong>GPIO8</strong></td>
+<td><strong>CE0 (SPI)</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>GND</td>
+<td>25</td>
+<td>26</td>
+<td>GPIO7</td>
+<td>CE1 (SPI)</td>
+</tr>
+<tr>
+<td></td>
+<td>ID_SD</td>
+<td>27</td>
+<td>28</td>
+<td>ID_SC</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>GPIO5</td>
+<td>29</td>
+<td>30</td>
+<td>GND</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>GPIO6</td>
+<td>31</td>
+<td>32</td>
+<td>GPIO12</td>
+<td>PWM0</td>
+</tr>
+<tr>
+<td>PWM1</td>
+<td>GPIO13</td>
+<td>33</td>
+<td>34</td>
+<td>GND</td>
+<td></td>
+</tr>
+<tr>
+<td>FS (PCM), PWM1</td>
+<td>GPIO19</td>
+<td>35</td>
+<td>36</td>
+<td>GPIO16</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>GPIO26</td>
+<td>37</td>
+<td>38</td>
+<td>GPIO20</td>
+<td>DIN (PCM)</td>
+</tr>
+<tr>
+<td></td>
+<td>GND</td>
+<td>39</td>
+<td>40</td>
+<td>GPIO21</td>
+<td>DOUT (PCM)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>반드시 외울 핀</strong></p>
+<ul>
+<li><strong>I2C</strong>: SDA = <strong>GPIO2</strong>, SCL = <strong>GPIO3</strong></li>
+<li><strong>SPI</strong>: MOSI = <strong>GPIO10</strong>, MISO = <strong>GPIO9</strong>, SCLK = <strong>GPIO11</strong>, CE0 = <strong>GPIO8</strong></li>
+<li><strong>PWM</strong>: <strong>GPIO18</strong> (실습에서 항상 사용)</li>
+<li><strong>UART</strong>: TXD = GPIO14, RXD = GPIO15</li>
+</ul>
+</div>
+<h3 id="핀-번호-모드">핀 번호 모드<a class="headerlink" href="#핀-번호-모드" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>모드</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GPIO.BOARD</code></td>
+<td><strong>순서대로 나열된 물리 핀 번호</strong> 사용 (1~40)</td>
+</tr>
+<tr>
+<td><code>GPIO.BCM</code></td>
+<td><strong>미리 정의된 GPIO 핀 번호</strong> 사용 (GPIO4, GPIO18 …)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>5강의 <strong>모든 실습은 <code>GPIO.BCM</code> 모드</strong>를 사용한다. (3강의 첫 LED 예제만 BOARD 모드)</p>
+</div>
+<h3 id="참고-용어">참고 용어<a class="headerlink" href="#참고-용어" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>용어</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vcc</strong> (collector 전원), <strong>Vdd</strong> (drain 전원)</td>
+<td><strong>+ 전원</strong></td>
+</tr>
+<tr>
+<td><strong>Vee</strong> (emitter 전원), <strong>Vss</strong> (source 전원)</td>
+<td><strong>− 전원 또는 접지(GND)</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="rpigpio-기본-사용법">RPi.GPIO 기본 사용법<a class="headerlink" href="#rpigpio-기본-사용법" title="Permanent link">#</a></h2>
+<p><strong>RPi.GPIO</strong>: 파이썬에서 라즈베리파이의 GPIO를 제어하기 위한 모듈. <strong>Raspberry Pi OS에 기본 설치</strong>되어 있어 따로 설치할 필요 없음.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-        # 한글 주석을 쓰려면 최상단에 추가</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">RPi.GPIO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">GPIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setwarnings</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>              <span class="c1"># 불필요한 warning 제거</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>               <span class="c1"># 핀 번호 모드 (BOARD / BCM)</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>        <span class="c1"># 출력으로 설정</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">)</span>         <span class="c1"># 입력으로 설정</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>              <span class="c1"># 3.3V 출력 (High)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>              <span class="c1"># 0V 출력 (Low)</span>
+
+<span class="n">value</span> <span class="o">=</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>          <span class="c1"># 입력 읽기</span>
+
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>                    <span class="c1"># delay 초 대기</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>                       <span class="c1"># GPIO 설정 초기화</span>
+</code></pre></div>
+
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong><code>GPIO.cleanup()</code>의 목적</strong>: 리소스를 반환시켜 <strong>중복 사용이나 GPIO 핀 쇼트 등의 하드웨어적 문제를 방지</strong></p>
+</div>
+<h3 id="전압-파이썬-표현">전압 ↔ 파이썬 표현<a class="headerlink" href="#전압-파이썬-표현" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>전압</th>
+<th>파이썬 코드 표현</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>3.3V</strong></td>
+<td><code>GPIO.HIGH</code>, <code>True</code>, <code>1</code></td>
+</tr>
+<tr>
+<td><strong>0V</strong></td>
+<td><code>GPIO.LOW</code>, <code>False</code>, <code>0</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="실습-1-led-켜고-끄기">[실습 1] LED 켜고 끄기<a class="headerlink" href="#실습-1-led-켜고-끄기" title="Permanent link">#</a></h2>
+<h3 id="배선">배선<a class="headerlink" href="#배선" title="Permanent link">#</a></h3>
+<p>준비물: <strong>1kΩ 저항, LED</strong></p>
+<table>
+<thead>
+<tr>
+<th>라즈베리파이</th>
+<th>LED</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GPIO 4</strong></td>
+<td><strong>+ 극</strong></td>
+</tr>
+<tr>
+<td><strong>GND</strong></td>
+<td><strong>− 극</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="코드-led-blinkpy">코드 (LED_Blink.py)<a class="headerlink" href="#코드-led-blinkpy" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">RPi.GPIO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">GPIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># 사용할 GPIO 핀 번호 설정 (BCM 모드)</span>
+<span class="n">led_pin</span> <span class="o">=</span> <span class="mi">4</span>                      <span class="c1"># GPIO 4</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setwarnings</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>          <span class="c1"># 불필요한 warning 제거</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>           <span class="c1"># GPIO 핀 번호 모드 설정</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>    <span class="c1"># LED 핀을 출력으로 설정</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>              <span class="c1"># 10번 반복</span>
+    <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>      <span class="c1"># LED 켜짐</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>                <span class="c1"># 1초 대기</span>
+    <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>      <span class="c1"># LED 꺼짐</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>                <span class="c1"># 1초 대기</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>                   <span class="c1"># GPIO 설정 초기화</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span>LED_Blink.py
+</code></pre></div>
+
+<p>→ LED가 <strong>1초 간격으로 10번</strong> 깜빡임</p>
+<hr />
+<h2 id="실습-2-버튼-입력-polling-방식">[실습 2] 버튼 입력 — Polling 방식<a class="headerlink" href="#실습-2-버튼-입력-polling-방식" title="Permanent link">#</a></h2>
+<h3 id="floating-상태">Floating 상태<a class="headerlink" href="#floating-상태" title="Permanent link">#</a></h3>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>Floating</strong>: 스위치를 누르지 않았을 때 핀에 0V도 3.3V도 아닌, <strong>부유하는 애매한 값</strong>이 입력되는 상태</p>
+</div>
+<ul>
+<li>스위치를 누르면 → GPIO 15에 <strong>3.3V(High, 1)</strong> 입력</li>
+<li>스위치를 안 누르면 → <strong>floating 상태 발생</strong></li>
+</ul>
+<h3 id="해결책-pull-down-pull-up">해결책: Pull-down / Pull-up<a class="headerlink" href="#해결책-pull-down-pull-up" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Pull-<strong>down</strong></th>
+<th>Pull-<strong>up</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>저항 위치</td>
+<td>스위치 기준 <strong>GND(−극, 0V)쪽</strong></td>
+<td>스위치 기준 <strong>Vcc(+전원)쪽</strong></td>
+</tr>
+<tr>
+<td>역할</td>
+<td>전압을 안정적으로 <strong>Low(0V)로 끌어내림</strong></td>
+<td>전압을 안정적으로 <strong>High(3.3V)로 끌어올림</strong></td>
+</tr>
+<tr>
+<td>안 눌렀을 때</td>
+<td><strong>0V (Low, 0)</strong></td>
+<td><strong>3.3V (High, 1)</strong></td>
+</tr>
+<tr>
+<td>눌렀을 때</td>
+<td><strong>3.3V (High, 1)</strong></td>
+<td><strong>0V (Low, 0)</strong></td>
+</tr>
+<tr>
+<td>저항값</td>
+<td>일반적으로 <strong>10kΩ</strong></td>
+<td>일반적으로 <strong>10kΩ</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>라즈베리파이는 내부에 pull-up / pull-down 저항이 내장</strong>되어 있어 별도 저항 설치 없이 <code>GPIO.setup()</code>에서 설정 가능하다. (아두이노는 외부 저항이 필요)</p>
+</div>
+<div class="codehilite"><pre><span></span><code><span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">button_pin</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">pull_up_down</span><span class="o">=</span><span class="n">GPIO</span><span class="o">.</span><span class="n">PUD_UP</span><span class="p">)</span>     <span class="c1"># pull-up 설정</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">button_pin</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">pull_up_down</span><span class="o">=</span><span class="n">GPIO</span><span class="o">.</span><span class="n">PUD_DOWN</span><span class="p">)</span>   <span class="c1"># pull-down 설정</span>
+</code></pre></div>
+
+<h3 id="배선_1">배선<a class="headerlink" href="#배선_1" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>라즈베리파이</th>
+<th>Tact 스위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GPIO 15</strong></td>
+<td>핀 연결</td>
+</tr>
+<tr>
+<td><strong>VCC (3.3V)</strong></td>
+<td>핀 연결</td>
+</tr>
+</tbody>
+</table>
+<h3 id="코드-btn-pollingpy">코드 (Btn_Polling.py)<a class="headerlink" href="#코드-btn-pollingpy" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">RPi.GPIO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">GPIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">button_pin</span> <span class="o">=</span> <span class="mi">15</span>                  <span class="c1"># GPIO 15</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setwarnings</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
+
+<span class="c1"># 입력으로 설정하고 pull-down 설정</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">button_pin</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">pull_up_down</span><span class="o">=</span><span class="n">GPIO</span><span class="o">.</span><span class="n">PUD_DOWN</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>                         <span class="c1"># 무한루프 (polling 방식)</span>
+    <span class="k">if</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">button_pin</span><span class="p">)</span> <span class="o">==</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">HIGH</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Button pushed!"</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>              <span class="c1"># 0.1초 기다림</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+</code></pre></div>
+
+<dl>
+<dt><strong>Polling 방식</strong></dt>
+<dd>계속해서 <strong>주기적으로 상태를 확인</strong>하면서 조건이 만족될 때 처리하는 방식</dd>
+</dl>
+<hr />
+<h2 id="실습-3-버튼-입력-event-handling-방식">[실습 3] 버튼 입력 — Event handling 방식<a class="headerlink" href="#실습-3-버튼-입력-event-handling-방식" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>Event handling 방식</strong></dt>
+<dd><strong>Event가 발생했을 때</strong> 미리 정의해둔 함수(<strong>callback 함수</strong>)를 수행하는 방식</dd>
+</dl>
+<div class="codehilite"><pre><span></span><code><span class="n">GPIO</span><span class="o">.</span><span class="n">add_event_detect</span><span class="p">(</span><span class="n">button_pin</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">RISING</span><span class="p">,</span>
+                      <span class="n">callback</span><span class="o">=</span><span class="n">button_callback</span><span class="p">,</span> <span class="n">bouncetime</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>인자</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GPIO.RISING</code></td>
+<td>입력이 <strong>0V(0) → 3.3V(1)로 변할 때</strong> (rising event)</td>
+</tr>
+<tr>
+<td><code>callback=</code></td>
+<td>event 발생 시 실행할 <strong>callback 함수</strong></td>
+</tr>
+<tr>
+<td><code>bouncetime=</code></td>
+<td><strong>bouncing 방지 지연시간 (ms)</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="bouncing-현상">Bouncing 현상<a class="headerlink" href="#bouncing-현상" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Bouncing</strong>: 실제로 버튼이 동작할 때 <strong>순간적으로 전압이 불규칙해지는 현상</strong></p>
+<p>→ bouncing되는 전압을 무시하기 위해 <strong>ms 단위의 bounce time(지연시간)</strong> 을 설정하여, 이 시간 뒤에 event를 감지하도록 하여 <strong>잘못된 전압 입력을 방지</strong>한다.</p>
+<p>예: <code>bouncetime=300</code> → 버튼을 눌러 RISING event로 callback이 실행되면, <strong>300ms(0.3초) 뒤</strong>에야 다시 event를 감지</p>
+</div>
+<h3 id="배선-버튼으로-led-토글">배선 (버튼으로 LED 토글)<a class="headerlink" href="#배선-버튼으로-led-토글" title="Permanent link">#</a></h3>
+<p>준비물: Tact 스위치, 1kΩ 저항, LED</p>
+<table>
+<thead>
+<tr>
+<th>라즈베리파이</th>
+<th>전자부품</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GPIO 15</strong></td>
+<td>스위치 연결</td>
+</tr>
+<tr>
+<td><strong>VCC (3.3V)</strong></td>
+<td>스위치 연결</td>
+</tr>
+<tr>
+<td><strong>GPIO 4</strong></td>
+<td>저항</td>
+</tr>
+<tr>
+<td><strong>GND</strong></td>
+<td>LED − 극</td>
+</tr>
+</tbody>
+</table>
+<h3 id="코드-btn-callbakpy">코드 (Btn_callbak.py)<a class="headerlink" href="#코드-btn-callbakpy" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">RPi.GPIO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">GPIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">button_pin</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">led_pin</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setwarnings</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">button_pin</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">pull_up_down</span><span class="o">=</span><span class="n">GPIO</span><span class="o">.</span><span class="n">PUD_DOWN</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="n">light_on</span> <span class="o">=</span> <span class="kc">False</span>                 <span class="c1"># boolean 변수 설정</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">button_callback</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">light_on</span>              <span class="c1"># 함수 내에서 수정하기 위해 global 선언</span>
+    <span class="k">if</span> <span class="n">light_on</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>        <span class="c1"># LED가 꺼져 있을 때</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># LED 켬</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"LED ON!"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>                        <span class="c1"># LED가 켜져 있을 때</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># LED 끔</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"LED OFF!"</span><span class="p">)</span>
+    <span class="n">light_on</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">light_on</span>      <span class="c1"># False &lt;=&gt; True swapping</span>
+
+<span class="c1"># rising event 감지 시 button_callback 실행, bounce time 300ms</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">add_event_detect</span><span class="p">(</span><span class="n">button_pin</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">RISING</span><span class="p">,</span>
+                      <span class="n">callback</span><span class="o">=</span><span class="n">button_callback</span><span class="p">,</span> <span class="n">bouncetime</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>                         <span class="c1"># 프로그램을 종료시키지 않기 위한 무한루프</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+</code></pre></div>
+
+<p>→ 버튼을 누르면 LED가 켜지고, 다음 번 누르면 꺼짐</p>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>callback 함수 안에서 바깥 변수를 수정하려면 <strong><code>global</code> 선언이 반드시 필요</strong>하다.</p>
+</div>
+<hr />
+<h2 id="pwm-pulse-width-modulation">PWM (Pulse Width Modulation)<a class="headerlink" href="#pwm-pulse-width-modulation" title="Permanent link">#</a></h2>
+<p><strong>PWM</strong>: 주기적으로 반복되는 디지털 신호인 <strong>on 신호(1; 3.3V)와 off 신호(0; 0V)</strong> 를 통해서 <strong>모터·팬의 속도, LED 등의 밝기를 제어</strong></p>
+<ul>
+<li><strong>주파수(frequency)</strong>: 1Hz는 1초에 1번, 2Hz는 1초에 2번 주기적 현상이 일어나는 것</li>
+<li><strong>Duty cycle</strong>: 반복되는 pulse 신호의 주기에서 <strong>on 신호가 지속되는 시간의 비율</strong></li>
+</ul>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Duty cycle이 클수록 팬 속도와 LED의 밝기가 증가</strong>한다.</p>
+</div>
+<h3 id="pwm-라이브러리-사용법">PWM 라이브러리 사용법<a class="headerlink" href="#pwm-라이브러리-사용법" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="n">p</span> <span class="o">=</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">PWM</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">frequency</span><span class="p">)</span>   <span class="c1"># PWM 인스턴스 생성 (핀번호, 주파수 Hz)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">dc</span><span class="p">)</span>                        <span class="c1"># 초기 duty cycle 설정하며 PWM 시작</span>
+<span class="n">p</span><span class="o">.</span><span class="n">ChangeDutyCycle</span><span class="p">(</span><span class="n">dc</span><span class="p">)</span>              <span class="c1"># duty cycle 변경 (0 &lt;= dc &lt;= 100.0)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">ChangeFrequency</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span>            <span class="c1"># 주파수 변경</span>
+<span class="n">p</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>                           <span class="c1"># PWM 종료</span>
+</code></pre></div>
+
+<hr />
+<h2 id="실습-4-pwm으로-led-밝기-조정">[실습 4] PWM으로 LED 밝기 조정<a class="headerlink" href="#실습-4-pwm으로-led-밝기-조정" title="Permanent link">#</a></h2>
+<h3 id="배선_2">배선<a class="headerlink" href="#배선_2" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>라즈베리파이</th>
+<th>LED</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GPIO 18 (PWM)</strong></td>
+<td><strong>+ 극</strong></td>
+</tr>
+<tr>
+<td><strong>GND</strong></td>
+<td><strong>− 극</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="코드-pwm-ledpy">코드 (PWM_LED.py)<a class="headerlink" href="#코드-pwm-ledpy" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">RPi.GPIO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">GPIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">led_pin</span> <span class="o">=</span> <span class="mi">18</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setwarnings</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">PWM</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>        <span class="c1"># GPIO 18, 주파수 50Hz</span>
+<span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                       <span class="c1"># duty cycle 0으로 PWM 시작</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">dc</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>      <span class="c1"># 0 → 100, 5씩 증가</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">ChangeDutyCycle</span><span class="p">(</span><span class="n">dc</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">dc</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">):</span>    <span class="c1"># 100 → 0, 5씩 감소</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">ChangeDutyCycle</span><span class="p">(</span><span class="n">dc</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>        <span class="c1"># Ctrl+C 눌렀을 때 예외 발생</span>
+    <span class="k">pass</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>                         <span class="c1"># PWM 종료</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>                   <span class="c1"># GPIO 설정 초기화</span>
+</code></pre></div>
+
+<p>→ LED가 <strong>밝아졌다 어두워지는 것을 반복</strong></p>
+<hr />
+<h2 id="실습-5-pwm으로-부저-음-조정">[실습 5] PWM으로 부저 음 조정<a class="headerlink" href="#실습-5-pwm으로-부저-음-조정" title="Permanent link">#</a></h2>
+<h3 id="부저의-종류">부저의 종류<a class="headerlink" href="#부저의-종류" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>종류</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Active</strong></td>
+<td><strong>일정한 전원(3.3V)만 가해주면 소리가 남</strong></td>
+</tr>
+<tr>
+<td><strong>Passive</strong></td>
+<td>전원만으로는 소리가 안 나고 <strong>일정한 주파수를 가해줘야</strong> 소리가 남. <strong>주파수 높낮이로 음 조정 가능</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="배선_3">배선<a class="headerlink" href="#배선_3" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>라즈베리파이</th>
+<th>부저</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VCC (3.3V)</strong></td>
+<td>+ 극</td>
+</tr>
+<tr>
+<td><strong>GPIO 18</strong></td>
+<td>I/O</td>
+</tr>
+<tr>
+<td><strong>GND (0V, −극)</strong></td>
+<td>GND</td>
+</tr>
+</tbody>
+</table>
+<h3 id="코드-pwm-buzzerpy">코드 (PWM_Buzzer.py)<a class="headerlink" href="#코드-pwm-buzzerpy" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">RPi.GPIO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">GPIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">bz_pin</span> <span class="o">=</span> <span class="mi">18</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setwarnings</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">bz_pin</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">PWM</span><span class="p">(</span><span class="n">bz_pin</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>        <span class="c1"># GPIO 18, 주파수 100Hz</span>
+
+<span class="c1"># 4옥타브 도~시, 5옥타브 도의 주파수</span>
+<span class="n">Frq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mi">294</span><span class="p">,</span> <span class="mi">330</span><span class="p">,</span> <span class="mi">349</span><span class="p">,</span> <span class="mi">392</span><span class="p">,</span> <span class="mi">440</span><span class="p">,</span> <span class="mi">493</span><span class="p">,</span> <span class="mi">523</span><span class="p">]</span>
+<span class="n">speed</span> <span class="o">=</span> <span class="mf">0.5</span>                      <span class="c1"># 음과 음 사이 연주 시간 (0.5초)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>                      <span class="c1"># duty cycle 10으로 PWM 시작</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">fr</span> <span class="ow">in</span> <span class="n">Frq</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">ChangeFrequency</span><span class="p">(</span><span class="n">fr</span><span class="p">)</span>    <span class="c1"># 주파수 변경</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>        <span class="c1"># 0.5초 딜레이</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>음계 주파수 (4옥타브 도 ~ 5옥타브 도)</strong></p>
+<table>
+<thead>
+<tr>
+<th>도</th>
+<th>레</th>
+<th>미</th>
+<th>파</th>
+<th>솔</th>
+<th>라</th>
+<th>시</th>
+<th>도(5옥타브)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>262</td>
+<td>294</td>
+<td>330</td>
+<td>349</td>
+<td>392</td>
+<td>440</td>
+<td>493</td>
+<td>523</td>
+</tr>
+</tbody>
+</table>
+<p>음 높이는 <code>ChangeDutyCycle</code>이 아니라 <strong><code>ChangeFrequency</code>로 조정</strong>한다.</p>
+</div>
+<hr />
+<h2 id="실습-6-pwm으로-서보모터-각도-조정">[실습 6] PWM으로 서보모터 각도 조정<a class="headerlink" href="#실습-6-pwm으로-서보모터-각도-조정" title="Permanent link">#</a></h2>
+<p><strong>서보모터는 duty cycle에 따라 각도가 변경</strong>된다.</p>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<table>
+<thead>
+<tr>
+<th>각도</th>
+<th>Duty cycle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0°</strong></td>
+<td><strong>2.5</strong></td>
+</tr>
+<tr>
+<td><strong>90°</strong></td>
+<td><strong>7.5</strong></td>
+</tr>
+<tr>
+<td><strong>180°</strong></td>
+<td><strong>12.5</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="배선-sg-90">배선 (SG-90)<a class="headerlink" href="#배선-sg-90" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>라즈베리파이</th>
+<th>SG-90 서보모터</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VCC (5V)</strong></td>
+<td><strong>빨간색</strong></td>
+</tr>
+<tr>
+<td><strong>GPIO 18</strong></td>
+<td><strong>오렌지색</strong></td>
+</tr>
+<tr>
+<td><strong>GND (0V, −극)</strong></td>
+<td><strong>갈색</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="코드-pwm-servopy">코드 (PWM_Servo.py)<a class="headerlink" href="#코드-pwm-servopy" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">RPi.GPIO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">GPIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">SERVO_PIN</span> <span class="o">=</span> <span class="mi">18</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setwarnings</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">SERVO_PIN</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="n">servo</span> <span class="o">=</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">PWM</span><span class="p">(</span><span class="n">SERVO_PIN</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>  <span class="c1"># 주파수 50Hz</span>
+<span class="n">servo</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                   <span class="c1"># duty cycle 0으로 PWM 시작</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">servo</span><span class="o">.</span><span class="n">ChangeDutyCycle</span><span class="p">(</span><span class="mf">7.5</span><span class="p">)</span>      <span class="c1"># 90도</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">servo</span><span class="o">.</span><span class="n">ChangeDutyCycle</span><span class="p">(</span><span class="mf">12.5</span><span class="p">)</span>     <span class="c1"># 180도</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">servo</span><span class="o">.</span><span class="n">ChangeDutyCycle</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span>      <span class="c1"># 0도</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="n">servo</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+    <span class="n">GPIO</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>LED 밝기 조정과 서보모터는 둘 다 <strong>주파수 50Hz</strong>, 부저는 <strong>100Hz</strong>로 시작한다.</p>
+</div>
+<hr />
+<h2 id="실습-7-초음파-센서-hc-sr04">[실습 7] 초음파 센서 (HC-SR04)<a class="headerlink" href="#실습-7-초음파-센서-hc-sr04" title="Permanent link">#</a></h2>
+<h3 id="동작-원리">동작 원리<a class="headerlink" href="#동작-원리" title="Permanent link">#</a></h3>
+<ol>
+<li><strong>Trigger 핀에 10μs 동안 start pulse 신호</strong>를 준다</li>
+<li>초음파 센서가 <strong>8개의 사운드 웨이브</strong>를 전방으로 발사</li>
+<li>물체에 반사되어 돌아오는 <strong>시간만큼 Echo 핀으로 pulse 신호</strong>를 보냄</li>
+</ol>
+<h3 id="거리-계산">거리 계산<a class="headerlink" href="#거리-계산" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>초음파의 속도는 340m/s로 일정</strong></p>
+<div class="codehilite"><pre><span></span><code>물체와의 거리 = 소리의 속도 × (걸린 시간 / 2)
+</code></pre></div>
+
+<p><strong>예제</strong>: 걸린 시간이 588μs일 때</p>
+<div class="codehilite"><pre><span></span><code>= 340 m/s × (588μs / 2)
+= 34000 cm/s × (0.000588s / 2)
+= 9.996 cm
+</code></pre></div>
+
+<p>왕복 시간이므로 <strong>÷2 를 빼먹지 말 것</strong></p>
+</div>
+<h3 id="데이터시트">데이터시트<a class="headerlink" href="#데이터시트" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>측정 거리: 2 ~ 400cm</strong></li>
+<li><strong>전방 15도 각도 이내</strong> 측정 가능</li>
+</ul>
+<h3 id="배선_4">배선<a class="headerlink" href="#배선_4" title="Permanent link">#</a></h3>
+<p>준비물: HC-SR04, <strong>1kΩ 저항, 2kΩ 저항</strong></p>
+<table>
+<thead>
+<tr>
+<th>라즈베리파이</th>
+<th>초음파 센서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VCC (5V)</strong></td>
+<td>VCC</td>
+</tr>
+<tr>
+<td><strong>GPIO 23</strong></td>
+<td><strong>Trigger 핀</strong></td>
+</tr>
+<tr>
+<td><strong>GPIO 24</strong></td>
+<td><strong>Echo 핀</strong></td>
+</tr>
+<tr>
+<td><strong>GND (0V, −극)</strong></td>
+<td>GND</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5v를-33v로-낮추기-전압-분배">5V를 3.3V로 낮추기 (전압 분배)<a class="headerlink" href="#5v를-33v로-낮추기-전압-분배" title="Permanent link">#</a></h3>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>라즈베리파이의 GPIO 핀은 3.3V 이상 입력하면 안 된다.</strong>
+HC-SR04는 <strong>5V로 동작</strong>하므로 Echo 핀의 5V 신호를 <strong>전압 분배 회로로 3.3V로 낮춰서</strong> 입력받아야 한다.</p>
+</div>
+<div class="codehilite"><pre><span></span><code>회로에 흐르는 전류
+  5V = (1000Ω + 2000Ω) × I
+  I  = 5V / 3000Ω = 0.00166667 A
+
+Vout
+  Vout = 5V − (1000Ω × 0.00166667A) = 3.33333 V
+</code></pre></div>
+
+<h3 id="코드-hc-sr04py">코드 (HC_SR04.py)<a class="headerlink" href="#코드-hc-sr04py" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">RPi.GPIO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">GPIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setwarnings</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
+
+<span class="n">TRIG</span> <span class="o">=</span> <span class="mi">23</span>
+<span class="n">ECHO</span> <span class="o">=</span> <span class="mi">24</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Distance measurement in process"</span><span class="p">)</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">TRIG</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>       <span class="c1"># trigger 핀은 출력</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">ECHO</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">)</span>        <span class="c1"># echo 핀은 입력</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">TRIG</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>         <span class="c1"># trigger 핀 0V 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Waiting for sensor to settle"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">TRIG</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>          <span class="c1"># 초음파 발사</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.00001</span><span class="p">)</span>              <span class="c1"># 10us 기다림</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">TRIG</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">ECHO</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span> <span class="c1"># echo 핀에 0V가 입력되는 동안</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">ECHO</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># echo 핀에 3.3V가 입력되는 동안(초음파 수신)</span>
+            <span class="n">stop</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="n">check_time</span> <span class="o">=</span> <span class="n">stop</span> <span class="o">-</span> <span class="n">start</span>             <span class="c1"># 발사 → 수신까지 걸린 시간</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">check_time</span> <span class="o">*</span> <span class="mi">34000</span> <span class="o">/</span> <span class="mi">2</span>     <span class="c1"># 거리 계산 (cm)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Distance : </span><span class="si">%.1f</span><span class="s2"> cm"</span> <span class="o">%</span> <span class="p">(</span><span class="n">distance</span><span class="p">))</span>
+
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.4</span><span class="p">)</span>                       <span class="c1"># 0.4초 간격 측정</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Measurement stopped by User"</span><span class="p">)</span>
+    <span class="n">GPIO</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><code>time.time()</code> 은 <strong>1970년 1월 1일 0시 0분 0초 이후 경과한 시간을 초 단위로 반환</strong>한다.
+<code>distance = check_time * 34000 / 2</code> 에서 <strong>34000은 cm/s 단위의 음속</strong>이다.</p>
+</div>
+<hr />
+<h2 id="실습-8-pir-인체감지-센서-hc-sr501">[실습 8] PIR 인체감지 센서 (HC-SR501)<a class="headerlink" href="#실습-8-pir-인체감지-센서-hc-sr501" title="Permanent link">#</a></h2>
+<p><strong>PIR (Passive InfraRed) 센서</strong>: <strong>적외선을 통해 사람의 움직임을 감지</strong>하는 센서</p>
+<ul>
+<li>감지 각도 범위 안에 <strong>적외선의 변화가 있으면 3.3V(High, 1)</strong>, <strong>없으면 0V(Low, 0)</strong> 출력</li>
+<li>예: 복도나 현관문 천장 조명에 설치되어 <strong>움직임 감지 시 자동으로 조명을 켬</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>설정</th>
+<th>범위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>감지 범위</strong></td>
+<td><strong>3m ~ 7m</strong></td>
+</tr>
+<tr>
+<td><strong>지연 시간</strong></td>
+<td>High 신호 감지 후 <strong>상태 유지 시간</strong> (0.3s ~ 5m)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p>실습 시 <strong>지연 시간 값을 최소로 설정</strong>하여 사람의 움직임을 신속히 감지하도록 한다.</p>
+</div>
+<h3 id="배선_5">배선<a class="headerlink" href="#배선_5" title="Permanent link">#</a></h3>
+<p>준비물: HC-SR501, 1kΩ 저항 2개, 노란색 LED, 빨간색 LED</p>
+<table>
+<thead>
+<tr>
+<th>라즈베리파이</th>
+<th>부품</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VCC (5V)</strong></td>
+<td>PIR 센서 VCC</td>
+</tr>
+<tr>
+<td><strong>GPIO 4</strong></td>
+<td>PIR 센서 <strong>Out</strong> (3.3V 또는 0V)</td>
+</tr>
+<tr>
+<td><strong>GPIO 20</strong></td>
+<td>LED(red) +</td>
+</tr>
+<tr>
+<td><strong>GPIO 21</strong></td>
+<td>LED(yellow) +</td>
+</tr>
+<tr>
+<td><strong>GND (0V, −극)</strong></td>
+<td>GND</td>
+</tr>
+</tbody>
+</table>
+<h3 id="코드-hc-sr501py">코드 (HC_SR501.py)<a class="headerlink" href="#코드-hc-sr501py" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">RPi.GPIO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">GPIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">led_R</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">led_Y</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="n">sensor</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setwarnings</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">led_R</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">led_Y</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">sensor</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">)</span>      <span class="c1"># PIR 센서는 입력</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"PIR Ready ...."</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                    <span class="c1"># PIR 센서 준비 시간</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># 움직임 감지 → 센서가 3.3V(1) 출력</span>
+        <span class="k">if</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">sensor</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">led_Y</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>        <span class="c1"># 노란색 LED 켬</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">led_R</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>        <span class="c1"># 빨간색 LED 끔</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Motion Detected !"</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+
+        <span class="c1"># 미감지 → 센서가 0V(0) 출력</span>
+        <span class="k">if</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">sensor</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">led_R</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>        <span class="c1"># 빨간색 LED 켬</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">led_Y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>        <span class="c1"># 노란색 LED 끔</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Motion Not Detected !"</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Stopped by User"</span><span class="p">)</span>
+    <span class="n">GPIO</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+</code></pre></div>
+
+<hr />
+<h2 id="adc-analog-to-digital-converter">ADC (Analog to Digital Converter)<a class="headerlink" href="#adc-analog-to-digital-converter" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>신호</th>
+<th>설명</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>아날로그 신호</strong></td>
+<td>길이·각도·전압처럼 <strong>외부 원인에 의해 연속적으로 변하는</strong> 물리량</td>
+<td>속도계 바늘 각도, 수은주 온도계, LP 음반</td>
+</tr>
+<tr>
+<td><strong>디지털 신호</strong></td>
+<td>데이터를 <strong>0 또는 1</strong>로 표현</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>ADC</strong>: 아날로그 신호를 디지털 신호로 변환하는 전자회로</p>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>라즈베리파이는 ADC 기능이 있는 GPIO 핀이 없으며 디지털 입력만 가능하다.</strong>
+따라서 아날로그 값을 입력받으려면 <strong>별도의 ADC 칩(MCP3008)</strong> 으로 디지털 변환 후 입력받아야 한다.</p>
+</div>
+<h3 id="mcp3008">MCP3008<a class="headerlink" href="#mcp3008" title="Permanent link">#</a></h3>
+<ul>
+<li>ADC 기능을 하는 칩. 아날로그 전압값을 디지털로 변환</li>
+<li>변환된 값을 <strong>SPI 통신으로 마스터 장치(라즈베리파이/아두이노)에 전송</strong></li>
+<li><strong>8개의 아날로그 입력 채널 (CH0 ~ CH7)</strong></li>
+<li><strong>해상도(resolution): 10bits</strong> → 2¹⁰ = <strong>1024개의 디지털 값 (0 ~ 1023)</strong></li>
+</ul>
+<h4 id="주요-핀">주요 핀<a class="headerlink" href="#주요-핀" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>핀</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VDD</strong></td>
+<td>칩의 전원 전압 (+2.7V ~ 5.5V)</td>
+</tr>
+<tr>
+<td><strong>VREF</strong></td>
+<td>ADC를 위한 <strong>기준 전압(reference voltage)</strong>. 이 전압을 기준으로 디지털 값 계산</td>
+</tr>
+<tr>
+<td><strong>CLK</strong></td>
+<td>마스터로부터 <strong>동기 신호(serial clock)</strong> 를 받는 핀</td>
+</tr>
+<tr>
+<td><strong>DOUT</strong></td>
+<td>마스터로 <strong>데이터를 보내는(data out)</strong> 핀</td>
+</tr>
+<tr>
+<td><strong>DIN</strong></td>
+<td>마스터로부터 <strong>데이터를 받는(data in)</strong> 핀</td>
+</tr>
+<tr>
+<td><strong>CS</strong></td>
+<td>마스터로부터 slave로 선택받기 위한 <strong>chip select 신호</strong>를 받는 핀</td>
+</tr>
+<tr>
+<td><strong>AGND / DGND</strong></td>
+<td><strong>아날로그 영역의 ground / 디지털 영역의 ground</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="변환-공식">변환 공식<a class="headerlink" href="#변환-공식" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<div class="codehilite"><pre><span></span><code>디지털 전압값  = (아날로그 전압값 / VREF) × 1023
+아날로그 전압값 = (디지털 전압값 × 3.3) / 1023
+</code></pre></div>
+
+<p>VREF = 3.3V 기준 변환표</p>
+<table>
+<thead>
+<tr>
+<th>아날로그 입력</th>
+<th>디지털 값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.00V</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0.25V</td>
+<td>78</td>
+</tr>
+<tr>
+<td>0.50V</td>
+<td>155</td>
+</tr>
+<tr>
+<td>0.75V</td>
+<td>233</td>
+</tr>
+<tr>
+<td>1.00V</td>
+<td>310</td>
+</tr>
+<tr>
+<td><strong>1.50V</strong></td>
+<td><strong>465</strong></td>
+</tr>
+<tr>
+<td>2.50V</td>
+<td>775</td>
+</tr>
+<tr>
+<td><strong>3.30V</strong></td>
+<td><strong>1023</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="spi-serial-peripheral-interface-통신">SPI (Serial Peripheral Interface) 통신<a class="headerlink" href="#spi-serial-peripheral-interface-통신" title="Permanent link">#</a></h2>
+<p><strong>마스터(master)와 슬레이브(slave) 장치 간의 동기식 직렬 통신 방식</strong></p>
+<table>
+<thead>
+<tr>
+<th>역할</th>
+<th>장치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>마스터</strong></td>
+<td>라즈베리파이, 아두이노</td>
+</tr>
+<tr>
+<td><strong>슬레이브</strong></td>
+<td>ADC(MCP3008), 센서, 플래시 메모리, RTC(real time clock)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="직렬-vs-병렬">직렬 vs 병렬<a class="headerlink" href="#직렬-vs-병렬" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>직렬 통신</strong></td>
+<td>데이터 전송 시 <strong>한 번에 한 비트씩</strong> 전송</td>
+</tr>
+<tr>
+<td><strong>병렬 통신</strong></td>
+<td>데이터 전송 시 <strong>한 번에 여러 비트</strong> 전송</td>
+</tr>
+</tbody>
+</table>
+<h3 id="비동기식-vs-동기식-직렬-통신">비동기식 vs 동기식 직렬 통신<a class="headerlink" href="#비동기식-vs-동기식-직렬-통신" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>비동기식</strong></td>
+<td>송신자와 수신자가 서로 알 수 없는 상태 → 1 byte 전송 전에 <strong>start bit</strong>, 끝낸 후 <strong>stop bit</strong> 필요. 서로 <strong>같은 속도</strong>로 전송</td>
+</tr>
+<tr>
+<td><strong>동기식</strong></td>
+<td>데이터와 함께 <strong>별도의 동기 신호(CLOCK)</strong> 를 보냄. <strong>데이터선 + CLOCK 신호선</strong> 필요. 수신자가 <strong>정확한 시간에 0/1 비트값을 읽을 수 있음</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="spi-신호선-4개">SPI 신호선 4개<a class="headerlink" href="#spi-신호선-4개" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<table>
+<thead>
+<tr>
+<th>신호선</th>
+<th>Full name</th>
+<th>방향</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MISO</strong></td>
+<td><strong>M</strong>aster <strong>I</strong>n <strong>S</strong>lave <strong>O</strong>ut</td>
+<td>슬레이브 → 마스터</td>
+</tr>
+<tr>
+<td><strong>MOSI</strong></td>
+<td><strong>M</strong>aster <strong>O</strong>ut <strong>S</strong>lave <strong>I</strong>n</td>
+<td>마스터 → 슬레이브</td>
+</tr>
+<tr>
+<td><strong>SCLK</strong></td>
+<td><strong>S</strong>erial <strong>CL</strong>oc<strong>K</strong></td>
+<td>마스터 → 슬레이브 (동기 신호)</td>
+</tr>
+<tr>
+<td><strong>CS / SS</strong></td>
+<td><strong>C</strong>hip <strong>S</strong>elect / <strong>S</strong>lave <strong>S</strong>elect</td>
+<td>슬레이브를 선택</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="통신-순서">통신 순서<a class="headerlink" href="#통신-순서" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>마스터가 슬레이브로 CS 신호를 보냄
+   ↓
+마스터가 슬레이브에게 SCLK 신호를 보냄
+   ↓
+마스터와 슬레이브가 shift register(8bit)에 데이터를 담아
+MOSI와 MISO 라인을 통해 데이터 통신
+</code></pre></div>
+
+<hr />
+<h2 id="실습-9-아날로그-전압을-mcp3008로-읽기">[실습 9] 아날로그 전압을 MCP3008로 읽기<a class="headerlink" href="#실습-9-아날로그-전압을-mcp3008로-읽기" title="Permanent link">#</a></h2>
+<h3 id="spi-활성화">SPI 활성화<a class="headerlink" href="#spi-활성화" title="Permanent link">#</a></h3>
+<p>GUI: <code>시작 메뉴 &gt; 기본설정 &gt; Raspberry Pi Configuration &gt; Interfaces</code> → <strong>SPI Enable</strong> → 재부팅</p>
+<p>터미널:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>raspi-config
+</code></pre></div>
+
+<p>→ <strong>3 Interface Options</strong> → <strong>SPI</strong> → <strong>Yes</strong> → OK → Finish</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>reboot
+</code></pre></div>
+
+<h3 id="spi-라이브러리-설치">SPI 라이브러리 설치<a class="headerlink" href="#spi-라이브러리-설치" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 모든 사용자가 사용 가능하도록 설치</span>
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>python3-spidev
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># 가상환경에 설치하는 경우</span>
+$<span class="w"> </span>mkdir<span class="w"> </span>SPI
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>SPI
+$<span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv<span class="w">            </span><span class="c1"># 가상환경 생성</span>
+$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w">        </span><span class="c1"># 가상환경 활성화</span>
+$<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>spidev<span class="w">              </span><span class="c1"># 모듈 설치</span>
+$<span class="w"> </span>deactivate<span class="w">                       </span><span class="c1"># 가상환경 비활성화</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># 가상환경에서 실행</span>
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>SPI
+$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+$<span class="w"> </span>python<span class="w"> </span>MCP_3008.py
+$<span class="w"> </span>deactivate
+</code></pre></div>
+
+<h3 id="가변저항-potentiometer-pot">가변저항 (potentiometer, POT)<a class="headerlink" href="#가변저항-potentiometer-pot" title="Permanent link">#</a></h3>
+<ul>
+<li>내부에 <strong>저항 물질이 둥글게</strong> 자리잡고 있고, 손잡이를 돌리면 <strong>다이얼 와이퍼가 회전</strong></li>
+<li>와이퍼가 <strong>1번 다리에 가까울수록</strong> 1-2번 사이 저항은 <strong>감소</strong>, 2-3번 사이 저항은 <strong>증가</strong></li>
+<li>보통 <strong>1번과 3번에 GND와 전원</strong>을 연결하고, 와이퍼 회전에 따라 <strong>2번 다리의 전압이 0V~3.3V(또는 5V)로 변함</strong></li>
+</ul>
+<h3 id="배선_6">배선<a class="headerlink" href="#배선_6" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>라즈베리파이</th>
+<th>MCP3008</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>3.3V</strong></td>
+<td><strong>VREF, VDD</strong></td>
+</tr>
+<tr>
+<td><strong>GND</strong></td>
+<td><strong>AGND, DGND</strong></td>
+</tr>
+<tr>
+<td><strong>GPIO 11 (SCLK)</strong></td>
+<td><strong>CLK</strong></td>
+</tr>
+<tr>
+<td><strong>GPIO 9 (MISO)</strong></td>
+<td><strong>DOUT</strong></td>
+</tr>
+<tr>
+<td><strong>GPIO 10 (MOSI)</strong></td>
+<td><strong>DIN</strong></td>
+</tr>
+<tr>
+<td><strong>GPIO 8 (CS)</strong></td>
+<td><strong>CS</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>MISO ↔ DOUT</strong>, <strong>MOSI ↔ DIN</strong> 으로 <strong>교차</strong>된다는 점이 핵심.
+(마스터의 "들어옴"이 슬레이브의 "나감"과 연결)</p>
+</div>
+<h3 id="코드-mcp-3008py">코드 (MCP_3008.py)<a class="headerlink" href="#코드-mcp-3008py" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spidev</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">delay</span> <span class="o">=</span> <span class="mf">0.5</span>                      <span class="c1"># 센서 측정 간격</span>
+<span class="n">pot_channel</span> <span class="o">=</span> <span class="mi">0</span>                  <span class="c1"># MCP3008 중 센서에 연결한 채널</span>
+
+<span class="n">spi</span> <span class="o">=</span> <span class="n">spidev</span><span class="o">.</span><span class="n">SpiDev</span><span class="p">()</span>            <span class="c1"># SPI 인스턴스 생성</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>                   <span class="c1"># SPI 통신 시작</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">max_speed_hz</span> <span class="o">=</span> <span class="mi">100000</span>        <span class="c1"># SPI 통신 속도 설정</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">readadc</span><span class="p">(</span><span class="n">adcnum</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">adcnum</span> <span class="o">&gt;</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">adcnum</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">spi</span><span class="o">.</span><span class="n">xfer2</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span> <span class="o">+</span> <span class="n">adcnum</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">((</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">pot_value</span> <span class="o">=</span> <span class="n">readadc</span><span class="p">(</span><span class="n">pot_channel</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"POT Value: </span><span class="si">%d</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">pot_value</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong><code>readadc()</code> 해설</strong> — 실기에서 그대로 쳐야 하는 부분</p>
+<ul>
+<li><code>r[0]</code>은 <strong>무시</strong></li>
+<li><code>r[1]</code>의 <strong>하위 2비트</strong> → ADC 값의 <strong>상위 2비트</strong></li>
+<li><code>r[2]</code>의 <strong>8비트</strong> → ADC 데이터의 <strong>하위 8비트</strong></li>
+<li>둘을 합쳐 <strong>총 10비트</strong> 데이터가 최종 ADC 값</li>
+</ul>
+<p><code>data = ((r[1] &amp; 3) &lt;&lt; 8) + r[2]</code>
+→ <code>&amp; 3</code> 으로 하위 2비트만 남기고, <code>&lt;&lt; 8</code> 로 8칸 왼쪽 이동한 뒤 <code>r[2]</code>를 더한다.</p>
+</div>
+<h3 id="파이썬-비트-연산-정리">파이썬 비트 연산 정리<a class="headerlink" href="#파이썬-비트-연산-정리" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="mb">0b0011</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>        <span class="c1"># shift 연산</span>
+<span class="mi">12</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">3</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>             <span class="c1"># 내부적으로 이진수로 변환하여 shift</span>
+<span class="mi">12</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">bin</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="s1">'0b1100'</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">bin</span><span class="p">(</span><span class="mb">0b1101</span> <span class="o">&amp;</span> <span class="mb">0b1001</span><span class="p">)</span>    <span class="c1"># 비트 AND</span>
+<span class="s1">'0b1001'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">13</span> <span class="o">&amp;</span> <span class="mi">9</span>
+<span class="mi">9</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">bin</span><span class="p">(</span><span class="mb">0b1101</span> <span class="o">|</span> <span class="mb">0b1001</span><span class="p">)</span>    <span class="c1"># 비트 OR</span>
+<span class="s1">'0b1101'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">13</span> <span class="o">|</span> <span class="mi">9</span>
+<span class="mi">13</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">bin</span><span class="p">(</span><span class="mb">0b1101</span> <span class="o">^</span> <span class="mb">0b1001</span><span class="p">)</span>    <span class="c1"># 비트 XOR</span>
+<span class="s1">'0b100'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">13</span> <span class="o">^</span> <span class="mi">9</span>
+<span class="mi">4</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">bin</span><span class="p">(</span><span class="o">~</span><span class="mb">0b1101</span><span class="p">)</span>            <span class="c1"># 비트 NOT</span>
+<span class="s1">'-0b1110'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">~</span><span class="mi">13</span>
+<span class="o">-</span><span class="mi">14</span>
+</code></pre></div>
+
+<hr />
+<h2 id="실습-10-ldr-조도-센서">[실습 10] LDR 조도 센서<a class="headerlink" href="#실습-10-ldr-조도-센서" title="Permanent link">#</a></h2>
+<p><strong>LDR (Light Dependent Resistor)</strong>: <strong>빛의 세기에 따라 저항값이 달라지는</strong> 조도 센서</p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<table>
+<thead>
+<tr>
+<th>주위 환경</th>
+<th>저항값</th>
+<th>전류</th>
+<th>출력 전압</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>밝음</strong></td>
+<td><strong>감소</strong></td>
+<td>많이 흐름</td>
+<td><strong>높아짐</strong></td>
+</tr>
+<tr>
+<td><strong>어두움</strong></td>
+<td><strong>증가</strong></td>
+<td>적게 흐름</td>
+<td><strong>낮아짐</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>10kΩ pull-down 저항</strong>을 사용하여 출력 전압에 입력되는 <strong>내부 잡음을 흡수</strong></li>
+<li>이 저항이 없으면 <strong>어두운 곳에서도 출력 전압이 정상적으로 낮아지지 않음</strong></li>
+<li>pull-down 저항은 <strong>GND에 연결되는 저항</strong>이고, GND(−극, 0V)는 전류가 +극에서 −극으로 흐르도록 <strong>경로를 제공</strong></li>
+</ul>
+<h3 id="배선_7">배선<a class="headerlink" href="#배선_7" title="Permanent link">#</a></h3>
+<p>준비물: MCP3008, 10kΩ 저항, LDR 센서 (MCP3008 ↔ RPi 배선은 실습 9와 동일)</p>
+<h3 id="코드-ldrpy">코드 (LDR.py)<a class="headerlink" href="#코드-ldrpy" title="Permanent link">#</a></h3>
+<p>실습 9의 <code>MCP_3008.py</code>와 <strong>구조가 완전히 동일</strong>하고 변수명만 다르다.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spidev</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">delay</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">ldr_channel</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">spi</span> <span class="o">=</span> <span class="n">spidev</span><span class="o">.</span><span class="n">SpiDev</span><span class="p">()</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">max_speed_hz</span> <span class="o">=</span> <span class="mi">100000</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">readadc</span><span class="p">(</span><span class="n">adcnum</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">adcnum</span> <span class="o">&gt;</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">adcnum</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">spi</span><span class="o">.</span><span class="n">xfer2</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span> <span class="o">+</span> <span class="n">adcnum</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">((</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">ldr_value</span> <span class="o">=</span> <span class="n">readadc</span><span class="p">(</span><span class="n">ldr_channel</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"LDR Value: </span><span class="si">%d</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">ldr_value</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="실습-11-조이스틱">[실습 11] 조이스틱<a class="headerlink" href="#실습-11-조이스틱" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>X축과 Y축 움직임에 따라 저항값이 변하는 가변저항</strong>이 달려 있어 움직임이나 방향을 표현</li>
+<li><strong>수직으로 누르면 스위치 기능</strong>도 가능</li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>10kΩ pull-up 저항 사용</strong></p>
+<ul>
+<li>수직으로 <strong>눌렀을 때</strong> SW 핀 출력 전압 = <strong>0V</strong></li>
+<li><strong>누르지 않았을 때</strong> SW 핀 출력 전압 = <strong>3.3V</strong></li>
+<li>저항이 없으면 누르지 않았을 때 출력이 3.3V가 아닌 값이 될 수 있음</li>
+</ul>
+</div>
+<h3 id="배선_8">배선<a class="headerlink" href="#배선_8" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>라즈베리파이</th>
+<th>조이스틱 모듈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GND</td>
+<td>GND</td>
+</tr>
+<tr>
+<td>3.3V</td>
+<td>+</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>MCP3008</th>
+<th>조이스틱 모듈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CH2</strong></td>
+<td><strong>VRx</strong></td>
+</tr>
+<tr>
+<td><strong>CH1</strong></td>
+<td><strong>VRy</strong></td>
+</tr>
+<tr>
+<td><strong>CH0</strong></td>
+<td><strong>SW</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="코드-joystickpy">코드 (Joystick.py)<a class="headerlink" href="#코드-joystickpy" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spidev</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">delay</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># MCP3008 채널 설정</span>
+<span class="n">sw_channel</span>  <span class="o">=</span> <span class="mi">0</span>
+<span class="n">vrx_channel</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">vry_channel</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">spi</span> <span class="o">=</span> <span class="n">spidev</span><span class="o">.</span><span class="n">SpiDev</span><span class="p">()</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">max_speed_hz</span> <span class="o">=</span> <span class="mi">100000</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">readadc</span><span class="p">(</span><span class="n">adcnum</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">adcnum</span> <span class="o">&gt;</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">adcnum</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">spi</span><span class="o">.</span><span class="n">xfer2</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span> <span class="o">+</span> <span class="n">adcnum</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">((</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">sw_val</span>  <span class="o">=</span> <span class="n">readadc</span><span class="p">(</span><span class="n">sw_channel</span><span class="p">)</span>
+    <span class="n">vrx_pos</span> <span class="o">=</span> <span class="n">readadc</span><span class="p">(</span><span class="n">vrx_channel</span><span class="p">)</span>
+    <span class="n">vry_pos</span> <span class="o">=</span> <span class="n">readadc</span><span class="p">(</span><span class="n">vry_channel</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"X : </span><span class="si">{}</span><span class="s2">, Y: </span><span class="si">{}</span><span class="s2">, SW: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vrx_pos</span><span class="p">,</span> <span class="n">vry_pos</span><span class="p">,</span> <span class="n">sw_val</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="i2c-통신">I2C 통신<a class="headerlink" href="#i2c-통신" title="Permanent link">#</a></h2>
+<p><strong>I2C (Inter-Integrated Circuit, 아이-스퀘어-씨)</strong>: SPI처럼 <strong>동기식 직렬 통신</strong></p>
+<h3 id="spi와의-차이">SPI와의 차이<a class="headerlink" href="#spi와의-차이" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>SPI</strong></th>
+<th><strong>I2C</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>통신 라인</td>
+<td>MISO, MOSI, SCLK, <strong>CS</strong> (4개)</td>
+<td><strong>SDA, SCL</strong> (2개)</td>
+</tr>
+<tr>
+<td>슬레이브 추가 시</td>
+<td><strong>슬레이브마다 CS 라인 필요</strong></td>
+<td><strong>CS 라인 불필요</strong></td>
+</tr>
+<tr>
+<td>동시 연결</td>
+<td>제한적</td>
+<td><strong>동시에 많은 슬레이브 연결 가능</strong></td>
+</tr>
+<tr>
+<td>속도</td>
+<td>빠름</td>
+<td><strong>느림</strong> → 보통 <strong>저속 주변장치</strong> 통신에 사용</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>SDA (Serial Data Line)</strong> = <strong>GPIO 2</strong></li>
+<li><strong>SCL (Serial Clock Line)</strong> = <strong>GPIO 3</strong></li>
+</ul>
+<h3 id="pull-up-저항">Pull-up 저항<a class="headerlink" href="#pull-up-저항" title="Permanent link">#</a></h3>
+<ul>
+<li>전압을 안정적으로 <strong>High(3.3V)로 끌어올리기 위해</strong> 사용</li>
+<li><strong>라즈베리파이는 내부적으로 SDA와 SCL에 이미 pull-up 저항이 장착</strong>되어 있으므로 추가 장착 불필요</li>
+</ul>
+<h3 id="i2c-활성화">I2C 활성화<a class="headerlink" href="#i2c-활성화" title="Permanent link">#</a></h3>
+<p>GUI: <code>시작 메뉴 &gt; 기본설정 &gt; Raspberry Pi Configuration &gt; Interfaces</code> → <strong>I2C Enable</strong> → 재부팅</p>
+<p>터미널:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>raspi-config
+</code></pre></div>
+
+<p>→ <strong>3 Interface Options</strong> → I2C → Yes → OK → Finish</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>reboot
+$<span class="w"> </span>ls<span class="w"> </span>/dev/i2c*<span class="w">         </span><span class="c1"># I2C 디바이스 파일(/dev/i2c-1) 존재 확인</span>
+</code></pre></div>
+
+<hr />
+<h2 id="실습-12-oled-디스플레이-i2c">[실습 12] OLED 디스플레이 (I2C)<a class="headerlink" href="#실습-12-oled-디스플레이-i2c" title="Permanent link">#</a></h2>
+<p><strong>OLED 128×64 I2C</strong></p>
+<ul>
+<li>I2C 통신 방식의 작은 OLED 디스플레이 모듈</li>
+<li>해상도 <strong>128 × 64 픽셀</strong>, <strong>SSD1306 드라이버</strong> 내장</li>
+</ul>
+<h3 id="배선_9">배선<a class="headerlink" href="#배선_9" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>라즈베리파이</th>
+<th>OLED 모듈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GND</td>
+<td>GND</td>
+</tr>
+<tr>
+<td><strong>VCC (3.3V)</strong></td>
+<td><strong>VDD</strong></td>
+</tr>
+<tr>
+<td><strong>SCL (GPIO3)</strong></td>
+<td><strong>SCK</strong></td>
+</tr>
+<tr>
+<td><strong>SDA (GPIO2)</strong></td>
+<td><strong>SDA</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="연결-확인">연결 확인<a class="headerlink" href="#연결-확인" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>i2cdetect<span class="w"> </span>-y<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
+
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>정상적으로 연결되었다면 <strong>OLED의 I2C 주소인 <code>0x3c</code></strong> 가 표시된다.</p>
+</div>
+<h3 id="라이브러리-설치">라이브러리 설치<a class="headerlink" href="#라이브러리-설치" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>mkdir<span class="w"> </span>OLED
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>OLED
+$<span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+$<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>adafruit-circuitpython-ssd1306
+$<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>spidev
+$<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>pillow
+$<span class="w"> </span>deactivate
+</code></pre></div>
+
+<h3 id="코드-oled-mcp3008-joystickpy">코드 (OLED_MCP3008_joystick.py)<a class="headerlink" href="#코드-oled-mcp3008-joystickpy" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spidev</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">adafruit_ssd1306</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageDraw</span><span class="p">,</span> <span class="n">ImageFont</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">board</span><span class="w"> </span><span class="kn">import</span> <span class="n">SCL</span><span class="p">,</span> <span class="n">SDA</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">busio</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">readadc</span><span class="p">(</span><span class="n">adcnum</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">adcnum</span> <span class="o">&gt;</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">adcnum</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">spi</span><span class="o">.</span><span class="n">xfer2</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span> <span class="o">+</span> <span class="n">adcnum</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">((</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="c1"># MCP3008 채널 설정</span>
+<span class="n">sw_channel</span>  <span class="o">=</span> <span class="mi">0</span>
+<span class="n">vrx_channel</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">vry_channel</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">spi</span> <span class="o">=</span> <span class="n">spidev</span><span class="o">.</span><span class="n">SpiDev</span><span class="p">()</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">max_speed_hz</span> <span class="o">=</span> <span class="mi">100000</span>
+
+<span class="c1"># I2C interface 생성</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">busio</span><span class="o">.</span><span class="n">I2C</span><span class="p">(</span><span class="n">SCL</span><span class="p">,</span> <span class="n">SDA</span><span class="p">)</span>
+
+<span class="c1"># 해상도 128 x 64 픽셀인 SSD1306 OLED 인스턴스 생성</span>
+<span class="n">display</span> <span class="o">=</span> <span class="n">adafruit_ssd1306</span><span class="o">.</span><span class="n">SSD1306_I2C</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">i2c</span><span class="p">)</span>
+
+<span class="n">display</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                  <span class="c1"># OLED 화면 초기화</span>
+<span class="n">display</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>                   <span class="c1"># 갱신된 픽셀들로 화면 보여줌</span>
+
+<span class="c1"># 출력할 직사각형과 문자열의 left top corner 위치</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">padding</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">padding</span>
+
+<span class="n">font</span> <span class="o">=</span> <span class="n">ImageFont</span><span class="o">.</span><span class="n">load_default</span><span class="p">()</span>  <span class="c1"># 폰트 설정</span>
+
+<span class="c1"># mode('1': 흑백화면)과 크기로 이미지 생성</span>
+<span class="n">width</span>  <span class="o">=</span> <span class="n">display</span><span class="o">.</span><span class="n">width</span>
+<span class="n">height</span> <span class="o">=</span> <span class="n">display</span><span class="o">.</span><span class="n">height</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'1'</span><span class="p">,</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+
+<span class="n">draw</span> <span class="o">=</span> <span class="n">ImageDraw</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>     <span class="c1"># 이미지상에 그리기를 수행할 object 생성</span>
+
+<span class="c1"># 직사각형 그리기 (0: 검정색, 255: 흰색)</span>
+<span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">outline</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">sw_val</span>  <span class="o">=</span> <span class="n">readadc</span><span class="p">(</span><span class="n">sw_channel</span><span class="p">)</span>
+    <span class="n">vrx_pos</span> <span class="o">=</span> <span class="n">readadc</span><span class="p">(</span><span class="n">vrx_channel</span><span class="p">)</span>
+    <span class="n">vry_pos</span> <span class="o">=</span> <span class="n">readadc</span><span class="p">(</span><span class="n">vry_channel</span><span class="p">)</span>
+
+    <span class="c1"># 모니터 화면 출력</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Switch = </span><span class="si">{0:0.2f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sw_val</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'X-axis = </span><span class="si">{0:0.2f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vrx_pos</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Y-axis = </span><span class="si">{0:0.2f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vry_pos</span><span class="p">))</span>
+
+    <span class="c1"># OLED 화면 출력</span>
+    <span class="n">draw</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>    <span class="s1">' Switch = </span><span class="si">{0:0.2f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sw_val</span><span class="p">),</span>  <span class="n">font</span><span class="o">=</span><span class="n">font</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">draw</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">+</span><span class="mi">8</span><span class="p">),</span>  <span class="s1">' X-axis = </span><span class="si">{0:0.2f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vrx_pos</span><span class="p">),</span> <span class="n">font</span><span class="o">=</span><span class="n">font</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">draw</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">+</span><span class="mi">16</span><span class="p">),</span> <span class="s1">' Y-axis = </span><span class="si">{0:0.2f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vry_pos</span><span class="p">),</span> <span class="n">font</span><span class="o">=</span><span class="n">font</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+
+    <span class="n">display</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>         <span class="c1"># 갱신된 픽셀들로 구성된 화면 보여줌</span>
+    <span class="n">display</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>OLED 그리기 흐름</strong>
+<code>Image.new</code> → <code>ImageDraw.Draw</code> → <code>draw.text</code> / <code>draw.rectangle</code> → <code>display.image(image)</code> → <code>display.show()</code></p>
+<p><code>fill=255</code>는 흰색(켜짐), <code>fill=0</code>은 검정색(꺼짐).</p>
+</div>
+  <footer class="page-footer"><code>content/embedded/05-gpio-sensor.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#gpio-general-purpose-input-output">GPIO (General Purpose Input Output)</a><ul>
+<li><a href="#gpio-핀의-성질">GPIO 핀의 성질</a></li>
+<li><a href="#40핀-구성">40핀 구성</a></li>
+<li><a href="#gpio-pinout-rpi-3-4-동일">GPIO Pinout (RPi 3 / 4 동일)</a></li>
+<li><a href="#핀-번호-모드">핀 번호 모드</a></li>
+<li><a href="#참고-용어">참고 용어</a></li>
+</ul>
+</li>
+<li><a href="#rpigpio-기본-사용법">RPi.GPIO 기본 사용법</a><ul>
+<li><a href="#전압-파이썬-표현">전압 ↔ 파이썬 표현</a></li>
+</ul>
+</li>
+<li><a href="#실습-1-led-켜고-끄기">[실습 1] LED 켜고 끄기</a><ul>
+<li><a href="#배선">배선</a></li>
+<li><a href="#코드-led-blinkpy">코드 (LED_Blink.py)</a></li>
+</ul>
+</li>
+<li><a href="#실습-2-버튼-입력-polling-방식">[실습 2] 버튼 입력 — Polling 방식</a><ul>
+<li><a href="#floating-상태">Floating 상태</a></li>
+<li><a href="#해결책-pull-down-pull-up">해결책: Pull-down / Pull-up</a></li>
+<li><a href="#배선_1">배선</a></li>
+<li><a href="#코드-btn-pollingpy">코드 (Btn_Polling.py)</a></li>
+</ul>
+</li>
+<li><a href="#실습-3-버튼-입력-event-handling-방식">[실습 3] 버튼 입력 — Event handling 방식</a><ul>
+<li><a href="#bouncing-현상">Bouncing 현상</a></li>
+<li><a href="#배선-버튼으로-led-토글">배선 (버튼으로 LED 토글)</a></li>
+<li><a href="#코드-btn-callbakpy">코드 (Btn_callbak.py)</a></li>
+</ul>
+</li>
+<li><a href="#pwm-pulse-width-modulation">PWM (Pulse Width Modulation)</a><ul>
+<li><a href="#pwm-라이브러리-사용법">PWM 라이브러리 사용법</a></li>
+</ul>
+</li>
+<li><a href="#실습-4-pwm으로-led-밝기-조정">[실습 4] PWM으로 LED 밝기 조정</a><ul>
+<li><a href="#배선_2">배선</a></li>
+<li><a href="#코드-pwm-ledpy">코드 (PWM_LED.py)</a></li>
+</ul>
+</li>
+<li><a href="#실습-5-pwm으로-부저-음-조정">[실습 5] PWM으로 부저 음 조정</a><ul>
+<li><a href="#부저의-종류">부저의 종류</a></li>
+<li><a href="#배선_3">배선</a></li>
+<li><a href="#코드-pwm-buzzerpy">코드 (PWM_Buzzer.py)</a></li>
+</ul>
+</li>
+<li><a href="#실습-6-pwm으로-서보모터-각도-조정">[실습 6] PWM으로 서보모터 각도 조정</a><ul>
+<li><a href="#배선-sg-90">배선 (SG-90)</a></li>
+<li><a href="#코드-pwm-servopy">코드 (PWM_Servo.py)</a></li>
+</ul>
+</li>
+<li><a href="#실습-7-초음파-센서-hc-sr04">[실습 7] 초음파 센서 (HC-SR04)</a><ul>
+<li><a href="#동작-원리">동작 원리</a></li>
+<li><a href="#거리-계산">거리 계산</a></li>
+<li><a href="#데이터시트">데이터시트</a></li>
+<li><a href="#배선_4">배선</a></li>
+<li><a href="#5v를-33v로-낮추기-전압-분배">5V를 3.3V로 낮추기 (전압 분배)</a></li>
+<li><a href="#코드-hc-sr04py">코드 (HC_SR04.py)</a></li>
+</ul>
+</li>
+<li><a href="#실습-8-pir-인체감지-센서-hc-sr501">[실습 8] PIR 인체감지 센서 (HC-SR501)</a><ul>
+<li><a href="#배선_5">배선</a></li>
+<li><a href="#코드-hc-sr501py">코드 (HC_SR501.py)</a></li>
+</ul>
+</li>
+<li><a href="#adc-analog-to-digital-converter">ADC (Analog to Digital Converter)</a><ul>
+<li><a href="#mcp3008">MCP3008</a></li>
+<li><a href="#변환-공식">변환 공식</a></li>
+</ul>
+</li>
+<li><a href="#spi-serial-peripheral-interface-통신">SPI (Serial Peripheral Interface) 통신</a><ul>
+<li><a href="#직렬-vs-병렬">직렬 vs 병렬</a></li>
+<li><a href="#비동기식-vs-동기식-직렬-통신">비동기식 vs 동기식 직렬 통신</a></li>
+<li><a href="#spi-신호선-4개">SPI 신호선 4개</a></li>
+<li><a href="#통신-순서">통신 순서</a></li>
+</ul>
+</li>
+<li><a href="#실습-9-아날로그-전압을-mcp3008로-읽기">[실습 9] 아날로그 전압을 MCP3008로 읽기</a><ul>
+<li><a href="#spi-활성화">SPI 활성화</a></li>
+<li><a href="#spi-라이브러리-설치">SPI 라이브러리 설치</a></li>
+<li><a href="#가변저항-potentiometer-pot">가변저항 (potentiometer, POT)</a></li>
+<li><a href="#배선_6">배선</a></li>
+<li><a href="#코드-mcp-3008py">코드 (MCP_3008.py)</a></li>
+<li><a href="#파이썬-비트-연산-정리">파이썬 비트 연산 정리</a></li>
+</ul>
+</li>
+<li><a href="#실습-10-ldr-조도-센서">[실습 10] LDR 조도 센서</a><ul>
+<li><a href="#배선_7">배선</a></li>
+<li><a href="#코드-ldrpy">코드 (LDR.py)</a></li>
+</ul>
+</li>
+<li><a href="#실습-11-조이스틱">[실습 11] 조이스틱</a><ul>
+<li><a href="#배선_8">배선</a></li>
+<li><a href="#코드-joystickpy">코드 (Joystick.py)</a></li>
+</ul>
+</li>
+<li><a href="#i2c-통신">I2C 통신</a><ul>
+<li><a href="#spi와의-차이">SPI와의 차이</a></li>
+<li><a href="#pull-up-저항">Pull-up 저항</a></li>
+<li><a href="#i2c-활성화">I2C 활성화</a></li>
+</ul>
+</li>
+<li><a href="#실습-12-oled-디스플레이-i2c">[실습 12] OLED 디스플레이 (I2C)</a><ul>
+<li><a href="#배선_9">배선</a></li>
+<li><a href="#연결-확인">연결 확인</a></li>
+<li><a href="#라이브러리-설치">라이브러리 설치</a></li>
+<li><a href="#코드-oled-mcp3008-joystickpy">코드 (OLED_MCP3008_joystick.py)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

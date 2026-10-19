@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5. Adaptation Tuning · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="05-adaptation-tuning.html" class="active">5. Adaptation Tuning</a></li>
+<li><a href="06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="5-adaptation-tuning">5. Adaptation Tuning<a class="headerlink" href="#5-adaptation-tuning" title="Permanent link">#</a></h1>
+<h2 id="이-장의-한-줄-요약">이 장의 한 줄 요약<a class="headerlink" href="#이-장의-한-줄-요약" title="Permanent link">#</a></h2>
+<blockquote>
+<p><strong>GPT-3는 똑똑했지만 ① 말을 안 듣고 ② 위험한 말도 하고 ③ 고치려면 돈이 너무 많이 들었다. 그걸 고치는 3가지 방법.</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>문제</th>
+<th>해결 방법</th>
+<th>한 줄</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 질문에 답을 안 하고 엉뚱한 말을 이어 씀</td>
+<td><strong>Instruction Tuning</strong></td>
+<td><strong>말 알아듣게</strong> 만들기</td>
+</tr>
+<tr>
+<td>② 거짓말, 욕설, 편견 섞인 말을 함</td>
+<td><strong>Alignment Tuning (RLHF)</strong></td>
+<td><strong>착하고 정직하게</strong> 만들기</td>
+</tr>
+<tr>
+<td>③ 모델이 너무 커서 고치는 비용이 큼</td>
+<td><strong>PEFT (Adapter, LoRA) + Quantization</strong></td>
+<td><strong>싸게</strong> 고치기</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-전체-지도-training-process-of-llms">1. 전체 지도 — Training Process of LLMs ★★<a class="headerlink" href="#1-전체-지도-training-process-of-llms" title="Permanent link">#</a></h2>
+<blockquote>
+<p><strong>"우수한 LLM 구축에는 거대한 모델과 다량의 데이터뿐만 아니라 다양한 학습 기법을 효과적으로 활용하는 것이 매우 중요"</strong></p>
+</blockquote>
+<p>LLM이 만들어지는 과정은 <strong>3단계</strong>입니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>정의</th>
+<th>포함 내용</th>
+<th>비유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>① Pre-training</strong></td>
+<td><strong>LLM의 기본적인 능력을 습득하는 과정</strong></td>
+<td>Data / Architecture / Pre-training task / Optimization and Scalable Training Techniques</td>
+<td><strong>초·중·고 교육</strong> (기본기)</td>
+</tr>
+<tr>
+<td><strong>② Adaptation Tuning</strong></td>
+<td><strong>LLM을 특정한 목표에 따라 추가로 adaptation 시키는 과정</strong></td>
+<td><strong>Instruction tuning / Alignment Tuning / Parameter efficient model adaptation</strong></td>
+<td><strong>직무 교육·예절 교육</strong></td>
+</tr>
+<tr>
+<td><strong>③ Utilization</strong></td>
+<td><strong>LLM을 효과적으로 사용하는 방법</strong></td>
+<td><strong>Prompt Engineering</strong></td>
+<td><strong>일 잘 시키는 법</strong> (6장)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>3단계 이름과 각각의 정의</strong>, 그리고 <strong>Adaptation Tuning에 속하는 3가지</strong>를 외우세요. (슬라이드에서 ②③에 빨간 박스 = 이 장과 다음 장의 범위)</p>
+</div>
+<h3 id="adaptation-tuning이란">Adaptation Tuning이란?<a class="headerlink" href="#adaptation-tuning이란" title="Permanent link">#</a></h3>
+<p><strong>Adaptation</strong> = 적응. <strong>이미 다 배운 모델을 특정 목적에 맞게 "적응"시키는 것.</strong></p>
+<ul>
+<li>다양한 task에서 <strong>사전 학습된 LLM을 효과적으로 더 잘 사용하기 위해 adaptation 시키는 작업</strong></li>
+<li><strong>GPT-1, GPT-2, GPT-3까지는 pre-train을 통해</strong> 그 성능을 확보했다면,</li>
+<li><strong>GPT-3에서부터 InstructGPT, ChatGPT까지는 adaptation tuning을 통해</strong> 성능을 확보하기 시작함</li>
+<li><strong>GPT-3에서 ChatGPT로의 중요한 변화는 adaptation tuning의 수행</strong>으로 볼 수 있음</li>
+</ul>
+<p>Adaptation Tuning의 3가지 (순환 그림):</p>
+<blockquote>
+<p><strong>1. Instruction Tuning → 2. Alignment Tuning → 3. Parameter Efficient Model Adaptation</strong></p>
+</blockquote>
+<hr />
+<h2 id="2-instruction-tuning">2. Instruction Tuning ★★<a class="headerlink" href="#2-instruction-tuning" title="Permanent link">#</a></h2>
+<h3 id="등장-배경-1-사용자의-의도에-맞는-답변-출력">등장 배경 ① — 사용자의 의도에 맞는 답변 출력<a class="headerlink" href="#등장-배경-1-사용자의-의도에-맞는-답변-출력" title="Permanent link">#</a></h3>
+<p><strong>문제 상황</strong></p>
+<ul>
+<li>LLM은 기본적으로 <strong>다음 단어를 예측하는 language modeling task로 pre-train</strong> 됨</li>
+<li>그래서 <strong>사용자의 의도에 맞게 자연스럽게 답변하기 어려움</strong></li>
+<li>LLM은 <strong>사용자의 입력 다음에 이어질 단어 혹은 문장들을 생성</strong>하기 때문에, <strong>질문에 대한 답이 아닌 "이어질 만한 후속 문장"을 출력할 가능성이 큼</strong></li>
+</ul>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>"Users intent ≠ Language modeling"</strong> — 이 예시 그대로 나오기 좋습니다.</p>
+<p>질문: <strong>"한국의 수도는 어디야?"</strong></p>
+<table>
+<thead>
+<tr>
+<th>Users intent (사용자가 원하는 것)</th>
+<th>Language modeling (실제로 나오는 것)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A: <strong>"서울입니다."</strong></td>
+<td>A: "한국에 처음 방문하는 외국인 관광객이 궁금해할 수 있습니다."</td>
+</tr>
+<tr>
+<td></td>
+<td>A: "한국인이라면 모두 답을 알 것입니다."</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>왜 이런 일이?</strong></p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>사전학습만 한 LLM은 <strong>"인터넷 글 이어 쓰기 기계"</strong> 입니다.
+인터넷에서 "한국의 수도는 어디야?" 다음에 어떤 글이 이어질까요? 블로그라면 "한국에 처음 오는 외국인이 궁금해할 수 있는 질문입니다~" 같은 말이 이어지겠죠.
+그래서 모델은 <strong>질문에 답하는 게 아니라 "그럴듯하게 이어지는 문장"을 씁니다.</strong> 답을 해야 한다는 걸 배운 적이 없으니까요.</p>
+</div>
+<h3 id="instruction-tuning의-정의">Instruction Tuning의 정의 ★<a class="headerlink" href="#instruction-tuning의-정의" title="Permanent link">#</a></h3>
+<dl>
+<dt>Instruction Tuning</dt>
+<dd><strong>Instruction(지시문) &amp; input text 와 output text의 pair 데이터 셋</strong>을 통해 <strong>supervised(지도) 형식으로 학습</strong>시키는 것</dd>
+</dl>
+<ul>
+<li><strong>사용자의 의도 및 task에 맞게 LLM을 잘 활용하기 위해서는 instruction-following 데이터로 tuning하는 것이 꼭 필요함</strong></li>
+</ul>
+<p><strong>예시 (슬라이드)</strong></p>
+<div class="codehilite"><pre><span></span><code>┌─────────── Input ───────────┐            ┌──── Output ────┐
+│ Instruction: Translate into Korean.  │  →  │ 고양이가 상자 위에 있다. │
+│ Input data : Text: The cat is on the box. │   └────────────────┘
+└─────────────────────────────┘
+
+→ 즉 "Translate 'The cat is on the box.' into Korean." 이라는 지시문 형태
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>쉽게:</strong> "<strong>이런 지시를 받으면 → 이렇게 답한다</strong>" 는 <strong>문제-정답 쌍</strong>을 엄청 많이 보여주며 가르치는 것입니다.
+- "번역해줘: The cat…" → "고양이가…"
+- "요약해줘: (긴 글)" → "(짧은 요약)"
+- "한국의 수도는?" → "서울입니다."</p>
+<p>이렇게 배우면 모델이 <strong>"아, 지시를 받으면 이어 쓰는 게 아니라 시킨 걸 하는 거구나"</strong> 를 깨닫습니다.
+<strong>pair</strong> = 쌍(짝). <strong>supervised(지도)</strong> = 정답을 보여주며 가르침.</p>
+</div>
+<h3 id="등장-배경-2-zero-shot-성능-향상">등장 배경 ② — Zero-shot 성능 향상<a class="headerlink" href="#등장-배경-2-zero-shot-성능-향상" title="Permanent link">#</a></h3>
+<p><strong>문제 상황</strong></p>
+<ul>
+<li>기존의 tuning 기법: <strong>task 별 fine-tuning</strong>, 또는 <strong>별도의 fine-tuning 없이 prompting</strong></li>
+<li>기존 LLM은 <strong>few-shot setting에서의 성능은 전반적으로 향상</strong>되었으나, <strong>zero-shot setting에서의 성능은 few-shot 성능만큼 향상되지 못함</strong></li>
+<li>(예시를 보여주면 잘하는데, 예시 없이 바로 시키면 잘 못함)</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>[기존 방식 1] Fine-tune on translation task
+  Input: The cat is on the box.  →  Output: 고양이가 상자 위에 있다.
+  (번역만 따로 학습시킨 번역 전용 모델)
+
+[기존 방식 2] Prompting (GPT-3)
+  Task description: Translate English to Korean:
+  Examples:         Dog ==&gt; 개 / Bear ==&gt; 곰 / Tiger ==&gt; 호랑이
+  Prompt:           Cat ==&gt; ____
+  → Output: 고양이
+  (예시를 줘야 잘함)
+</code></pre></div>
+
+<p><strong>해결</strong></p>
+<ul>
+<li><strong>NLP task를 instruction(지시문) 형태로 변환하여 adaptation tuning 진행</strong></li>
+<li><strong>다양한 task로 instruction 데이터를 구성하여 학습하면 새로운 task에서의 성능이 향상되며 zero-shot 성능 또한 향상됨</strong></li>
+</ul>
+<div class="codehilite"><pre><span></span><code>[Translation]                                  [Sentiment Analysis]
+Input : Translate into Korean.                 Input : Classify the text into neutral, negative or positive
+        Text: The cat is on the box.                   Text: I think the movie was perfect.
+Output: 고양이가 상자 위에 있다.                    Output: Positive
+                                                                        … (여러 과제를 같은 형식으로)
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유:</strong> 번역 문제만 푼 학생 vs <strong>번역·요약·분류·질의응답 등 온갖 유형의 "지시문 문제"를 풀어본 학생</strong>
+후자는 <strong>처음 보는 유형의 지시</strong>가 와도 "아 이렇게 하면 되겠다" 하고 <strong>예시 없이도(zero-shot)</strong> 해냅니다.</p>
+</div>
+<h3 id="flan-2021">FLAN (2021) ★<a class="headerlink" href="#flan-2021" title="Permanent link">#</a></h3>
+<p>논문: <strong>"FLAN: Finetuned Language Models Are Zero-Shot Learners"</strong>
+(제목 뜻: "미세조정된 언어 모델은 예시 없이도 잘하는 학습자다")</p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>FLAN의 결론 3가지</strong> — 그대로 출제 포인트</p>
+<ol>
+<li>기존 LLM의 <strong>zero-shot 성능을 향상시킬 수 있는 instruction tuning 기법을 처음으로 제안</strong>함</li>
+<li>Instruction tuning에 사용되는 <strong>task cluster의 개수가 많아질수록 unseen task에서의 성능이 향상</strong>됨</li>
+<li><strong>크기가 작은 모델에서는 instruction tuning 수행 시 오히려 성능이 하락</strong>하며, <strong>tuning의 효과를 얻기 위해서는 모델의 크기가 일정 수준 이상이 되어야 함</strong></li>
+</ol>
+</div>
+<p><strong>용어 풀이</strong>
+- <strong>task cluster</strong> = 비슷한 과제끼리 묶은 <strong>과제 그룹</strong> (요약 그룹, 번역 그룹, 감정분석 그룹 …)
+- <strong>unseen task</strong> = 학습 때 <strong>한 번도 안 본</strong> 과제</p>
+<p><strong>슬라이드 그래프 해석</strong></p>
+<table>
+<thead>
+<tr>
+<th>그래프</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Task cluster 수에 따른 성능 변화</strong></td>
+<td>학습에 쓴 과제 그룹이 1개 → 7개로 늘수록 평균 성능 <strong>49.9 → 55.0 → 59.3 → 59.2 → 60.8 → 61.9 → 63.5</strong> 로 상승</td>
+</tr>
+<tr>
+<td><strong>모델 크기에 따른 성능 변화</strong></td>
+<td>0.4B·2B·8B(작은 모델)에선 instruction tuning한 쪽이 <strong>오히려 낮음</strong>, 68B·137B(큰 모델)에선 <strong>훨씬 높음</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>결론 3이 왜 그럴까?</strong> 작은 모델은 <strong>"머리 용량"이 작아서</strong>, 여러 과제를 한꺼번에 배우면 오히려 헷갈려서 원래 하던 것도 못 하게 됩니다. 큰 모델은 용량이 넉넉해서 여러 과제를 배운 게 <strong>시너지</strong>가 됩니다.
+→ <strong>4장의 Emergent Abilities</strong>(일정 크기 이상에서 능력이 생김)와 같은 맥락입니다.</p>
+</div>
+<hr />
+<h2 id="3-alignment-tuning">3. Alignment Tuning ★★<a class="headerlink" href="#3-alignment-tuning" title="Permanent link">#</a></h2>
+<p><strong>Alignment</strong> = 정렬, 맞추기. <strong>AI의 행동을 인간의 가치에 맞추는 것.</strong></p>
+<h3 id="등장-배경">등장 배경<a class="headerlink" href="#등장-배경" title="Permanent link">#</a></h3>
+<ul>
+<li>LLM은 학습 데이터에 포함된 <strong>거짓 정보, 해로운 표현, 사회적 편향(인종, 성별 등)</strong> 이 반영되어 <strong>인간의 가치와 선호를 고려하지 않는 답변을 생성</strong>하기도 함</li>
+<li>이러한 <strong>부적절한 행동을 방지하기 위해 human alignment 기법들이 제안</strong>됨</li>
+<li><strong>Pre-train 및 instruction tuning과 달리 alignment는 매우 다른 기준을 고려해야 함</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>왜 "다른 기준"?</strong>
+- Pre-training / Instruction Tuning은 <strong>"정답을 맞혔나"</strong> 가 기준입니다.
+- Alignment는 <strong>"착한가, 정직한가, 해롭지 않은가"</strong> 가 기준입니다. 이건 <strong>정답이 딱 정해진 게 아니라 사람의 가치 판단</strong>이 필요하죠.</p>
+</div>
+<h3 id="alignment의-기준-3h">Alignment의 기준 — 3H ★★<a class="headerlink" href="#alignment의-기준-3h" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Helpfulness / Honesty / Harmlessness</strong> — 이름과 정의를 모두 쓸 수 있어야 합니다. (전부 H로 시작 → "3H")</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>기준</th>
+<th>정의</th>
+<th>쉬운 말</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Helpfulness</strong> (유용성)</td>
+<td><strong>사용자가 과제를 해결하는 데 도움이 되어야 함</strong></td>
+<td><strong>도움이 돼라</strong></td>
+</tr>
+<tr>
+<td><strong>Honesty</strong> (정직성)</td>
+<td><strong>조작하지 않고 정확한 내용을 사용자에게 제공해야 함</strong></td>
+<td><strong>거짓말하지 마라</strong></td>
+</tr>
+<tr>
+<td><strong>Harmlessness</strong> (무해성)</td>
+<td><strong>모욕적이거나 차별적인 표현을 생성해서는 안 되며, 악의적인 목적으로 요청하는 시도를 감지할 수 있어야 함</strong></td>
+<td><strong>해롭게 하지 마라</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="rlhf-reinforcement-learning-with-human-feedback">RLHF (Reinforcement Learning with Human Feedback) ★★★<a class="headerlink" href="#rlhf-reinforcement-learning-with-human-feedback" title="Permanent link">#</a></h3>
+<dl>
+<dt>RLHF</dt>
+<dd><strong>강화학습을 이용해 인간의 피드백으로부터 LLM을 최적화하는 방법</strong></dd>
+</dl>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>강화학습(Reinforcement Learning)이 뭔가요?</strong> (<a href="00-math-basics.html">0장</a> 11절)
+<strong>"해보고 → 점수 받고 → 점수 높은 쪽으로 행동을 바꾸기"</strong> 를 반복하는 학습입니다.
+강아지 훈련과 같아요. "앉아" 했을 때 앉으면 <strong>간식(보상)</strong>, 아니면 없음. 반복하면 강아지는 <strong>간식 받는 행동</strong>을 하게 됩니다.</p>
+<p><strong>RLHF</strong> = 그 <strong>"간식(점수)"을 사람의 평가로</strong> 주는 강화학습.</p>
+</div>
+<p><strong>총 3단계로 학습</strong>이 이루어지며, 다음 <strong>3가지 요소</strong>가 필요합니다.</p>
+<table>
+<thead>
+<tr>
+<th>요소</th>
+<th>역할</th>
+<th>비유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Human annotator</strong> (인간 평가자)</td>
+<td>LM이 생성한 답변에 대해 <strong>인간이 직접 피드백을 주어 선호도를 모델링</strong></td>
+<td><strong>심사위원</strong></td>
+</tr>
+<tr>
+<td><strong>Reward model</strong> (보상 모델)</td>
+<td>LM이 생성한 답변에 대해 <strong>인간의 선호도를 예측하는 모델</strong></td>
+<td><strong>심사위원을 흉내 내는 AI 채점기</strong></td>
+</tr>
+<tr>
+<td><strong>Aligned model</strong> (정렬 모델)</td>
+<td><strong>인간의 선호도를 반영하여 학습시키고자 하는 모델</strong></td>
+<td><strong>훈련받는 학생</strong> (최종 결과물)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="rlhf-3단계">RLHF 3단계 ★★★<a class="headerlink" href="#rlhf-3단계" title="Permanent link">#</a></h4>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>3단계의 이름과 각 단계에서 하는 일</strong> — 서술형 출제 1순위입니다.
+<strong>Step 1: Supervised Fine-tuning → Step 2: Reward Model Training → Step 3: RL Fine-tuning</strong></p>
+</div>
+<hr />
+<p><strong>Step 1: Supervised Fine-tuning (지도 미세조정)</strong></p>
+<ul>
+<li><strong>인간이 작성한 prompt 데이터 셋을 이용해 LM을 fine-tuning</strong> 함</li>
+<li>학습이 완료된 LM은 <strong>어느 정도 인간의 의도에 맞는 답변을 생성할 수 있게 됨</strong></li>
+</ul>
+<div class="codehilite"><pre><span></span><code>Human Annotator ──→ Prompts (질문)
+               └──→ Demonstrations (사람이 쓴 모범 답안)
+                         ↓  Training with demonstration data
+                    Pre-trained LM 🔥 (학습됨)
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>쉽게:</strong> 사람이 질문과 <strong>모범 답안</strong>을 직접 써서, 모델에게 <strong>"이렇게 답하는 거야"</strong> 하고 따라 쓰게 가르침.
+(= 앞에서 배운 Instruction Tuning과 비슷한 단계)
+<strong>Demonstration</strong> = 시범, 모범 답안</p>
+</div>
+<hr />
+<p><strong>Step 2: Reward Model Training (보상 모델 학습)</strong></p>
+<ul>
+<li><strong>1단계에서 학습된 LM이 여러 개의 답변을 생성</strong>하도록 하고, 각 답변에 대해 <strong>인간 평가자는 선호도 순위를 매김 (Ranking)</strong></li>
+<li><strong>답변과 해당 답변에 대응되는 인간 선호도</strong>를 통해, <strong>인간의 선호도를 모방할 수 있는 reward model을 학습</strong>시킴</li>
+<li><strong>Reward model은 이후 aligned model의 평가를 위해 사용</strong>됨</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>Prompts → LM Outputs (답변 A, B, C, D)
+              ↓
+     사람이 순위 매김 (Ranking): B &gt; A &gt; D &gt; C
+              ↓
+     Human Feedback 데이터 저장
+              ↓  Training with feedback data
+     Reward Model 🔥 (학습됨)   ← "사람이라면 이 답을 몇 점 줄까?"를 예측
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>쉽게:</strong> 모델에게 같은 질문에 답을 <strong>4개</strong> 쓰게 하고, 사람이 <strong>"B가 제일 낫고, 그다음 A, D, C 순"</strong> 이라고 줄을 세웁니다.
+이걸 수만 번 반복해서 모은 데이터로 <strong>"사람 취향을 흉내 내는 채점 AI(Reward model)"</strong> 를 만듭니다.</p>
+<p><strong>왜 채점 AI를 따로 만드나?</strong> 사람이 매번 직접 채점하면 너무 느리고 비싸니까요. 한 번 채점 AI를 만들어 두면 <strong>수백만 개 답변을 자동으로 채점</strong>할 수 있습니다.</p>
+<p><strong>왜 점수가 아니라 순위?</strong> "이 답은 7점" 같은 절대 점수는 사람마다 기준이 들쭉날쭉하지만, <strong>"A가 B보다 낫다"</strong> 는 비교는 훨씬 일관되게 할 수 있기 때문입니다.</p>
+</div>
+<hr />
+<p><strong>Step 3: RL Fine-tuning (강화학습 미세조정)</strong></p>
+<ul>
+<li><strong>강화 학습을 통해 aligned model을 최적화</strong>시킴</li>
+<li><strong>Reward model을 보상 함수로 사용</strong>하고, <strong>보상을 최대화하기 위해 aligned model의 정책(policy)을 fine-tuning</strong> 함</li>
+<li>이 과정에서 <strong>PPO (Proximal Policy Optimization)</strong> 가 사용됨</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>Prompts → Aligned LM 🔥 이 답변 생성 → LM Outputs
+                                        ↓
+                               Reward Model ❄ (고정, 채점만 함)
+                                        ↓
+                               Reward 👍 / 👎 (점수)
+                                        ↓  Training with RL algorithm (PPO)
+                               Aligned LM 🔥 업데이트
+                               (점수 높게 받는 방향으로)
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>쉽게:</strong> 이제 모델이 답을 쓰면 <strong>채점 AI가 점수</strong>를 줍니다. 모델은 <strong>점수를 더 많이 받는 방향으로</strong> 자기 말투·내용을 계속 고쳐 나갑니다. (강아지가 간식 받는 행동을 배우듯)</p>
+<p><strong>용어 풀이</strong>
+- <strong>정책(policy)</strong> = 모델의 <strong>"이런 상황에선 이렇게 답한다"는 행동 방식</strong>
+- <strong>보상 함수</strong> = 점수를 매겨 주는 기준 (여기선 Reward model)
+- <strong>PPO</strong> = 강화학습 방법 이름. 핵심은 <strong>"한 번에 너무 많이 바꾸지 말고 조금씩(proximal = 가까운)"</strong> 바꾸게 하는 안전장치. 갑자기 확 바뀌면 이상해질 수 있으니까요.</p>
+<p>그림의 🔥 = 학습되는 중 / ❄ = 고정(학습 안 함)</p>
+</div>
+<hr />
+<p><strong>3단계 한눈에 보기</strong></p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>이름</th>
+<th>하는 일</th>
+<th>비유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Supervised Fine-tuning</strong></td>
+<td>사람이 쓴 <strong>모범 답안</strong>으로 따라 쓰게 학습</td>
+<td>모범 답안 베껴 쓰기</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Reward Model Training</strong></td>
+<td>모델 답변들에 사람이 <strong>순위</strong> → <strong>채점 AI</strong> 학습</td>
+<td>심사위원 흉내 내는 채점기 만들기</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>RL Fine-tuning</strong></td>
+<td>채점 AI 점수를 <strong>최대화</strong>하도록 <strong>PPO</strong>로 학습</td>
+<td>채점기 점수 높게 받는 연습</td>
+</tr>
+</tbody>
+</table>
+<h4 id="rlhf의-효과와-한계">RLHF의 효과와 한계<a class="headerlink" href="#rlhf의-효과와-한계" title="Permanent link">#</a></h4>
+<ul>
+<li>RLHF를 통해 사용자의 입력에 대해 <strong>안전하고 유용하게 답변하는 모델</strong>을 얻을 수 있음 (<strong>Safety + Helpfulness</strong>)</li>
+<li><strong>InstructGPT 및 ChatGPT는 GPT-3에 RLHF가 적용되어 더 나은 품질의 답변을 생성</strong>할 수 있게 됨</li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>RLHF의 한계</strong> (추가 개선이 필요한 이유) — 2가지
+1. <strong>Human annotator를 고용해 데이터 셋을 확보하기 위한 비용이 많이 필요</strong>
+2. <strong>주관적인 요인에 따라 학습 데이터 셋의 품질 편차가 존재</strong> (평가자마다 취향이 달라서)</p>
+</div>
+<hr />
+<h2 id="4-parameter-efficient-model-adaptation-peft">4. Parameter-Efficient Model Adaptation (PEFT) ★★<a class="headerlink" href="#4-parameter-efficient-model-adaptation-peft" title="Permanent link">#</a></h2>
+<p><strong>PEFT = Parameter-Efficient Fine-Tuning</strong> = <strong>파라미터를 아껴 쓰는 미세조정</strong></p>
+<h3 id="왜-필요한가">왜 필요한가?<a class="headerlink" href="#왜-필요한가" title="Permanent link">#</a></h3>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>GPT-3는 파라미터(다이얼)가 <strong>1,750억 개</strong>입니다. 새 과제를 위해 이걸 <strong>전부 다시 조절(full fine-tuning)</strong> 하려면:
+- 엄청난 GPU와 메모리가 필요
+- 과제마다 1,750억 개짜리 모델을 <strong>통째로 하나씩 저장</strong>해야 함 (번역용 1개, 요약용 1개 …)</p>
+<p><strong>"전부 다 고칠 필요 있나? 조금만 고치면 안 되나?"</strong> 에서 나온 게 PEFT입니다.</p>
+</div>
+<h3 id="근거-low-intrinsic-dimension">근거 — Low intrinsic dimension<a class="headerlink" href="#근거-low-intrinsic-dimension" title="Permanent link">#</a></h3>
+<ul>
+<li>Pre-trained 언어 모델(<strong>PLM</strong>)의 경우 <strong>low intrinsic dimension</strong>을 가짐</li>
+<li>→ <strong>모델이 크고 복잡하지만, 실제로 중요한 정보를 나타내는 특성의 수가 상대적으로 적음</strong></li>
+<li>→ <strong>RoBERTa의 경우 오직 200개의 학습 가능한 파라미터로 90% 성능을 달성</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Intrinsic dimension (내재 차원)</strong> = <strong>"진짜로 필요한 자유도"</strong>.
+<strong>비유:</strong> 자동차 계기판에 버튼이 1,000개 있어도, 실제로 운전할 때 쓰는 건 <strong>핸들·엑셀·브레이크</strong> 정도죠.
+모델도 수억 개 파라미터 중 <strong>새 과제를 위해 진짜 바꿔야 하는 방향은 몇 개 안 된다</strong>는 발견입니다. 그러니 <strong>그 몇 개만 학습하면 됩니다.</strong>
+<strong>RoBERTa</strong> = BERT의 개선 버전 모델.</p>
+</div>
+<h3 id="adapter-tuning">Adapter Tuning ★<a class="headerlink" href="#adapter-tuning" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>기존 Layer 위에 adapter layer를 추가</strong>함</li>
+<li>이때 adapter layer는 <strong>target task에 따라 최적화</strong>되며, <strong>기존 LLM 파라미터는 고정(freeze)</strong></li>
+<li>구조:</li>
+<li><strong>Down Projection</strong> → <strong>핵심 변화만 추출</strong> (큰 차원 <code>d</code> → 작은 차원 <code>m</code> 으로 줄임)</li>
+<li><strong>Up Projection</strong> → <strong>원래 LLM 표현 공간으로 복원</strong> (작은 차원 <code>m</code> → 다시 <code>d</code>)</li>
+<li>(<code>d</code> = 모델의 차원, <code>m</code> = 차원 축소를 위한 차원)</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>   원래 층 출력 (d=1024 크기)
+        ↓
+   [Down Projection]  1024 → 16   (핵심만 뽑기)
+        ↓
+   [Up Projection]    16 → 1024   (원래 크기로 되돌리기)
+        ↓
+   다음 층으로
+</code></pre></div>
+
+<p><strong>계산 예시 (슬라이드)</strong> — <code>d = 1024</code>, <code>m = 16</code></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>계산</th>
+<th>파라미터 수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>원래 층 전체를 학습</td>
+<td>1024 × 1024</td>
+<td><strong>1,048,576개</strong> (약 100만)</td>
+</tr>
+<tr>
+<td>Adapter만 학습</td>
+<td>2 × 1024 × 16</td>
+<td><strong>32,768개</strong> (약 3만)</td>
+</tr>
+</tbody>
+</table>
+<p>→ <strong>약 1/32로 감소</strong></p>
+<blockquote>
+<p><strong>Adapter Tuning은 전체 모델을 다시 학습하지 않고, 작은 추가 모듈만 학습하여 효율적인 모델 적응을 시킴</strong></p>
+</blockquote>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 기존 건물은 그대로 두고 작은 별채만 증축</strong>
+건물 전체를 리모델링하는 대신, <strong>옆에 작은 방(adapter)을 하나 붙여서</strong> 새 용도에 맞춥니다.
+과제가 바뀌면 <strong>작은 방만 갈아 끼우면</strong> 됩니다.</p>
+<p><strong>왜 <code>2 × 1024 × 16</code>?</strong> Down(1024×16) + Up(16×1024) = 표 두 개니까 ×2. (<a href="00-math-basics.html">0장</a> 6절 행렬)</p>
+</div>
+<h3 id="lora-low-rank-adaptation">LoRA (Low-Rank Adaptation) ★★<a class="headerlink" href="#lora-low-rank-adaptation" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>가정: Adapter Tuning과 동일</strong> → 즉 <strong>weight update 행렬은 low-rank(낮은 랭크) intrinsic rank를 가짐</strong></li>
+<li>PLM 모델의 weight matrix <code>W0 ∈ ℝ^(d×d)</code> 를 <code>ΔW</code> 라는 <strong>작은 두 개의 행렬로 분해</strong></li>
+<li><strong>Adapter tuning과 유사하게, PLM 파라미터는 고정하고 분해된 행렬만 학습</strong></li>
+</ul>
+<div class="codehilite"><pre><span></span><code>W0 + ΔW  =  W0 + A·B
+
+A ∈ ℝ^(d×m),   B ∈ ℝ^(m×d),   m = rank의 차원
+</code></pre></div>
+
+<p><strong>기호 하나씩 풀기</strong> (<a href="00-math-basics.html">0장</a> 14절에 자세히)</p>
+<table>
+<thead>
+<tr>
+<th>기호</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>W0</code></td>
+<td><strong>원래 모델의 가중치</strong> (1024×1024 표). <strong>얼려 둠(freeze)</strong></td>
+</tr>
+<tr>
+<td><code>ΔW</code> (델타 W)</td>
+<td><strong>"변화량"</strong>. 새 과제를 위해 <strong>얼마나 바꿔야 하는지</strong></td>
+</tr>
+<tr>
+<td><code>A</code>, <code>B</code></td>
+<td>그 변화량을 표현하는 <strong>얇은 표 두 개</strong> (1024×8, 8×1024)</td>
+</tr>
+<tr>
+<td><code>A·B</code></td>
+<td>두 표를 곱하면 → 1024×1024 크기의 변화량이 만들어짐</td>
+</tr>
+<tr>
+<td><code>ℝ^(d×m)</code></td>
+<td>"d행 m열짜리 실수 표" 라는 뜻</td>
+</tr>
+<tr>
+<td><code>m</code> (rank)</td>
+<td><strong>얼마나 얇게 쪼갤지</strong>. 작을수록 파라미터가 적음</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ΔW의 의미 (슬라이드)</strong> → <strong>새로운 task에 적응하기 위해 필요한 변화량만 학습하면 된다</strong></p>
+<p><strong>계산 예시</strong> — <code>d = 1024</code>, <code>m = 8</code>이면 → <code>1024 × 8 × 2 = 16,384</code>개</p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 교과서에 포스트잇 붙이기</strong>
+교과서(원래 모델 <code>W0</code>)에 <strong>직접 낙서하지 않고</strong>, 고칠 내용을 <strong>포스트잇(<code>A·B</code>)</strong> 에 써서 붙입니다.
+- 원본은 깨끗하게 보존
+- 포스트잇은 작고 가벼움
+- 과제가 바뀌면 <strong>포스트잇만 바꿔 붙이면</strong> 됨</p>
+<p>그리고 포스트잇 내용을 <strong>얇은 종이 두 장(A, B)</strong> 으로 압축해서 적는 게 LoRA의 비결입니다.</p>
+</div>
+<p><strong>Adapter vs LoRA 파라미터 비교</strong></p>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>설정</th>
+<th>학습 파라미터 수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>전체 학습</td>
+<td>d=1024</td>
+<td>1,048,576</td>
+</tr>
+<tr>
+<td>Adapter</td>
+<td>d=1024, m=16</td>
+<td>32,768</td>
+</tr>
+<tr>
+<td><strong>LoRA</strong></td>
+<td>d=1024, m=8</td>
+<td><strong>16,384</strong></td>
+</tr>
+</tbody>
+</table>
+<h4 id="왜-lora가-adapter보다-나은가">왜 LoRA가 Adapter보다 나은가? ★★<a class="headerlink" href="#왜-lora가-adapter보다-나은가" title="Permanent link">#</a></h4>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>3가지로 답하세요.</strong></p>
+<ol>
+<li><strong>adapter tuning보다도 낮은 parameter tuning</strong>을 통한 새로운 task에 <strong>fast adaptation 가능</strong></li>
+<li><strong>순차적인 방식으로 진행되는 adapter와 달리 병렬적으로 진행</strong>되어 <strong>추가적인 추론 지연(inference latency)이 발생하지 않음</strong></li>
+<li><strong>입력 시퀀스 길이를 줄이지 않고 훈련이 가능</strong></li>
+</ol>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>2번이 무슨 뜻?</strong>
+- <strong>Adapter</strong>: 원래 층 <strong>다음에</strong> adapter를 거쳐야 함 → 길에 <strong>정거장이 하나 더 생긴 것</strong> → 답 나오는 데 <strong>조금 더 오래 걸림</strong> (추론 지연)
+- <strong>LoRA</strong>: 원래 경로 <strong>옆에 나란히(병렬)</strong> 붙어서 동시에 계산하고 더하기만 함. 게다가 학습이 끝나면 <code>W0 + A·B</code> 를 <strong>미리 더해서 하나로 합쳐버릴 수 있어서</strong>, 실제 사용할 땐 <strong>원래 모델과 속도가 똑같음</strong></p>
+<p><strong>추론(inference)</strong> = 학습이 끝난 모델을 <strong>실제로 사용해서 답을 내는 것</strong>. <strong>latency(지연)</strong> = 걸리는 시간.</p>
+</div>
+<hr />
+<h2 id="5-quantization-양자화">5. Quantization (양자화) ★<a class="headerlink" href="#5-quantization-양자화" title="Permanent link">#</a></h2>
+<h3 id="왜-필요한가_1">왜 필요한가?<a class="headerlink" href="#왜-필요한가_1" title="Permanent link">#</a></h3>
+<ul>
+<li>앞서 설명한 <strong>PEFT 방식들은 원래 모델의 파라미터 크기를 줄이지 않음</strong></li>
+<li>→ <strong>원래 모델의 파라미터를 저장해 놓고 있어야 하기 때문에 메모리 및 계산 비용이 크게 증가</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>LoRA로 <strong>학습할 양</strong>은 줄였지만, 원래 1,750억 개짜리 모델은 <strong>여전히 메모리에 통째로</strong> 올려 둬야 합니다. 이 <strong>덩치 자체</strong>를 줄이는 게 양자화입니다.</p>
+</div>
+<h3 id="양자화란-숫자를-대충짧게-저장하기">양자화란? — 숫자를 대충(짧게) 저장하기<a class="headerlink" href="#양자화란-숫자를-대충짧게-저장하기" title="Permanent link">#</a></h3>
+<p><strong>파라미터 하나를 저장하는 데 쓰는 칸(비트) 수를 줄이는 것</strong> (<a href="00-math-basics.html">0장</a> 15절)</p>
+<div class="codehilite"><pre><span></span><code>FP32 (32 bit)  →  FP16 (16 bit)  →  INT8 (8 bit)  →  INT4 (4 bit)
+ 3.14159265         3.1416            3.14            3
+ 아주 정밀            ←─────────────────────────────→    거침
+ 용량 큼                                                  용량 작음
+</code></pre></div>
+
+<ul>
+<li>효과: <strong>메모리 사용량 감소 | 계산량 감소</strong></li>
+<li>32비트 → 4비트면 <strong>용량이 1/8</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 사진 화질 낮추기</strong>
+원본 사진(FP32)은 화질이 좋지만 용량이 큽니다. 화질을 조금 낮추면(INT4) 용량이 확 줄어도 <strong>알아보는 데는 거의 문제가 없죠.</strong>
+<strong>FP</strong> = Floating Point (소수점 숫자), <strong>INT</strong> = Integer (정수)</p>
+</div>
+<hr />
+<h2 id="6-거대한-llm을-효율적으로-활용하는-두-가지-접근-방법">6. 거대한 LLM을 효율적으로 활용하는 두 가지 접근 방법 ★★<a class="headerlink" href="#6-거대한-llm을-효율적으로-활용하는-두-가지-접근-방법" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>이 장 전체를 한 장으로 요약한 슬라이드입니다. <strong>PEFT와 Quantization이 각각 "무엇을" 줄이는지</strong> 정확히 구분하세요.</p>
+</div>
+<p><strong>출발점 — Pre-trained LLM</strong> (이미 방대한 지식을 학습한 거대한 모델, 예: LLaMA, GPT / 수십억~수천억 개 파라미터)</p>
+<table>
+<thead>
+<tr>
+<th>잘하는 것</th>
+<th>하지만…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✓ <strong>일반적인 언어 이해</strong></td>
+<td>⚠ <strong>모델이 너무 커서 학습 비용이 큼</strong></td>
+</tr>
+<tr>
+<td>✓ <strong>다양한 주제에 대한 지식</strong></td>
+<td>⚠ <strong>많은 GPU 메모리가 필요</strong></td>
+</tr>
+<tr>
+<td>✓ <strong>풍부한 세계 지식</strong></td>
+<td>⚠ <strong>새로운 작업에 맞게 전체 모델을 다시 학습하기는 비효율적</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>"LLM은 이미 방대한 지식을 학습했지만, 새로운 작업에 맞게 활용하기 위해서는 학습 비용과 메모리 사용량을 줄이는 효율적인 방법이 필요합니다."</strong></p>
+</blockquote>
+<h3 id="두-가지-핵심-아이디어">두 가지 핵심 아이디어<a class="headerlink" href="#두-가지-핵심-아이디어" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>① PEFT</strong> (Parameter-Efficient Fine-Tuning)</th>
+<th><strong>② Quantization</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>줄이는 것</strong></td>
+<td><strong>학습할 파라미터 수를 줄이기</strong></td>
+<td><strong>파라미터의 표현 크기(비트 수)를 줄이기</strong></td>
+</tr>
+<tr>
+<td><strong>구조</strong></td>
+<td><strong>기존 LLM (대부분 Freeze) + 작은 모듈만 학습</strong> (예: Adapter, LoRA)</td>
+<td><strong>FP32 → FP16 → INT8 → INT4</strong></td>
+</tr>
+<tr>
+<td><strong>핵심 개념</strong></td>
+<td>• 기존 LLM의 파라미터는 <strong>대부분 고정(Freeze)</strong><br>• <strong>작은 모듈(또는 작은 가중치 변화량)만 학습</strong><br>• 학습 파라미터 수를 크게 줄여 <strong>작은 자원으로 효과적인 성능 향상</strong> 가능</td>
+<td>• 모델의 파라미터를 <strong>더 작은 비트로 표현</strong><br>• <strong>모델 크기와 메모리 사용량을 크게 감소</strong><br>• 적절한 양자화 기법을 사용하면 <strong>성능 저하를 최소화</strong>하면서도 효율적으로 모델을 활용 가능</td>
+</tr>
+<tr>
+<td><strong>효과</strong></td>
+<td>✓ <strong>학습 비용 절감 | 적은 데이터로 학습 가능</strong><br>✓ <strong>다양한 작업에 빠르게 적용</strong></td>
+<td>✓ <strong>메모리 절감 | 추론 속도 향상</strong><br>✓ <strong>더 작은 하드웨어에서도 실행 가능</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="두-방법의-결합-qlora-quantization-lora">두 방법의 결합 — QLoRA (Quantization + LoRA) ★<a class="headerlink" href="#두-방법의-결합-qlora-quantization-lora" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>  ┌──────────────────────────────┐
+  │ 양자화된 LLM (4-bit, Freeze) 🔒 │  ← Quantization으로 덩치 줄이고 얼림
+  └──────────────────────────────┘
+                 +
+  ┌──────────────────────────────┐
+  │    LoRA Adapter (학습 가능)     │  ← LoRA로 작은 부분만 학습
+  └──────────────────────────────┘
+</code></pre></div>
+
+<p><strong>QLoRA의 주요 장점 4가지</strong></p>
+<ul>
+<li>✓ <strong>매우 적은 메모리로 학습 가능</strong></li>
+<li>✓ <strong>학습 파라미터 수 최소화</strong></li>
+<li>✓ <strong>큰 모델도 개인/소규모 GPU에서 활용</strong></li>
+<li>✓ <strong>성능과 효율성의 균형 달성</strong></li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>핵심 메시지 (슬라이드 원문 — 그대로 외우기)</strong>
+<strong>"PEFT는 학습할 파라미터 수를 줄이고, Quantization은 파라미터의 표현 크기를 줄인다.</strong>
+<strong>이 두 가지를 결합한 QLoRA는 거대한 LLM을 작은 자원으로도 효과적으로 활용할 수 있게 해준다."</strong></p>
+<p>(요약 슬라이드 버전: <strong>"PEFT는 학습할 파라미터를 줄이고, Quantization은 메모리 사용량을 줄인다. 두 방법을 결합한 것이 QLoRA이다."</strong>)</p>
+</div>
+<h3 id="정리-그림">정리 그림<a class="headerlink" href="#정리-그림" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>                    Large Language Model
+                   (너무 크고 학습이 비쌈)
+                   /                    \
+       Trainable Parameters          Model Memory
+            (너무 많음)                  (너무 큼)
+                ↓                          ↓
+              PEFT                    Quantization
+        (Adapter / LoRA)          (FP16 → INT8 → INT4)
+                   \                    /
+                         QLoRA
+              Quantized Base LLM (4-bit, Freeze)
+                           +
+                      LoRA Adapter
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>기법</th>
+<th>해결하는 문제</th>
+<th>줄이는 것</th>
+<th>방법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PEFT</strong> (Adapter, LoRA)</td>
+<td>Trainable Parameters가 너무 많음</td>
+<td><strong>학습할 파라미터 수</strong></td>
+<td>원본 freeze, 작은 모듈만 학습</td>
+</tr>
+<tr>
+<td><strong>Quantization</strong></td>
+<td>Model Memory가 너무 큼</td>
+<td><strong>메모리 (비트 수)</strong></td>
+<td>숫자 정밀도 낮추기</td>
+</tr>
+<tr>
+<td><strong>QLoRA</strong></td>
+<td>둘 다</td>
+<td><strong>둘 다</strong></td>
+<td>4-bit 양자화 base + LoRA</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="이-장-정리">이 장 정리<a class="headerlink" href="#이-장-정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>기법</th>
+<th>목적</th>
+<th>핵심 키워드</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Instruction Tuning</strong></td>
+<td>사용자 의도에 맞게 답하기 + zero-shot 향상</td>
+<td>지시문-정답 <strong>pair</strong>, <strong>지도학습</strong>, <strong>FLAN</strong></td>
+</tr>
+<tr>
+<td><strong>Alignment Tuning</strong></td>
+<td>인간 가치에 맞추기</td>
+<td><strong>3H</strong> (Helpful·Honest·Harmless), <strong>RLHF 3단계</strong>, <strong>PPO</strong></td>
+</tr>
+<tr>
+<td><strong>PEFT</strong></td>
+<td>학습 파라미터 줄이기</td>
+<td><strong>Adapter</strong> (Down/Up Projection), <strong>LoRA</strong> (W0 + A·B)</td>
+</tr>
+<tr>
+<td><strong>Quantization</strong></td>
+<td>메모리 줄이기</td>
+<td><strong>FP32→FP16→INT8→INT4</strong></td>
+</tr>
+<tr>
+<td><strong>QLoRA</strong></td>
+<td>둘 다</td>
+<td>4-bit freeze + LoRA</td>
+</tr>
+</tbody>
+</table>
+  <footer class="page-footer"><code>content/isw/05-adaptation-tuning.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#이-장의-한-줄-요약">이 장의 한 줄 요약</a></li>
+<li><a href="#1-전체-지도-training-process-of-llms">1. 전체 지도 — Training Process of LLMs ★★</a><ul>
+<li><a href="#adaptation-tuning이란">Adaptation Tuning이란?</a></li>
+</ul>
+</li>
+<li><a href="#2-instruction-tuning">2. Instruction Tuning ★★</a><ul>
+<li><a href="#등장-배경-1-사용자의-의도에-맞는-답변-출력">등장 배경 ① — 사용자의 의도에 맞는 답변 출력</a></li>
+<li><a href="#instruction-tuning의-정의">Instruction Tuning의 정의 ★</a></li>
+<li><a href="#등장-배경-2-zero-shot-성능-향상">등장 배경 ② — Zero-shot 성능 향상</a></li>
+<li><a href="#flan-2021">FLAN (2021) ★</a></li>
+</ul>
+</li>
+<li><a href="#3-alignment-tuning">3. Alignment Tuning ★★</a><ul>
+<li><a href="#등장-배경">등장 배경</a></li>
+<li><a href="#alignment의-기준-3h">Alignment의 기준 — 3H ★★</a></li>
+<li><a href="#rlhf-reinforcement-learning-with-human-feedback">RLHF (Reinforcement Learning with Human Feedback) ★★★</a></li>
+</ul>
+</li>
+<li><a href="#4-parameter-efficient-model-adaptation-peft">4. Parameter-Efficient Model Adaptation (PEFT) ★★</a><ul>
+<li><a href="#왜-필요한가">왜 필요한가?</a></li>
+<li><a href="#근거-low-intrinsic-dimension">근거 — Low intrinsic dimension</a></li>
+<li><a href="#adapter-tuning">Adapter Tuning ★</a></li>
+<li><a href="#lora-low-rank-adaptation">LoRA (Low-Rank Adaptation) ★★</a></li>
+</ul>
+</li>
+<li><a href="#5-quantization-양자화">5. Quantization (양자화) ★</a><ul>
+<li><a href="#왜-필요한가_1">왜 필요한가?</a></li>
+<li><a href="#양자화란-숫자를-대충짧게-저장하기">양자화란? — 숫자를 대충(짧게) 저장하기</a></li>
+</ul>
+</li>
+<li><a href="#6-거대한-llm을-효율적으로-활용하는-두-가지-접근-방법">6. 거대한 LLM을 효율적으로 활용하는 두 가지 접근 방법 ★★</a><ul>
+<li><a href="#두-가지-핵심-아이디어">두 가지 핵심 아이디어</a></li>
+<li><a href="#두-방법의-결합-qlora-quantization-lora">두 방법의 결합 — QLoRA (Quantization + LoRA) ★</a></li>
+<li><a href="#정리-그림">정리 그림</a></li>
+</ul>
+</li>
+<li><a href="#이-장-정리">이 장 정리</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

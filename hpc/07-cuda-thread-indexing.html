@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7. CUDA 스레드 레이아웃과 인덱싱 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="07-cuda-thread-indexing.html" class="active">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="7-cuda-스레드-레이아웃과-인덱싱">7. CUDA 스레드 레이아웃과 인덱싱<a class="headerlink" href="#7-cuda-스레드-레이아웃과-인덱싱" title="Permanent link">#</a></h1>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>이 강의는 <strong>9주차(기말 범위)</strong> 내용이지만, <a href="05-cuda-flow.html">5강의 "데이터가 1024개를 넘으면 결과가 틀리는 문제"</a>를 해결하는 부분이라 이어서 정리한다.</p>
+</div>
+<h2 id="스레드-인덱싱-thread-indexing">스레드 인덱싱 (thread indexing)<a class="headerlink" href="#스레드-인덱싱-thread-indexing" title="Permanent link">#</a></h2>
+<p><strong>스레드 인덱싱</strong>: 스레드를 식별하기 위해 제공하는 <strong>인덱스 체계 전체</strong></p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>설명</th>
+<th>변수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>gridDim</code></strong></td>
+<td>grid 내의 각 차원의 <strong>block 수</strong></td>
+<td><code>.x</code> <code>.y</code> <code>.z</code></td>
+</tr>
+<tr>
+<td><strong><code>blockIdx</code></strong></td>
+<td>grid 내의 각 차원의 <strong>block 인덱스</strong></td>
+<td><code>.x</code> <code>.y</code> <code>.z</code></td>
+</tr>
+<tr>
+<td><strong><code>blockDim</code></strong></td>
+<td>block 내의 각 차원의 <strong>thread 수</strong></td>
+<td><code>.x</code> <code>.y</code> <code>.z</code></td>
+</tr>
+<tr>
+<td><strong><code>threadIdx</code></strong></td>
+<td>block 내의 각 차원의 <strong>thread 인덱스</strong></td>
+<td><code>.x</code> <code>.y</code> <code>.z</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="메모리-상의-배열">메모리 상의 배열<a class="headerlink" href="#메모리-상의-배열" title="Permanent link">#</a></h3>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>메모리에는 차원 개념이 없으며, 데이터(배열)는 연속된 메모리 공간에 저장된다.</strong></p>
+<p>그래서 2차원 배열도 실제로는 1차원이고, 인덱스는 다음과 같이 계산한다.</p>
+<div class="codehilite"><pre><span></span><code>index = row * COL_SIZE + col
+      = (내 앞의 행 수) × (한 행의 길이) + (내 행에서 몇 번째)
+</code></pre></div>
+
+<p>이 식이 이후 모든 2차원 배열 예제에 등장한다.</p>
+</div>
+<hr />
+<h2 id="스레드의-전역-번호-global-id">스레드의 전역 번호 (global ID)<a class="headerlink" href="#스레드의-전역-번호-global-id" title="Permanent link">#</a></h2>
+<p><strong>전역 번호</strong>: thread indexing을 이용하여 <strong>그리드 내의 각 스레드에게 부여되는 고유한 번호</strong></p>
+<p>스레드 레이아웃(배치)과 처리하려는 데이터가 <strong>1:1로 매칭되는 경우</strong> 사용한다.</p>
+<h3 id="블록-내의-전역-번호">블록 내의 전역 번호<a class="headerlink" href="#블록-내의-전역-번호" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>차원이 올라갈수록 이전 차원 공식을 그대로 재사용</strong>하는 구조다.</p>
+<p><strong>1차원 블록</strong> — x 번호가 곧 전역 번호</p>
+<div class="codehilite"><pre><span></span><code>BLOCK_1D_TID = threadIdx.x
+             = 내가 x축에서 몇 번째인가
+</code></pre></div>
+
+<p><strong>2차원 블록</strong> — 내 앞의 행들을 통째로 세고, 내 행에서의 위치를 더한다</p>
+<div class="codehilite"><pre><span></span><code>BLOCK_2D_TID = threadIdx.y * blockDim.x + threadIdx.x
+             = (내 앞의 행 수) × (한 행의 스레드 수) + (내 행에서 몇 번째)
+</code></pre></div>
+
+<p><strong>3차원 블록</strong> — 내 앞의 층들을 통째로 세고, 2차원 공식을 더한다</p>
+<div class="codehilite"><pre><span></span><code>BLOCK_3D_TID = threadIdx.z * (blockDim.y * blockDim.x) + BLOCK_2D_TID
+             = (내 앞의 층 수) × (한 층의 스레드 수) + (내 층 안에서의 번호)
+</code></pre></div>
+
+</div>
+<h3 id="그리드-내의-전역-번호">그리드 내의 전역 번호<a class="headerlink" href="#그리드-내의-전역-번호" title="Permanent link">#</a></h3>
+<p>한 블록 내의 스레드 수:</p>
+<div class="codehilite"><pre><span></span><code>NUM_THREAD_IN_BLOCK = blockDim.x * blockDim.y * blockDim.z     (1024 이하)
+                    = 블록 하나에 들어 있는 스레드의 총 개수
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>블록 공식과 <strong>완전히 같은 모양</strong>이고, "스레드" 자리에 "블록"이 들어갈 뿐이다.</p>
+<p><strong>1차원 그리드</strong> — 내 앞의 블록들을 통째로 세고, 내 블록 안에서의 번호를 더한다</p>
+<div class="codehilite"><pre><span></span><code>GRID_1D_TID = blockIdx.x * NUM_THREAD_IN_BLOCK + BLOCK_3D_TID
+            = (내 앞의 블록 수) × (블록 1개의 스레드 수) + (내 블록 안에서의 번호)
+</code></pre></div>
+
+<p><strong>2차원 그리드</strong> — 내 앞의 "블록 행"들을 통째로 세고, 1차원 공식을 더한다</p>
+<div class="codehilite"><pre><span></span><code>GRID_2D_TID = blockIdx.y * (gridDim.x * NUM_THREAD_IN_BLOCK) + GRID_1D_TID
+            = (내 앞의 블록 행 수) × (블록 한 행의 스레드 수) + (내 블록 행 안에서의 번호)
+</code></pre></div>
+
+<p><strong>3차원 그리드</strong> — 내 앞의 "블록 층"들을 통째로 세고, 2차원 공식을 더한다</p>
+<div class="codehilite"><pre><span></span><code>GRID_3D_TID = blockIdx.z * (gridDim.y * gridDim.x * NUM_THREAD_IN_BLOCK) + GRID_2D_TID
+            = (내 앞의 블록 층 수) × (블록 한 층의 스레드 수) + (내 블록 층 안에서의 번호)
+</code></pre></div>
+
+</div>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>여섯 공식이 전부 같은 모양이다.</strong> 외울 건 공식 여섯 개가 아니라 이 문장 하나.</p>
+<div class="codehilite"><pre><span></span><code>전역 번호 = (내 앞에 있는 덩어리 수) × (덩어리 1개의 크기) + (그 덩어리 안에서의 번호)
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>항</th>
+<th>의미</th>
+<th>무엇이 들어가나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1항</strong></td>
+<td>내 앞에 있는 덩어리 수</td>
+<td><strong>상위 차원의 인덱스</strong> (<code>threadIdx.y</code>, <code>blockIdx.x</code> …)</td>
+</tr>
+<tr>
+<td><strong>2항</strong></td>
+<td>덩어리 1개의 크기</td>
+<td><strong>그 아래 차원들의 총 개수</strong> (<code>blockDim.x</code>, <code>gridDim.x * NUM_THREAD_IN_BLOCK</code> …)</td>
+</tr>
+<tr>
+<td><strong>3항</strong></td>
+<td>그 덩어리 안에서의 번호</td>
+<td><strong>한 단계 아래 차원의 공식</strong></td>
+</tr>
+</tbody>
+</table>
+<p>차원이 하나 올라갈 때마다 <strong>"앞선 덩어리를 통째로 세는 항"이 앞에 하나씩 붙을</strong> 뿐이다.</p>
+</div>
+<hr />
+<h2 id="공통-헤더-파일-lec05-01cuh">공통 헤더 파일 (lec05_01.cuh)<a class="headerlink" href="#공통-헤더-파일-lec05-01cuh" title="Permanent link">#</a></h2>
+<p>전역 번호 계산은 자주 쓰이므로 매크로로 헤더에 정의해 둔다.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// grid dimension</span>
+<span class="cp">#define GDIM_X gridDim.x</span>
+<span class="cp">#define GDIM_Y gridDim.y</span>
+<span class="cp">#define GDIM_Z gridDim.z</span>
+
+<span class="c1">// block index</span>
+<span class="cp">#define BID_X blockIdx.x</span>
+<span class="cp">#define BID_Y blockIdx.y</span>
+<span class="cp">#define BID_Z blockIdx.z</span>
+
+<span class="c1">// block dimension</span>
+<span class="cp">#define BDIM_X blockDim.x</span>
+<span class="cp">#define BDIM_Y blockDim.y</span>
+<span class="cp">#define BDIM_Z blockDim.z</span>
+
+<span class="c1">// thread index</span>
+<span class="cp">#define TID_X threadIdx.x</span>
+<span class="cp">#define TID_Y threadIdx.y</span>
+<span class="cp">#define TID_Z threadIdx.z</span>
+
+<span class="c1">// the number of threads in a block</span>
+<span class="cp">#define NUM_THREAD_IN_BLOCK BDIM_X * BDIM_Y * BDIM_Z</span>
+
+<span class="c1">// thread global id in block</span>
+<span class="cp">#define BLOCK_2D_TID TID_Y * BDIM_X + TID_X</span>
+<span class="cp">#define BLOCK_3D_TID TID_Z * (BDIM_Y * BDIM_X) + BLOCK_2D_TID</span>
+
+<span class="c1">// thread global id in grid</span>
+<span class="cp">#define GRID_1D_TID BID_X * NUM_THREAD_IN_BLOCK + BLOCK_3D_TID</span>
+<span class="cp">#define GRID_2D_TID BID_Y * (GDIM_X * NUM_THREAD_IN_BLOCK) + GRID_1D_TID</span>
+<span class="cp">#define GRID_3D_TID BID_Z * (GDIM_Y * GDIM_X * NUM_THREAD_IN_BLOCK) + GRID_2D_TID</span>
+</code></pre></div>
+
+<hr />
+<h2 id="1차원-배열-1차원-그리드-1차원-블록">1차원 배열 — 1차원 그리드 + 1차원 블록<a class="headerlink" href="#1차원-배열-1차원-그리드-1차원-블록" title="Permanent link">#</a></h2>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>가장 많이 쓰이는 인덱싱 공식.</strong> 이것만큼은 반드시 외울 것.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">blockDim</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<span class="c1">//    = (내 앞의 블록 수) × (블록당 스레드 수) + (내 블록에서 몇 번째)</span>
+</code></pre></div>
+
+<p>위의 <code>GRID_1D_TID</code> 를 <strong>1차원 블록(<code>blockDim.y = blockDim.z = 1</code>)</strong> 에 대해 풀어 쓴 것과 같다.</p>
+</div>
+<h3 id="5강의-문제-해결-lec05-02cu">5강의 문제 해결 (lec05_02.cu)<a class="headerlink" href="#5강의-문제-해결-lec05-02cu" title="Permanent link">#</a></h3>
+<p>5강에서 <code>vecAdd &lt;&lt;&lt;1, NUM_DATA&gt;&gt;&gt;</code> 로는 <strong>블록당 최대 스레드 수 1024</strong>를 넘길 수 없어 결과가 틀렸다. 이를 <strong>블록을 여러 개 사용</strong>하도록 고친다.</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"cuda_runtime.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"device_launch_parameters.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;time.h&gt;</span>
+
+<span class="cp">#define NUM_DATA 134217728              </span><span class="c1">// 1024 * 1024 * 128</span>
+
+<span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">vecAdd</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">dc</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// 1차원 그리드 내의 스레드 전역 번호 (GRID_1D_TID)</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">blockDim</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NUM_DATA</span><span class="p">)</span><span class="w">               </span><span class="c1">// 범위 검사 필수</span>
+<span class="w">        </span><span class="n">dc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">da</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">db</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>커널 호출 부분:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// 한 그리드 내의 블록 수: NUM_DATA/256 을 올림 처리한 수</span>
+<span class="n">dim3</span><span class="w"> </span><span class="n">dimGrid</span><span class="p">(</span><span class="n">ceil</span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">NUM_DATA</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="mi">256</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">dim3</span><span class="w"> </span><span class="nf">dimBlock</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">               </span><span class="c1">// 한 블록 내의 스레드 수: 256</span>
+
+<span class="n">vecAdd</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="n">dimGrid</span><span class="p">,</span><span class="w"> </span><span class="n">dimBlock</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="n">dc</span><span class="p">);</span>
+<span class="n">cudaDeviceSynchronize</span><span class="p">();</span>
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>왜 <code>ceil()</code> 이 필요한가?</strong></p>
+<p><code>NUM_DATA / 256</code> 이 나누어떨어지지 않으면 <strong>마지막 데이터들이 처리되지 않는다.</strong>
+올림 처리하면 블록이 하나 더 생기지만, 그만큼 <strong>남는 스레드가 배열 범위를 벗어나므로</strong> 커널 안에서 <strong><code>if (index &lt; NUM_DATA)</code> 범위 검사가 반드시 필요</strong>하다.</p>
+<p><strong><code>ceil()</code> 과 <code>if</code> 범위 검사는 항상 세트</strong>다.</p>
+</div>
+<h3 id="실행-결과-num-data-134217728">실행 결과 (NUM_DATA = 134,217,728)<a class="headerlink" href="#실행-결과-num-data-134217728" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>Computation on host (CPU):     392.813000 ms
+Memory copy: host -&gt; device:   108.794000 ms
+Computation on device (GPU):     4.253000 ms
+Memory copy: device -&gt; host:    59.988000 ms
+CUDA Total:                    173.049000 ms
+</code></pre></div>
+
+<ul>
+<li><strong>GPU 연산 결과와 CPU 연산 결과가 같음</strong></li>
+<li><strong>GPU 연산 시간은 CPU 연산 시간보다 약 92배 적게 소요</strong></li>
+<li><strong>CUDA Total은 메모리 복사 시간 때문에 CPU 연산 시간보다 2.26배 적게 소요</strong></li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>GPU 연산 자체는 92배 빠른데 전체로는 2.26배밖에 못 줄었다.</strong>
+그 차이가 전부 <strong>메모리 복사(host와 device 사이) 비용</strong>이다. CUDA 성능 분석의 핵심 포인트.</p>
+</div>
+<hr />
+<h2 id="1차원-배열-2차원-그리드-2차원-블록">1차원 배열 — 2차원 그리드 + 2차원 블록<a class="headerlink" href="#1차원-배열-2차원-그리드-2차원-블록" title="Permanent link">#</a></h2>
+<p><strong>스레드 indexing</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GRID_2D_TID</span><span class="p">;</span>
+<span class="c1">// = blockIdx.y * (gridDim.x * NUM_THREAD_IN_BLOCK) + GRID_1D_TID</span>
+</code></pre></div>
+
+<h3 id="코드-lec05-06cu">코드 (lec05_06.cu)<a class="headerlink" href="#코드-lec05-06cu" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"lec05_01.cuh"</span><span class="w">                 </span><span class="c1">// 매크로 헤더</span>
+
+<span class="cp">#define ROW_SIZE (8192)</span>
+<span class="cp">#define COL_SIZE (8192)</span>
+<span class="cp">#define MAT_SIZE (ROW_SIZE * COL_SIZE)</span>
+
+<span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">vecAdd</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">dc</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GRID_2D_TID</span><span class="p">;</span><span class="w">   </span><span class="c1">// 매크로 사용</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">MAT_SIZE</span><span class="p">)</span>
+<span class="w">        </span><span class="n">dc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">da</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">db</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>커널 호출:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">dim3</span><span class="w"> </span><span class="nf">dimBlock</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">               </span><span class="c1">// dim3 dimBlock(32, 32); 와 동일</span>
+<span class="n">dim3</span><span class="w"> </span><span class="n">dimGrid</span><span class="p">(</span><span class="n">ceil</span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">COL_SIZE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">dimBlock</span><span class="p">.</span><span class="n">x</span><span class="p">),</span>
+<span class="w">             </span><span class="n">ceil</span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">ROW_SIZE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">dimBlock</span><span class="p">.</span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="n">vecAdd</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="n">dimGrid</span><span class="p">,</span><span class="w"> </span><span class="n">dimBlock</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="n">dc</span><span class="p">);</span>
+</code></pre></div>
+
+<p>결과: GPU 연산 시간이 CPU보다 <strong>약 104배</strong> 적게 소요, CUDA Total은 <strong>2.7배</strong> 적게 소요.</p>
+<hr />
+<h2 id="2차원-배열에-대한-인덱싱-3가지-조합">2차원 배열에 대한 인덱싱 — 3가지 조합<a class="headerlink" href="#2차원-배열에-대한-인덱싱-3가지-조합" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>가장 출제 가능성이 높은 표.</strong> 그리드·블록 차원 조합에 따라 <code>col</code>과 <code>row</code> 계산식이 어떻게 바뀌는지가 핵심이다.</p>
+<table>
+<thead>
+<tr>
+<th>조합</th>
+<th><code>col</code></th>
+<th><code>row</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1차원 그리드 + 1차원 블록</strong></td>
+<td><code>(blockIdx.x * blockDim.x) + threadIdx.x</code></td>
+<td>커널 안에서 <strong>for 루프로 순회</strong></td>
+</tr>
+<tr>
+<td><strong>2차원 그리드 + 1차원 블록</strong></td>
+<td><code>(blockIdx.x * blockDim.x) + threadIdx.x</code></td>
+<td><strong><code>blockIdx.y</code></strong></td>
+</tr>
+<tr>
+<td><strong>2차원 그리드 + 2차원 블록</strong></td>
+<td><code>(blockIdx.x * blockDim.x) + threadIdx.x</code></td>
+<td><strong><code>(blockIdx.y * blockDim.y) + threadIdx.y</code></strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>col</code> 계산식은 세 경우 모두 동일</strong>하고, <strong><code>row</code>를 무엇으로 구하느냐만 달라진다.</strong></p>
+</div>
+<p>공통으로 사용하는 배열 인덱스:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">COL_SIZE</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">col</span><span class="p">;</span>
+</code></pre></div>
+
+<hr />
+<h3 id="1-1차원-그리드-1차원-블록-lec05-03cu">(1) 1차원 그리드 + 1차원 블록 (lec05_03.cu)<a class="headerlink" href="#1-1차원-그리드-1차원-블록-lec05-03cu" title="Permanent link">#</a></h3>
+<p><strong>한 스레드가 하나의 열(column) 전체를 처리</strong>한다.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">vecAdd</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">dc</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">blockDim</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">col</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">COL_SIZE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ROW_SIZE</span><span class="p">;</span><span class="w"> </span><span class="n">row</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">   </span><span class="c1">// row는 for 루프로 순회</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">COL_SIZE</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">col</span><span class="p">;</span>
+<span class="w">            </span><span class="n">dc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">da</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">db</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>커널 호출:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">dim3</span><span class="w"> </span><span class="nf">dimBlock</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">dim3</span><span class="w"> </span><span class="n">dimGrid</span><span class="p">(</span><span class="n">ceil</span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">COL_SIZE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">dimBlock</span><span class="p">.</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">vecAdd</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="n">dimGrid</span><span class="p">,</span><span class="w"> </span><span class="n">dimBlock</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="n">dc</span><span class="p">);</span>
+</code></pre></div>
+
+<p>결과: GPU가 CPU보다 <strong>약 65배</strong> 빠름 (세 방식 중 <strong>가장 느림</strong> — 한 스레드가 루프를 돌기 때문)</p>
+<hr />
+<h3 id="2-2차원-그리드-1차원-블록-lec05-04cu">(2) 2차원 그리드 + 1차원 블록 (lec05_04.cu)<a class="headerlink" href="#2-2차원-그리드-1차원-블록-lec05-04cu" title="Permanent link">#</a></h3>
+<p><strong><code>row</code>를 <code>blockIdx.y</code>로 대체</strong>하여 for 루프를 없앤다.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">vecAdd</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">dc</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">blockDim</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blockIdx</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">COL_SIZE</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">col</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">row</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ROW_SIZE</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">col</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">COL_SIZE</span><span class="p">))</span>
+<span class="w">        </span><span class="n">dc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">da</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">db</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>커널 호출:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">dim3</span><span class="w"> </span><span class="nf">dimBlock</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">dim3</span><span class="w"> </span><span class="n">dimGrid</span><span class="p">(</span><span class="n">ceil</span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">COL_SIZE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">dimBlock</span><span class="p">.</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">ROW_SIZE</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">vecAdd</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="n">dimGrid</span><span class="p">,</span><span class="w"> </span><span class="n">dimBlock</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="n">dc</span><span class="p">);</span>
+</code></pre></div>
+
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>그리드의 <strong>y 차원 크기는 <code>ROW_SIZE</code> 를 그대로</strong> 준다 (<code>ceil</code> 불필요).
+<strong>블록 하나가 한 행(row)을 담당</strong>하기 때문이다.</p>
+</div>
+<p>결과: GPU가 CPU보다 <strong>약 94배</strong> 빠름</p>
+<hr />
+<h3 id="3-2차원-그리드-2차원-블록-lec05-05cu">(3) 2차원 그리드 + 2차원 블록 (lec05_05.cu)<a class="headerlink" href="#3-2차원-그리드-2차원-블록-lec05-05cu" title="Permanent link">#</a></h3>
+<p><strong><code>row</code>도 <code>col</code>과 같은 방식</strong>으로 계산한다.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">vecAdd</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">dc</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">blockDim</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">blockIdx</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">blockDim</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">COL_SIZE</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">col</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">row</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ROW_SIZE</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">col</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">COL_SIZE</span><span class="p">))</span>
+<span class="w">        </span><span class="n">dc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">da</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">db</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>커널 호출:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">dim3</span><span class="w"> </span><span class="nf">dimBlock</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">               </span><span class="c1">// dim3 dimBlock(32, 32); 와 동일</span>
+<span class="n">dim3</span><span class="w"> </span><span class="n">dimGrid</span><span class="p">(</span><span class="n">ceil</span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">COL_SIZE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">dimBlock</span><span class="p">.</span><span class="n">x</span><span class="p">),</span>
+<span class="w">             </span><span class="n">ceil</span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">ROW_SIZE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">dimBlock</span><span class="p">.</span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">vecAdd</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="n">dimGrid</span><span class="p">,</span><span class="w"> </span><span class="n">dimBlock</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="n">dc</span><span class="p">);</span>
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><code>dimBlock(32, 32, 1)</code> 이면 블록당 스레드 수는 <strong>32 × 32 = 1024</strong>. <strong>블록당 최대 스레드 수 한계에 정확히 맞춘 값</strong>이다.</p>
+</div>
+<p>결과: GPU가 CPU보다 <strong>약 102배</strong> 빠름</p>
+<hr />
+<h2 id="성능-비교-정리">성능 비교 정리<a class="headerlink" href="#성능-비교-정리" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<table>
+<thead>
+<tr>
+<th>방식</th>
+<th>배열</th>
+<th>GPU 대 CPU</th>
+<th>CUDA Total 기준</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1D 그리드 + 1D 블록</td>
+<td>1차원 (1억 3천만)</td>
+<td><strong>약 92배</strong></td>
+<td>2.26배</td>
+</tr>
+<tr>
+<td>1D 그리드 + 1D 블록</td>
+<td>2차원 (8192×8192)</td>
+<td><strong>약 65배</strong></td>
+<td>2.7배</td>
+</tr>
+<tr>
+<td>2D 그리드 + 1D 블록</td>
+<td>2차원</td>
+<td><strong>약 94배</strong></td>
+<td>2.7배</td>
+</tr>
+<tr>
+<td>2D 그리드 + 2D 블록</td>
+<td>2차원</td>
+<td><strong>약 102배</strong></td>
+<td>2.7배</td>
+</tr>
+<tr>
+<td>1D 배열 + 2D 그리드/블록</td>
+<td>1차원 (8192×8192)</td>
+<td><strong>약 104배</strong></td>
+<td>2.7배</td>
+</tr>
+</tbody>
+</table>
+<p><strong>결론 2가지</strong></p>
+<ol>
+<li><strong>커널 안에서 for 루프를 도는 방식(1D+1D)이 가장 느리다.</strong> 스레드를 더 많이 펼칠수록 빠르다.</li>
+<li><strong>어떤 방식을 쓰든 CUDA Total은 2.7배 수준에서 더 좋아지지 않는다.</strong> 병목이 <strong>메모리 복사</strong>이기 때문이다.</li>
+</ol>
+</div>
+  <footer class="page-footer"><code>content/hpc/07-cuda-thread-indexing.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#스레드-인덱싱-thread-indexing">스레드 인덱싱 (thread indexing)</a><ul>
+<li><a href="#메모리-상의-배열">메모리 상의 배열</a></li>
+</ul>
+</li>
+<li><a href="#스레드의-전역-번호-global-id">스레드의 전역 번호 (global ID)</a><ul>
+<li><a href="#블록-내의-전역-번호">블록 내의 전역 번호</a></li>
+<li><a href="#그리드-내의-전역-번호">그리드 내의 전역 번호</a></li>
+</ul>
+</li>
+<li><a href="#공통-헤더-파일-lec05-01cuh">공통 헤더 파일 (lec05_01.cuh)</a></li>
+<li><a href="#1차원-배열-1차원-그리드-1차원-블록">1차원 배열 — 1차원 그리드 + 1차원 블록</a><ul>
+<li><a href="#5강의-문제-해결-lec05-02cu">5강의 문제 해결 (lec05_02.cu)</a></li>
+<li><a href="#실행-결과-num-data-134217728">실행 결과 (NUM_DATA = 134,217,728)</a></li>
+</ul>
+</li>
+<li><a href="#1차원-배열-2차원-그리드-2차원-블록">1차원 배열 — 2차원 그리드 + 2차원 블록</a><ul>
+<li><a href="#코드-lec05-06cu">코드 (lec05_06.cu)</a></li>
+</ul>
+</li>
+<li><a href="#2차원-배열에-대한-인덱싱-3가지-조합">2차원 배열에 대한 인덱싱 — 3가지 조합</a><ul>
+<li><a href="#1-1차원-그리드-1차원-블록-lec05-03cu">(1) 1차원 그리드 + 1차원 블록 (lec05_03.cu)</a></li>
+<li><a href="#2-2차원-그리드-1차원-블록-lec05-04cu">(2) 2차원 그리드 + 1차원 블록 (lec05_04.cu)</a></li>
+<li><a href="#3-2차원-그리드-2차원-블록-lec05-05cu">(3) 2차원 그리드 + 2차원 블록 (lec05_05.cu)</a></li>
+</ul>
+</li>
+<li><a href="#성능-비교-정리">성능 비교 정리</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

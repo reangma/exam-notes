@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2. 자연어 임베딩 (Word Embedding) · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="02-embedding.html" class="active">2. 자연어 임베딩</a></li>
+<li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="2-자연어-임베딩-word-embedding">2. 자연어 임베딩 (Word Embedding)<a class="headerlink" href="#2-자연어-임베딩-word-embedding" title="Permanent link">#</a></h1>
+<h2 id="이-장의-한-줄-요약">이 장의 한 줄 요약<a class="headerlink" href="#이-장의-한-줄-요약" title="Permanent link">#</a></h2>
+<blockquote>
+<p><strong>컴퓨터는 숫자만 안다 → 그래서 단어를 숫자 목록(벡터)으로 바꿔야 한다 → 어떻게 바꾸는 게 좋은가?</strong></p>
+</blockquote>
+<p>이 장은 "단어를 숫자로 바꾸는 방법"이 어떻게 발전했는지의 이야기입니다.</p>
+<div class="codehilite"><pre><span></span><code>ASCII 코드         → 그냥 번호표. 의미 없음 (실패)
+One-hot encoding   → 단어마다 자리 하나. 너무 크고 의미 없음
+TF-IDF             → 중요도 점수를 줌. 그래도 크고 문맥을 모름
+Dense (밀집 표현)  → 짧고, 의미가 담긴 숫자. 비슷한 단어는 비슷한 숫자 ✅
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>벡터, 코사인 유사도, log, 희소 행렬</strong>이라는 말이 나옵니다. 모르면 <a href="00-math-basics.html">0장</a>을 먼저 보세요.
+아주 짧게: <strong>벡터 = 숫자 목록</strong>, <strong>희소 = 대부분이 0</strong>, <strong>log = 큰 숫자를 작게 눌러주는 도구</strong></p>
+</div>
+<hr />
+<h2 id="1-기계가-자연어를-처리하는-방법">1. 기계가 자연어를 처리하는 방법<a class="headerlink" href="#1-기계가-자연어를-처리하는-방법" title="Permanent link">#</a></h2>
+<p><strong>자연어(natural language)</strong> = 사람이 쓰는 말 (한국어, 영어 등). 프로그래밍 언어의 반대말입니다.</p>
+<h3 id="기계는-왜-말을-못-알아듣나">기계는 왜 말을 못 알아듣나?<a class="headerlink" href="#기계는-왜-말을-못-알아듣나" title="Permanent link">#</a></h3>
+<p>컴퓨터에게 <strong>"사과"</strong> 라는 글자는 그냥 <strong>모양</strong>일 뿐입니다. 먹는 사과인지, 미안하다는 사과인지 전혀 모릅니다.
+컴퓨터가 계산할 수 있는 건 <strong>숫자뿐</strong>이므로 → <strong>기계가 이해할 수 있는 언어(숫자)로 바꾸어야</strong> 합니다.</p>
+<h3 id="처리-순서">처리 순서<a class="headerlink" href="#처리-순서" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>Tokenization  →  Vocabulary  →  Word
+(글 자르기)       (단어 사전 만들기)  (단어 하나를 어떻게 표현할까?)
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>쉬운 뜻</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tokenization</strong></td>
+<td>문장을 작은 조각(토큰)으로 자르기</td>
+<td>"나는 학생이다" → ["나는", "학생", "이다"]</td>
+</tr>
+<tr>
+<td><strong>Vocabulary</strong></td>
+<td>나온 조각들을 모아 <strong>단어 사전</strong> 만들기</td>
+<td>{나는, 학생, 이다, 사과, …}</td>
+</tr>
+<tr>
+<td><strong>Word</strong></td>
+<td>사전 속 단어 <strong>하나를 숫자로 어떻게 표현할까?</strong></td>
+<td>"학생" → ???</td>
+</tr>
+</tbody>
+</table>
+<h3 id="가장-어려운-단계는-마지막">가장 어려운 단계는 마지막<a class="headerlink" href="#가장-어려운-단계는-마지막" title="Permanent link">#</a></h3>
+<p><strong>"단어 하나를 어떻게 표현할까" = "단어의 의미를 어떻게 정의할까"</strong> 의 문제이고, 슬라이드는 이렇게 말합니다.</p>
+<ul>
+<li><strong>가장 기초적이지만 가장 어려운 문제</strong></li>
+<li>단어는 <strong>겉으로 보이는 형태와 달리 여러 가지 뜻을 내포</strong> → 그 뜻에 따라 <strong>문장의 내용과 의미가 바뀔 수 있음</strong></li>
+<li>언어는 <strong>효율성을 극대화하는 방향으로 발달(진화)</strong> 해 왔음</li>
+<li>효율성을 높이는 과정에서 <strong>정보량이 낮은 정보들이 생략됨</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>"효율성 때문에 정보가 생략된다"는 게 무슨 말?</strong>
+친구에게 "<strong>밥 먹었어?</strong>"라고 하지 "<strong>너는 오늘 점심시간에 식사를 하였는가?</strong>"라고 하지 않죠.
+사람은 <strong>뻔한 건 빼고 짧게</strong> 말합니다. 듣는 사람이 알아서 채워 들으니까요.
+그런데 컴퓨터는 그 <strong>빠진 부분을 채울 능력이 없습니다.</strong> 그래서 어렵습니다.</p>
+</div>
+<hr />
+<h2 id="2-단어의-유사성과-모호성">2. 단어의 유사성과 모호성<a class="headerlink" href="#2-단어의-유사성과-모호성" title="Permanent link">#</a></h2>
+<p>언어의 효율성은 <strong>단어</strong>에도 나타납니다. <strong>한 단어에 여러 뜻을 몰아넣는 방식</strong>으로요.</p>
+<dl>
+<dt>표제어 (Lemma)</dt>
+<dd>겉으로 보이는 단어의 <strong>형태(글자)</strong>. 사전에서 찾을 때 쓰는 대표 단어. 이 <strong>하나의 형태 안에 여러 의미가 들어 있음</strong></dd>
+</dl>
+<h3 id="예시-배">예시 — "배"<a class="headerlink" href="#예시-배" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>같은 글자 "배"</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>배 ①</td>
+<td>사람이나 동물의 몸에서 위장, 창자, 콩팥 따위의 내장이 들어 있는 곳</td>
+</tr>
+<tr>
+<td>배 ②</td>
+<td>배나무의 열매</td>
+</tr>
+<tr>
+<td>배 ③</td>
+<td>(물 위의 탈것) …</td>
+</tr>
+</tbody>
+</table>
+<p><strong>글자는 하나인데 뜻이 여러 개</strong> → 이걸 <strong>중의성(모호성) 문제</strong>라고 하며, 자연어처리에서 <strong>매우 중요한 문제</strong>입니다.</p>
+<div class="codehilite"><pre><span></span><code>              ┌─ 의미 1
+   단어 1 ────┼─ 의미 2         ← 단어 1, 2가 같은 형태를 공유하지만
+              └─ 의미 3            서로 다른 뜻을 가질 수 있음
+   단어 2 ────┬─ 의미 4
+              └─ 의미 5
+</code></pre></div>
+
+<h3 id="왜-어려운가-슬라이드-3가지">왜 어려운가 (슬라이드 3가지)<a class="headerlink" href="#왜-어려운가-슬라이드-3가지" title="Permanent link">#</a></h3>
+<ol>
+<li><strong>상황에 따라 다른 의미로 쓰일 수 있음</strong> → <strong>사람도 이해하기 어려움</strong>
+   - "배가 아프다" (몸) / "배가 맛있다" (과일) / "배가 떠난다" (탈것)</li>
+<li><strong>주변 정보가 부족하면 의미적 모호성이 증가</strong>
+   - 그냥 <strong>"배"</strong> 한 글자만 주면 아무도 모름</li>
+<li><strong>내가 가진 과거 기억이나 사전 지식 때문에 주변 정보를 다르게 해석</strong>
+   - 어부는 "배"를 들으면 탈것을, 과일가게 사장님은 과일을 먼저 떠올림</li>
+</ol>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>예상 문제: "자연어처리에서 단어 표현이 어려운 이유를 쓰시오"</strong></p>
+<p><strong>모범 답안</strong>: 하나의 표제어(형태) 안에 <strong>여러 의미가 공존하는 중의성</strong> 때문이다. 같은 단어도 상황에 따라 다른 의미로 쓰이며, <strong>주변 정보(문맥)가 부족하면 모호성이 커지고</strong>, 사람마다 가진 <strong>사전 지식에 따라 해석이 달라질</strong> 수 있다.</p>
+</div>
+<hr />
+<h2 id="3-단어의-표현-단순한-방법은-실패한다">3. 단어의 표현 — 단순한 방법은 실패한다<a class="headerlink" href="#3-단어의-표현-단순한-방법은-실패한다" title="Permanent link">#</a></h2>
+<h3 id="가장-단순한-방법-번호표-붙이기-ascii-code-등">가장 단순한 방법: 번호표 붙이기 (ASCII code 등)<a class="headerlink" href="#가장-단순한-방법-번호표-붙이기-ascii-code-등" title="Permanent link">#</a></h3>
+<p><strong>ASCII 코드</strong> = 컴퓨터가 글자를 저장하는 <strong>번호표</strong>입니다. 예: <code>A = 65</code>, <code>B = 66</code>.</p>
+<p>이렇게 각 글자/단어에 번호를 붙이면 컴퓨터가 저장은 할 수 있지만…</p>
+<ul>
+<li><strong>"이 단어가 무엇인지" 알려주는 것 외에 아무 정보가 없음</strong></li>
+<li><strong>단어의 의미에 대한 정보 X</strong></li>
+<li>→ 컴퓨터가 <strong>단어의 표상(겉모습)에만 집중</strong>하게 됨 → <strong>의미의 모호성을 포착할 만큼 충분한 정보를 줄 수 없음</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>학생에게 <strong>학번</strong>을 붙이는 것과 같습니다. 학번 <code>2023001</code>과 <code>2023002</code>는 숫자가 가깝지만, 두 학생이 <strong>비슷한 사람이라는 뜻은 전혀 아니죠.</strong>
+번호는 <strong>"누구인지 구별"만</strong> 해줄 뿐, <strong>"어떤 사람인지"는 알려주지 않습니다.</strong> 단어도 마찬가지입니다.</p>
+</div>
+<h3 id="그래서-생기는-3가지-요구사항">그래서 생기는 3가지 요구사항<a class="headerlink" href="#그래서-생기는-3가지-요구사항" title="Permanent link">#</a></h3>
+<p>자연어를 숫자로 바꾸는 건 결국 <strong>정보를 압축</strong>하는 일입니다. 그래서 고민할 것:</p>
+<ol>
+<li>자연어를 변환할 때 <strong>어떤 정보를 압축</strong>시킬 것인가?</li>
+<li>정보 압축 과정에서 <strong>어떤 손실</strong>이 발생할 수 있는가?</li>
+<li>발생하는 손실은 <strong>어떻게 줄일</strong> 수 있는가?</li>
+</ol>
+<hr />
+<h2 id="4-embedding-임베딩">4. Embedding (임베딩) ★<a class="headerlink" href="#4-embedding-임베딩" title="Permanent link">#</a></h2>
+<dl>
+<dt>특징 추출 (Feature extraction)</dt>
+<dd>데이터마다 <strong>어떤 특징을 가지고 있는지 찾아내고</strong>, 그것을 <strong>벡터(숫자 목록)로 변환</strong>하는 작업</dd>
+<dt>임베딩 (Embedding)</dt>
+<dd>자연어 처리에서 <strong>특징 추출을 통해 자연어를 수치화하는 과정</strong> (<strong>자연어 → 벡터</strong>)</dd>
+</dl>
+<ul>
+<li>(예시) 학생 → <code>[0, 1, 0, 1, 0, 0, …, 0, 1]</code></li>
+<li><strong>2003년 "A Neural Probabilistic Language Model"</strong> 논문에서 처음 소개</li>
+<li>이름의 뜻: 단어나 문장을 벡터로 바꿔서 <strong>벡터 공간에 "끼워 넣는다(embed)"</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>"벡터 공간에 끼워 넣는다"를 그림으로 상상하기</strong></p>
+<p>커다란 <strong>지도</strong>가 있다고 생각하세요. 단어 하나하나를 지도 위의 <strong>한 점</strong>에 찍습니다.
+- "강아지", "고양이", "햄스터"는 <strong>서로 가까운 곳</strong>에 (동물 동네)
+- "사과", "바나나", "포도"는 <strong>또 다른 동네</strong>에 (과일 동네)</p>
+<p>이렇게 <strong>의미가 비슷하면 가까이, 다르면 멀리</strong> 배치하는 것이 좋은 임베딩입니다.
+실제로는 2차원 지도가 아니라 <strong>수백 차원</strong> 공간이지만 원리는 같습니다.</p>
+</div>
+<h3 id="embedding의-두-가지-역할">Embedding의 두 가지 역할 ★<a class="headerlink" href="#embedding의-두-가지-역할" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>임베딩의 역할 2가지</strong>는 단답 단골입니다.
+① <strong>자연어의 의미적인 정보 함축</strong> ② <strong>자연어 간 유사도 계산</strong></p>
+</div>
+<h4 id="역할-1-자연어의-의미적인-정보-함축">역할 ① 자연어의 의미적인 정보 함축<a class="headerlink" href="#역할-1-자연어의-의미적인-정보-함축" title="Permanent link">#</a></h4>
+<p><strong>함축</strong> = 짧은 것 안에 많은 뜻을 담는 것.</p>
+<ul>
+<li>자연어의 <strong>중요한 특징을 추출 → 벡터로 압축</strong></li>
+<li>임베딩으로 표현된 문장은 <strong>실제 자연어의 주요 정보</strong>를 포함</li>
+<li>주요 정보: <strong>의미적, 문법적, 구조적</strong>, …</li>
+<li><strong>다양한 특징을 표현</strong> → <strong>언어의 복잡성과 모호성까지 설명할 수 있음</strong></li>
+<li><strong>사칙연산 가능</strong> → 단어들 사이의 <strong>의미적, 문법적 관계 도출 가능</strong></li>
+</ul>
+<p><strong>"단어로 사칙연산을 한다"?</strong> — 이게 임베딩의 신기한 점입니다.</p>
+<h5 id="성능-평가-단어-유추-평가-word-analogy-test">성능 평가: 단어 유추 평가 (Word analogy test)<a class="headerlink" href="#성능-평가-단어-유추-평가-word-analogy-test" title="Permanent link">#</a></h5>
+<div class="codehilite"><pre><span></span><code>(첫 번째 단어 벡터) − (두 번째 단어 벡터) + (세 번째 단어 벡터) = ?
+
+    아들   −   딸    +   소년   =   ?   →  소녀
+</code></pre></div>
+
+<p><strong>이 테스트가 확인하려는 것</strong></p>
+<p><strong>"아들 : 딸 = 소년 : 소녀"</strong> 라는 <strong>관계</strong>가 벡터 안에 들어 있는지입니다.</p>
+<ol>
+<li>두 단어를 빼면 → <strong>공통점은 지워지고 차이점만</strong> 남습니다.
+   - <code>아들</code>과 <code>딸</code>의 공통점: 자식 / 차이점: <strong>성별</strong>
+   - 그래서 <code>아들 − 딸</code> = <strong>"성별 차이"를 나타내는 화살표</strong></li>
+<li><code>소년</code>과 <code>소녀</code>의 차이도 똑같이 <strong>성별</strong>이죠.</li>
+<li>좋은 임베딩이라면 <strong>두 "성별 화살표"가 같은 방향·같은 길이</strong>로 만들어져 있습니다.</li>
+<li>그러면 벡터 덧셈·뺄셈으로 <strong>짝이 되는 단어(소녀)를 찾아낼 수 있습니다.</strong></li>
+</ol>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p>수학적으로 정확히 쓰면 <code>딸 − 아들 + 소년 = 소녀</code> 가 맞는 방향입니다(아들→딸로 가는 화살표를 소년에 더하면 소녀).
+슬라이드는 <code>아들 − 딸 + 소년 = 소녀</code> 로 적혀 있는데, <strong>핵심은 "두 쌍의 관계가 벡터에 똑같이 담겨 있는가"</strong> 이므로 시험에서는 <strong>슬라이드 식 그대로 쓰고, 의미(관계가 보존된다)를 설명</strong>하면 됩니다.</p>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>더 유명한 예시로 이해하면 쉽습니다.
+<strong><code>왕 − 남자 + 여자 = 여왕</code></strong>
+- 왕에서 "남자다움"을 빼고 "여자다움"을 더하면 → 여왕</p>
+<p>이게 된다는 건 <strong>"성별"이라는 개념이 벡터 안에 하나의 방향으로 들어 있다</strong>는 뜻입니다. 컴퓨터가 단어의 <strong>의미 관계</strong>를 숫자로 이해하고 있는 거죠.</p>
+</div>
+<p>슬라이드 결론: <strong>"아들-딸의 관계와 소년-소녀 간 의미 차이가 임베딩에 함축되어 있으면, 성능 좋은 임베딩임을 간접적으로 확인할 수 있음"</strong> (실습: <code>word2vec.kr/search/</code>)</p>
+<h4 id="역할-2-자연어-간-유사도-계산">역할 ② 자연어 간 유사도 계산<a class="headerlink" href="#역할-2-자연어-간-유사도-계산" title="Permanent link">#</a></h4>
+<ul>
+<li>컴퓨터는 <strong>여러 개의 특징 차원으로 구성된 공간</strong> 위에서 <strong>사람처럼 벡터의 의미 해석 가능</strong></li>
+<li><strong>유사도 계산 방법</strong>을 활용하여 두 벡터(두 단어) 간 <strong>얼마나 비슷한지</strong> 계산 가능</li>
+</ul>
+<dl>
+<dt>코사인 유사도 (Cosine similarity)</dt>
+<dd><strong>두 벡터 간의 코사인 각도</strong>를 이용하여 두 벡터의 유사도를 계산. <strong>−1 ~ 1</strong> 사이의 값으로 표현, <strong>1에 가까울수록 유사도 높음</strong></dd>
+</dl>
+<p><strong>쉽게:</strong> 두 단어를 각각 <strong>화살표</strong>라고 생각하고, <strong>두 화살표가 얼마나 같은 방향을 보는지</strong> 재는 것입니다.</p>
+<table>
+<thead>
+<tr>
+<th>두 화살표</th>
+<th>각도</th>
+<th>값</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>거의 같은 방향</td>
+<td>0도</td>
+<td><strong>1에 가까움</strong></td>
+<td>"강아지" vs "멍멍이"</td>
+</tr>
+<tr>
+<td>직각</td>
+<td>90도</td>
+<td><strong>0</strong></td>
+<td>"강아지" vs "민주주의"</td>
+</tr>
+<tr>
+<td>정반대</td>
+<td>180도</td>
+<td><strong>−1</strong></td>
+<td>(반대 의미)</td>
+</tr>
+</tbody>
+</table>
+<dl>
+<dt>벡터 공간 시각화</dt>
+<dd>단어 벡터는 수백 차원이라 <strong>눈으로 볼 수 없음</strong> → <strong>차원 축소 기법</strong>으로 <strong>저차원(2~3차원)으로 줄여서</strong> 그림으로 그림. 대표 기법: <strong>t-SNE, PCA</strong></dd>
+</dl>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>차원 축소</strong> = 입체 물체에 빛을 비춰 <strong>벽에 그림자</strong>를 만드는 것과 같습니다. 정보는 조금 잃지만 대략적인 모양은 볼 수 있습니다. t-SNE, PCA는 그 <strong>"그림자 만드는 방법"의 이름</strong>입니다.</p>
+</div>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>숫자로 외울 것: <strong>코사인 유사도 범위 = −1 ~ 1</strong>, <strong>1에 가까울수록 유사</strong></p>
+</div>
+<h3 id="embedding-기법의-발전-3단계">Embedding 기법의 발전 3단계<a class="headerlink" href="#embedding-기법의-발전-3단계" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>통계 기반의 자연어처리  →  딥러닝 기반의 자연어처리  →  전이학습 기반의 자연어처리
+ (One-hot, TF-IDF)          (Word2Vec, RNN 등)         (BERT, GPT 등)
+   ↓ 이 장 5~7절              ↓ 이 장 8~9절               ↓ 3~4장
+</code></pre></div>
+
+<hr />
+<h2 id="5-출현-빈도-기반-임베딩-1-one-hot-encoding">5. 출현 빈도 기반 임베딩 ① — One-hot encoding ★<a class="headerlink" href="#5-출현-빈도-기반-임베딩-1-one-hot-encoding" title="Permanent link">#</a></h2>
+<p>"단어가 몇 번 나왔나(출현 빈도)"를 기반으로 하는 가장 기초적인 방법 두 가지가 <strong>One-hot</strong>과 <strong>TF-IDF</strong>입니다.</p>
+<h3 id="개념">개념<a class="headerlink" href="#개념" title="Permanent link">#</a></h3>
+<p>말 그대로 <strong>딱 한 자리만 뜨겁게(hot = 1), 나머지는 전부 0</strong>으로 표현합니다.</p>
+<ul>
+<li>자연어 코퍼스(<strong>전체 글 모음</strong>) 안의 <strong>전체 단어 개수 = 벡터의 길이(차원)</strong></li>
+<li>표현하고 싶은 <strong>단어의 자리(인덱스)만 1</strong>, 나머지는 <strong>0</strong></li>
+</ul>
+<h3 id="예시-단어가-4개면-벡터-길이도-4">예시 — 단어가 4개면 벡터 길이도 4<a class="headerlink" href="#예시-단어가-4개면-벡터-길이도-4" title="Permanent link">#</a></h3>
+<p>단어 사전: 초등학생, 중학생, 고등학생, 대학생 → <strong>벡터의 차원 = 4</strong></p>
+<table>
+<thead>
+<tr>
+<th>단어</th>
+<th>1번 자리</th>
+<th>2번 자리</th>
+<th>3번 자리</th>
+<th>4번 자리</th>
+<th>벡터</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>초등학생</td>
+<td><strong>1</strong></td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td><code>[1, 0, 0, 0]</code></td>
+</tr>
+<tr>
+<td>중학생</td>
+<td>0</td>
+<td><strong>1</strong></td>
+<td>0</td>
+<td>0</td>
+<td><code>[0, 1, 0, 0]</code></td>
+</tr>
+<tr>
+<td>고등학생</td>
+<td>0</td>
+<td>0</td>
+<td><strong>1</strong></td>
+<td>0</td>
+<td><code>[0, 0, 1, 0]</code></td>
+</tr>
+<tr>
+<td>대학생</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td><strong>1</strong></td>
+<td><code>[0, 0, 0, 1]</code></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>출석부</strong>를 생각하세요. 반 학생이 4명이면 칸이 4개고, "초등학생"을 부르면 <strong>그 칸에만 체크(1)</strong> 합니다.</p>
+</div>
+<h3 id="one-hot-encoding의-한계-2가지">One-hot encoding의 한계 2가지 ★★<a class="headerlink" href="#one-hot-encoding의-한계-2가지" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>거의 확정 출제 포인트.</strong> ① <strong>희소 문제(Sparsity problem)</strong> ② <strong>단어의 유사도를 표현할 수 없음</strong></p>
+</div>
+<h4 id="한계-1-희소-문제-sparsity-problem">한계 ① 희소 문제 (Sparsity problem)<a class="headerlink" href="#한계-1-희소-문제-sparsity-problem" title="Permanent link">#</a></h4>
+<p><strong>희소(sparse)</strong> = 드문드문하다, 대부분 비어 있다.</p>
+<ul>
+<li>실제 글 모음(코퍼스)에는 <strong>최소 몇 만 개</strong>의 단어가 있음</li>
+<li>(예시) 단어 사전 크기가 <strong>20,000개</strong>라면:</li>
+<li>벡터 길이도 <strong>20,000</strong></li>
+<li>그중 <strong>1개 자리만 1</strong></li>
+<li>나머지 <strong>19,999개는 0</strong></li>
+<li>→ 대부분의 값이 0인 <strong>희소 행렬(Sparse matrix)</strong> 이 됨</li>
+<li>→ <strong>단어가 늘어날수록 표현의 효율성 저하</strong> (쓸모없는 0이 점점 많아짐)</li>
+<li>→ <strong>단어 사전이 커질수록 공간 복잡도 증가</strong> (저장 공간이 계속 커짐)</li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>공간 복잡도</strong> = "<strong>얼마나 많은 저장 공간</strong>이 필요한가". 커질수록 메모리를 많이 잡아먹습니다.</p>
+<p>비유: 단어 하나를 저장하려고 <strong>2만 칸짜리 서류</strong>를 쓰는데, 거기 적힌 건 <strong>체크 표시 하나</strong>뿐. 나머지 19,999칸은 백지. 엄청난 종이 낭비죠.</p>
+</div>
+<h4 id="한계-2-단어의-유사도를-표현할-수-없음">한계 ② 단어의 유사도를 표현할 수 없음<a class="headerlink" href="#한계-2-단어의-유사도를-표현할-수-없음" title="Permanent link">#</a></h4>
+<ul>
+<li><strong>모든 단어들 간의 거리가 동일</strong> → 유사도 판단 불가</li>
+<li>(예시) 중학교 <code>[1,0,0]</code>, 고등학교 <code>[0,1,0]</code>, 대학교 <code>[0,0,1]</code></li>
+</ul>
+<div class="codehilite"><pre><span></span><code>       z (대학교)
+       │
+       │
+       └──────── y (고등학교)
+      /
+     x (중학교)
+
+  세 단어가 서로 직각(90도)으로 떨어져 있음
+  → 어느 둘을 골라도 거리가 똑같음
+</code></pre></div>
+
+<p><strong>문제:</strong> 사람이 보기엔 "중학교-고등학교"가 "중학교-대학교"보다 <strong>더 비슷한데</strong>, One-hot에서는 <strong>셋 다 똑같이 남남</strong>입니다. 코사인 유사도를 재도 <strong>전부 0</strong>(직각)이 나옵니다.</p>
+<hr />
+<h2 id="6-출현-빈도-기반-임베딩-2-tf-idf">6. 출현 빈도 기반 임베딩 ② — TF-IDF ★★<a class="headerlink" href="#6-출현-빈도-기반-임베딩-2-tf-idf" title="Permanent link">#</a></h2>
+<h3 id="개념_1">개념<a class="headerlink" href="#개념_1" title="Permanent link">#</a></h3>
+<p><strong>TF-IDF (Term Frequency – Inverse Document Frequency)</strong></p>
+<p>이름이 길지만 뜻은 간단합니다. <strong>단어에 "중요도 점수"를 매기는 방법</strong>입니다.</p>
+<table>
+<thead>
+<tr>
+<th>부분</th>
+<th>풀네임</th>
+<th>쉬운 뜻</th>
+<th>묻는 질문</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TF</strong></td>
+<td>Term Frequency (단어 빈도)</td>
+<td><strong>이 문서에 이 단어가 얼마나 자주 나오나</strong></td>
+<td>"이 글에서 많이 나와?"</td>
+</tr>
+<tr>
+<td><strong>IDF</strong></td>
+<td>Inverse Document Frequency (역 문서 빈도)</td>
+<td><strong>전체 문서 중에 이 단어가 얼마나 희귀한가</strong></td>
+<td>"다른 글에도 다 나와? 아니면 이 글에만 나와?"</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>문서-단어 행렬</strong> 안의 각 단어에 <strong>중요한 정도만큼 가중치(점수)</strong> 를 주는 방법</li>
+<li>활용: <strong>문서의 유사도 계산</strong>, <strong>검색 시스템에서 검색 결과의 중요도 결정</strong>, <strong>문서 내 특정 단어의 중요도 계산</strong> 등에 효율적</li>
+</ul>
+<h3 id="직관-왜-두-개를-곱하나">직관 — 왜 두 개를 곱하나?<a class="headerlink" href="#직관-왜-두-개를-곱하나" title="Permanent link">#</a></h3>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>"자기소개서에서 그 사람을 대표하는 단어"를 찾는다고 해 봅시다.</strong></p>
+<ul>
+<li>"저는", "그리고", "했습니다" → <strong>모든 자소서에 다 나옴</strong> → 이 사람만의 특징이 아님 ❌</li>
+<li>"<strong>드론 대회 우승</strong>" → <strong>이 사람 자소서에만</strong> 여러 번 나옴 → 이 사람을 대표함 ✅</li>
+</ul>
+<p>즉 좋은 키워드는:
+1. <strong>이 문서에 자주 나오고</strong> (TF가 높고)
+2. <strong>다른 문서엔 잘 안 나와야</strong> 합니다 (IDF가 높고)</p>
+<p>그래서 <strong>TF × IDF</strong> 입니다. 둘 다 높아야 점수가 높아집니다.</p>
+</div>
+<h3 id="공식-슬라이드-그대로">공식 (슬라이드 그대로)<a class="headerlink" href="#공식-슬라이드-그대로" title="Permanent link">#</a></h3>
+<p>기호부터 정리합니다.</p>
+<table>
+<thead>
+<tr>
+<th>기호</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d</code></td>
+<td>문서 (document) 하나</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td>단어 (term) 하나</td>
+</tr>
+<tr>
+<td><code>n</code> (또는 <code>N</code>)</td>
+<td><strong>전체 문서의 개수</strong></td>
+</tr>
+<tr>
+<td><code>f(t,d)</code></td>
+<td>문서 <code>d</code> 안에서 단어 <code>t</code>가 <strong>나온 횟수</strong></td>
+</tr>
+<tr>
+<td><code>Σₖ f(k,d)</code></td>
+<td>문서 <code>d</code>에 나온 <strong>모든 단어 횟수의 합</strong> = 그 문서의 <strong>총 단어 수</strong> (Σ = 전부 더하기)</td>
+</tr>
+<tr>
+<td><code>df(t)</code></td>
+<td>단어 <code>t</code>가 <strong>등장한 문서의 수</strong> (document frequency)</td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span><code>         문서 d 안에서 단어 t가 나온 횟수
+tf(d,t) = ─────────────────────────────────
+         문서 d의 전체 단어 수
+
+                  n (전체 문서 수)
+idf(d,t) = log( ──────────────────── )
+                 1 + df(t) (단어가 나온 문서 수)
+
+TF-IDF = tf × idf
+</code></pre></div>
+
+<h3 id="공식을-말로-풀면">공식을 말로 풀면<a class="headerlink" href="#공식을-말로-풀면" title="Permanent link">#</a></h3>
+<p><strong>TF 부분</strong>
+- "이 문서 전체 단어 중에서, 이 단어가 차지하는 비율"
+- 예: 단어 100개짜리 글에 "AI"가 5번 → TF = 5/100 = 0.05</p>
+<p><strong>IDF 부분</strong>
+- <code>df(t)</code> 가 <strong>크다</strong> (여러 문서에 나온다) → 분모가 커짐 → 분수가 작아짐 → <strong>IDF 작음</strong> → 흔한 단어라 덜 중요
+- <code>df(t)</code> 가 <strong>작다</strong> (몇 문서에만 나온다) → 분모가 작아짐 → 분수가 커짐 → <strong>IDF 큼</strong> → 희귀한 단어라 중요
+- 슬라이드 표현: <strong>"<code>idf</code>는 <code>df(t)</code>에 반비례 → 여러 문서에 공통적으로 많이 나오는 단어는 중요도가 낮음을 의미"</strong></p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>반비례</strong> = 하나가 커지면 다른 하나는 작아지는 관계. 시소처럼요.</p>
+</div>
+<h3 id="why-log-log를-왜-쓰나">Why log? — log를 왜 쓰나 ★★<a class="headerlink" href="#why-log-log를-왜-쓰나" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>아주 전형적인 질문입니다. <strong>답은 2가지:</strong>
+① <strong>가중치를 적절히 조절하기 위해서</strong>
+② <strong>분모가 0이 되는 경우(특정 단어가 문서 전체에서 등장하지 않는 경우) 방지</strong></p>
+</div>
+<p><strong>① 가중치를 적절히 조절 — log의 역할</strong></p>
+<p>log는 <strong>큰 숫자를 작게 눌러주는 도구</strong>입니다 (<a href="00-math-basics.html">0장</a> 3절).</p>
+<p>문서가 <strong>100만 개</strong>이고 어떤 단어가 <strong>딱 1개 문서</strong>에만 나왔다고 하면:</p>
+<div class="codehilite"><pre><span></span><code>log 없이 :  1,000,000 ÷ 1      = 1,000,000   ← 점수가 폭발!
+log 쓰면 :  log(1,000,000)     = 6           ← 적당한 점수
+</code></pre></div>
+
+<p>log가 없으면 희귀 단어 하나가 <strong>점수 백만 점</strong>을 받아서 다른 모든 단어를 압도해 버립니다. log로 눌러서 <strong>점수 차이를 적당하게</strong> 만드는 것입니다.</p>
+<p><strong>② 분모가 0이 되는 것 방지 — <code>1 +</code> 의 역할</strong></p>
+<ul>
+<li>어떤 단어가 <strong>어느 문서에도 안 나왔다면</strong> <code>df(t) = 0</code></li>
+<li>그러면 <code>n ÷ 0</code> → <strong>0으로 나누기는 계산 불가</strong> (수학에서 금지)</li>
+<li>그래서 분모에 <strong>1을 더해서</strong> <code>1 + df(t)</code> 로 만듦 → 최소 1이 되므로 안전</li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>엄밀히 말하면 ②는 log가 아니라 <strong>분모의 <code>1 +</code></strong> 가 해주는 일입니다. 슬라이드가 "Why log?" 아래에 둘 다 묶어 놓았으므로 <strong>시험에서는 2가지를 같이 쓰면 됩니다.</strong></p>
+</div>
+<h3 id="tf-idf-계산-예시-슬라이드-한-단계씩">TF-IDF 계산 예시 (슬라이드) — 한 단계씩 ★<a class="headerlink" href="#tf-idf-계산-예시-슬라이드-한-단계씩" title="Permanent link">#</a></h3>
+<p><strong>상황</strong></p>
+<ul>
+<li>전체 문서 수 <strong>N = 3</strong></li>
+<li>계산할 단어: <strong>"AI"</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>문서</th>
+<th>내용</th>
+<th>단어 수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d1</code></td>
+<td>"AI is the future"</td>
+<td>4개 (AI, is, the, future)</td>
+</tr>
+<tr>
+<td><code>d2</code></td>
+<td>"AI and data science"</td>
+<td>4개 (AI, and, data, science)</td>
+</tr>
+<tr>
+<td><code>d3</code></td>
+<td>"Data is important"</td>
+<td>3개</td>
+</tr>
+</tbody>
+</table>
+<p><strong>1단계 — TF 구하기</strong> ("각 문서 안에서 AI가 차지하는 비율")</p>
+<table>
+<thead>
+<tr>
+<th>문서</th>
+<th>AI 등장 횟수</th>
+<th>전체 단어 수</th>
+<th>TF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d1</code></td>
+<td>1번</td>
+<td>4개</td>
+<td>1 ÷ 4 = <strong>0.25</strong></td>
+</tr>
+<tr>
+<td><code>d2</code></td>
+<td>1번</td>
+<td>4개</td>
+<td>1 ÷ 4 = <strong>0.25</strong></td>
+</tr>
+<tr>
+<td><code>d3</code></td>
+<td>0번</td>
+<td>–</td>
+<td><strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>2단계 — IDF 구하기</strong> ("AI가 얼마나 희귀한가")</p>
+<ul>
+<li>AI가 등장한 문서 수 = <code>d1</code>, <code>d2</code> → <strong>2개</strong></li>
+<li>IDF("AI") = log(N ÷ df) = log(3 ÷ 2) = log(1.5) ≈ <strong>0.176</strong></li>
+</ul>
+<p><strong>3단계 — TF × IDF</strong></p>
+<table>
+<thead>
+<tr>
+<th>문서</th>
+<th>TF</th>
+<th>× IDF</th>
+<th>= TF-IDF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d1</code></td>
+<td>0.25</td>
+<td>× 0.176</td>
+<td>≈ <strong>0.044</strong></td>
+</tr>
+<tr>
+<td><code>d2</code></td>
+<td>0.25</td>
+<td>× 0.176</td>
+<td>≈ <strong>0.044</strong></td>
+</tr>
+<tr>
+<td><code>d3</code></td>
+<td>0</td>
+<td>× 0.176</td>
+<td>= <strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>4단계 — "만약 future 또는 science 단어라면?"</strong> (슬라이드 질문)</p>
+<ul>
+<li>"future"는 <code>d1</code>에만, "science"는 <code>d2</code>에만 나옵니다 → <strong>df = 1</strong> → 더 희귀함 → IDF가 더 큼</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>단어</th>
+<th>문서 d1</th>
+<th>문서 d2</th>
+<th>문서 d3</th>
+<th>IDF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AI</strong></td>
+<td>TF = 1/4 = 0.25 → <strong>0.044</strong></td>
+<td>TF = 1/4 = 0.25 → <strong>0.044</strong></td>
+<td>TF = 0 → 0</td>
+<td>log(3/2) ≈ <strong>0.176</strong></td>
+</tr>
+<tr>
+<td><strong>future</strong></td>
+<td>TF = 1/4 = 0.25 → <strong>0.275</strong></td>
+<td>TF = 0 → 0</td>
+<td>TF = 0 → 0</td>
+<td>log(3/1) ≈ <strong>1.099</strong></td>
+</tr>
+<tr>
+<td><strong>science</strong></td>
+<td>TF = 0 → 0</td>
+<td>TF = 1/4 = 0.25 → <strong>0.275</strong></td>
+<td>TF = 0 → 0</td>
+<td>log(3/1) ≈ <strong>1.099</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>결론 (계산 문제가 나오면 반드시 같이 쓰기)</strong>
+<strong>한 문서에만 나오는 단어(future, science: 0.275)가 여러 문서에 나오는 단어(AI: 0.044)보다 TF-IDF 점수가 훨씬 높다.</strong>
+→ TF-IDF는 <strong>그 문서를 특징짓는 단어</strong>에 높은 점수를 준다.</p>
+</div>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p><strong>슬라이드 숫자의 함정 (알고만 있으세요)</strong>
+- 공식에는 분모가 <code>1 + df(t)</code> 인데, 예시 계산은 <code>+1</code> 없이 <code>log(N/df)</code> 로 했습니다.
+- 또 <code>0.176</code>은 <strong>밑이 10인 log</strong>(log₁₀ 1.5), <code>1.099</code>는 <strong>밑이 e인 자연로그</strong>(ln 3) 값이라 두 줄의 log 종류가 다릅니다.
+- <strong>시험에서 계산을 시키면 문제에 주어진 공식·조건을 따르면 되고</strong>, 이 표가 그대로 나오면 <strong>슬라이드 숫자를 그대로 쓰는 게 안전</strong>합니다. 결론(희귀 단어일수록 점수가 높다)은 어느 쪽이든 같습니다.</p>
+</div>
+<hr />
+<h2 id="7-sparse-representation-희소-표현">7. Sparse representation (희소 표현)<a class="headerlink" href="#7-sparse-representation-희소-표현" title="Permanent link">#</a></h2>
+<p>One-hot과 TF-IDF의 <strong>공통된 한계</strong>입니다.</p>
+<ul>
+<li>표현하고 싶은 <strong>단어 자리만 1(또는 점수), 나머지는 0</strong>으로 채우는 방식</li>
+<li>→ <strong>벡터 또는 행렬의 대부분이 0으로 저장</strong> → 이걸 <strong>Sparse representation (희소 표현)</strong> 이라고 부름</li>
+<li>One-hot encoding으로 만든 벡터 = <strong>sparse vector (희소 벡터)</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>TF-IDF도 희소한가요?</strong> 네. TF-IDF 벡터도 길이가 <strong>단어 사전 크기</strong>이고, 그 문서에 <strong>안 나온 단어 자리는 전부 0</strong>입니다. 한 문서에 나오는 단어는 사전 전체에 비하면 극히 일부니까 대부분이 0이죠. 0 대신 <strong>점수(실수)</strong> 가 들어간다는 것만 다릅니다.</p>
+</div>
+<h3 id="one-hot-vs-tf-idf-비교표">One-hot vs TF-IDF 비교표 ★<a class="headerlink" href="#one-hot-vs-tf-idf-비교표" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th><strong>원핫 인코딩 (One-hot)</strong></th>
+<th><strong>TF-IDF</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>표현 방식</strong></td>
+<td>단어 → <strong>0과 1</strong> 벡터 구성</td>
+<td>단어 → <strong>중요도 가중치</strong> 벡터</td>
+</tr>
+<tr>
+<td><strong>벡터 차원</strong></td>
+<td><strong>어휘 크기만큼</strong></td>
+<td><strong>어휘 크기만큼</strong></td>
+</tr>
+<tr>
+<td><strong>값 분포</strong></td>
+<td>0과 1</td>
+<td>0과 <strong>가중치(실수)</strong></td>
+</tr>
+<tr>
+<td><strong>장점</strong></td>
+<td><strong>단순, 구현 쉬움</strong></td>
+<td><strong>단어 중요도 반영</strong>, 검색/분류에 효과적</td>
+</tr>
+<tr>
+<td><strong>한계</strong></td>
+<td><strong>의미 정보 없음, 차원 크다</strong></td>
+<td><strong>문맥 무시, 희소성, 동의어/다의어 처리 불가</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>표 채우기로 나오기 좋습니다. 특히:
+- <strong>공통점</strong>: 둘 다 <strong>벡터 차원 = 어휘(단어 사전) 크기</strong>, 둘 다 <strong>희소</strong>
+- TF-IDF의 한계 단어 3개: <strong>문맥 무시 / 희소성 / 동의어·다의어 처리 불가</strong></p>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>용어 풀이</strong>
+- <strong>문맥 무시</strong>: "나는 <strong>배</strong>가 아프다"와 "<strong>배</strong>를 깎아 먹었다"의 "배"를 <strong>같은 단어로 취급</strong>함 (단어 횟수만 세니까)
+- <strong>동의어</strong>: 뜻이 같은 다른 단어 (강아지 = 멍멍이). TF-IDF는 이 둘을 <strong>전혀 다른 단어</strong>로 봄
+- <strong>다의어</strong>: 한 단어에 뜻이 여럿 (배 = 몸/과일/탈것). TF-IDF는 이걸 <strong>구별 못 함</strong></p>
+</div>
+<hr />
+<h2 id="8-dense-representation-밀집-표현">8. Dense representation (밀집 표현) ★★<a class="headerlink" href="#8-dense-representation-밀집-표현" title="Permanent link">#</a></h2>
+<p>딥러닝 기반 모델에서 쓰는 방식이며, <strong>희소 표현의 문제를 해결</strong>합니다.</p>
+<dl>
+<dt>밀집 표현 (Dense representation)</dt>
+<dd>벡터의 차원이 <strong>조밀(dense)해졌다</strong>는 의미
+- 더 이상 벡터의 차원을 <strong>단어 집합의 크기로 설정하지 않음</strong>
+- → <strong>사용자가 설정한 값</strong>으로 모든 단어 벡터의 차원을 맞춤 (예: 300)
+- <strong>0과 1의 binary가 아닌 연속적인 실수값</strong>으로 인코딩됨</dd>
+</dl>
+<p><strong>(예시)</strong> 강아지 → <code>[0.12, 0.84, 0.11, 0.34, 0.45]</code> (fixed size, <strong>dim = 5</strong>)</p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비교해 보세요</strong></p>
+<div class="codehilite"><pre><span></span><code>One-hot  강아지 = [0, 0, 0, 1, 0, 0, …, 0]   ← 길이 20,000, 숫자 1개만 의미 있음
+Dense    강아지 = [0.12, 0.84, 0.11, 0.34, 0.45]   ← 길이 5, 숫자 전부 의미 있음
+</code></pre></div>
+
+<p>Dense의 각 칸은 <strong>"동물스러움 0.84", "크기 0.11"</strong> 처럼 <strong>어떤 특징의 정도</strong>를 나타낸다고 상상하면 됩니다. (실제로는 사람이 이름 붙일 수 없는 특징들이지만, 원리는 이렇습니다)</p>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>binary / 실수 / 연속적</strong>
+- <strong>binary(이진)</strong>: 0 아니면 1, 둘 중 하나
+- <strong>실수</strong>: 0.12, 0.84 처럼 <strong>소수점이 있는 숫자</strong>
+- <strong>연속적</strong>: 0과 1 사이 <strong>아무 값이나</strong> 될 수 있음</p>
+</div>
+<h3 id="dense-representation의-특징">Dense representation의 특징 ★<a class="headerlink" href="#dense-representation의-특징" title="Permanent link">#</a></h3>
+<ol>
+<li><strong>적은 차원으로 대상을 표현 가능</strong> (2만 칸 → 300칸)</li>
+<li><strong>각각의 차원들이 모두 어느 정도의 정보를 포함</strong> → <strong>모델 학습이 수월함</strong></li>
+<li><strong>단어 사전의 크기가 증가하더라도 차원의 크기는 일정</strong> → <strong>공간 복잡도 개선</strong>
+   - 단어가 2만 개든 10만 개든 <strong>벡터 길이는 300 그대로</strong></li>
+<li><strong>더 큰 일반화 능력(generalization)</strong> 을 가짐</li>
+<li><strong>의미 이해 &amp; 정보 검색 향상</strong></li>
+</ol>
+<h4 id="특징-4-일반화-능력-슬라이드-예시">특징 4 — 일반화 능력 (슬라이드 예시) ★<a class="headerlink" href="#특징-4-일반화-능력-슬라이드-예시" title="Permanent link">#</a></h4>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>그대로 외우면 좋은 예시</strong></p>
+<p>'강아지'는 자주 출현하고, '멍멍이'는 적게 출현한다고 할 때:
+- <strong>희소 표현</strong> → '강아지'-'멍멍이' 간의 관계가 <strong>전혀 표현되지 않음</strong> → '멍멍이'를 <strong>따로 학습</strong>해야 함
+- <strong>밀집 표현</strong> → '강아지'와 '멍멍이'가 <strong>서로 비슷한 벡터</strong>로 표현됨 → <strong>일반화 가능</strong></p>
+</div>
+<p><strong>쉽게 풀면:</strong>
+- 데이터에서 "강아지"는 1만 번 나오고 "멍멍이"는 10번만 나왔다고 합시다.
+- 희소 표현: 두 단어가 완전히 남남이라, "강아지"로 배운 지식이 "멍멍이"에게 <strong>전혀 전달 안 됨.</strong> 10번 나온 걸로 따로 배워야 해서 잘 모름.
+- 밀집 표현: 두 단어가 <strong>비슷한 위치</strong>에 있으니, "강아지"로 배운 지식이 "멍멍이"에도 <strong>자동으로 적용</strong>됨. 이게 <strong>일반화</strong>입니다.</p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>일반화(generalization)</strong> = <strong>배운 걸 처음 보는 경우에도 적용하는 능력.</strong> "이 문제 풀어봤으니 비슷한 문제도 풀 수 있다"는 것.</p>
+</div>
+<h4 id="특징-5-의미-이해-정보-검색-향상">특징 5 — 의미 이해 &amp; 정보 검색 향상<a class="headerlink" href="#특징-5-의미-이해-정보-검색-향상" title="Permanent link">#</a></h4>
+<p><strong>(1) 질문과 답을 같은 공간에 놓기</strong></p>
+<div class="codehilite"><pre><span></span><code>"What is the capital of France?"   →  [Question Encoder]  ┐
+                                                          ├→ Dense embedding (같은 공간)
+"Paris is the capital of France"   →  [Context Encoder]   ┘
+
+두 인코더의 가중치는 "벡터 차이를 최소화하도록(minimize vector difference)" 함께 최적화됨
+</code></pre></div>
+
+<ul>
+<li><strong>인코더(encoder)</strong> = 글을 받아서 벡터로 바꿔주는 장치</li>
+<li>질문용 인코더와 문서용 인코더를 <strong>같이 훈련</strong>시켜서, <strong>질문과 그 정답 문장이 가까운 벡터</strong>가 되게 만듦</li>
+<li>그 결과 <strong>의미가 비슷한 것끼리 공간에 모임</strong> (예: <code>monday, tuesday, wednesday, thursday, friday, saturday, sunday</code> 가 한 동네에 뭉쳐 있음)</li>
+</ul>
+<p><strong>(2) 정보 검색 동작 예시 (임베딩된 단락 활용)</strong></p>
+<p>문서를 단락별로 미리 벡터로 바꿔 두고, 질문이 오면 <strong>가장 비슷한 단락</strong>을 고릅니다.</p>
+<div class="codehilite"><pre><span></span><code>[미리 저장해 둔 단락 벡터]
+1번 단락 (IDC 시장 성장률 이야기)       : [0.1, 0.5, 0.9, … , 0.1, 0.2]
+2번 단락 (AI 애플리케이션 시장 이야기)  : [0.7, 0.1, 0.3, … , 0.5, 0.6]
+3번 단락 (AI SIS·AD&amp;D 이야기)           : [0.9, 0.4, 0.5, … , 0.4, 0.3]
+
+[질문이 들어옴]
+"시장조사기관 IDC가 예측한 AI 소프트웨어 시장의 연평균 성장률은 어떻게 되나요?"
+  → 질문 벡터: [0.1, 0.5, 0.9, … , 0.2, 0.4]
+
+[유사도 계산]
+  1번: 80%  → 선택!   (질문 벡터와 모양이 거의 같음)
+  2번: 30%
+  3번: 25%
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>질문 벡터 <code>[0.1, 0.5, 0.9, …]</code> 와 1번 단락 <code>[0.1, 0.5, 0.9, …]</code> 가 <strong>앞부분이 거의 같죠?</strong> 그래서 유사도가 높게 나옵니다.
+이 원리가 <a href="08-react-tool.html">8장</a>의 <strong>RAG(검색해서 답하기)</strong> 의 핵심입니다.</p>
+</div>
+<h3 id="sparse-vs-dense-최종-비교">Sparse vs Dense 최종 비교 ★<a class="headerlink" href="#sparse-vs-dense-최종-비교" title="Permanent link">#</a></h3>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th><strong>Sparse</strong> (One-hot, TF-IDF)</th>
+<th><strong>Dense</strong> (딥러닝 임베딩)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>차원</strong></td>
+<td>단어 사전 크기 (거대, 단어 늘면 같이 늘어남)</td>
+<td>사용자가 정한 고정값 (작음)</td>
+</tr>
+<tr>
+<td><strong>값</strong></td>
+<td>0/1 또는 0/가중치, <strong>대부분 0</strong></td>
+<td><strong>연속적인 실수</strong>, 모든 칸에 의미</td>
+</tr>
+<tr>
+<td><strong>의미 정보</strong></td>
+<td><strong>없음</strong></td>
+<td><strong>있음</strong> (비슷한 단어 = 비슷한 벡터)</td>
+</tr>
+<tr>
+<td><strong>공간 복잡도</strong></td>
+<td>단어 늘면 <strong>증가</strong></td>
+<td><strong>일정</strong></td>
+</tr>
+<tr>
+<td><strong>일반화</strong></td>
+<td>불가 (강아지≠멍멍이)</td>
+<td><strong>가능</strong> (강아지≈멍멍이)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="9-autoencoder-오토인코더">9. AutoEncoder (오토인코더) ★<a class="headerlink" href="#9-autoencoder-오토인코더" title="Permanent link">#</a></h2>
+<p>밀집 표현을 <strong>스스로 배우는</strong> 대표적인 구조입니다.</p>
+<ul>
+<li><strong>"Learning Internal Representation by Error Backpropagation" (1986)</strong> 논문에서 처음 소개</li>
+<li>일반적으로 <strong>3개의 계층(층)</strong> 으로 구성</li>
+<li><strong>Label(정답)이 없는 데이터로부터 낮은 차원의 특성 표현을 학습하는 비지도 학습</strong></li>
+</ul>
+<div class="codehilite"><pre><span></span><code>   입력 X          Latent vector Z        출력 X̃
+ (원래 데이터)      (압축된 핵심)        (복원한 데이터)
+
+  ●●●●●●●●   →      ●●●       →      ●●●●●●●●
+  (넓음)          (좁음, 저차원)         (넓음)
+        압축(encode)        복원(decode)
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>층</th>
+<th>이름</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1층</td>
+<td><strong>입력 계층 X</strong></td>
+<td>원래 데이터</td>
+</tr>
+<tr>
+<td>2층</td>
+<td><strong>Latent vector Z</strong></td>
+<td><strong>입력 데이터의 정보를 압축하고 있는 벡터</strong> (핵심만 남긴 것)</td>
+</tr>
+<tr>
+<td>3층</td>
+<td><strong>출력 계층 X̃</strong> (엑스 틸드)</td>
+<td>Z를 보고 <strong>원래 데이터를 복원</strong>한 것</td>
+</tr>
+</tbody>
+</table>
+<h3 id="어떻게-학습하나-요약했다가-다시-풀어쓰기">어떻게 학습하나? — "요약했다가 다시 풀어쓰기"<a class="headerlink" href="#어떻게-학습하나-요약했다가-다시-풀어쓰기" title="Permanent link">#</a></h3>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 책 한 권을 3줄 요약 → 그 3줄만 보고 다시 책을 써보기</strong></p>
+<ol>
+<li>긴 책(입력 X)을 <strong>3줄로 요약</strong>합니다 (Latent vector Z).</li>
+<li>그 3줄만 보고 <strong>원래 책을 다시 써 봅니다</strong> (출력 X̃).</li>
+<li>다시 쓴 책이 원래 책과 <strong>비슷하면 → 요약을 잘한 것</strong>, 다르면 → 요약을 고쳐야 함.</li>
+<li>이걸 반복하면 <strong>3줄 요약(Z) 안에 책의 핵심이 압축되어</strong> 들어가게 됩니다.</li>
+</ol>
+<p>이때 <strong>정답지가 필요 없습니다.</strong> "원래 책" 자체가 정답이니까요. 그래서 <strong>비지도 학습</strong>입니다.</p>
+</div>
+<ul>
+<li><strong>Latent</strong>(잠재) = 겉으로 드러나지 않고 <strong>숨어 있는</strong>. 데이터 속에 숨은 핵심 특징이라는 뜻</li>
+<li><strong>Backpropagation</strong>(역전파) = 틀린 정도를 거꾸로 전달하며 모델을 고치는 학습 방법 (<a href="00-math-basics.html">0장</a> 8절)</li>
+</ul>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>AutoEncoder로 물어볼 것 3가지:
+① <strong>3계층 구조</strong>: 입력 X / <strong>Latent vector Z</strong> / 출력 X̃
+② <strong>Label 없는 데이터로 학습하는 비지도 학습</strong>
+③ <strong>낮은 차원의 특성 표현(압축된 표현)을 학습</strong>
+(+ 1986년 논문에서 처음 소개)</p>
+</div>
+<hr />
+<h2 id="이-장-정리">이 장 정리<a class="headerlink" href="#이-장-정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>핵심</th>
+<th>장점</th>
+<th>한계</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASCII 코드</td>
+<td>번호표</td>
+<td>단순</td>
+<td>의미 정보 없음</td>
+</tr>
+<tr>
+<td><strong>One-hot</strong></td>
+<td>한 자리만 1</td>
+<td>단순, 구현 쉬움</td>
+<td><strong>희소 문제</strong>, <strong>유사도 표현 불가</strong></td>
+</tr>
+<tr>
+<td><strong>TF-IDF</strong></td>
+<td>TF × IDF 중요도 점수</td>
+<td>단어 중요도 반영, 검색에 효과적</td>
+<td>문맥 무시, 희소성, 동의어/다의어 불가</td>
+</tr>
+<tr>
+<td><strong>Dense</strong></td>
+<td>짧은 실수 벡터</td>
+<td>적은 차원, 의미 담김, <strong>일반화</strong>, 공간 일정</td>
+<td>–</td>
+</tr>
+<tr>
+<td><strong>AutoEncoder</strong></td>
+<td>압축했다 복원하며 학습</td>
+<td>정답 없이 핵심 특징 학습 (비지도)</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+  <footer class="page-footer"><code>content/isw/02-embedding.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#이-장의-한-줄-요약">이 장의 한 줄 요약</a></li>
+<li><a href="#1-기계가-자연어를-처리하는-방법">1. 기계가 자연어를 처리하는 방법</a><ul>
+<li><a href="#기계는-왜-말을-못-알아듣나">기계는 왜 말을 못 알아듣나?</a></li>
+<li><a href="#처리-순서">처리 순서</a></li>
+<li><a href="#가장-어려운-단계는-마지막">가장 어려운 단계는 마지막</a></li>
+</ul>
+</li>
+<li><a href="#2-단어의-유사성과-모호성">2. 단어의 유사성과 모호성</a><ul>
+<li><a href="#예시-배">예시 — "배"</a></li>
+<li><a href="#왜-어려운가-슬라이드-3가지">왜 어려운가 (슬라이드 3가지)</a></li>
+</ul>
+</li>
+<li><a href="#3-단어의-표현-단순한-방법은-실패한다">3. 단어의 표현 — 단순한 방법은 실패한다</a><ul>
+<li><a href="#가장-단순한-방법-번호표-붙이기-ascii-code-등">가장 단순한 방법: 번호표 붙이기 (ASCII code 등)</a></li>
+<li><a href="#그래서-생기는-3가지-요구사항">그래서 생기는 3가지 요구사항</a></li>
+</ul>
+</li>
+<li><a href="#4-embedding-임베딩">4. Embedding (임베딩) ★</a><ul>
+<li><a href="#embedding의-두-가지-역할">Embedding의 두 가지 역할 ★</a></li>
+<li><a href="#embedding-기법의-발전-3단계">Embedding 기법의 발전 3단계</a></li>
+</ul>
+</li>
+<li><a href="#5-출현-빈도-기반-임베딩-1-one-hot-encoding">5. 출현 빈도 기반 임베딩 ① — One-hot encoding ★</a><ul>
+<li><a href="#개념">개념</a></li>
+<li><a href="#예시-단어가-4개면-벡터-길이도-4">예시 — 단어가 4개면 벡터 길이도 4</a></li>
+<li><a href="#one-hot-encoding의-한계-2가지">One-hot encoding의 한계 2가지 ★★</a></li>
+</ul>
+</li>
+<li><a href="#6-출현-빈도-기반-임베딩-2-tf-idf">6. 출현 빈도 기반 임베딩 ② — TF-IDF ★★</a><ul>
+<li><a href="#개념_1">개념</a></li>
+<li><a href="#직관-왜-두-개를-곱하나">직관 — 왜 두 개를 곱하나?</a></li>
+<li><a href="#공식-슬라이드-그대로">공식 (슬라이드 그대로)</a></li>
+<li><a href="#공식을-말로-풀면">공식을 말로 풀면</a></li>
+<li><a href="#why-log-log를-왜-쓰나">Why log? — log를 왜 쓰나 ★★</a></li>
+<li><a href="#tf-idf-계산-예시-슬라이드-한-단계씩">TF-IDF 계산 예시 (슬라이드) — 한 단계씩 ★</a></li>
+</ul>
+</li>
+<li><a href="#7-sparse-representation-희소-표현">7. Sparse representation (희소 표현)</a><ul>
+<li><a href="#one-hot-vs-tf-idf-비교표">One-hot vs TF-IDF 비교표 ★</a></li>
+</ul>
+</li>
+<li><a href="#8-dense-representation-밀집-표현">8. Dense representation (밀집 표현) ★★</a><ul>
+<li><a href="#dense-representation의-특징">Dense representation의 특징 ★</a></li>
+<li><a href="#sparse-vs-dense-최종-비교">Sparse vs Dense 최종 비교 ★</a></li>
+</ul>
+</li>
+<li><a href="#9-autoencoder-오토인코더">9. AutoEncoder (오토인코더) ★</a><ul>
+<li><a href="#어떻게-학습하나-요약했다가-다시-풀어쓰기">어떻게 학습하나? — "요약했다가 다시 풀어쓰기"</a></li>
+</ul>
+</li>
+<li><a href="#이-장-정리">이 장 정리</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

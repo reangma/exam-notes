@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3. 언어 본능 vs 언어 게임 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">언어와 사회</a>
+<ul>
+<li><a href="01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="03-language-instinct.html" class="active">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="3-언어-본능-vs-언어-게임">3. 언어 본능 vs 언어 게임<a class="headerlink" href="#3-언어-본능-vs-언어-게임" title="Permanent link">#</a></h1>
+<p>4주차 「마음이 언어를 만드는 방법」(e-러닝 주차, 강의계획서상 제목은 '언어본능과 언어습득'). <strong>"언어는 타고나는가, 만들어지는가"</strong> 를 두고 <strong>핑커(본능론)</strong> 와 <strong>크리스티안센·채터(문화적 진화론)</strong> 를 대결시키는 구성입니다.</p>
+<p><strong>수업 목표</strong>
+- 언어의 <strong>본능적인 측면</strong>을 이해한다
+- 언어가 가진 <strong>보편적 속성</strong>을 이해한다
+- <strong>언어와 사회의 관계</strong>를 이해한다</p>
+<p><strong>출발 질문 4개</strong>
+- 언어 습득은 본능인가, 후천적 학습에 의해 이루어지는 것인가
+- 문화를 초월하여 언어에 공통적인 요소가 있는가
+- 사회는 언어 습득 및 사용 과정에서 어떠한 역할을 하는가
+- 언어는 인간 사회 조직과 발전 과정에서 어떠한 역할을 하는가</p>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>이 장의 대결 구도를 먼저 잡으세요.</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>핑커 / 촘스키</strong></th>
+<th><strong>크리스티안센 &amp; 채터</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>책</td>
+<td>『언어본능』(1995)</td>
+<td>『진화하는 언어(The Language Game)』(2022)</td>
+</tr>
+<tr>
+<td>한 줄</td>
+<td><strong>"언어는 인간의 본능이다!"</strong></td>
+<td>언어는 <strong>협력적인 즉흥연주</strong></td>
+</tr>
+<tr>
+<td>입장</td>
+<td><strong>선천주의</strong> — 보편문법이 뇌에 <strong>내장(hardwired)</strong></td>
+<td><strong>문화적 진화론</strong> — 뇌에 내장 ✗, <strong>점진적으로 출현</strong></td>
+</tr>
+<tr>
+<td>진화</td>
+<td><strong>생물학적 진화</strong>(진화적 적응)</td>
+<td><strong>빠른 속도의 문화적 진화</strong></td>
+</tr>
+<tr>
+<td>보편문법</td>
+<td><strong>필요</strong></td>
+<td><strong>불필요한 가설</strong></td>
+</tr>
+<tr>
+<td>언어 간 공통점의 이유</td>
+<td>뇌에 내장된 <strong>보편문법</strong></td>
+<td>인간이 공유하는 <strong>인지적 제약</strong>, 공통된 의사소통 문제</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="1-핑커의-언어본능">1. 핑커의 『언어본능』 ★★<a class="headerlink" href="#1-핑커의-언어본능" title="Permanent link">#</a></h2>
+<p><strong>스티븐 핑커(Steven Pinker), 『언어본능: 마음은 어떻게 언어를 창조하는가(The Language Instinct: How the Mind Creates Language)』(1995)</strong></p>
+<blockquote>
+<p><strong>"언어는 인간의 본능이다!"</strong></p>
+</blockquote>
+<ul>
+<li>언어능력은 <strong>문화적 산물이나 사회적 상호작용의 결과가 아니라</strong>, <strong>진화를 통해 인간의 뇌에 심어진 선천적인 능력</strong></li>
+<li><strong>언어학, 심리학, 진화심리학</strong>을 종합하여 언어가 인간 두뇌의 <strong>선천적인 생물학적 기능</strong>이라고 주장</li>
+<li><strong>언어를 이해하는 것이 인간 본성을 이해하는 데 핵심</strong>이며, 마음과 우리 종을 정의하는 방식</li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>슬라이드 표기는 <strong>1995</strong>입니다(원서 초판은 1994, 참고문헌엔 "스티븐 핑커(1994), 김한영 옮김(2004)"). 시험에선 슬라이드 기준 <strong>1995</strong>로 나올 가능성이 높습니다.</p>
+</div>
+<hr />
+<h2 id="2-언어가-본능이라는-증거-4가지">2. 언어가 본능이라는 증거 (4가지) ★★★<a class="headerlink" href="#2-언어가-본능이라는-증거-4가지" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>① 언어 보편성 ② 언어 습득 ③ 언어의 재창조 ④ 일반지능과 분리되는 언어능력</strong> — 4개, 순서대로.</p>
+</div>
+<h3 id="1-언어-보편성">(1) 언어 보편성<a class="headerlink" href="#1-언어-보편성" title="Permanent link">#</a></h3>
+<ul>
+<li>지구상 존재하는 민족 중 <strong>언어가 없는 곳 없음</strong></li>
+<li><strong>원시적이거나 단순한 언어도 존재하지 않음</strong></li>
+<li>전 세계 언어가 공유하는 <strong>보편문법</strong>이 존재함</li>
+</ul>
+<h4 id="보편문법-universal-grammar">보편문법 (universal grammar) ★<a class="headerlink" href="#보편문법-universal-grammar" title="Permanent link">#</a></h4>
+<ul>
+<li>제안자: <strong>촘스키(Noam Chomsky, 1928~)</strong> — 세계적인 언어학자, 작가, 정치평론가, 사회운동가</li>
+<li><strong>인간이 태어날 때부터</strong> 언어를 습득하고 사용하는 데 필요한 문법</li>
+<li><strong>모든 언어에 다 존재</strong>하기 때문에 '보편' 문법</li>
+<li>보편문법이 있기 때문에 → 모국어의 구체적인 규칙·구조를 학습할 수 있고, <strong>이전에 들어본 적 없는 문장들도 이해하고 생성</strong>할 수 있음</li>
+<li>보편문법이 있기 때문에 → <strong>언어 간 번역도 가능</strong></li>
+<li>언어 습득이 전적으로 경험이나 후천적 학습에 의해서만 이루어진다는 기존 주장과 반대되는 <strong>선천주의적 관점</strong></li>
+<li>역사적으로 관련 없는 언어들도 모두 <strong>명사, 동사, 주어, 목적어, 시제</strong> 등 동일한 구성요소로 이루어져 있음</li>
+</ul>
+<h3 id="2-언어-습득">(2) 언어 습득<a class="headerlink" href="#2-언어-습득" title="Permanent link">#</a></h3>
+<ul>
+<li>인간은 언어를 습득하는 능력을 가지고 태어나 <strong>자연스럽게</strong> 학습</li>
+<li>문화·환경에 관계없이 전 세계 아이들은 <strong>유사한 습득 단계</strong>를 거침 → 언어가 <strong>생물학적 구조에 내장</strong>되어 있다는 뜻</li>
+<li><strong>공식적인 교육 없이도</strong> 쉽게 습득</li>
+<li>발달 시기: <strong>생후 5~6개월 옹알이 → 12개월 첫 단어 → 3세에 복잡한 문장·문법 구조 이해</strong></li>
+<li><strong>최소한의 입력</strong>만 주어져도 완전한 언어를 <strong>자발적으로</strong> 발전시킴</li>
+</ul>
+<h4 id="아이들은-문법을-알고-있다">아이들은 문법을 알고 있다 ★<a class="headerlink" href="#아이들은-문법을-알고-있다" title="Permanent link">#</a></h4>
+<ul>
+<li><strong>'goed', 'holded'</strong> 같은 표현 → 아이들이 <strong>언어의 규칙성을 파악</strong>하고 있다는 증거 (go-went 같은 불규칙을 모르고 '-ed 규칙'을 과잉 적용)</li>
+<li>아이들은 문법적 구조에 대한 감수성을 가진 <strong>문법적 천재</strong></li>
+<li>한국어 예 (생후 <strong>33~36개월</strong> 유아):</li>
+<li>"선생님<strong>이가</strong> 잘했다고 했어요." / "계단<strong>이가</strong> 왜 많아요?"</li>
+<li>"내가 과자를 <strong>먹으는데</strong>" / "사이좋게 <strong>놀으라고</strong> 그랬는데"</li>
+<li>"보라색이 <strong>된다요</strong>?" / "우리 같이 <strong>만들자요</strong>." / "엄마, <strong>힘들어워요</strong>."</li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>틀린 말인데 왜 증거일까? 어른은 "이가"라고 말하지 않으니 <strong>흉내 낸 게 아닙니다.</strong> 아이가 스스로 <strong>규칙(주격 조사 '이/가', 존대 '-요')을 뽑아내서 과하게 적용</strong>했다는 뜻이고, 이게 규칙을 찾아내는 능력이 있다는 증거입니다.</p>
+</div>
+<h3 id="3-언어의-재창조-피진과-크리올">(3) 언어의 재창조 — 피진과 크리올 ★★★<a class="headerlink" href="#3-언어의-재창조-피진과-크리올" title="Permanent link">#</a></h3>
+<p>아이들은 불완전하고 제한적인 의사소통 체계(<strong>피진</strong>)에 노출되더라도 <strong>어순(주어-동사-목적어), 시제, 부정</strong> 등 복잡한 문법 규칙을 갖춘 언어인 <strong>크리올</strong>을 창조해 냄.</p>
+<dl>
+<dt>피진 (pidgin)</dt>
+<dd><strong>서로 다른 두 언어의 화자가 만나 의사소통을 위해 자연스레 형성한 혼성어</strong></dd>
+</dl>
+<ul>
+<li><strong>식민지</strong> 지역이었던 현지에서 주로 생겨남</li>
+<li>교역 등 필요에 의해 만들어진 경우가 많아 <strong>어휘와 문법 규칙이 매우 단순</strong></li>
+<li><strong>어휘는 상층어에서, 문법 구조는 하층어에서</strong> 따옴</li>
+<li>두 집단의 교류가 약화되면 저절로 사라지고, 접촉 빈도가 높아지면 상위어를 직접 배우게 되므로 <strong>생명력이 짧음</strong></li>
+<li>대표: <strong>중국의 피진 영어</strong> — '피진'은 <strong>비즈니스(business)의 중국 발음</strong>을 딴 것이라고 알려짐</li>
+<li>어느 쪽도 상대 언어를 온전히 배울 마음이 없으면 유지됨 (<strong>중국 피진 영어는 300년 유지</strong>)</li>
+</ul>
+<dl>
+<dt>크리올 (creole)</dt>
+<dd><strong>피진이 뿌리내려 모국어로서 사용되는 말.</strong> 피진 사용자들의 <strong>자녀</strong>가 불완전한 체계에 <strong>시제, 부정</strong> 같은 문법을 갖춘 언어를 창조해 모국어로 사용</dd>
+</dl>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>피진</strong></th>
+<th><strong>크리올</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>누가 만드나</td>
+<td>서로 다른 언어의 <strong>어른들</strong></td>
+<td>피진 사용자의 <strong>자녀(아이들)</strong></td>
+</tr>
+<tr>
+<td>모국어인가</td>
+<td>✗</td>
+<td><strong>○ (모국어)</strong></td>
+</tr>
+<tr>
+<td>문법</td>
+<td>매우 단순</td>
+<td><strong>어순·시제·부정</strong> 등 갖춤</td>
+</tr>
+<tr>
+<td>수명</td>
+<td>짧음 (교류 약화 시 소멸)</td>
+<td>정착</td>
+</tr>
+</tbody>
+</table>
+<p><strong>하와이 예시</strong>
+- 하와이언 <strong>피진</strong>: "Me capé buy, me check make." (나에게 사 커피, 나에게 끊어 수표) — 단어만 나열
+- 하와이언 <strong>크리올</strong>: "Da firs japani came ran away from japan come." (처음 온 일본인들은 일본에서 이곳으로 도망쳐 왔다.) — 문장 구조가 있음</p>
+<h4 id="니카라과-수어">니카라과 수어 ★<a class="headerlink" href="#니카라과-수어" title="Permanent link">#</a></h4>
+<ul>
+<li><strong>1980년경</strong> 니카라과에 <strong>농아학교</strong>가 설립되었을 때, 수어가 없었던 아이들이 부모에게 배운 몸짓을 모아 <strong>피진 같은 손짓 시스템</strong> 개발</li>
+<li>이를 접한 <strong>6~9세 어린이들</strong>이 표현력이 풍부하고 일관된 문법 규칙을 가진 <strong>니카라과 수어</strong>로 발전시킴</li>
+<li>심지어 <strong>큰 아이들이 이 새로운 언어를 (어린아이들에게서) 배우는</strong> 현상이 관찰됨</li>
+</ul>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p>슬라이드에 "피진(pigeons)"이라고 적혀 있지만 이는 오타이고 올바른 철자는 <strong>pidgin</strong>입니다. 보기에 영어가 나오면 <strong>pidgin</strong>을 고르세요.</p>
+</div>
+<h3 id="4-일반지능과-분리되는dissociated-언어능력">(4) 일반지능과 분리되는(dissociated) 언어능력 ★<a class="headerlink" href="#4-일반지능과-분리되는dissociated-언어능력" title="Permanent link">#</a></h3>
+<p>언어능력과 지능이 <strong>따로 논다</strong> → 언어는 지능의 부산물이 아니라 <strong>별개의 능력</strong>이라는 증거.</p>
+<table>
+<thead>
+<tr>
+<th>경우</th>
+<th>사례</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>언어 장애, 지능 유지</strong></td>
+<td><strong>좌반구 손상으로 인한 실어증(Aphasia)</strong> — 복잡한 문장을 말하거나 이해하기 어렵지만 다른 영역의 지능은 보존. <strong>특정언어장애(SLI, Specific Language Impairment)</strong> — 언어 발달은 지연되지만 다른 지적 능력은 정상</td>
+</tr>
+<tr>
+<td><strong>언어능력 유지, 지능 장애</strong></td>
+<td><strong>수다쟁이 증후군(Chatterbox syndrome), 서번트 증후군(Savant syndrome), 윌리엄스 증후군(Williams syndrome)</strong> — 지적장애(<strong>IQ 50</strong>)가 심한 아이가 완벽한 영어로 유창하게 대화</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>실어증·SLI → <strong>언어 ✗ 지능 ○</strong> / 수다쟁이·서번트·윌리엄스 → <strong>언어 ○ 지능 ✗</strong></p>
+</div>
+<hr />
+<h2 id="3-언어의-작동-원리-2가지">3. 언어의 작동 원리 (2가지) ★<a class="headerlink" href="#3-언어의-작동-원리-2가지" title="Permanent link">#</a></h2>
+<h3 id="1-단어">(1) 단어<a class="headerlink" href="#1-단어" title="Permanent link">#</a></h3>
+<ul>
+<li>단어는 <strong>소리와 의미 사이의 임의적인 짝짓기</strong> (= <strong>언어의 자의성</strong>)</li>
+<li><strong>정신 사전(Mental Dictionary)</strong>: 이 소리-의미의 짝들을 저장하는 곳</li>
+<li>방대한 양: 일반적인 고등학생은 <strong>6만 단어</strong>를 앎 = <strong>한 살 때부터 깨어 있는 시간 90분마다 한 단어씩</strong> 습득한 속도</li>
+</ul>
+<h3 id="2-문법-및-조합-능력">(2) 문법 및 조합 능력<a class="headerlink" href="#2-문법-및-조합-능력" title="Permanent link">#</a></h3>
+<ul>
+<li>단어를 구와 문장으로 조합해 아이디어 간의 관계를 전달하는 <strong>규칙</strong> (예: 주어-동사-목적어 순서)</li>
+<li>이 규칙 덕분에 가능한 문장 수가 <strong>기하급수적으로 증가</strong> — <strong>20단어 이하 문장만 해도 100조 이상</strong></li>
+<li>언어는 <strong>무한히 클 수 있음</strong> — 가장 긴 문장이라도 언제든 한 단어를 더 붙일 수 있으니까</li>
+</ul>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>숫자: 고등학생 <strong>6만 단어</strong> / <strong>90분마다 1단어</strong> / 20단어 이하 문장 <strong>100조 이상</strong></p>
+</div>
+<hr />
+<h2 id="4-핑커의-입장-3가지">4. 핑커의 입장 (3가지) ★<a class="headerlink" href="#4-핑커의-입장-3가지" title="Permanent link">#</a></h2>
+<ol>
+<li><strong>언어는 진화적 적응으로 발생한 것</strong> — 생존 및 사회적 상호작용과 관련된 문제를 해결하기 위한 적응. 정보 공유·행동 조율·복잡한 사회 건설의 수단. 모든 인간이 언어를 발전시킬 능력을 가진 이유</li>
+<li><strong>언어 보편성이 존재함</strong> — 언어가 전적으로 <strong>문화적 구성물</strong>이라는 주장에 반박. 문화 전반에 걸친 언어 발달의 균일성과 체계성</li>
+<li><strong>언어와 사고의 관계</strong> — 언어가 특정 개념에 대해 생각하는 방식에 <strong>영향을 미칠 수 있지만</strong>, 사고 과정을 <strong>전적으로 제약하지는 않음</strong></li>
+</ol>
+<hr />
+<h2 id="5-언어-게임-촘스키-반박하기">5. 언어 게임: 촘스키 반박하기 ★★★<a class="headerlink" href="#5-언어-게임-촘스키-반박하기" title="Permanent link">#</a></h2>
+<p><strong>모튼 크리스티안센 · 닉 채터 (Morten Christiansen &amp; Nick Chater), 『진화하는 언어(The Language Game)』(2022)</strong></p>
+<p>키워드: <strong>IMPROVISATION (즉흥연주)</strong></p>
+<ul>
+<li>언어는 <strong>지속적인 공동체 전체의 몸짓 게임</strong>과 같다</li>
+<li>언어 구조가 뇌에 내장되어 있다는 <strong>보편문법과 촘스키의 주장을 반박</strong></li>
+<li>언어는 <strong>협력적인 즉흥연주(collaborative improvisation)</strong> 와 <strong>문화적 진화(cultural evolution)</strong> 의 산물</li>
+<li><strong>인간의 비언어적 능력과 사회성</strong>이 언어 발달에 중요한 역할</li>
+</ul>
+<p>반박의 세 축: <strong>① 언어 구조의 기원 및 본질 ② 언어 진화의 메커니즘 ③ 보편문법의 필요성 여부</strong></p>
+<h3 id="반박-1-언어-구조의-기원-및-본질">반박 1. 언어 구조의 기원 및 본질<a class="headerlink" href="#반박-1-언어-구조의-기원-및-본질" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>촘스키</th>
+<th>저자들</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>선천주의</strong></td>
+<td><strong>문화적 진화론</strong></td>
+</tr>
+<tr>
+<td>언어능력을 위한 복잡한 구조와 규칙(보편문법)이 뇌에 <strong>내장되어 있거나 선천적으로 고정(hardwired)</strong></td>
+<td>언어가 뇌에 <strong>내장되어 있지 않음</strong></td>
+</tr>
+<tr>
+<td>이 구조를 언어 생산·이해를 가능하게 하는 <strong>특화된 인지 메커니즘</strong>으로 설명</td>
+<td>언어 구조는 <strong>점진적으로 출현</strong>한 것</td>
+</tr>
+</tbody>
+</table>
+<p><strong>문화적 진화론의 내용</strong>
+- <strong>즉흥적인 몸짓 게임으로서의 언어</strong>: 언어 = <strong>끝없는 공동체 차원의 몸짓 게임(endless community-wide game of charades)</strong>. 의사소통은 본질적으로 <strong>협력적인 과정</strong>
+- <strong>자의적(arbitrary) 신호의 재사용</strong>: 의사소통이 필요한 순간에 만들어 쓴 자의적 신호·몸짓·소리를 <strong>반복적으로 재사용하고 패턴화</strong>하는 과정에서 언어가 시작
+- <strong>문법 구조의 출현</strong>: 문법 같은 복잡한 패턴은 즉흥적 요소들이 <strong>층층이 쌓여 재사용</strong>되면서 점진적으로 생성된 결과물. <strong>규칙은 시작 시점에 있었던 것이 아니라</strong> 혼란스러운 상호작용 속에서 <strong>부분적 질서로 나타난 것</strong></p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>charades = 말 없이 몸짓으로 단어를 맞히는 게임(몸으로 말해요). 처음 보는 사람끼리 몸짓으로 뜻을 통하게 하다 보면, 자주 쓰는 몸짓이 굳어져 "규칙"이 됩니다. 언어도 그렇게 생겼다는 것.</p>
+</div>
+<h3 id="반박-2-언어-진화의-메커니즘">반박 2. 언어 진화의 메커니즘<a class="headerlink" href="#반박-2-언어-진화의-메커니즘" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>촘스키 이론의 한계</th>
+<th>저자들</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>보편문법은 언어 학습·사용을 쉽게 하기 위한, <strong>기능을 고려하지 않은 제약</strong>일 수 있음</td>
+<td>언어 진화는 <strong>생물학적 진화가 아닌 빠른 속도의 문화적 진화</strong></td>
+</tr>
+<tr>
+<td>보편문법이 <strong>처음에 어떻게 발생했는지에 대한 타당한 진화론적 설명이 부족</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>저자들이 제시하는 메커니즘 4가지:</p>
+<ol>
+<li><strong>언어는 뇌에 내장된 게 아니라 형성되고 진화한 것</strong> — 여러 세대에 걸친 문화적 진화에서 <strong>인간 뇌의 자연스러운 편향성을 반영</strong>해 배우기 쉬운 형태로 스스로 형성 (<strong>language shaped by the brain</strong>). 생물학적 진화(수백만 년)에 비해 언어는 매우 빠르게 변화 — 예: <strong>덴마크어와 힌디어는 7,000년 만에</strong> 공통 조상으로부터 진화</li>
+<li><strong>비언어적 능력에 편승(piggybacking)</strong> — 언어만을 위한 특화 메커니즘이 진화한 게 아니라 다양한 비언어적 능력에 편승: <strong>사고 과정의 제약, 신체 및 감각운동 시스템, 사회적·실용적 요소, 정보처리 및 기억력 같은 인지적 한계</strong></li>
+<li><strong>사회성의 역할</strong> — 인간의 <strong>깊은 사회성과 유연한 사회성</strong>이 언어의 핵심 기반. 언어로 복잡한 사회를 만들수록 사회적 지능 압력 ↑ → 언어를 더 복잡하게 → <strong>긍정적 순환 구조</strong></li>
+<li><strong>다발적 출현</strong> — 언어는 인류 역사에서 <strong>여러 차례, 다른 장소에서</strong> 출현했을 가능성이 높음. 공통 언어가 없는 사람들의 상호작용이나 <strong>니카라과 수어</strong> 사례로 모델링 가능</li>
+</ol>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>니카라과 수어는 양쪽에서 다 쓰입니다!</strong>
+- 핑커 → 아이들이 문법을 <strong>재창조</strong>했다 = <strong>본능의 증거</strong>
+- 크리스티안센·채터 → 언어가 <strong>다발적으로 출현</strong>할 수 있다는 모델링 사례</p>
+</div>
+<h3 id="반박-3-보편문법-가정의-필요성-여부">반박 3. 보편문법 가정의 필요성 여부<a class="headerlink" href="#반박-3-보편문법-가정의-필요성-여부" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>촘스키</th>
+<th>저자들</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>본능적으로 이루어지는 언어 습득 과정</strong>을 설명하기 위해, 그리고</td>
+<td><strong>보편문법은 불필요한 가설</strong></td>
+</tr>
+<tr>
+<td>모든 언어에서 발견되는 공통 패턴인 <strong>보편소(universals)</strong> 를 설명하기 위해</td>
+<td>굳이 가정할 필요가 없음</td>
+</tr>
+<tr>
+<td>→ 보편문법이 내장되어 있다고 <strong>가정할 수밖에 없음</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>저자들의 근거:
+- 언어들은 매우 다양한데, 모든 언어에 공통적인 <strong>보편소가 존재한다는 증거가 없음</strong>
+- 언어 간 유사성이 나타나는 이유 = 뇌에 내장된 보편문법 때문이 <strong>아니라</strong> 인간이 공유하는 <strong>인지적 제약(기억, 지각 등)</strong> 때문에 특정 패턴이 더 흔하게 발생. 즉 <strong>인간이 직면하는 의사소통 문제가 전 세계적으로 공통</strong>적이기 때문
+- <strong>아이들의 언어 습득</strong>: 입력되는 자극과 주어진 자원에서 <strong>통계적 규칙성</strong>을 잘 포착하여 학습 → 보편문법을 가정하지 않아도 됨</p>
+<h4 id="인지적-제약-문제를-해결하는-방법">인지적 제약 문제를 해결하는 방법 ★<a class="headerlink" href="#인지적-제약-문제를-해결하는-방법" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>지금 아니면 끝 병목 (Now or Never Bottleneck)</strong></td>
+<td>들은 소리는 <strong>약 0.1초 이내에 사라지고</strong>, 사람은 <strong>분당 최대 150단어</strong>를 말함 → 듣는 즉시 처리해야 함 → 미리 저장된 패턴으로 입력을 빠르게 <strong>덩어리화(chunk)</strong> (예: 무의미한 철자 대신 의미 있는 단어로 기억)</td>
+</tr>
+<tr>
+<td><strong>비유와 은유를 통한 대처</strong></td>
+<td>복잡한 세상을 이해하는 많은 이론을 갖는 대신 <strong>비유·은유</strong> 같은 인지적 메커니즘으로 다른 많은 개념을 이해</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>Now or Never Bottleneck: <strong>0.1초</strong>, <strong>분당 150단어</strong>, <strong>chunk(덩어리화)</strong></p>
+</div>
+<hr />
+<h2 id="6-언어와-사회의-관계">6. 언어와 사회의 관계 ★★★<a class="headerlink" href="#6-언어와-사회의-관계" title="Permanent link">#</a></h2>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>교수님 예고 질문 3번 <strong>"언어가 사회를 구성하는 데 어떠한 역할을 했나요?"</strong> 의 답이 여기입니다.</p>
+</div>
+<p>구성: <strong>① 언어가 인간 사회의 존립과 진화에 미치는 영향 ② 언어와 사회성의 관계 ③ 언어와 사고의 관계</strong></p>
+<h3 id="1-언어가-인간-사회의-존립과-진화에-미치는-영향">(1) 언어가 인간 사회의 존립과 진화에 미치는 영향<a class="headerlink" href="#1-언어가-인간-사회의-존립과-진화에-미치는-영향" title="Permanent link">#</a></h3>
+<p><strong>언어는 인간 사회의 존립 자체에 필수적</strong></p>
+<table>
+<thead>
+<tr>
+<th>측면</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>사회 기반 형성</strong></td>
+<td>언어는 <strong>인간임을 규정하는 본질적 요소</strong>. 언어가 갑자기 사라진다면 인간 사회는 <strong>붕괴</strong> — 협력·추론·일상 업무 수행 불가</td>
+</tr>
+<tr>
+<td><strong>문명의 발달에 기여</strong></td>
+<td>언어 없이는 아이디어 공유, 협업, 사회·문화 구축, 정교한 문화적·기술적 발달 불가능. <strong>다른 영장류</strong>를 보면 언어 없이 사회 발달이 어렵다는 걸 알 수 있음</td>
+</tr>
+<tr>
+<td><strong>진화적 전환점, 가장 성공적인 종</strong></td>
+<td>언어의 등장은 인간 진화의 <strong>주요 전환점</strong>. 인간이 <strong>사회·법률·과학·기술</strong>을 개발할 수 있게 함. 좋든 나쁘든 인간을 지구상에서 <strong>가장 성공적인 종</strong>으로 만듦</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-언어와-사회성의-관계">(2) 언어와 사회성의 관계<a class="headerlink" href="#2-언어와-사회성의-관계" title="Permanent link">#</a></h3>
+<blockquote>
+<p>인간의 <strong>깊은 사회적 본성과 유연한 사회성</strong>은 언어 발달의 <strong>근본적인 기반</strong>이며, 언어는 다시 <strong>사회성을 증폭</strong>시킴.</p>
+</blockquote>
+<p><strong>① 언어의 본질적 속성으로서의 사회성</strong>
+- 인간은 <strong>사회적인 종</strong>. 유연성을 기반으로 끊임없이 새로운 기술·법률·생활방식을 창조
+- <strong>언어적 의사소통은 본질적으로 협력적</strong>: 화자와 청자 모두 <strong>신호(signal)와 의미(meaning) 사이의 매핑(mapping)에 동의</strong>해야 함. 이 <strong>공통의 합의</strong>에 도달하는 과정이 의사소통에 필수
+- 언어는 언어만을 위한 특화 메커니즘이 아니라 사회적·실용적 요소와 <strong>유연한 사회성</strong>에 힘입어 발전</p>
+<p><strong>② 사회적 지능에 대한 긍정적 피드백 루프</strong> ★★</p>
+<div class="codehilite"><pre><span></span><code>언어 → 더 복잡한 사회 (논쟁, 규칙·종교·금기, 팀 작업)
+  ↑                       ↓
+언어가 더 복잡해짐 ← 상호작용에 능숙한 사람이 성공
+                         ↓
+               사회적 지능에 대한 압력 증가
+</code></pre></div>
+
+<ul>
+<li>언어는 사람들이 논쟁하고 <strong>규칙·종교·금기</strong>를 만들고 팀으로 일하는 등 훨씬 더 복잡한 사회를 만들 수 있게 함</li>
+<li>사회가 복잡할수록 <strong>상호작용에 능숙한 사람</strong>이 잘해냄 → <strong>사회적 지능(social intelligence)에 대한 추가 압력</strong></li>
+<li>이 압력이 언어를 더 복잡하게 → 다시 사회적 지능에 압력 = <strong>긍정적 피드백 루프(positive feedback loop)</strong></li>
+<li>이러한 <strong>폭주 선택(runaway selection)</strong> 이 인간의 뇌가 <strong>2백만 년 전 조상보다 세 배가량 커진</strong> 이유를 설명</li>
+<li><strong>핵심은 사회적으로 영리해지는 것</strong></li>
+</ul>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>폭주 선택(runaway selection)</strong> → 뇌가 <strong>2백만 년 전보다 약 3배</strong> 커진 이유
+7주차 요약: 의사소통에 능한 사람이 성공 → 사회적 지능 요구 → 언어 발달 → 다시 사회적 지능에 압력</p>
+</div>
+<h3 id="3-언어와-사고의-관계">(3) 언어와 사고의 관계<a class="headerlink" href="#3-언어와-사고의-관계" title="Permanent link">#</a></h3>
+<ul>
+<li>언어는 인간의 사고에 <strong>편향(bias)을 만들 수 있지만</strong>, 사고를 <strong>제약하거나 가둘 수는 없음</strong></li>
+<li>언어가 사고에 영향을 미친다는 생각은 <strong>어느 정도 옳지만</strong>, 언어가 사고에 <strong>제약을 가하거나 경계를 제공한다는 생각은 과장</strong> (cf. <strong>사피어-워프 가설의 '재단'</strong> → 5장)</li>
+<li>언어는 <strong>창의적 산물</strong>이므로 어떤 언어를 사용하든 <strong>모든 것을 표현하는 것이 항상 가능</strong></li>
+<li>언어는 사람들이 <strong>무엇에 초점을 맞출지 편향</strong>되게 하고 <strong>주의를 형성</strong>함</li>
+<li>예: 특정 나무·식물에 대한 단어가 많은 사회의 사람은 숲을 걸을 때 단순히 '나무'라고 생각하는 사람보다 <strong>더 많이 보고 기억</strong> (cf. <strong>전문화의 문제</strong>)</li>
+<li>그 사회에 중요한 요소(예: <strong>생태, 경제</strong>)는 언어 표현 방식에 반영됨</li>
+<li>언어는 <strong>표기법</strong> 같은 유용한 역할을 함</li>
+<li>→ <strong>언어는 더 쉽게 사고하고 정보를 처리하도록 만들어 줌</strong></li>
+</ul>
+<h3 id="생각해-볼-질문-이캠퍼스-조별-토론">생각해 볼 질문 (이캠퍼스 조별 토론)<a class="headerlink" href="#생각해-볼-질문-이캠퍼스-조별-토론" title="Permanent link">#</a></h3>
+<ol>
+<li>언어 습득이 본능적인 경우와 후천적 학습인 경우</li>
+<li>외국어 학습 시 한국어와 같다/다르다고 생각한 것</li>
+<li>외국어 학습 시 쉬웠던 것과 어려웠던 것, 그 이유</li>
+<li>말하고 싶은 단어를 말 못 했지만 의사소통에 성공한 경험, 어떻게 가능했나</li>
+<li>한 단어를 다른 의미로 해석해 오해가 생기는 예</li>
+</ol>
+<hr />
+<h2 id="이-장-정리">이 장 정리<a class="headerlink" href="#이-장-정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>주제</th>
+<th>외울 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>핑커</td>
+<td>『언어본능』(1995), "언어는 본능", 진화로 뇌에 심어진 <strong>선천적</strong> 능력</td>
+</tr>
+<tr>
+<td>본능의 증거 4</td>
+<td><strong>보편성 / 습득 / 재창조 / 일반지능과 분리</strong></td>
+</tr>
+<tr>
+<td>보편문법</td>
+<td><strong>촘스키(1928~)</strong>, 선천주의, 들어본 적 없는 문장 생성·번역 가능의 근거</td>
+</tr>
+<tr>
+<td>습득 시기</td>
+<td>5~6개월 옹알이 / 12개월 첫 단어 / 3세 복잡한 문장, goed·holded, "선생님이가"</td>
+</tr>
+<tr>
+<td>피진·크리올</td>
+<td>피진 = 두 언어의 <strong>혼성어</strong>(어휘↑상층어, 문법↑하층어, 수명 짧음, 중국 피진 영어 300년) / 크리올 = 피진이 <strong>모국어</strong>가 된 것</td>
+</tr>
+<tr>
+<td>니카라과 수어</td>
+<td>1980년경 농아학교, 6~9세 아이들이 문법 완성</td>
+</tr>
+<tr>
+<td>분리 사례</td>
+<td>실어증·SLI(언어✗) / 수다쟁이·서번트·윌리엄스(지능✗, IQ 50)</td>
+</tr>
+<tr>
+<td>작동 원리 2</td>
+<td><strong>단어</strong>(자의성, 정신 사전, 6만 단어, 90분) / <strong>문법·조합</strong>(20단어 이하 100조↑, 무한)</td>
+</tr>
+<tr>
+<td>핑커 입장 3</td>
+<td>진화적 적응 / 보편성 존재 / 언어가 사고에 영향은 주나 전적 제약은 ✗</td>
+</tr>
+<tr>
+<td>크리스티안센&amp;채터</td>
+<td>『The Language Game』(2022), <strong>즉흥연주</strong>, 문화적 진화, <strong>charades</strong>, piggybacking, 덴마크어-힌디어 7,000년, 보편문법 <strong>불필요</strong></td>
+</tr>
+<tr>
+<td>인지적 제약</td>
+<td><strong>Now or Never Bottleneck</strong>(0.1초, 150단어, chunk), 비유·은유</td>
+</tr>
+<tr>
+<td>언어와 사회</td>
+<td>존립에 필수 / 신호-의미 매핑 합의 / <strong>긍정적 피드백 루프</strong>, <strong>폭주 선택</strong>, 뇌 3배</td>
+</tr>
+<tr>
+<td>언어와 사고</td>
+<td><strong>편향 ○ 제약 ✗</strong>, 사피어-워프의 '재단'은 과장</td>
+</tr>
+</tbody>
+</table>
+  <footer class="page-footer"><code>content/lang/03-language-instinct.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#1-핑커의-언어본능">1. 핑커의 『언어본능』 ★★</a></li>
+<li><a href="#2-언어가-본능이라는-증거-4가지">2. 언어가 본능이라는 증거 (4가지) ★★★</a><ul>
+<li><a href="#1-언어-보편성">(1) 언어 보편성</a></li>
+<li><a href="#2-언어-습득">(2) 언어 습득</a></li>
+<li><a href="#3-언어의-재창조-피진과-크리올">(3) 언어의 재창조 — 피진과 크리올 ★★★</a></li>
+<li><a href="#4-일반지능과-분리되는dissociated-언어능력">(4) 일반지능과 분리되는(dissociated) 언어능력 ★</a></li>
+</ul>
+</li>
+<li><a href="#3-언어의-작동-원리-2가지">3. 언어의 작동 원리 (2가지) ★</a><ul>
+<li><a href="#1-단어">(1) 단어</a></li>
+<li><a href="#2-문법-및-조합-능력">(2) 문법 및 조합 능력</a></li>
+</ul>
+</li>
+<li><a href="#4-핑커의-입장-3가지">4. 핑커의 입장 (3가지) ★</a></li>
+<li><a href="#5-언어-게임-촘스키-반박하기">5. 언어 게임: 촘스키 반박하기 ★★★</a><ul>
+<li><a href="#반박-1-언어-구조의-기원-및-본질">반박 1. 언어 구조의 기원 및 본질</a></li>
+<li><a href="#반박-2-언어-진화의-메커니즘">반박 2. 언어 진화의 메커니즘</a></li>
+<li><a href="#반박-3-보편문법-가정의-필요성-여부">반박 3. 보편문법 가정의 필요성 여부</a></li>
+</ul>
+</li>
+<li><a href="#6-언어와-사회의-관계">6. 언어와 사회의 관계 ★★★</a><ul>
+<li><a href="#1-언어가-인간-사회의-존립과-진화에-미치는-영향">(1) 언어가 인간 사회의 존립과 진화에 미치는 영향</a></li>
+<li><a href="#2-언어와-사회성의-관계">(2) 언어와 사회성의 관계</a></li>
+<li><a href="#3-언어와-사고의-관계">(3) 언어와 사고의 관계</a></li>
+<li><a href="#생각해-볼-질문-이캠퍼스-조별-토론">생각해 볼 질문 (이캠퍼스 조별 토론)</a></li>
+</ul>
+</li>
+<li><a href="#이-장-정리">이 장 정리</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

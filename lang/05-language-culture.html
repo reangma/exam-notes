@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5. 언어와 문화, 언어와 사고 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">언어와 사회</a>
+<ul>
+<li><a href="01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="05-language-culture.html" class="active">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="5-언어와-문화-언어와-사고">5. 언어와 문화, 언어와 사고<a class="headerlink" href="#5-언어와-문화-언어와-사고" title="Permanent link">#</a></h1>
+<p>6주차 「무엇이 달라서 달라요?」. <strong>문화상대주의 → 언어상대주의 → 사피어-워프 가설</strong> 순으로 "언어가 다르면 생각도 다른가"를 묻고, 실험 사례로 <strong>언어가 사고에 영향을 주는 경우 / 사고가 언어에 영향을 주는 경우 / 영향을 못 주는 경우</strong>를 나눕니다.</p>
+<p><strong>수업 목표</strong>
+- 언어가 문화와 사고방식을 반영하는 방식을 이해한다
+- <strong>언어상대성 이론</strong>을 이해한다
+- <strong>언어와 사고의 관계</strong>를 이해한다</p>
+<p><strong>출발 질문</strong>
+- 생각하는 것이 달라서 언어가 다른가?
+- 언어가 달라서 생각하는 것이 다른가?
+- 먹고사는 방법이 달라서 다 다른가?</p>
+<hr />
+<h2 id="1-언어와-문화">1. 언어와 문화<a class="headerlink" href="#1-언어와-문화" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>문화인류학자</strong>들은 한 집단의 문화를 연구하기 위해 <strong>가장 먼저 언어를 연구</strong>함</li>
+<li>집단 내부에 들어가 <strong>참여적 관찰자(participant observer)</strong> 로 살게 되므로 해당 집단의 언어를 배우는 것이 급선무</li>
+<li>언어를 배우는 것을 넘어 그 언어의 <strong>용법을 분석</strong> → 그 사람들이 <strong>어떤 세계관</strong>을 가졌는지 밝혀내고자 함</li>
+</ul>
+<hr />
+<h2 id="2-문화상대주의-cultural-relativism">2. 문화상대주의 (cultural relativism) ★★<a class="headerlink" href="#2-문화상대주의-cultural-relativism" title="Permanent link">#</a></h2>
+<dl>
+<dt>문화상대주의</dt>
+<dd>문화는 그 사회의 <strong>특수한 환경과 역사적 맥락</strong> 속에서 형성된 것으로 <strong>그 자체로 고유한 가치와 의미</strong>를 지닌다는 것. 특정 문화권 사람들이 왜 특정 행위를 하는지 이해하려면 <strong>해당 문화 안에서 답을 찾아야</strong> 한다는 것 → <strong>외부인의 시각이 아니라 그 문화에 속한 사람들의 시각</strong>에서 생각. <strong>각 문화의 독자성과 상대성을 인정하는 태도</strong></dd>
+</dl>
+<ul>
+<li>제안자: <strong>20세기 초, 프란츠 보애스(Franz Boas, 1858~1942)</strong> → 지금까지도 <strong>문화인류학의 기본 원리</strong></li>
+<li><strong>모든 문화는 인간이 직면하는 문제들에 대해 타당한 방식으로 적응한 결과</strong>. 문화는 환경과 역사적 발전 과정에서 <strong>차이가 났을 뿐</strong></li>
+<li>유럽과 미국이 원주민을 열등하고 무식한 야만인으로 간주하던 당시에는 <strong>급진적인 제안</strong>이었음</li>
+</ul>
+<h3 id="자문화중심주의-ethnocentrism">자문화중심주의 (ethnocentrism)<a class="headerlink" href="#자문화중심주의-ethnocentrism" title="Permanent link">#</a></h3>
+<ul>
+<li>사람은 특정 문화에서 성장하는 <strong>문화화(enculturation)</strong> 과정에서 특정 유형의 정보에는 관심을 기울이고 다른 유형은 <strong>차단</strong>하는 법을 배움</li>
+<li>하나의 문화 속에서 성장한다는 것 = 그 문화의 기본 가치·특질을 <strong>너무나 자연스럽고 당연한 것으로 여기게 되는 것</strong> → 이 생각이 바로 <strong>자문화중심주의</strong></li>
+<li>자기 문화에 <strong>우월감</strong>을 느끼며 다른 문화에 <strong>강요하는 태도만</strong> 자문화중심주의라고 하는 것이 <strong>아님</strong></li>
+<li>문화상대주의 관점을 가지려면 <strong>자문화중심주의를 벗어나야</strong> 함 (한국문화인류학회 2003: 30)</li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>자문화중심주의 = "내 문화가 당연하다"고 여기는 것까지 포함.</strong> 강요·우월감만이 아닙니다. "우월감을 느끼고 강요하는 태도만을 말한다"는 보기는 <strong>틀린</strong> 보기.</p>
+</div>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>문화상대주의 제안자 = <strong>프란츠 보애스(Franz Boas)</strong>, 20세기 초
+문화화 = <strong>enculturation</strong> / 자문화중심주의 = <strong>ethnocentrism</strong> / 참여적 관찰자 = <strong>participant observer</strong></p>
+</div>
+<hr />
+<h2 id="3-언어상대주의-linguistic-relativism">3. 언어상대주의 (linguistic relativism) ★★<a class="headerlink" href="#3-언어상대주의-linguistic-relativism" title="Permanent link">#</a></h2>
+<dl>
+<dt>언어상대주의</dt>
+<dd><strong>다른 언어보다 더 뛰어난 언어란 존재하지 않으며</strong>, 모든 언어는 <strong>똑같이 복잡하고 표현력이 풍부하며 완전한 체계</strong>를 갖추었다는 생각</dd>
+</dl>
+<ul>
+<li>각 언어는 그 자체 내에서 <strong>일관성이 있고 이해할 수 있기 때문에</strong> 하나의 <strong>독특한 체계</strong>로 연구되어야 함</li>
+<li>한 언어를 다른 언어로 번역하려는 노력은 <strong>특정 물건을 위해 만들어진 그릇에 다른 물건을 강제로 집어넣는 것</strong>과 같음</li>
+<li>언어 간의 차이는 해당 문화 사람의 <strong>지적 능력을 반영하지 않고</strong>, 그 사람들의 <strong>문화와 그것에 대해 소통하고자 하는 필요성</strong>을 반영할 뿐</li>
+<li>어떤 문화의 <strong>기술 수준이 아주 단순할 수는 있지만</strong>, 그것이 단순한 통사 구조나 간단한 어휘만 갖춘 언어를 가졌다는 의미는 <strong>아님</strong></li>
+</ul>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>"기술 수준이 단순한 문화 = 언어도 단순하다" → <strong>✗ (언어상대주의에 반함)</strong>
+언어 간 차이가 반영하는 것: 지적 능력 ✗ / <strong>문화와 소통의 필요성</strong> ○
+4장(핑커)의 "<strong>원시적이거나 단순한 언어는 존재하지 않음</strong>"과도 연결됩니다.</p>
+</div>
+<hr />
+<h2 id="4-사피어-워프-가설-sapir-whorf-hypothesis">4. 사피어-워프 가설 (Sapir-Whorf hypothesis) ★★★<a class="headerlink" href="#4-사피어-워프-가설-sapir-whorf-hypothesis" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>20세기 초</strong> 언어학자 <strong>에드워드 사피어(Edward Sapir, 1884~1939)</strong> 와 <strong>벤자민 워프(Benjamin Whorf, 1897~1941)</strong> 가 발전시킨 생각</li>
+<li>= <strong>언어상대성 가설</strong></li>
+<li>= <strong>언어결정주의(linguistic determinism)</strong> 라고도 불림</li>
+</ul>
+<blockquote>
+<p>"우리가 속한 지역사회의 <strong>언어 관습</strong>이 미리 정해진 방식대로 해석하도록 만들기 때문에 늘 경험하던 대로 경험할 수밖에 없다." (<strong>Sapir 1941</strong>: 69)</p>
+<p>"언어는 그 언어의 사용자에게 각기 다른 <strong>세계관 또는 사물관</strong>을 심어 주는데, <strong>모국어에 의해 규정된 원리에 따라 환경을 재단</strong>하며, 세상은 우리 마음속에서 주로 <strong>언어 체계에 의해 조직된 모습</strong>으로 나타난다." (<strong>Whorf 1956</strong>: 213)</p>
+<p>(언어결정주의) "우리의 사고방식은 우리의 언어에 의해 <strong>결정되고 통제</strong>된다. 아무도 이 세상을 <strong>중립적으로 묘사할 수는 없다</strong>. 언어는 이 세상을 특정한 방식으로 파악하도록 <strong>강제</strong>한다."</p>
+</blockquote>
+<p><strong>주장 요약</strong>
+- <strong>언어 차이 때문에</strong> 문화마다 서로 다른 사상 체계를 가지며 서로 다르게 행동한다
+- 개인의 사고방식이나 세상을 보는 관점이 <strong>언어의 영향</strong>을 받는다
+- 각 언어의 <strong>문법</strong>은 그 문화권에서 중요한 개념을 표현할 수 있는 규칙을 포함
+- 언어의 <strong>어휘부</strong>는 단순히 단어와 의미의 목록이 아니라 그 언어 사용자들의 <strong>경험을 조직화하는 하나의 체계</strong>
+- 시간·아름다움·사랑 같은 <strong>추상적 개념을 나타내는 어휘가 따로 없는 언어</strong>도 있음</p>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>이름 세 개가 다 같은 가설</strong>: 사피어-워프 가설 = <strong>언어상대성 가설</strong> = <strong>언어결정주의</strong>
+단, "<strong>언어상대주의</strong>"(3절, 모든 언어는 대등하다)와 "<strong>언어상대성 가설</strong>"(언어가 사고를 결정한다)은 다른 이야기이니 정의를 구별하세요. 7주차 복습 슬라이드에서는 3절 내용을 사피어-워프 항목 아래에 묶어 놓았습니다.</p>
+</div>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>"<strong>환경을 재단</strong>한다" → <strong>워프(Whorf 1956)</strong>
+"<strong>언어 관습</strong>이 미리 정해진 방식대로 해석하도록" → <strong>사피어(Sapir 1941)</strong>
+4장에서 핑커·크리스티안센&amp;채터는 이 '<strong>재단</strong>'이 <strong>과장되었다</strong>고 봄</p>
+</div>
+<h3 id="에스키모어의-눈">에스키모어의 '눈' ★★<a class="headerlink" href="#에스키모어의-눈" title="Permanent link">#</a></h3>
+<ul>
+<li>"에스키모어에는 눈을 표현하는 단어가 100개가 넘는다?" → "아니! 100개까지는 안 된다. <strong>10개 정도?</strong>" → "<strong>영어도 10개 정도 되는데?</strong>" (snow, sleet, slush, blizzard, avalanche, hail, hardpack, powder, flurry, dusting …)</li>
+<li>에스키모어는 <strong>'떨어지는 눈', '바닥에 있는 눈', '딱딱하게 굳은 눈'</strong> 을 별개 어휘로 가짐</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>단어</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aput</td>
+<td>땅 위에 쌓인 눈</td>
+</tr>
+<tr>
+<td>qana</td>
+<td>내리고 있는 눈</td>
+</tr>
+<tr>
+<td>piqsirpok</td>
+<td>바람에 날리는 눈</td>
+</tr>
+<tr>
+<td>qimuqsqu</td>
+<td>바람에 날려 쌓인 눈</td>
+</tr>
+<tr>
+<td>tlun</td>
+<td>별빛처럼 반짝이는 눈</td>
+</tr>
+<tr>
+<td>mentlana</td>
+<td>분홍빛을 띠는 눈</td>
+</tr>
+<tr>
+<td>ylaipi</td>
+<td>내일 내릴 눈</td>
+</tr>
+<tr>
+<td>shiya</td>
+<td>새벽에 내리는 눈</td>
+</tr>
+<tr>
+<td>maxtla</td>
+<td>마을 전체를 덮은 눈</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>반대로 <strong>아즈텍어</strong>는 <strong>'눈', '얼음', '추위'를 나타내는 공통의 한 단어</strong>만 가짐</li>
+<li>(질문) 우리말에는 '눈'에 관한 단어가 몇 개나 있을까?</li>
+</ul>
+<hr />
+<h2 id="5-언어의-다름-이해하기-전문성의-문제">5. 언어의 다름 이해하기 — 전문성의 문제 ★★<a class="headerlink" href="#5-언어의-다름-이해하기-전문성의-문제" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>언어</th>
+<th>발달한 어휘</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>버마의 가로(Garo)어</strong></td>
+<td>영어에선 <strong>'rice'</strong> 한 단어인 <strong>'쌀'</strong> 을 탈곡한 것/안 한 것, 요리된 것/안 된 것 등으로 구분</td>
+</tr>
+<tr>
+<td><strong>아랍 유목민</strong></td>
+<td><strong>낙타</strong>를 지칭하는 단어가 <strong>스무 개가 넘음</strong> → 낙타는 <strong>생존의 동의어</strong> (이희수 2009)</td>
+</tr>
+<tr>
+<td>한국어(소나무)</td>
+<td>개잎갈나무(설송), 곰반송, 곰솔, 금강송, 낙우송, 눈잣나무, 대왕송, 리기다소나무, 미인송, 반송, 백송, 황금소나무 …</td>
+</tr>
+</tbody>
+</table>
+<p><strong>핵심 결론</strong>
+- 언어의 다름에는 <strong>삶의 환경이 제공하는 전문성의 문제</strong>가 있다
+- 따라서 <strong>언어의 상대성 문제는 전문성의 문제와는 구별되어야 한다</strong>
+- <strong>어휘 사용만 가지고 한 언어의 특징으로 생각하는 것은 잘못이다</strong> (<strong>Clark &amp; Clark 1977</strong>)
+- 어휘 사용의 다름은 <strong>삶에서의 유용성과 전문성의 다름</strong> 관점에서 보아야 한다</p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>소나무 이름을 수십 개 아는 건 한국어 화자 전체가 아니라 <strong>조경사·식물학자</strong>입니다. 영어에도 눈 단어가 10개쯤 있죠. 즉 "단어가 많다 = 그 언어가 세상을 다르게 본다"가 아니라 "<strong>그 일을 많이 다루는 사람에게 단어가 많다</strong>"는 겁니다. 4장의 "cf. 전문화의 문제"도 같은 이야기입니다.</p>
+</div>
+<hr />
+<h2 id="6-언어와-사고의-관계-톺아보기">6. 언어와 사고의 관계 톺아보기 ★★★<a class="headerlink" href="#6-언어와-사고의-관계-톺아보기" title="Permanent link">#</a></h2>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>교수님 예고 질문 4번 <strong>"언어는 사고(지각)에 어느 정도 영향을 미치나요?"</strong> 의 답. <strong>3가지 경우 + 각 사례</strong>를 짝지어 외우세요.</p>
+<table>
+<thead>
+<tr>
+<th>경우</th>
+<th>사례</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>6.1 언어 → 사고 (영향 줌)</strong></td>
+<td>심상 왜곡(Carmichael 1932), 그림 제목(Glucksberg 1988), 이름 있는 그림 기억(Santa &amp; Ranken 1972), 러시아어 파랑(Winawer 2007), 베린모어 nol/wor(Kay &amp; Regier 2007), 파랑-녹색 경계(Özgen 2004)</td>
+</tr>
+<tr>
+<td><strong>6.2 사고 → 언어</strong></td>
+<td>피라항(Pirahã), 사모(Samo) / (+ 언어 없는 사고: 일데폰소, 5개월 아기 암산)</td>
+</tr>
+<tr>
+<td><strong>6.3 언어가 사고에 영향 못 줌</strong></td>
+<td><strong>착시</strong> (뮐러-라이어, 폰조)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="61-언어가-사고에-영향을-주는-경우">6.1 언어가 사고에 영향을 주는 경우<a class="headerlink" href="#61-언어가-사고에-영향을-주는-경우" title="Permanent link">#</a></h3>
+<p><strong>① 심상 왜곡 (image-distorting) — Carmichael et al. (1932)</strong></p>
+<dl>
+<dt>심상 왜곡</dt>
+<dd><strong>언어 자극으로 인해 원래의 기억이 왜곡되는 현상</strong></dd>
+</dl>
+<p>같은 그림(예: 원 두 개를 선으로 이은 그림 ○-○)을 보여주며 한 그룹엔 <strong>'Eyeglasses(안경)'</strong>, 다른 그룹엔 <strong>'Dumbbells(아령)'</strong> 라는 이름을 붙여 주면, 나중에 따라 그릴 때 각각 <strong>안경처럼 / 아령처럼</strong> 그림. (그 밖에 '창문의 커튼' vs '직사각형 안의 다이아몬드', '초승달' vs '글자 C', '7' vs '4', '배의 키' vs '해')</p>
+<p><strong>② 그림에 제목 붙이기 — Glucksberg (1988)</strong></p>
+<p>막대에 타원 두 개가 끼워진 모호한 그림을 보여주고 "제목을 붙여 보세요" → 어떤 이름을 붙이느냐에 따라 그림이 달리 보이고 기억됨</p>
+<p><strong>③ 이름이 있어야 더 잘 기억 — Santa &amp; Ranken (1972)</strong></p>
+<p>무의미한 그림 여러 개를 보여주며 <strong>어떤 그림엔 이름을 제시하고 어떤 그림엔 제시하지 않음</strong> → <strong>이름이 있는 그림을 본 사람들이 더 잘 기억</strong></p>
+<p><strong>④ 러시아어의 두 가지 파랑 — Winawer et al. (2007)</strong></p>
+<table>
+<thead>
+<tr>
+<th>영어</th>
+<th>러시아어</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>blue</strong> (하나)</td>
+<td><strong>goluboy</strong>(밝은 파랑) &amp; <strong>siniy</strong>(짙은 파랑) (둘)</td>
+</tr>
+</tbody>
+</table>
+<p>러시아어 화자는 goluboy와 siniy의 색상 구분에 <strong>민감</strong>, 영어 화자는 그 차이에 <strong>신경을 덜 씀</strong></p>
+<p><strong>⑤ 베린모어 nol / wor — Kay &amp; Regier (2007)</strong></p>
+<table>
+<thead>
+<tr>
+<th>베린모어(Berinmo)</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>nol</strong></td>
+<td><strong>파랑까지 포함하는 녹색 계통</strong>의 색</td>
+</tr>
+<tr>
+<td><strong>wor</strong></td>
+<td><strong>오렌지 색상을 포함하는 노랑 계통</strong>의 색</td>
+</tr>
+</tbody>
+</table>
+<p>영어 사용자는 <strong>blue/green</strong> 판단에서 우위, 베린모어 사용자는 <strong>nol/wor</strong> 판단에서 우위</p>
+<p><strong>⑥ 파랑-녹색 경계 — Özgen (2004)</strong></p>
+<p>색상 간격이 같은 <strong>B1–B2–G2–G1</strong> 스펙트럼에서, 사람들은 같은 범주 안의 차이(B1–B2, G2–G1)보다 <strong>'파랑'과 '녹색'의 경계에 놓인 B2–G2의 차이를 더 크게</strong> 느낌</p>
+<p><strong>결론</strong>
+- 사람들은 색을 <strong>언어 범주에 따라 지각</strong>하는 경향 → <strong>언어가 색채 지각에 영향을 준다</strong>, 언어가 지각 방식에 영향을 준다
+- 언어는 <strong>구체적인 개념보다 추상적인 개념</strong>에서 그 역할이 더 크다</p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>학자-연도-사례 짝</strong> (단답형 단골)
+- <strong>Carmichael et al. 1932</strong> → <strong>심상 왜곡</strong> (안경/아령)
+- <strong>Glucksberg 1988</strong> → 그림에 제목 붙이기
+- <strong>Santa &amp; Ranken 1972</strong> → 이름 있는 그림을 더 잘 기억
+- <strong>Winawer et al. 2007</strong> → 러시아어 <strong>goluboy / siniy</strong>
+- <strong>Kay &amp; Regier 2007</strong> → 베린모어 <strong>nol / wor</strong>
+- <strong>Özgen 2004</strong> → <strong>B2–G2</strong> 경계 차이를 더 크게 느낌</p>
+</div>
+<h3 id="62-사고가-언어에-영향을-주는-경우">6.2 사고가 언어에 영향을 주는 경우<a class="headerlink" href="#62-사고가-언어에-영향을-주는-경우" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>언어</th>
+<th>사례</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>피라항(Pirahã)</strong> — 브라질 원주민</td>
+<td><strong>숫자, 색채어, 세분화된 친족어 표현이 없음</strong></td>
+<td>그들의 삶에서 <strong>필요 없는 개념</strong>이기 때문</td>
+</tr>
+<tr>
+<td><strong>사모(Samo)</strong> — 뉴기니섬의 한 부족</td>
+<td>문장의 <strong>81%</strong> 에 숲·강·언덕 등 <strong>지리적 위치 정보</strong> 포함</td>
+<td>자연·지리 정보가 삶에서 <strong>매우 중요</strong>하기 때문</td>
+</tr>
+</tbody>
+</table>
+<p>→ 삶에서 필요한 것(사고)이 언어에 반영된다.</p>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p>사모어 비율은 6주차 슬라이드에서 <strong>81%</strong>, 7주차 복습 슬라이드에서 <strong>"80% 이상"</strong> 으로 표기되어 있습니다. 둘 다 같은 내용.</p>
+</div>
+<h4 id="언어-없이-사고할-수-있나">언어 없이 사고할 수 있나<a class="headerlink" href="#언어-없이-사고할-수-있나" title="Permanent link">#</a></h4>
+<ul>
+<li><strong>27세 청각장애인 일데폰소</strong>: 뒤늦게 배운 수어로 <strong>이전에 알고 있던 모든 개념을 표현</strong>할 수 있었음 (<strong>Schaller 1991</strong>) → <strong>언어의 상실이 개념의 상실로 이어지는 것은 아님</strong></li>
+<li>청각을 <strong>후천적으로</strong> 상실한 사람은 어느 정도까지 <strong>소리로</strong> 생각하고, <strong>선천적으로</strong> 소리를 듣지 못하는 사람은 <strong>수어로</strong> 사고함 (Flaherty 2005)</li>
+<li><strong>생후 5개월 아기</strong>도 간단한 <strong>암산</strong>을 함: 인형 개수에 변화가 없으면 싫증 내고 시선을 돌리지만, <strong>개수에 변화가 생기면 응시</strong> (<strong>Wynn 1992</strong>) → <strong>언어 습득 이전부터 이미 사고 활동</strong>을 함</li>
+</ul>
+<h3 id="63-언어가-사고에-영향을-주지-못하는-경우">6.3 언어가 사고에 영향을 주지 못하는 경우<a class="headerlink" href="#63-언어가-사고에-영향을-주지-못하는-경우" title="Permanent link">#</a></h3>
+<p><strong>착시 현상</strong> — 이름을 알든 모르든, 설명을 듣든 말든 <strong>여전히 틀리게 보임</strong>
+- <strong>뮐러-라이어 착시 (Müller-Lyer illusion)</strong>: 양 끝 화살표 방향만 다른 같은 길이의 두 선이 다른 길이로 보임
+- <strong>폰조 착시 (Ponzo illusion)</strong>: 모이는 두 선 사이의 같은 길이 가로선 두 개 중 위쪽이 더 길어 보임</p>
+<h3 id="색채어-berlin-kay-1969">색채어: Berlin &amp; Kay (1969) ★★<a class="headerlink" href="#색채어-berlin-kay-1969" title="Permanent link">#</a></h3>
+<p>"만약 색을 표현하는 단어가 단 두 개밖에 없다면 그 색은 무엇일까요?"
+→ <strong>다니(Dani)어</strong>: <strong>mili(검정), mola(하양)</strong></p>
+<p><strong>Berlin &amp; Kay (1969), 『Basic Color Terms』 — 기본 색채어의 출현 순서</strong></p>
+<div class="codehilite"><pre><span></span><code>White/Black → Red → Green/Yellow → Blue → Brown → Purple/Pink/Orange/Grey
+ (흰·검)      (빨강)  (초록·노랑, 순서는 둘 중 아무거나)  (파랑)  (갈색)  (보라·분홍·주황·회색)
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>색채어가 2개뿐인 언어 = <strong>흑·백</strong> (다니어 mili/mola)
+3번째 색 = <strong>빨강(Red)</strong>
+Green과 Yellow는 <strong>어느 쪽이 먼저든</strong> 그다음 단계 (둘 다 생긴 다음 Blue)</p>
+</div>
+<h3 id="64-언어와-사고의-관계-결론">6.4 언어와 사고의 관계 — 결론 ★★★<a class="headerlink" href="#64-언어와-사고의-관계-결론" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>색상의 연속에 선을 그어 경계를 만드는 것은 분명 언어이다.</strong> (빛의 스펙트럼은 연속적인데 V·B·G·Y·O·R로 끊는 건 언어)</li>
+<li><strong>언어가 사고를 제한하는 경우도 있고, 반대로 제한할 수 없는 경우도 있다.</strong></li>
+<li><strong>기억을 돕거나 다른 대상과 구별하는 것</strong>과 같이 <strong>사고의 범위를 제한할 때</strong> 언어는 <strong>결정적인 역할</strong>을 한다</li>
+<li>하지만 <strong>언어 자극에 영향받지 않는 착시 현상</strong>, <strong>언어가 없어도 사고하는 경우</strong>, <strong>현저한 것을 지각하는 모습</strong> 등에서는 언어의 역할이 <strong>크지 않다</strong></li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>"언어는 사고(지각)에 어느 정도 영향을 미치나?"</strong> 모범 답
+→ <strong>기억·구별</strong>처럼 사고의 범위를 정할 때는 <strong>결정적</strong>이지만(색채 지각, 심상 왜곡), <strong>착시·언어 없는 사고·현저한 것의 지각</strong>에서는 역할이 <strong>크지 않다</strong>. 즉 <strong>부분적 영향</strong> — 사피어-워프의 강한 결정론은 과장.</p>
+</div>
+<h3 id="생각해-볼-질문">생각해 볼 질문<a class="headerlink" href="#생각해-볼-질문" title="Permanent link">#</a></h3>
+<ol>
+<li>우리말에는 있고 외국어에는 없는 표현?</li>
+<li>외국어에는 있고 우리말에는 없는 표현?</li>
+<li>우리말에 발달한 표현과 문화의 관계?</li>
+<li>말로 정확히 표현하기 어려운 감정이나 상태?</li>
+<li>언어가 기억을 돕거나 다른 대상과 구별하는 데 도움을 주는 예?</li>
+<li>빨강·노랑·파랑·흰색·검은색 중 하나의 색채어를 모두 모아 보기</li>
+</ol>
+<hr />
+<h2 id="이-장-정리">이 장 정리<a class="headerlink" href="#이-장-정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>주제</th>
+<th>외울 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>언어와 문화</td>
+<td>문화인류학자는 <strong>먼저 언어를</strong> 연구, <strong>참여적 관찰자</strong></td>
+</tr>
+<tr>
+<td>문화상대주의</td>
+<td><strong>프란츠 보애스</strong>, 20세기 초, 그 문화 사람의 시각에서, 문화인류학 기본 원리</td>
+</tr>
+<tr>
+<td>자문화중심주의</td>
+<td><strong>ethnocentrism</strong>, 문화화(enculturation), "당연하게 여기는 것"까지 포함</td>
+</tr>
+<tr>
+<td>언어상대주의</td>
+<td>더 뛰어난 언어 없음, 모든 언어는 똑같이 복잡·완전, 차이 = 지적 능력 ✗ 문화·필요성 ○</td>
+</tr>
+<tr>
+<td>사피어-워프</td>
+<td><strong>Sapir(1884~1939) &amp; Whorf(1897~1941)</strong>, 언어상대성 가설 = <strong>언어결정주의</strong>, 환경을 <strong>재단</strong></td>
+</tr>
+<tr>
+<td>눈·쌀·낙타</td>
+<td>에스키모 눈(약 10개, 영어도 10개), 아즈텍어 눈=얼음=추위 1단어, 가로어 쌀, 아랍 낙타 20개↑</td>
+</tr>
+<tr>
+<td>전문성</td>
+<td>상대성 ≠ 전문성, <strong>Clark &amp; Clark (1977)</strong></td>
+</tr>
+<tr>
+<td>언어→사고</td>
+<td><strong>Carmichael 1932 심상 왜곡</strong>, Glucksberg 1988, Santa &amp; Ranken 1972, <strong>Winawer 2007 러시아어</strong>, <strong>Kay &amp; Regier 2007 베린모어</strong>, <strong>Özgen 2004 경계</strong></td>
+</tr>
+<tr>
+<td>사고→언어</td>
+<td><strong>피라항</strong>(숫자·색채어·친족어 없음), <strong>사모</strong>(81% 지리 정보), 일데폰소(Schaller 1991), 5개월 아기 암산(Wynn 1992)</td>
+</tr>
+<tr>
+<td>영향 못 줌</td>
+<td><strong>착시</strong>: 뮐러-라이어, 폰조</td>
+</tr>
+<tr>
+<td>색채어</td>
+<td><strong>Berlin &amp; Kay 1969</strong>, 흑백 → 빨강 → 초록/노랑 → 파랑 → 갈색 → 나머지, 다니어 mili/mola</td>
+</tr>
+<tr>
+<td>결론</td>
+<td>기억·구별엔 <strong>결정적</strong>, 착시·언어 없는 사고·현저한 것 지각엔 <strong>크지 않음</strong></td>
+</tr>
+</tbody>
+</table>
+  <footer class="page-footer"><code>content/lang/05-language-culture.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#1-언어와-문화">1. 언어와 문화</a></li>
+<li><a href="#2-문화상대주의-cultural-relativism">2. 문화상대주의 (cultural relativism) ★★</a><ul>
+<li><a href="#자문화중심주의-ethnocentrism">자문화중심주의 (ethnocentrism)</a></li>
+</ul>
+</li>
+<li><a href="#3-언어상대주의-linguistic-relativism">3. 언어상대주의 (linguistic relativism) ★★</a></li>
+<li><a href="#4-사피어-워프-가설-sapir-whorf-hypothesis">4. 사피어-워프 가설 (Sapir-Whorf hypothesis) ★★★</a><ul>
+<li><a href="#에스키모어의-눈">에스키모어의 '눈' ★★</a></li>
+</ul>
+</li>
+<li><a href="#5-언어의-다름-이해하기-전문성의-문제">5. 언어의 다름 이해하기 — 전문성의 문제 ★★</a></li>
+<li><a href="#6-언어와-사고의-관계-톺아보기">6. 언어와 사고의 관계 톺아보기 ★★★</a><ul>
+<li><a href="#61-언어가-사고에-영향을-주는-경우">6.1 언어가 사고에 영향을 주는 경우</a></li>
+<li><a href="#62-사고가-언어에-영향을-주는-경우">6.2 사고가 언어에 영향을 주는 경우</a></li>
+<li><a href="#63-언어가-사고에-영향을-주지-못하는-경우">6.3 언어가 사고에 영향을 주지 못하는 경우</a></li>
+<li><a href="#색채어-berlin-kay-1969">색채어: Berlin &amp; Kay (1969) ★★</a></li>
+<li><a href="#64-언어와-사고의-관계-결론">6.4 언어와 사고의 관계 — 결론 ★★★</a></li>
+<li><a href="#생각해-볼-질문">생각해 볼 질문</a></li>
+</ul>
+</li>
+<li><a href="#이-장-정리">이 장 정리</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

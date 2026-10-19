@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1. 사물인터넷과 오픈소스 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="01-iot-opensource.html" class="active">1. IoT와 오픈소스</a></li>
+<li><a href="02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="1-사물인터넷과-오픈소스">1. 사물인터넷과 오픈소스<a class="headerlink" href="#1-사물인터넷과-오픈소스" title="Permanent link">#</a></h1>
+<h2 id="사물인터넷-iot-internet-of-things">사물인터넷 (IoT, Internet of Things)<a class="headerlink" href="#사물인터넷-iot-internet-of-things" title="Permanent link">#</a></h2>
+<blockquote>
+<p>"모든 것들의 인터넷" — 작은 센서, 조명, 콘센트, 가전제품, 스마트기기, 자동차 등 <strong>모든 기기가 인터넷에 연결</strong>되어 유기적으로 통신하는 것</p>
+</blockquote>
+<ul>
+<li><strong>시작</strong>: 스마트폰(아이폰) → 스마트패드/TV → 웨어러블(글래스, 워치)</li>
+<li><strong>4차 산업혁명의 핵심 기술</strong>로 부상</li>
+</ul>
+<h3 id="iot-발전을-이끈-3요소">IoT 발전을 이끈 3요소<a class="headerlink" href="#iot-발전을-이끈-3요소" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>요소</th>
+<th>내용</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>저전력 기술</td>
+<td>적은 전력으로 통신</td>
+<td>BLE, 6LoWPAN, MQTT</td>
+</tr>
+<tr>
+<td>오픈소스</td>
+<td>소프트웨어</td>
+<td>리눅스</td>
+</tr>
+<tr>
+<td>오픈소스 하드웨어</td>
+<td>하드웨어</td>
+<td>아두이노, 라즈베리파이</td>
+</tr>
+<tr>
+<td>오픈소스 컨텐츠</td>
+<td>지식/콘텐츠</td>
+<td>위키피디아, TED, YouTube</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="gnu-프로젝트와-자유소프트웨어">GNU 프로젝트와 자유소프트웨어<a class="headerlink" href="#gnu-프로젝트와-자유소프트웨어" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>1983년 9월, 리처드 스톨만</strong>이 시작</li>
+<li><strong>GNU = "GNU's Not Unix"</strong> — 상용 OS인 유닉스 대신 자유롭게 쓸 수 있는 OS(<strong>Hurd</strong>)를 만들려던 프로젝트</li>
+<li><strong>1985년</strong> 스톨만이 <strong>GNU 선언문</strong> 발표 + <strong>자유소프트웨어재단(FSF)</strong> 설립</li>
+<li>Hurd 개발이 지연되어 → 결국 <strong>Linux</strong>를 커널로 사용</li>
+<li>GNU 프로젝트가 개발한 소프트웨어: <strong>gcc, gdb, GNOME</strong></li>
+</ul>
+<dl>
+<dt><strong>자유소프트웨어(free software)</strong></dt>
+<dd>자유롭게 소스코드를 <strong>사용 · 복사 · 수정 · 배포</strong>할 수 있는 소프트웨어</dd>
+</dl>
+<hr />
+<h2 id="자유소프트웨어-vs-프리웨어-vs-오픈소스">자유소프트웨어 vs 프리웨어 vs 오픈소스<a class="headerlink" href="#자유소프트웨어-vs-프리웨어-vs-오픈소스" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><code>free</code>가 '공짜'인지 '자유'인지 혼동 → 1998년 2월 3일, 넷스케이프 브라우저 소스 공개 논의 회의에서 <strong>'오픈소스'라는 용어</strong>가 만들어짐</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>무료 여부</th>
+<th>소스코드 공개</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프리웨어(freeware)</td>
+<td>무료</td>
+<td><strong>공개 안 함</strong></td>
+</tr>
+<tr>
+<td>자유소프트웨어</td>
+<td>유료 또는 무료</td>
+<td><strong>공개해야 함</strong></td>
+</tr>
+<tr>
+<td>오픈소스 소프트웨어</td>
+<td>유료 또는 무료</td>
+<td><strong>공개해야 함</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="자유소프트웨어-vs-오픈소스-관점-차이">자유소프트웨어 vs 오픈소스 (관점 차이)<a class="headerlink" href="#자유소프트웨어-vs-오픈소스-관점-차이" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>자유소프트웨어</th>
+<th>오픈소스 소프트웨어</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>성격</td>
+<td><strong>사회적 운동</strong> 측면</td>
+<td><strong>개발 방법론</strong> 측면</td>
+</tr>
+<tr>
+<td>주장</td>
+<td>"공유할 수 없는 독점 소프트웨어는 잘못됐다. 소스코드를 공개해서 모두 자유롭게 쓰자"</td>
+<td>"당신의 코드를 다른 사용자가 변경하게 하면 그들이 버그를 고칠 것이다. 서로 에러를 고쳐 완성도를 높이자"</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>오픈소스가 더 포괄적인 개념</strong> (자유소프트웨어 ⊂ 오픈소스)</li>
+<li>소프트웨어뿐 아니라 <strong>하드웨어(설계도 공개), 글꼴 같은 데이터</strong>에도 적용 가능</li>
+</ul>
+<hr />
+<h2 id="오픈소스-라이선스">오픈소스 라이선스<a class="headerlink" href="#오픈소스-라이선스" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>"소스코드를 공개해야 하는가?"</strong> 가 핵심 구분 기준. GPL만 공개 의무가 있고 나머지는 없다고 외우면 됨.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>라이선스</th>
+<th>소스 공개 의무</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GNU GPL</strong></td>
+<td><strong>공개 필수</strong></td>
+<td>가장 많은 오픈소스가 채택. 소스를 수정하거나 새 코드를 병합하면 공개해야 함</td>
+</tr>
+<tr>
+<td><strong>GNU LGPL</strong></td>
+<td><strong>불필요</strong>(링크 시)</td>
+<td>GPL의 공개 부담을 줄임. <strong>라이브러리에 링크만 하는 경우</strong> 공개 불필요</td>
+</tr>
+<tr>
+<td><strong>BSD</strong></td>
+<td>불필요</td>
+<td>GPL/LGPL보다 제한이 적어 허용 범위가 넓음</td>
+</tr>
+<tr>
+<td><strong>Apache</strong></td>
+<td>불필요</td>
+<td>아파치 소프트웨어 재단이 자체 제작</td>
+</tr>
+<tr>
+<td><strong>MIT</strong></td>
+<td>불필요</td>
+<td>MIT가 소속 소프트웨어공학도를 돕기 위해 개발</td>
+</tr>
+</tbody>
+</table>
+<h3 id="copyleft">copyleft<a class="headerlink" href="#copyleft" title="Permanent link">#</a></h3>
+<ul>
+<li>FSF가 자유소프트웨어를 위해 만든 것이 <strong>GPL</strong></li>
+<li><strong>copyleft</strong> = 저작권을 기반으로 자유롭게 공유한다는 GNU의 철학</li>
+<li>GPL 소프트웨어(Linux, gcc, gdb, GNOME)는 <strong>배포 시 소스코드를 반드시 공개</strong></li>
+</ul>
+<h3 id="리눅스-배포판이-많은-이유">리눅스 배포판이 많은 이유<a class="headerlink" href="#리눅스-배포판이-많은-이유" title="Permanent link">#</a></h3>
+<p>소스코드가 공개되므로 <strong>재빌드해서 또 다른 리눅스를 배포</strong>할 수 있기 때문.</p>
+<ul>
+<li>Debian → 재빌드 → <strong>Ubuntu</strong> (더 빠른 버전 업데이트 + 사용자 편의성 개선)</li>
+<li>RHEL(상용) → 재빌드 → <strong>CentOS</strong> (무료로 사용 가능)</li>
+</ul>
+<hr />
+<h2 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>연도</th>
+<th>사건</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1991</td>
+<td>핀란드의 <strong>리누즈 토발즈</strong>가 공개</td>
+</tr>
+<tr>
+<td>1994</td>
+<td>안정적인 <strong>커널 1.0</strong> 발표</td>
+</tr>
+<tr>
+<td>1996</td>
+<td><strong>커널 2.0</strong> 발표</td>
+</tr>
+<tr>
+<td>1990년대</td>
+<td>IBM, Compaq, Oracle이 공식 지원 → <strong>서버 시장</strong>에서 두각</td>
+</tr>
+<tr>
+<td>2000년대</td>
+<td><strong>임베디드</strong> 분야 진출</td>
+</tr>
+<tr>
+<td>2005년 이후</td>
+<td>스마트 디바이스 OS로 사용 (안드로이드, 리모, 모블린, 마에모, 미고, 타이젠, WebOS)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>대형 기종용 <strong>Unix를 개인용 컴퓨터에서 동작하도록 변형</strong>한 것</li>
+<li>초창기에는 <strong>앤드루 타넨바움</strong>이 교육용으로 만든 <strong>미닉스(MINIX)</strong> 유닉스 커널을 기반으로 제작</li>
+<li>라이선스는 <strong>GNU GPL</strong></li>
+<li>현재 삼성전자, LG전자, 구글의 <strong>스마트TV OS</strong>로도 사용 중</li>
+</ul>
+<h3 id="대표-오픈소스">대표 오픈소스<a class="headerlink" href="#대표-오픈소스" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>오픈소스 소프트웨어</td>
+<td><strong>Apache</strong>(웹서버 점유율 60~70%), Linux 배포판(Debian/Ubuntu/RHEL/CentOS), GNOME·KDE, 안드로이드, 타이젠, 이클립스(IBM)</td>
+</tr>
+<tr>
+<td>오픈소스 하드웨어</td>
+<td>비글보드, <strong>아두이노</strong>, <strong>라즈베리파이</strong>, 구글 코랄, 엔비디아 젯슨</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="오픈소스-하드웨어가-등장한-이유">오픈소스 하드웨어가 등장한 이유<a class="headerlink" href="#오픈소스-하드웨어가-등장한-이유" title="Permanent link">#</a></h2>
+<p>초기 임베디드 교육의 문제점 3가지:</p>
+<ol>
+<li><strong>값비싼</strong> 임베디드 보드 → 진입 어려움</li>
+<li>저항·콘덴서·PCB 설계·납땜 등 <strong>전자공학 전문지식</strong> 요구</li>
+<li>하드웨어에서 프로그램을 구동하기 위한 <strong>방대한 소프트웨어 지식</strong> 요구</li>
+</ol>
+<p>→ 비전공자뿐 아니라 <strong>소프트웨어 전공자에게도 진입 장벽</strong>으로 작용</p>
+<p>→ 해결: 저렴하고 전문지식 없이도 접근 가능한 <strong>오픈소스 하드웨어</strong> 등장</p>
+<hr />
+<h2 id="아두이노-vs-라즈베리파이">아두이노 vs 라즈베리파이<a class="headerlink" href="#아두이노-vs-라즈베리파이" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>두 보드의 <strong>포지션 차이</strong>(마이크로컨트롤러 vs 싱글보드 컴퓨터)를 묻기 좋음</p>
+</div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>아두이노 (Arduino)</th>
+<th>라즈베리파이 (Raspberry Pi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>출시</td>
+<td><strong>2005년</strong>, 이탈리아 <strong>마시모 반지</strong></td>
+<td><strong>2012년 1월 29일</strong>, 영국 <strong>라즈베리파이 재단</strong></td>
+</tr>
+<tr>
+<td>목적</td>
+<td>디자이너와 IT의 <strong>융합인재 교육</strong></td>
+<td><strong>기초 컴퓨터과학 교육</strong></td>
+</tr>
+<tr>
+<td>분류</td>
+<td><strong>저사양 마이크로컨트롤러 보드</strong></td>
+<td><strong>싱글보드 컴퓨터(SBC)</strong></td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>8비트 AVR CPU (Atmel AVR)</td>
+<td>ARM 기반 싱글/쿼드코어 + GPU + DSP</td>
+</tr>
+<tr>
+<td>메모리</td>
+<td>매우 작음</td>
+<td>대용량 (최대 8GB)</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>없음</td>
+<td>있음 (Raspberry Pi OS 등)</td>
+</tr>
+<tr>
+<td>개발환경</td>
+<td><strong>스케치(sketch)</strong> — C/C++ 몰라도 접근 가능</td>
+<td>리눅스 + Python 등</td>
+</tr>
+<tr>
+<td>전원</td>
+<td>건전지 등 저전력 배터리로 구동 가능</td>
+<td>어댑터 필요</td>
+</tr>
+<tr>
+<td>가격</td>
+<td>UNO 기준 20달러 내외</td>
+<td>재단이 비영리라 저렴</td>
+</tr>
+</tbody>
+</table>
+<p><strong>라즈베리파이 추가 특징</strong></p>
+<ul>
+<li>미국 <strong>Broadcom</strong>사의 <strong>SoC(System on Chip)</strong> 사용</li>
+<li><strong>OpenGL 지원 GPU</strong> 탑재</li>
+<li>USB, GPIO, Ethernet, 무선랜, 블루투스, 사운드 출력, HDMI 등 지원</li>
+<li>키보드·마우스·모니터를 연결하면 <strong>소형 PC로 사용 가능</strong></li>
+<li><strong>모델 B = 유선랜(Ethernet) 포트 있음 / 모델 A = 없음</strong></li>
+</ul>
+  <footer class="page-footer"><code>content/embedded/01-iot-opensource.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#사물인터넷-iot-internet-of-things">사물인터넷 (IoT, Internet of Things)</a><ul>
+<li><a href="#iot-발전을-이끈-3요소">IoT 발전을 이끈 3요소</a></li>
+</ul>
+</li>
+<li><a href="#gnu-프로젝트와-자유소프트웨어">GNU 프로젝트와 자유소프트웨어</a></li>
+<li><a href="#자유소프트웨어-vs-프리웨어-vs-오픈소스">자유소프트웨어 vs 프리웨어 vs 오픈소스</a><ul>
+<li><a href="#자유소프트웨어-vs-오픈소스-관점-차이">자유소프트웨어 vs 오픈소스 (관점 차이)</a></li>
+</ul>
+</li>
+<li><a href="#오픈소스-라이선스">오픈소스 라이선스</a><ul>
+<li><a href="#copyleft">copyleft</a></li>
+<li><a href="#리눅스-배포판이-많은-이유">리눅스 배포판이 많은 이유</a></li>
+</ul>
+</li>
+<li><a href="#linux">Linux</a><ul>
+<li><a href="#대표-오픈소스">대표 오픈소스</a></li>
+</ul>
+</li>
+<li><a href="#오픈소스-하드웨어가-등장한-이유">오픈소스 하드웨어가 등장한 이유</a></li>
+<li><a href="#아두이노-vs-라즈베리파이">아두이노 vs 라즈베리파이</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

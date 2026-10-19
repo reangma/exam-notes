@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3. Seq2Seq와 Transformer · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="03-transformer.html" class="active">3. Seq2Seq와 Transformer</a></li>
+<li><a href="04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="3-seq2seq와-transformer">3. Seq2Seq와 Transformer<a class="headerlink" href="#3-seq2seq와-transformer" title="Permanent link">#</a></h1>
+<h2 id="이-장의-한-줄-요약">이 장의 한 줄 요약<a class="headerlink" href="#이-장의-한-줄-요약" title="Permanent link">#</a></h2>
+<blockquote>
+<p><strong>단어를 숫자로 바꿨으면(2장), 이제 "문장"을 처리할 모델이 필요하다.</strong>
+<strong>RNN(한 단어씩 읽기) → Seq2Seq(다 읽고 요약해서 번역) → Transformer(한꺼번에 읽고, 서로 참고하기)</strong></p>
+</blockquote>
+<p>각 단계가 <strong>앞 단계의 문제를 어떻게 고쳤는지</strong>만 따라가면 이 장은 끝납니다.</p>
+<div class="codehilite"><pre><span></span><code>RNN         : 한 단어씩 순서대로 읽는다      → 문제: 입출력 길이가 고정됨
+Seq2Seq     : 다 읽고 → 요약 → 번역한다      → 문제: 요약 1개에 다 넣느라 정보 손실, 느림
+Transformer : 한꺼번에 읽고, 단어끼리 참고  → 해결! (지금 GPT, Claude의 뼈대)
+</code></pre></div>
+
+<hr />
+<h2 id="1-배경-rnn-계열-모델과-그-한계">1. 배경 — RNN 계열 모델과 그 한계<a class="headerlink" href="#1-배경-rnn-계열-모델과-그-한계" title="Permanent link">#</a></h2>
+<h3 id="시계열-데이터란">시계열 데이터란?<a class="headerlink" href="#시계열-데이터란" title="Permanent link">#</a></h3>
+<dl>
+<dt>시계열(Time series) 데이터</dt>
+<dd><strong>순서가 중요한</strong> 데이터. 소리 데이터, 자연어 등의 <strong>언어 정보</strong></dd>
+</dl>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>"나는 너를 좋아해" 와 "너는 나를 좋아해" 는 <strong>같은 단어</strong>인데 <strong>순서가 달라서 뜻이 다릅니다.</strong>
+이렇게 순서가 의미를 결정하는 데이터를 시계열(순차) 데이터라고 합니다.</p>
+</div>
+<p>DNN(심층 신경망) 기반 모델이 이런 시계열 데이터 처리에서도 준수한 성과를 보였고, 대표 모델이 셋 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>모델</th>
+<th>풀네임</th>
+<th>쉬운 설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RNN</strong></td>
+<td>Recurrent Neural Network (순환 신경망)</td>
+<td><strong>한 단어씩 순서대로</strong> 읽으면서, 앞에서 읽은 내용을 <strong>메모장(hidden state)</strong> 에 적어 다음으로 넘기는 모델</td>
+</tr>
+<tr>
+<td><strong>LSTM</strong></td>
+<td>Long-Short Term Memory</td>
+<td>RNN의 <strong>기억력 개선판</strong>. 중요한 건 오래 기억하고 필요 없는 건 잊는 <strong>장치(gate, 문)</strong> 를 달았음</td>
+</tr>
+<tr>
+<td><strong>GRU</strong></td>
+<td>Gated Recurrent Unit</td>
+<td>LSTM을 <strong>더 단순하게</strong> 만든 버전</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>RNN 작동 방식 비유: 책을 한 글자씩 읽으며 메모하기</strong></p>
+<div class="codehilite"><pre><span></span><code>"I"   를 읽음 → 메모: [I]
+"am"  를 읽음 → 메모 갱신: [I am]
+"a"   를 읽음 → 메모 갱신: [I am a]
+"student" 읽음 → 메모 갱신: [I am a student]
+</code></pre></div>
+
+<p>이 <strong>메모장</strong>을 <strong>hidden state(은닉 상태)</strong> 라고 부릅니다. 앞 단어를 다 읽어야 다음 단어로 넘어갈 수 있습니다.</p>
+</div>
+<h3 id="rnn의-한계-입력출력-크기가-고정">RNN의 한계 — 입력/출력 크기가 고정<a class="headerlink" href="#rnn의-한계-입력출력-크기가-고정" title="Permanent link">#</a></h3>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>모델의 입력/출력 크기가 고정된다는 명확한 한계가 존재</strong>
+그런데 <strong>자연어, 소리 등은 가변적인 길이의 입출력</strong>을 가집니다.</p>
+</div>
+<p><strong>예: 기계 번역기 (Machine Translator)</strong></p>
+<div class="codehilite"><pre><span></span><code>I am a student        (영어 4단어)
+     ↓
+je suis étudiant      (프랑스어 3단어)
+</code></pre></div>
+
+<ul>
+<li>입력은 4단어인데 출력은 3단어 → <strong>길이가 다릅니다</strong></li>
+<li>한국어 → 영어 번역도 마찬가지: "너 지금 뭐해?" (3~4단어) ↔ "What are you doing now?" (5단어)</li>
+<li>기본 RNN은 <strong>"단어 하나 들어오면 단어 하나 나간다"</strong> 식이라 이런 번역을 못 합니다.</li>
+</ul>
+<hr />
+<h2 id="2-seq2seq-sequence-to-sequence">2. Seq2Seq (Sequence to Sequence) ★<a class="headerlink" href="#2-seq2seq-sequence-to-sequence" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Google, 2014</strong> 발표 (논문: <code>arxiv.org/abs/1409.3215</code>)</li>
+<li>이름 뜻: <strong>시퀀스(문장)를 받아서 → 시퀀스(문장)를 내보낸다</strong></li>
+<li><strong>RNN의 한계 (가변 길이에 동작하지 않음)</strong> 를 해결</li>
+<li>방법: <strong>두 개의 LSTM 네트워크</strong>를 이용한 <strong>Encoder / Decoder</strong> 구조</li>
+<li><strong>Input</strong>: LSTM/GRU 기반 구조로 단어 시퀀스를 입력</li>
+<li><strong>Output</strong>: 입력에 <strong>적합한 길이</strong>의 시퀀스를 출력</li>
+</ul>
+<h3 id="구조-다-듣고-정리하고-말하기">구조 — "다 듣고, 정리하고, 말하기"<a class="headerlink" href="#구조-다-듣고-정리하고-말하기" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>            Encoder (인코더)                         Decoder (디코더)
+   ┌──────────────────────────┐            ┌──────────────────────────────┐
+   I → am → a → student  ──→  [Context Vector]  ──→  &lt;sos&gt; → je → suis → étudiant → &lt;eos&gt;
+   (RNN 셀이 한 단어씩 읽음)    (요약 벡터 1개)       (한 단어씩 출력)
+</code></pre></div>
+
+<dl>
+<dt>Encoder (인코더)</dt>
+<dd>입력 문장의 <strong>모든 단어를 순차적으로 입력받은 후</strong>, 마지막에 <strong>모든 단어 정보를 압축해서 하나의 벡터로</strong> 만듦 (encoding) → 이게 <strong>Context vector</strong></dd>
+<dt>Context vector (문맥 벡터)</dt>
+<dd><strong>입력 문장 전체의 의미가 압축된 벡터 1개</strong></dd>
+<dt>Decoder (디코더)</dt>
+<dd><strong>Context vector를 받아서</strong> 번역된 단어를 <strong>한 개씩 순차적으로 출력</strong> (decoding) → 이렇게 해서 <strong>서로 다른 길이의 입/출력에 대응</strong></dd>
+</dl>
+<p><strong>특수 토큰</strong></p>
+<table>
+<thead>
+<tr>
+<th>토큰</th>
+<th>뜻</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;sos&gt;</code></td>
+<td>start of sentence</td>
+<td><strong>"이제 말 시작해"</strong> 신호. 디코더의 첫 입력</td>
+</tr>
+<tr>
+<td><code>&lt;eos&gt;</code></td>
+<td>end of sentence</td>
+<td><strong>"말 끝났다"</strong> 신호. 이게 나오면 출력 종료</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 동시통역사가 아니라 순차통역사</strong>
+1. 연사의 말을 <strong>끝까지 다 듣고</strong> (Encoder)
+2. 머릿속에 <strong>"이 사람이 한 말의 요지"를 하나로 정리</strong>한 뒤 (Context Vector)
+3. 그 요지를 보고 <strong>다른 언어로 한 단어씩 말함</strong> (Decoder) — "시작"(<code>&lt;sos&gt;</code>)부터 "끝"(<code>&lt;eos&gt;</code>)까지</p>
+<p>디코더는 말할 때 <strong>자기가 방금 한 말을 다음 입력으로</strong> 씁니다: <code>&lt;sos&gt;</code> → je → (je를 보고) suis → (suis를 보고) étudiant → <code>&lt;eos&gt;</code></p>
+</div>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Encoder / Context Vector / Decoder 각각의 역할</strong>
+- <strong>Encoder</strong>: 입력 단어를 순차적으로 받아 <strong>하나의 벡터로 압축</strong>
+- <strong>Context Vector</strong>: 입력 문장 <strong>전체 정보가 압축된 고정 크기 벡터</strong>
+- <strong>Decoder</strong>: Context Vector를 받아 <strong>출력 단어를 하나씩 순차적으로 생성</strong> → 입출력 길이가 달라도 대응 가능</p>
+</div>
+<hr />
+<h2 id="3-transformer의-등장">3. Transformer의 등장 ★★<a class="headerlink" href="#3-transformer의-등장" title="Permanent link">#</a></h2>
+<ul>
+<li>논문: <strong>"Attention Is All You Need" (2017)</strong>, <code>arxiv.org/abs/1706.03762</code></li>
+<li>제목 뜻: <strong>"Attention만 있으면 된다"</strong> → RNN 없이 <strong>Attention이라는 방법만으로</strong> 만들었다는 자신감</li>
+<li><strong>Seq2Seq(Encoder-Decoder) 구조를 따르면서도 Attention만으로 구현된 모델</strong></li>
+<li><strong>RNN을 사용하지 않고 Encoder-Decoder 구조로만 설계</strong> → <strong>RNN보다 우수한 성능</strong></li>
+<li><strong>아직까지도 다양한 분야에서 사용되는 범용적 모델</strong> (GPT, Claude, Gemini 전부 Transformer 기반)</li>
+</ul>
+<p>기존 Seq2Seq / RNN 계열은 <strong>시간에 의존적인 입력 sequence에 따라 hidden state를 생성하여 입력을 처리하는 구조</strong> (= 한 단어씩 순서대로 메모장을 갱신하는 방식) 였고, 이 방식에서 고질적인 한계 3가지가 생겼습니다.</p>
+<h3 id="seq2seq-rnn의-고질적-한계-3가지">Seq2Seq / RNN의 고질적 한계 3가지 ★★<a class="headerlink" href="#seq2seq-rnn의-고질적-한계-3가지" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Transformer가 무엇을 해결했는가</strong> — 거의 반드시 나옵니다. 3개를 세트로 외우세요.</p>
+<ol>
+<li><strong>고정된 크기의 벡터에 모든 정보 압축 → 정보 손실 발생</strong></li>
+<li><strong>Vanishing Gradient Problem (기울기 소실)</strong></li>
+<li><strong>입력의 순차적 처리 → 병렬화 불가능</strong></li>
+</ol>
+</div>
+<h4 id="한계-1-고정-크기-벡터에-모든-정보-압축-정보-손실">한계 ① 고정 크기 벡터에 모든 정보 압축 → 정보 손실<a class="headerlink" href="#한계-1-고정-크기-벡터에-모든-정보-압축-정보-손실" title="Permanent link">#</a></h4>
+<ul>
+<li>문장이 3단어든 300단어든, Context Vector는 <strong>똑같은 크기 1개</strong></li>
+<li><strong>긴 문장일수록 다 못 담고 흘려버림</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 영화 한 편을 "한 줄 평"으로 요약하기</strong>
+3분짜리 광고는 한 줄로 요약해도 괜찮지만, <strong>3시간짜리 영화를 한 줄로 요약하면 대부분의 내용을 잃습니다.</strong>
+그런데 디코더는 <strong>그 한 줄만 보고</strong> 번역해야 합니다.</p>
+</div>
+<h4 id="한계-2-vanishing-gradient-problem-기울기-소실">한계 ② Vanishing Gradient Problem (기울기 소실)<a class="headerlink" href="#한계-2-vanishing-gradient-problem-기울기-소실" title="Permanent link">#</a></h4>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 귓속말 전달 게임</strong>
+30명이 줄 서서 귓속말을 전하면 <strong>뒤로 갈수록 말이 뭉개져서</strong> 처음 말이 사라집니다.</p>
+<p>RNN은 학습할 때 "여기 틀렸어!"라는 <strong>수정 신호(gradient, 기울기)</strong> 를 문장 <strong>뒤에서 앞으로</strong> 전달합니다.
+단어를 하나 거칠 때마다 신호가 조금씩 약해져서, <strong>문장 앞부분에 도착할 땐 거의 0</strong>이 됩니다.
+→ <strong>긴 문장의 앞부분을 제대로 배우지 못합니다.</strong>
+(자세히: <a href="00-math-basics.html">0장</a> 8절)</p>
+</div>
+<h4 id="한계-3-순차적-처리-병렬화-불가능">한계 ③ 순차적 처리 → 병렬화 불가능<a class="headerlink" href="#한계-3-순차적-처리-병렬화-불가능" title="Permanent link">#</a></h4>
+<ul>
+<li>RNN은 <strong>1번째 단어를 처리해야 2번째로, 2번째를 처리해야 3번째로</strong> 갈 수 있음</li>
+<li><strong>동시에 여러 단어를 처리(병렬화)할 수 없음</strong> → <strong>느림</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>병렬화</strong> = 여러 일을 <strong>동시에</strong> 하는 것.
+<strong>비유:</strong> 시험지 100장 채점
+- 순차 처리: 선생님 1명이 1장씩 → 100번 반복 (느림)
+- 병렬 처리: 선생님 100명이 1장씩 <strong>동시에</strong> → 1번에 끝 (빠름)</p>
+<p>GPU(그래픽카드)는 <strong>동시에 수천 개 계산</strong>을 잘하는 장치인데, RNN은 순서를 기다려야 해서 <strong>GPU를 제대로 못 씁니다.</strong> Transformer는 문장 전체를 <strong>한꺼번에</strong> 넣으니까 GPU를 100% 활용할 수 있습니다.</p>
+</div>
+<hr />
+<h2 id="4-transformer-모델-구조">4. Transformer 모델 구조 ★<a class="headerlink" href="#4-transformer-모델-구조" title="Permanent link">#</a></h2>
+<h3 id="큰-틀-여전히-encoder-decoder">큰 틀 — 여전히 Encoder-Decoder<a class="headerlink" href="#큰-틀-여전히-encoder-decoder" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>Seq2Seq처럼 Encoder-Decoder 구조를 사용</strong></li>
+<li><code>&lt;sos&gt;</code> 토큰을 입력으로 받아 <code>&lt;eos&gt;</code> 토큰이 나올 때까지 연산 수행</li>
+<li><strong>RNN은 사용되지 않았지만 encoder-decoder의 구조는 유지</strong></li>
+</ul>
+<div class="codehilite"><pre><span></span><code> I  am  a  student              &lt;sos&gt;  je  suis  étudiant
+ ↓   ↓  ↓    ↓                    ↓     ↓    ↓      ↓
+[Embedding layer]               [Embedding layer]
+ ↓                                ↓
+[    Encoders    ]  ─────────→  [    Decoders    ]
+                                  ↓
+                         je  suis  étudiant  &lt;eos&gt;
+</code></pre></div>
+
+<h3 id="transformer의-입력-embedding-positional-encoding">Transformer의 입력 — Embedding + Positional Encoding ★<a class="headerlink" href="#transformer의-입력-embedding-positional-encoding" title="Permanent link">#</a></h3>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>Transformer는 단어의 embedding vector를 그대로 입력받지 않습니다.</strong>
+<strong>Embedding vector에서 "조정된 값"</strong> 을 입력으로 활용합니다 = <strong>Embedding + Positional Encoding(위치 정보)</strong></p>
+<p>(슬라이드: "단순히 각 단어의 embedding vector를 입력으로 받지 않음 (RNN의 고유한 특성)")</p>
+</div>
+<p><strong>왜 위치 정보를 따로 더해야 하나?</strong></p>
+<ul>
+<li>RNN은 <strong>순서대로 한 단어씩</strong> 넣으니까, 모델이 <strong>자동으로 순서를 압니다.</strong></li>
+<li>Transformer는 <strong>모든 단어를 한꺼번에</strong> 넣습니다 (병렬화를 위해).</li>
+<li>그러면 모델 입장에선 <strong>"I am a student"와 "student a am I"가 똑같아 보입니다!</strong> 그냥 단어 4개가 든 <strong>봉지</strong>일 뿐이니까요.</li>
+<li>그래서 각 단어에 <strong>"너는 1번째, 너는 2번째…"</strong> 라는 <strong>위치 표시(Positional Encoding)</strong> 를 숫자로 <strong>더해 줍니다.</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 단체 사진 찍을 때 번호표 달기</strong>
+학생들을 한꺼번에 운동장에 풀어 놓으면 원래 줄 순서를 모릅니다.
+그래서 각자 가슴에 <strong>번호표(1번, 2번, 3번…)</strong> 를 달아 줍니다. 한꺼번에 모여 있어도 번호표를 보면 순서를 알 수 있죠.</p>
+<div class="codehilite"><pre><span></span><code>입력 = 단어의 의미 (Embedding)  +  단어의 위치 (Positional Encoding)
+        "student"라는 뜻              "4번째 자리"
+</code></pre></div>
+
+</div>
+<h3 id="내부-구성요소">내부 구성요소<a class="headerlink" href="#내부-구성요소" title="Permanent link">#</a></h3>
+<p>슬라이드 구조도를 표로 풀면:</p>
+<table>
+<thead>
+<tr>
+<th>구성 요소</th>
+<th>위치</th>
+<th>쉬운 설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Embedding + Positional Encoding</strong></td>
+<td>인코더·디코더 맨 아래</td>
+<td>단어 의미 + 위치 번호표</td>
+</tr>
+<tr>
+<td><strong>Multi-head Self-Attention</strong></td>
+<td>인코더</td>
+<td><strong>Encoder Self-Attention</strong>: 입력 문장 안의 단어들이 <strong>서로를 참고</strong></td>
+</tr>
+<tr>
+<td><strong>Masked Multi-head Self-Attention</strong></td>
+<td>디코더</td>
+<td><strong>Masked Decoder Self-Attention</strong>: 아직 안 쓴 <strong>뒤쪽 단어는 가리고(mask)</strong> 앞쪽만 참고</td>
+</tr>
+<tr>
+<td><strong>Multi-head Attention</strong> (두 번째)</td>
+<td>디코더</td>
+<td><strong>Encoder-Decoder Attention</strong>: 디코더가 <strong>인코더의 결과를 참고</strong></td>
+</tr>
+<tr>
+<td><strong>Position-wise FFNN</strong></td>
+<td>인코더·디코더</td>
+<td>각 단어 위치마다 따로 적용하는 <strong>일반 신경망</strong> (Feed-Forward Neural Network)</td>
+</tr>
+<tr>
+<td><strong>Add &amp; Norm</strong></td>
+<td>각 단계 뒤</td>
+<td><strong>Add</strong>: 원래 입력을 결과에 다시 더해줌 / <strong>Norm</strong>: 숫자 크기를 고르게 맞춤</td>
+</tr>
+<tr>
+<td><strong>Dense → Softmax</strong></td>
+<td>디코더 맨 위</td>
+<td>다음 단어 후보들의 점수 → <strong>확률</strong>로 변환</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Add &amp; Norm 쉽게:</strong>
+- <strong>Add (잔차 연결)</strong>: 처리한 결과에 <strong>처리 전 원본을 다시 더해</strong> 줍니다. 처리하다 중요한 정보를 잃어도 원본이 남아 있게 하는 <strong>안전장치</strong>입니다. (기울기 소실도 줄여 줌)
+- <strong>Norm (정규화)</strong>: 숫자들이 너무 커지거나 작아지지 않게 <strong>크기를 고르게</strong> 맞춥니다.</p>
+<p><strong>FFNN 쉽게:</strong> Attention이 "누구를 참고할지" 정했다면, FFNN은 그렇게 모은 정보를 <strong>한 번 더 가공</strong>하는 단계입니다.</p>
+<p><strong>Softmax 쉽게:</strong> 후보 단어 점수(고양이 2.0점, 강아지 1.0점…)를 <strong>합이 100%인 확률</strong>(고양이 66%, 강아지 24%…)로 바꿉니다. (<a href="00-math-basics.html">0장</a> 9절)</p>
+</div>
+<hr />
+<h2 id="5-attention이란">5. Attention이란? ★★<a class="headerlink" href="#5-attention이란" title="Permanent link">#</a></h2>
+<p>Transformer의 핵심 아이디어입니다. 시험에서 깊은 수식은 안 나오지만 <strong>개념</strong>은 꼭 알아야 합니다.</p>
+<h3 id="attention-중요한-데에-집중하기">Attention = "중요한 데에 집중하기"<a class="headerlink" href="#attention-중요한-데에-집중하기" title="Permanent link">#</a></h3>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>다음 문장을 보세요.
+<strong>"동물이 길을 건너지 않았다. 왜냐하면 그것이 너무 피곤했기 때문이다."</strong></p>
+<p>여기서 <strong>"그것"</strong> 은 뭘까요? 사람은 바로 <strong>"동물"</strong> 이라는 걸 압니다. "길"이 피곤할 리는 없으니까요.</p>
+<p>컴퓨터도 "그것"을 이해하려면 <strong>문장의 다른 단어들을 둘러보면서 "누가 나랑 관련 있지?"</strong> 를 따져야 합니다.
+- "동물" ↔ "그것": <strong>관련도 높음</strong> ★★★
+- "길" ↔ "그것": 관련도 낮음 ★
+- "건너지" ↔ "그것": 관련도 낮음 ★</p>
+<p>이렇게 <strong>관련도를 점수로 계산해서, 중요한 단어에 더 집중하는 것</strong>이 Attention입니다.</p>
+</div>
+<h3 id="self-attention-같은-문장-안에서-서로-참고하기">Self-Attention = 같은 문장 안에서 서로 참고하기<a class="headerlink" href="#self-attention-같은-문장-안에서-서로-참고하기" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>Self</strong>(자기 자신) = <strong>같은 문장 안의 단어들끼리</strong> Attention</li>
+<li>모든 단어가 <strong>다른 모든 단어와의 관련도를 한 번에</strong> 계산</li>
+<li>→ 문장이 길어도 1번째 단어와 100번째 단어가 <strong>직접</strong> 연결됨 (RNN처럼 귓속말로 전달할 필요 없음)</li>
+</ul>
+<h3 id="query-key-value-attention-계산에-쓰는-3가지">Query / Key / Value — Attention 계산에 쓰는 3가지<a class="headerlink" href="#query-key-value-attention-계산에-쓰는-3가지" title="Permanent link">#</a></h3>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 도서관에서 책 찾기</strong></p>
+<table>
+<thead>
+<tr>
+<th>이름</th>
+<th>도서관 비유</th>
+<th>Attention에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Query (Q)</strong></td>
+<td>내가 찾는 것: <strong>"고양이 키우는 법"</strong></td>
+<td>지금 이 단어가 <strong>알고 싶은 것</strong></td>
+</tr>
+<tr>
+<td><strong>Key (K)</strong></td>
+<td>각 책 등에 붙은 <strong>제목표</strong></td>
+<td>각 단어가 내건 <strong>"나는 이런 단어야" 이름표</strong></td>
+</tr>
+<tr>
+<td><strong>Value (V)</strong></td>
+<td>책 <strong>안의 실제 내용</strong></td>
+<td>각 단어가 가진 <strong>실제 정보</strong></td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>내 질문(Q)과 각 책 제목표(K)를 <strong>비교해서 점수</strong>를 냄 → <strong>Dot product</strong></li>
+<li>점수를 적당히 조절하고, 볼 수 없는 건 가림 → <strong>Scaling · Mask</strong></li>
+<li>점수를 <strong>확률(비율)로 변환</strong> → <strong>Softmax</strong></li>
+<li>그 비율대로 책 내용(V)을 <strong>섞어서</strong> 가져옴 → <strong>Out</strong></li>
+</ol>
+<p>예: "고양이 책" 70% + "애완동물 책" 25% + "요리책" 5% 비율로 내용을 섞어 읽는 것.</p>
+</div>
+<p>슬라이드의 계산 흐름:</p>
+<div class="codehilite"><pre><span></span><code>Query · Key  →  Dot product  →  Scaling · Mask  →  Softmax · Dropout  →  × Value  →  Out
+  (비교)          (점수)          (조절·가리기)        (확률로)                    (섞어서 결과)
+</code></pre></div>
+
+<ul>
+<li><strong>Dot product (내적)</strong>: 두 벡터가 얼마나 비슷한지 점수 내는 계산 (코사인 유사도의 친척)</li>
+<li><strong>Dropout</strong>: 학습할 때 일부 연결을 <strong>일부러 랜덤하게 끊어서</strong> 과적합(외워버리기)을 막는 기법</li>
+</ul>
+<h3 id="multi-head-여러-관점으로-동시에-보기">Multi-head = 여러 관점으로 동시에 보기<a class="headerlink" href="#multi-head-여러-관점으로-동시에-보기" title="Permanent link">#</a></h3>
+<ul>
+<li>Attention 계산을 <strong>한 번이 아니라 여러 번(여러 head) 동시에</strong> 수행</li>
+<li>각 head가 <strong>서로 다른 관점</strong>으로 관련도를 봄</li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 영화 한 편을 여러 평론가가 동시에 리뷰</strong>
+- 1번 평론가(head): <strong>문법</strong> 관점 — "이 동사의 주어는 누구지?"
+- 2번 평론가(head): <strong>의미</strong> 관점 — "'그것'이 가리키는 건?"
+- 3번 평론가(head): <strong>감정</strong> 관점 — "긍정적인 말인가?"</p>
+<p>여러 관점을 <strong>합치면</strong> 더 풍부하게 이해할 수 있습니다.</p>
+</div>
+<h3 id="masked-미래-단어-가리기">Masked = 미래 단어 가리기<a class="headerlink" href="#masked-미래-단어-가리기" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>디코더</strong>는 문장을 <strong>왼쪽부터 한 단어씩 생성</strong>합니다.</li>
+<li>학습할 때 정답 문장 전체를 넣어 주는데, <strong>뒤에 올 단어를 미리 보면 커닝</strong>이 됩니다.</li>
+<li>그래서 <strong>아직 생성 안 한 뒤쪽 단어는 가려서(mask)</strong> 못 보게 합니다.</li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유:</strong> 받아쓰기 시험에서 <strong>다음 문장이 적힌 부분을 손으로 가리고</strong> 지금까지 쓴 것만 보고 다음 단어를 쓰게 하는 것.</p>
+</div>
+<h3 id="attention-3종류-정리">Attention 3종류 정리 ★<a class="headerlink" href="#attention-3종류-정리" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>헷갈리기 쉬워 비교 문제로 좋습니다.</strong></p>
+<table>
+<thead>
+<tr>
+<th>이름</th>
+<th>어디에</th>
+<th>누가 누구를 참고?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Encoder Self-Attention</strong></td>
+<td>인코더</td>
+<td>입력 문장의 단어들이 <strong>서로를</strong></td>
+</tr>
+<tr>
+<td><strong>Masked Decoder Self-Attention</strong></td>
+<td>디코더</td>
+<td>출력 문장의 단어들이 서로를 (<strong>단, 미래 단어는 가림</strong>)</td>
+</tr>
+<tr>
+<td><strong>Encoder-Decoder Attention</strong></td>
+<td>디코더</td>
+<td>디코더가 <strong>인코더의 결과</strong>를 (번역할 때 원문을 다시 보는 것)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="transformer의-동작-과정-디코더-블록-기준">Transformer의 동작 과정 (디코더 블록 기준)<a class="headerlink" href="#transformer의-동작-과정-디코더-블록-기준" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>Inputs (단어 벡터들)
+   ⊕  Positional embedding (위치 더하기)
+   ↓
+┌─ Decoder block ─────────────────────────┐
+│  Layer norm → Masked self-attention → ⊕ │   ← ⊕ = Add (원본 다시 더하기)
+│  Layer norm → Feed forward network  → ⊕ │
+└─────────────────────────────────────────┘
+   × N 번 반복 (Decoder block * N)
+   ↓
+출력
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Attention 시각화 도구</strong> (오리엔테이션 Backgrounds 슬라이드): <strong><code>https://poloclub.github.io/transformer-explainer/</code></strong>
+슬라이드 그림의 <code>[CLS] many people dislike steve jobs, while acknowledging his genius [SEP]</code> 처럼, 단어끼리 <strong>선이 얼마나 진하게 연결되는지</strong>(=Attention 점수)를 직접 볼 수 있습니다.
+이 Transformer 구조 하나에서 <strong>deepseek, Claude, perplexity, Copilot, ChatGPT, Gemini</strong> 가 전부 나왔다는 게 그 슬라이드의 메시지입니다.</p>
+</div>
+<hr />
+<h2 id="6-nlp-패러다임의-변화">6. NLP 패러다임의 변화 ★<a class="headerlink" href="#6-nlp-패러다임의-변화" title="Permanent link">#</a></h2>
+<ul>
+<li>기계는 강력한 인공지능을 장착하지 않는 이상, <strong>인간의 언어 형태로 이해하고 소통하는 것이 불가능</strong></li>
+<li><strong>Language Model (언어 모델)</strong>: <strong>기계가 인간처럼 읽고, 쓰고, 소통할 수 있게 하는 기술</strong></li>
+</ul>
+<h3 id="paradigms-on-nlp-history-아래에서-위로-쌓임">Paradigms on NLP (History) — 아래에서 위로 쌓임<a class="headerlink" href="#paradigms-on-nlp-history-아래에서-위로-쌓임" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>┌──────────────────────── 초거대 AI (2020~2023) ─────────────────────────┐
+│ LaMDA (구글)      │ GPT3 (OpenAI)        │ MT NLG (MS, NVIDIA) │ OPT (Meta) │
+│ ↳ PaLM, LaMDA2,   │ ↳ GPT3.5(Instruct),  │                     │ ↳ LLaMA    │
+│   Bard            │   ChatGPT, GPT4      │                     │   (예정)    │
+└────────────────────────────────────────────────────────────────────────┘
+                                   ▲
+┌─────────────── 대규모 언어모델 (LLM) (2018) ───────────────┐
+│            BERT            │            GPT               │
+└───────────────────────────────────────────────────────────┘
+          ▲ (인코더에서)                ▲ (디코더에서)
+┌────────────────── 트랜스포머 (2017) ──────────────────┐
+│     인코더      │      디코더      │   어텐션 알고리즘   │
+└──────────────────────────────────────────────────────┘
+                                   ▲
+┌──────────────────── 언어모델 (LM) ────────────────────┐
+│      인공신경망 언어모델      │    통계적 언어모델(SLM)    │
+└──────────────────────────────────────────────────────┘
+</code></pre></div>
+
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>BERT ← 트랜스포머의 "인코더"</strong>, <strong>GPT ← 트랜스포머의 "디코더"</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>BERT</th>
+<th>GPT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>트랜스포머의 어느 쪽?</td>
+<td><strong>인코더</strong></td>
+<td><strong>디코더</strong></td>
+</tr>
+<tr>
+<td>읽는 방향</td>
+<td><strong>양방향</strong> (문장 앞뒤를 다 봄)</td>
+<td><strong>단방향</strong> (왼쪽→오른쪽)</td>
+</tr>
+<tr>
+<td>잘하는 것</td>
+<td>문장 <strong>이해</strong> (분류, 추론)</td>
+<td>문장 <strong>생성</strong> (글쓰기, 대화)</td>
+</tr>
+</tbody>
+</table>
+<p>4장에서 "GPT는 단방향이라 자연어 추론에 약하다"는 한계가 나오는데, 그 이유가 바로 이것입니다.</p>
+</div>
+<h3 id="language-modeling의-목표">Language Modeling의 목표 ★<a class="headerlink" href="#language-modeling의-목표" title="Permanent link">#</a></h3>
+<dl>
+<dt>Language Modeling (언어 모델링)</dt>
+<dd><strong>단어 시퀀스의 생성 가능성을 모델링하여 미래 토큰의 확률을 예측</strong>하는 것</dd>
+</dl>
+<p><strong>쉽게:</strong> <strong>"지금까지 나온 단어를 보고, 다음 단어가 뭘지 확률로 맞히는 것."</strong></p>
+<div class="codehilite"><pre><span></span><code>"오늘 날씨가 정말 ___"
+
+  좋다   : 45%
+  덥다   : 30%
+  춥다   : 15%
+  바나나 : 0.001%
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>Language Modeling 정의 그대로 외우기: <strong>"단어 시퀀스의 생성 가능성을 모델링하여 미래 토큰의 확률을 예측"</strong>
+수식: <code>P(S) = P(w₁) × P(w₂|w₁) × P(w₃|w₁,w₂) × …</code> (<a href="00-math-basics.html">0장</a> 4절)</p>
+</div>
+<h3 id="history-of-language-model-slm-nlm-plm-llm">History of Language Model — SLM → NLM → PLM → LLM ★★<a class="headerlink" href="#history-of-language-model-slm-nlm-plm-llm" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>언어 모델 발전 4단계.</strong> 시기 / 핵심 기술 / 대표 모델 / 특징을 표로 묻기 좋습니다.
+슬라이드 부제: <strong>"더 자연스러운 언어 이해와 생성으로, 인간과 AI의 가능성을 확장해온 여정"</strong></p>
+</div>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th><strong>SLM</strong></th>
+<th><strong>NLM</strong></th>
+<th><strong>PLM</strong></th>
+<th><strong>LLM</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>풀네임</strong></td>
+<td>Statistical LM (통계적)</td>
+<td>Neural LM (신경망)</td>
+<td>Pre-trained LM (사전학습)</td>
+<td>Large LM (거대)</td>
+</tr>
+<tr>
+<td><strong>시기</strong></td>
+<td><strong>1990s</strong></td>
+<td><strong>2010s</strong></td>
+<td><strong>2018+</strong></td>
+<td><strong>2020+</strong></td>
+</tr>
+<tr>
+<td><strong>한 줄 정의</strong></td>
+<td><strong>확률 기반 (N-gram, MLE)</strong> / 조건부 확률로 다음 단어 추정</td>
+<td><strong>신경망 + 단어 임베딩</strong> (Word2Vec, RNN/LSTM)</td>
+<td><strong>대규모 비지도 사전학습 + 작업별 파인튜닝</strong> (BERT, GPT-2)</td>
+<td><strong>수십억~수천억 파라미터</strong> / <strong>사전학습 + 인간 가치 정렬</strong> (GPT-4)</td>
+</tr>
+<tr>
+<td><strong>핵심 기술</strong></td>
+<td>• N-gram 언어 모델<br>• 최대우도추정 (MLE)<br>• 통계적 확률 모델</td>
+<td>• 단어 임베딩 (Word2Vec, GloVe)<br>• 순환 신경망 (RNN, LSTM, GRU)<br>• 신경망 기반 언어 모델링</td>
+<td>• 대규모 비지도 사전학습<br>• 트랜스포머 (Self-Attention)<br>• 파인튜닝 / 전이학습</td>
+<td>• 초대규모 모델 (수십~수천억 파라미터)<br>• 멀티모달 / 멀티태스크<br>• 인간 피드백 기반 강화학습 (RLHF)</td>
+</tr>
+<tr>
+<td><strong>대표 모델</strong></td>
+<td>N-gram LM, Kneser-Ney Smoothing</td>
+<td>word2vec, LSTM, Seq2Seq</td>
+<td><strong>BERT, GPT-2, T5</strong></td>
+<td><strong>GPT-4, PaLM 2, LLaMA 3</strong></td>
+</tr>
+<tr>
+<td><strong>특징·한계</strong></td>
+<td><strong>데이터 의존적</strong> / <strong>맥락 이해 한계</strong> / <strong>긴 문장 처리 어려움</strong></td>
+<td><strong>분산 표현 학습</strong> / <strong>문맥 반영 개선</strong> / <strong>기울기 소실 문제</strong></td>
+<td><strong>대규모 데이터 활용</strong> / <strong>범용 언어 이해 능력</strong> / <strong>다양한 작업에 전이 가능</strong></td>
+<td><strong>뛰어난 자연어 이해 및 생성</strong> / <strong>복잡한 추론 및 문제 해결</strong> / <strong>안전성·정렬·책임감 중요성 확대</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>용어 풀이</strong></p>
+<table>
+<thead>
+<tr>
+<th>용어</th>
+<th>쉬운 뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>N-gram</strong></td>
+<td><strong>앞의 N−1개 단어만 보고</strong> 다음 단어를 맞히는 방식. 예: 2-gram은 바로 앞 1단어만 봄 ("오늘" 다음엔 "날씨"가 자주 나왔으니 "날씨")</td>
+</tr>
+<tr>
+<td><strong>MLE (최대우도추정)</strong></td>
+<td>"데이터에서 <strong>가장 자주 나온 걸 정답으로</strong> 추정"하는 통계 방법. "오늘 날씨" 다음에 "좋다"가 100번 중 45번 나왔으면 확률 45%</td>
+</tr>
+<tr>
+<td><strong>Kneser-Ney Smoothing</strong></td>
+<td>데이터에 <strong>한 번도 안 나온 조합도 확률 0이 되지 않게</strong> 살짝 보정해 주는 기법</td>
+</tr>
+<tr>
+<td><strong>분산 표현</strong></td>
+<td>= Dense representation (2장). 의미를 <strong>여러 숫자에 나눠 담는</strong> 표현</td>
+</tr>
+<tr>
+<td><strong>전이학습</strong></td>
+<td>한 곳에서 배운 지식을 <strong>다른 일에 옮겨 쓰는 것</strong> (영어 배운 사람이 독일어를 더 빨리 배우듯)</td>
+</tr>
+<tr>
+<td><strong>T5</strong></td>
+<td>구글이 만든 PLM. 모든 작업을 "글 → 글" 변환으로 통일한 모델</td>
+</tr>
+<tr>
+<td><strong>멀티모달</strong></td>
+<td>글뿐 아니라 <strong>이미지·소리</strong>까지 다루는 것</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>각 단계 한계가 다음 단계를 낳는 흐름</strong>
+- SLM: <strong>바로 앞 몇 단어만 봄</strong> → 맥락 이해 못 함 → 신경망으로 해결 (NLM)
+- NLM: RNN이라 <strong>기울기 소실</strong> → Transformer로 해결 (PLM)
+- PLM: 작업마다 <strong>파인튜닝 필요</strong> → 거대화 + 프롬프트로 해결 (LLM)
+- LLM: 너무 강력해서 <strong>안전성·정렬</strong>이 새 과제가 됨 → 5장 Alignment Tuning</p>
+</div>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>핵심 전환 (슬라이드 별표 문장)</strong>
+<strong>"대규모 사전학습 + 다운스트림 작업 파인튜닝이 표준 패러다임이 되었다"</strong>
+결과: ✓ 성능 향상 ✓ 적용 범위 확대 ✓ 사용자 경험 혁신 ✓ 산업 전반의 AI 전환 가속화</p>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>2장의 <strong>"임베딩 기법의 발전 3단계"</strong> 와 같은 이야기입니다.
+<strong>통계 기반</strong> (SLM, One-hot, TF-IDF) → <strong>딥러닝 기반</strong> (NLM, Word2Vec) → <strong>전이학습 기반</strong> (PLM/LLM, BERT, GPT)</p>
+</div>
+<hr />
+<h2 id="7-pre-trained-language-model-plm">7. Pre-trained Language Model (PLM) ★<a class="headerlink" href="#7-pre-trained-language-model-plm" title="Permanent link">#</a></h2>
+<p><strong>많은 양의 텍스트 데이터를 활용해 일반적인 수준의 '언어 이해'가 가능하도록 사전 학습을 시킨 언어 모델</strong></p>
+<div class="codehilite"><pre><span></span><code>1. Pre-training (사전학습)              2. Fine-tuning (미세조정)
+   위키피디아 등 대량의 글(Corpus)          특정 과제 데이터 (Downstream task)
+   ↓                                       예: KorQuAD(한국어 질의응답),
+   BERT가 일반적인 언어 능력 습득              네이버 영화 리뷰 감정 분류
+                                           ↓
+                                           그 과제를 잘하는 BERT
+</code></pre></div>
+
+<ul>
+<li>사전 학습된 모델을 <strong>텍스트 분류, 생성, 번역 등 다양한 downstream task에서 fine-tuning</strong>하여 사용 가능</li>
+<li><strong>task마다 end-to-end로 따로 학습하는 방식에 비해</strong> 여러 자연어 처리 task의 성능을 <strong>비약적으로 끌어올림</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 대학 교양 → 전공</strong>
+- <strong>Pre-training</strong> = 대학 1~2학년 <strong>교양 수업</strong>. 국어, 영어, 상식 등 <strong>두루두루</strong> 배움 (책을 엄청 많이 읽음)
+- <strong>Fine-tuning</strong> = 3~4학년 <strong>전공 수업</strong>. 교양을 바탕으로 <strong>특정 분야</strong>를 집중적으로 배움</p>
+<p>교양을 탄탄히 쌓은 학생이 어떤 전공이든 <strong>빨리 배우죠.</strong> 처음부터 전공만 파는 것(end-to-end)보다 훨씬 효율적입니다.</p>
+<p><strong>Downstream task</strong> = 사전학습 "다음에(아래 흐름에서)" 하는 <strong>실제 목표 과제</strong>
+<strong>End-to-end</strong> = 처음부터 끝까지 <strong>그 과제 하나만을 위해</strong> 모델을 새로 학습하는 방식</p>
+</div>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>Pre-training vs Fine-tuning</strong> (4·5장에서 계속 나옴)</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Pre-training</th>
+<th>Fine-tuning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>데이터</td>
+<td>정답 없는 <strong>대량의 글</strong></td>
+<td>정답(label)이 있는 <strong>특정 과제 데이터</strong></td>
+</tr>
+<tr>
+<td>목적</td>
+<td><strong>일반적</strong> 언어 능력</td>
+<td><strong>특정 과제</strong>에 맞추기</td>
+</tr>
+<tr>
+<td>학습 방식</td>
+<td><strong>비지도</strong></td>
+<td><strong>지도</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="이-장-정리">이 장 정리<a class="headerlink" href="#이-장-정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>모델</th>
+<th>방식</th>
+<th>해결한 것</th>
+<th>남은 문제</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RNN/LSTM/GRU</strong></td>
+<td>한 단어씩 순서대로</td>
+<td>순서 있는 데이터 처리</td>
+<td>입출력 길이 고정</td>
+</tr>
+<tr>
+<td><strong>Seq2Seq</strong> (2014)</td>
+<td>Encoder → Context Vector → Decoder</td>
+<td><strong>가변 길이 입출력</strong></td>
+<td>정보 손실, 기울기 소실, 병렬화 불가</td>
+</tr>
+<tr>
+<td><strong>Transformer</strong> (2017)</td>
+<td><strong>Attention만</strong> 사용, 한꺼번에 처리</td>
+<td><strong>위 3가지 전부</strong></td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+  <footer class="page-footer"><code>content/isw/03-transformer.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#이-장의-한-줄-요약">이 장의 한 줄 요약</a></li>
+<li><a href="#1-배경-rnn-계열-모델과-그-한계">1. 배경 — RNN 계열 모델과 그 한계</a><ul>
+<li><a href="#시계열-데이터란">시계열 데이터란?</a></li>
+<li><a href="#rnn의-한계-입력출력-크기가-고정">RNN의 한계 — 입력/출력 크기가 고정</a></li>
+</ul>
+</li>
+<li><a href="#2-seq2seq-sequence-to-sequence">2. Seq2Seq (Sequence to Sequence) ★</a><ul>
+<li><a href="#구조-다-듣고-정리하고-말하기">구조 — "다 듣고, 정리하고, 말하기"</a></li>
+</ul>
+</li>
+<li><a href="#3-transformer의-등장">3. Transformer의 등장 ★★</a><ul>
+<li><a href="#seq2seq-rnn의-고질적-한계-3가지">Seq2Seq / RNN의 고질적 한계 3가지 ★★</a></li>
+</ul>
+</li>
+<li><a href="#4-transformer-모델-구조">4. Transformer 모델 구조 ★</a><ul>
+<li><a href="#큰-틀-여전히-encoder-decoder">큰 틀 — 여전히 Encoder-Decoder</a></li>
+<li><a href="#transformer의-입력-embedding-positional-encoding">Transformer의 입력 — Embedding + Positional Encoding ★</a></li>
+<li><a href="#내부-구성요소">내부 구성요소</a></li>
+</ul>
+</li>
+<li><a href="#5-attention이란">5. Attention이란? ★★</a><ul>
+<li><a href="#attention-중요한-데에-집중하기">Attention = "중요한 데에 집중하기"</a></li>
+<li><a href="#self-attention-같은-문장-안에서-서로-참고하기">Self-Attention = 같은 문장 안에서 서로 참고하기</a></li>
+<li><a href="#query-key-value-attention-계산에-쓰는-3가지">Query / Key / Value — Attention 계산에 쓰는 3가지</a></li>
+<li><a href="#multi-head-여러-관점으로-동시에-보기">Multi-head = 여러 관점으로 동시에 보기</a></li>
+<li><a href="#masked-미래-단어-가리기">Masked = 미래 단어 가리기</a></li>
+<li><a href="#attention-3종류-정리">Attention 3종류 정리 ★</a></li>
+<li><a href="#transformer의-동작-과정-디코더-블록-기준">Transformer의 동작 과정 (디코더 블록 기준)</a></li>
+</ul>
+</li>
+<li><a href="#6-nlp-패러다임의-변화">6. NLP 패러다임의 변화 ★</a><ul>
+<li><a href="#paradigms-on-nlp-history-아래에서-위로-쌓임">Paradigms on NLP (History) — 아래에서 위로 쌓임</a></li>
+<li><a href="#language-modeling의-목표">Language Modeling의 목표 ★</a></li>
+<li><a href="#history-of-language-model-slm-nlm-plm-llm">History of Language Model — SLM → NLM → PLM → LLM ★★</a></li>
+</ul>
+</li>
+<li><a href="#7-pre-trained-language-model-plm">7. Pre-trained Language Model (PLM) ★</a></li>
+<li><a href="#이-장-정리">이 장 정리</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

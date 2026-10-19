@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4. LLM과 GPT 시리즈 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="04-llm-gpt.html" class="active">4. LLM과 GPT 시리즈</a></li>
+<li><a href="05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="4-llm과-gpt-시리즈">4. LLM과 GPT 시리즈<a class="headerlink" href="#4-llm과-gpt-시리즈" title="Permanent link">#</a></h1>
+<h2 id="이-장의-한-줄-요약">이 장의 한 줄 요약<a class="headerlink" href="#이-장의-한-줄-요약" title="Permanent link">#</a></h2>
+<blockquote>
+<p><strong>Transformer를 엄청나게 크게 만들었더니(LLM), 따로 가르치지 않아도 예시만 보여주면 알아서 하는 능력이 생겼다.</strong></p>
+</blockquote>
+<p>GPT가 1 → 2 → 3으로 가면서 <strong>"점점 덜 가르쳐도 되게"</strong> 바뀐 과정이 이 장의 전부입니다.</p>
+<div class="codehilite"><pre><span></span><code>GPT-1 (2018): 사전학습 + 과제마다 따로 가르치기(Fine-tuning)      ← 매번 가르쳐야 함
+GPT-2 (2019): 사전학습만으로 여러 과제를! (Fine-tuning 없애보자)    ← 덜 가르쳐도 됨
+GPT-3 (2020): 프롬프트에 예시 몇 개만 보여주면 끝 (In-context)      ← 안 가르쳐도 됨
+ChatGPT (2022): 말 잘 듣게 다듬기 (5장 Adaptation Tuning)
+</code></pre></div>
+
+<hr />
+<h2 id="1-llm이란">1. LLM이란? ★<a class="headerlink" href="#1-llm이란" title="Permanent link">#</a></h2>
+<dl>
+<dt>LLM (Large Language Model, 거대 언어 모델)</dt>
+<dd><strong>방대한 텍스트 데이터로 학습된 수천 억 개의 파라미터를 가진 Transformer 기반의 Language Model</strong></dd>
+</dl>
+<ul>
+<li><strong>언어를 이해하고 복잡한 과업을 수행하는 데 강력한 능력</strong></li>
+</ul>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>정의에서 <strong>3가지 요소</strong>를 빠뜨리지 마세요.
+<strong>① 방대한 텍스트 데이터로 학습 ② 수천 억 개의 파라미터 ③ Transformer 기반 Language Model</strong></p>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>파라미터 = 모델 안의 다이얼</strong> (<a href="00-math-basics.html">0장</a> 7절). 수천억 개의 다이얼을 인터넷 글로 맞춰 놓은 거대한 "다음 단어 맞히기 기계"가 LLM입니다.</p>
+</div>
+<h3 id="emergent-abilities-창발적-능력">Emergent Abilities (창발적 능력) ★★<a class="headerlink" href="#emergent-abilities-창발적-능력" title="Permanent link">#</a></h3>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>슬라이드에서 큰 글씨로 강조한 문장:
+<strong>"Emergent Abilities: 기존 PLM과 구별되는 LLM의 가장 큰 특징"</strong></p>
+<p><strong>"PLM과 LLM의 차이는?"</strong> → 정답은 <strong>"크기가 크다"가 아니라 "Emergent Abilities가 있다"</strong> 입니다.</p>
+</div>
+<p><strong>Emergent(창발적)</strong> = <strong>작을 땐 전혀 없다가, 어느 크기를 넘으면 갑자기 생겨나는</strong> 것.</p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 물이 끓는 것</strong>
+물을 1도, 2도… 99도까지 데워도 <strong>그냥 뜨거운 물</strong>입니다. 그런데 <strong>100도를 넘는 순간 갑자기 끓기</strong> 시작하죠.
+LLM도 그렇습니다. 모델을 조금씩 키워도 그저 그렇다가, <strong>어떤 크기를 넘으면 갑자기 새로운 능력이 생깁니다.</strong> 그래서 "더 크게 만들자"는 흐름이 생겼습니다.</p>
+</div>
+<p>LLM의 Emergent Abilities 3가지:</p>
+<table>
+<thead>
+<tr>
+<th>능력</th>
+<th>쉬운 뜻</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>In-context Learning</strong></td>
+<td><strong>따로 학습 안 시켜도, 프롬프트 안의 예시만 보고</strong> 과제를 해냄</td>
+<td>"개→dog, 고양이→cat, 사자→?" 하면 "lion"</td>
+</tr>
+<tr>
+<td><strong>Instruction Following</strong></td>
+<td><strong>지시(명령)</strong> 를 알아듣고 그대로 따름</td>
+<td>"3줄로 요약해줘" 하면 3줄로 요약</td>
+</tr>
+<tr>
+<td><strong>Step-by-Step Reasoning</strong></td>
+<td><strong>단계별로 생각</strong>해서 복잡한 문제를 풂</td>
+<td>수학 문제를 풀이 과정과 함께 풀기 (6장 CoT)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="llm을-쓰는-이점-benefits-of-using-llms">LLM을 쓰는 이점 (Benefits of using LLMs) ★<a class="headerlink" href="#llm을-쓰는-이점-benefits-of-using-llms" title="Permanent link">#</a></h3>
+<ol>
+<li><strong>사전 학습된 단일 모델이 여러 task에 사용될 수 있음</strong>
+   - 하나의 LLM을 <strong>번역, 문장 생성, 문장 분류, QA(질의응답)</strong> 등 다양한 task에 사용 가능
+   - (예전엔 번역 모델, 요약 모델을 따로 만들었음)</li>
+<li><strong>Fine-tuning을 위한 특정 task의 데이터가 많이 필요하지 않음</strong>
+   - <strong>Few-shot 혹은 zero-shot setting에서도 우수한 성능</strong> (예시 몇 개, 혹은 0개로도 잘함)</li>
+<li><strong>학습 데이터와 모델의 파라미터를 증가시킴으로써 성능을 지속적으로 향상시킬 수 있음</strong>
+   - 키우면 키울수록 좋아짐</li>
+</ol>
+<hr />
+<h2 id="2-gpt란">2. GPT란?<a class="headerlink" href="#2-gpt란" title="Permanent link">#</a></h2>
+<p><strong>GPT: Generative Pre-trained Transformer</strong></p>
+<table>
+<thead>
+<tr>
+<th>글자</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>G</strong>enerative</td>
+<td><strong>생성하는</strong> (글을 만들어 냄)</td>
+</tr>
+<tr>
+<td><strong>P</strong>re-trained</td>
+<td><strong>미리 학습된</strong> (사전학습)</td>
+</tr>
+<tr>
+<td><strong>T</strong>ransformer</td>
+<td><strong>Transformer 구조</strong> 기반</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Transformer의 생성형 Decoder 구조</strong> 기반의 <strong>Autoregressive 모델</strong></li>
+</ul>
+<dl>
+<dt>Autoregressive (자기회귀)</dt>
+<dd><strong>주어진 입력의 일부를 사용하여 이후에 오는 부분을 예측</strong>. 즉 <strong>주어진 연속된 단어의 다음 단어를 맞추는 방식</strong></dd>
+</dl>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Autoregressive를 쉽게: "끝말잇기처럼 자기가 쓴 말을 보고 다음 말 쓰기"</strong></p>
+<div class="codehilite"><pre><span></span><code>입력: "오늘 날씨가"
+  → 다음 단어 예측: "정말"       → "오늘 날씨가 정말"
+  → 다음 단어 예측: "좋네요"     → "오늘 날씨가 정말 좋네요"
+  → 다음 단어 예측: &lt;끝&gt;
+</code></pre></div>
+
+<p><strong>자기가 방금 만든 단어를 다시 입력으로 넣어서</strong> 다음 단어를 만듭니다. "자기(auto)를 다시 보며(regressive)" 라는 뜻이에요.</p>
+</div>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>GPT = Transformer의 Decoder만 사용</strong> (BERT는 Encoder 계열)
+→ 그래서 GPT는 <strong>왼쪽에서 오른쪽으로만</strong> 읽는 <strong>단방향</strong> 모델입니다. (3장 Paradigms 참고)</p>
+</div>
+<hr />
+<h2 id="3-gpt-1-2018">3. GPT-1 (2018) ★<a class="headerlink" href="#3-gpt-1-2018" title="Permanent link">#</a></h2>
+<p>논문: <strong>"Improving Language Understanding by Generative Pre-Training"</strong></p>
+<ul>
+<li><strong>비지도 사전학습과 지도 미세조정을 조합</strong>한 NLP에 대한 <strong>'준지도학습'</strong> 제시</li>
+<li>다양한 작업에 <strong>쉽게 전이 가능한 보편적인 표현 학습</strong></li>
+<li><strong>최소한의 모델 구조 변화</strong>를 통해 목적에 맞게 전이학습 가능</li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>준지도학습</strong> = <strong>비지도(정답 없음) + 지도(정답 있음)</strong> 를 섞은 것.
+1단계는 정답 없는 대량의 글로, 2단계는 정답 있는 소량의 데이터로 → 둘을 섞었으니 "준(準)지도".
+(<a href="00-math-basics.html">0장</a> 11절: 지도/비지도/강화 학습)</p>
+</div>
+<h3 id="gpt-framework-2단계">GPT Framework (2단계) ★<a class="headerlink" href="#gpt-framework-2단계" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>이름</th>
+<th>하는 일</th>
+<th>데이터</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Step 1</strong></td>
+<td><strong>Unsupervised Pre-Training</strong> (비지도 사전학습)</td>
+<td>대량의 말뭉치로 대용량의 언어모델 학습. <strong>지금까지의 토큰 순서를 기반으로 다음 토큰이 나타날 확률 추정</strong></td>
+<td>정답 없는 대량의 글</td>
+</tr>
+<tr>
+<td><strong>Step 2</strong></td>
+<td><strong>Supervised Fine-tuning</strong> (지도 미세조정)</td>
+<td><strong>Labeled Data를 사용하여 목표 Task에 맞게 미세조정</strong></td>
+<td>정답 있는 특정 과제 데이터</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>말뭉치(코퍼스, corpus)</strong> = 학습에 쓰는 <strong>대량의 글 모음</strong></li>
+<li><strong>Labeled Data</strong> = <strong>정답(label)이 붙어 있는</strong> 데이터 (예: "이 영화 최고!" → 긍정)</li>
+</ul>
+<h3 id="contribution-of-gpt-1-gpt-1의-공헌">Contribution of GPT-1 (GPT-1의 공헌)<a class="headerlink" href="#contribution-of-gpt-1-gpt-1의-공헌" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>GPT-Series 모델의 핵심 구조 설정</strong>, <strong>다음 단어 예측을 위한 기본 원칙 확립</strong></li>
+<li><strong>Generative Pre-Training이 모델의 일반화 성능을 높이는 데 효과적</strong>임을 확인</li>
+<li>사전학습을 통해 다양한 NLP Tasks에서 <strong>Zero-shot 성능 향상</strong>을 입증</li>
+</ul>
+<hr />
+<h2 id="4-gpt-2-2019">4. GPT-2 (2019) ★<a class="headerlink" href="#4-gpt-2-2019" title="Permanent link">#</a></h2>
+<p>논문: <strong>"Language Models are Unsupervised Multitask Learners"</strong>
+(제목 뜻: "언어 모델은 비지도로 여러 과제를 배우는 학습자다")</p>
+<ul>
+<li>GPT-1에서 <strong>더 큰 데이터셋 &amp; 더 많은 파라미터</strong> 학습을 통해 더 강력한 언어모델 학습</li>
+<li><strong>동일한 Unsupervised Model을 활용하여 Multiple Tasks 학습</strong></li>
+<li>목표: <strong>모델이 주어진 입력 문장들을 통해 적합한 Task를 유추하고 적절한 답을 내는 것</strong></li>
+</ul>
+<h3 id="gpt-2-architecture">GPT-2 Architecture<a class="headerlink" href="#gpt-2-architecture" title="Permanent link">#</a></h3>
+<ul>
+<li>GPT-1보다 <strong>10배 많은 1.5 Billion(15억) 개의 Parameters</strong></li>
+<li>GPT-2 내부 버전에 따라 Parameter와 Layer 개수를 다르게 지정 (작은 버전~큰 버전)</li>
+</ul>
+<h3 id="task-conditioning-gpt-1과의-핵심-차이">Task Conditioning ★★ (GPT-1과의 핵심 차이)<a class="headerlink" href="#task-conditioning-gpt-1과의-핵심-차이" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>목적함수(Objective) 비교</strong> — 전형적인 출제 포인트</p>
+<ul>
+<li><strong>GPT-1</strong>: <code>P(Output | Input)</code></li>
+<li><strong>GPT-2</strong>: <code>P(Output | Input, Task)</code> → <strong>다른 Task에 대해 동일한 Input임에도 다른 Output 생성</strong></li>
+</ul>
+</div>
+<p><strong>수식 읽는 법</strong> (<a href="00-math-basics.html">0장</a> 4절)</p>
+<ul>
+<li><code>P(Output | Input)</code> = <strong>"입력이 주어졌을 때, 출력이 나올 확률"</strong></li>
+<li><code>P(Output | Input, Task)</code> = <strong>"입력과 '무슨 과제인지'가 함께 주어졌을 때, 출력이 나올 확률"</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>예시로 이해하기</strong></p>
+<p>입력: <strong>"I love you"</strong></p>
+<table>
+<thead>
+<tr>
+<th>Task (과제)</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"한국어로 번역해"</td>
+<td>"사랑해"</td>
+</tr>
+<tr>
+<td>"감정을 분류해"</td>
+<td>"긍정"</td>
+</tr>
+<tr>
+<td>"단어 수를 세"</td>
+<td>"3"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>똑같은 입력인데 과제에 따라 답이 다르죠?</strong> GPT-2는 <strong>과제까지 조건으로 받아서</strong> 하나의 모델로 이걸 다 해냅니다.
+GPT-1은 과제마다 따로 fine-tuning한 모델이 필요했습니다.</p>
+</div>
+<h3 id="zero-shot-learning-zero-shot-task-transfer">Zero-Shot Learning &amp; Zero-Shot Task Transfer<a class="headerlink" href="#zero-shot-learning-zero-shot-task-transfer" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>GPT-1</strong>: Task의 종류에 따라 <strong>Input을 Ordered Sequence로 변환</strong>해 줘야 함</li>
+<li>(사람이 과제별로 입력 형식을 일일이 맞춰서 넣어 줌)</li>
+<li><strong>GPT-2</strong>: <strong>모델이 주어진 Task의 특성을 이해하고 알아서 답을 내릴 것으로 예상</strong></li>
+<li>(형식 안 맞춰도, 모델이 "아 이건 번역이구나" 알아챔)</li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Zero-shot</strong> = 예시를 <strong>0개</strong> 보여주고 시키는 것. "처음 보는 문제를 바로 풀기"</p>
+</div>
+<h3 id="gpt-2의-결론">GPT-2의 결론<a class="headerlink" href="#gpt-2의-결론" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>Parameter의 개수가 가장 많은 모델이 모든 Downstream Task에서 가장 높은 성능</strong></li>
+<li>더 큰 Dataset &amp; 더 많은 Parameters로 <strong>더 강력한 언어모델 학습 가능성 확인</strong></li>
+<li>→ <strong>즉, 더 큰 Language Model을 구축하자!!</strong></li>
+</ul>
+<hr />
+<h2 id="5-gpt-3-2020">5. GPT-3 (2020) ★★<a class="headerlink" href="#5-gpt-3-2020" title="Permanent link">#</a></h2>
+<p>논문: <strong>"Language Models are Few-shot Learners"</strong>
+(제목 뜻: "언어 모델은 예시 몇 개로 배우는 학습자다")</p>
+<ul>
+<li><strong>1,750억 개의 파라미터</strong>를 가지며, <strong>미세조정(Fine-tuning)이 생략된</strong> 언어 모델</li>
+<li><strong>Few-shot &amp; Zero-shot 방식으로 LLM을 활용하는 In-context Learning을 공식적으로 도입</strong></li>
+</ul>
+<h3 id="gpt-3-architecture">GPT-3 Architecture<a class="headerlink" href="#gpt-3-architecture" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>더 많은 데이터, 더 깊은 구조로, 더 오랫동안</strong> 학습</li>
+<li><strong>GPT-2와 거의 유사한 구조</strong>를 가지며 우수한 성능 도출 (구조는 비슷, 크기만 확 키움)</li>
+</ul>
+<h3 id="왜-fine-tuning을-없앴나">왜 Fine-tuning을 없앴나?<a class="headerlink" href="#왜-fine-tuning을-없앴나" title="Permanent link">#</a></h3>
+<p><strong>Overall Process of Language Model (기존 방식의 문제)</strong></p>
+<ul>
+<li>기존 사전 학습된 언어모델의 구조는 <strong>Task-agnostic</strong>(과제와 무관, 범용)임에도 불구하고</li>
+<li><strong>미세조정 단계에서는 여전히 해당 Task의 Labeled Dataset이 필요</strong></li>
+<li>즉 <strong>Task-specific한 Dataset</strong>을 바탕으로 <strong>Task-specific 미세조정</strong>을 수행해야 했음</li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Task-agnostic</strong> = "과제를 가리지 않는", 범용의
+<strong>Task-specific</strong> = "특정 과제 전용의"</p>
+<p>모델 자체는 범용인데, 쓰려고 할 때마다 <strong>그 과제 전용 정답 데이터</strong>를 만들어서 또 학습시켜야 했다는 모순입니다.</p>
+</div>
+<h3 id="limitation-of-fine-tuning-fine-tuning의-한계">Limitation of Fine-tuning (Fine-tuning의 한계) ★★<a class="headerlink" href="#limitation-of-fine-tuning-fine-tuning의-한계" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>3가지</strong> — 서술형으로 나오기 좋습니다.</p>
+<ol>
+<li>새로운 Task에 대한 <strong>Task별 Labeled Dataset이 필요</strong></li>
+<li>미세조정을 거쳐 <strong>작은 Task의 분포를 따르면 과적합이 발생</strong>하여, <strong>분포 밖 Dataset에 대해 일반화 성능을 잃을 수 있음</strong></li>
+<li><strong>사람과 같이 적은 샘플로도 Task를 수행하는 능력</strong> 필요</li>
+</ol>
+</div>
+<p><strong>쉽게 풀기</strong></p>
+<ol>
+<li><strong>정답 데이터 만들기가 힘들다</strong>: 새 과제마다 수천~수만 개의 "문제+정답"을 사람이 만들어야 함 → 돈·시간 많이 듦</li>
+<li><strong>과적합 위험</strong>: 좁은 데이터로 세게 가르치면 그 데이터만 잘하고 <strong>처음 보는 데이터엔 약해짐</strong></li>
+</ol>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>과적합 비유: 기출문제만 외운 학생</strong> (<a href="00-math-basics.html">0장</a> 12절)
+기출 100문제만 달달 외우면 기출은 100점인데, <strong>새로운 유형이 나오면 못 풉니다.</strong>
+<strong>분포 밖(out-of-distribution)</strong> = 학습할 때 본 것과 <strong>다른 종류의 데이터</strong></p>
+</div>
+<ol start="3">
+<li><strong>사람은 그렇게 안 배운다</strong>: 사람은 예시 2~3개만 보면 "아 이런 거구나" 하고 따라 하죠. AI도 그래야 한다는 것.</li>
+</ol>
+<h3 id="gpt-3-no-fine-tuning-required">GPT-3: No Fine-Tuning Required<a class="headerlink" href="#gpt-3-no-fine-tuning-required" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>Labeled Dataset이 필요한 미세조정 단계를 제외</strong></li>
+<li><strong>미세조정 없이 사전학습만으로 동작하는 모델</strong> 구축</li>
+<li>이를 가능하게 한 두 축: <strong>→ In-context Learning</strong> + <strong>→ Large Capacity (거대한 모델 용량)</strong></li>
+</ul>
+<hr />
+<h2 id="6-in-context-learning">6. In-context Learning ★★<a class="headerlink" href="#6-in-context-learning" title="Permanent link">#</a></h2>
+<dl>
+<dt>In-context Learning</dt>
+<dd><strong>프롬프트의 맥락적 의미(In-context)를 모델이 이해하고, 이에 대한 답변을 생성</strong></dd>
+</dl>
+<ul>
+<li><strong>사전학습이나 미세조정처럼 모델을 업데이트하지 않고, 별도의 모델 학습 과정 없음</strong></li>
+<li><strong>Demo Context 구성을 위한 소수의 예시 필요</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 새로 온 알바생에게 일 가르치기</strong></p>
+<ul>
+<li><strong>Fine-tuning 방식</strong>: 알바생을 <strong>2주간 교육센터에 보내서</strong> 재교육 → 알바생의 <strong>머리 자체가 바뀜</strong></li>
+<li><strong>In-context Learning 방식</strong>: 일하기 직전에 <strong>"이건 이렇게, 저건 저렇게 해" 하고 예시 2~3개 보여줌</strong> → 알바생 머리는 그대로, <strong>그 자리에서 보고 따라 함</strong></li>
+</ul>
+<p>In-context = "<strong>문맥(context) 안에서</strong>" 배운다 = 프롬프트 안에 넣어 준 예시를 보고 그 자리에서 배운다는 뜻.</p>
+</div>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>In-context Learning의 핵심: 모델 파라미터가 바뀌지 않는다!</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Fine-tuning</th>
+<th>In-context Learning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>모델 파라미터</td>
+<td><strong>바뀜</strong> (재학습)</td>
+<td><strong>안 바뀜</strong></td>
+</tr>
+<tr>
+<td>필요한 것</td>
+<td>정답 데이터 수천 개 + 학습 시간</td>
+<td>프롬프트 속 <strong>예시 몇 개</strong></td>
+</tr>
+<tr>
+<td>비유</td>
+<td>교육센터 보내기</td>
+<td>일 시작 전에 예시 보여주기</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="few-shot-one-shot-zero-shot">Few-shot / One-shot / Zero-shot ★<a class="headerlink" href="#few-shot-one-shot-zero-shot" title="Permanent link">#</a></h3>
+<p><strong>shot</strong> = <strong>예시(시범)</strong> 의 개수라고 생각하면 됩니다.</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>슬라이드 정의</th>
+<th>예시 개수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Few-shot</strong></td>
+<td>모델에게 <strong>Task 설명 + Model의 Context Window <code>k</code>에 맞는 예제</strong> 제공 (Limited Labeled Dataset)</td>
+<td><strong>몇 개</strong></td>
+</tr>
+<tr>
+<td><strong>One-shot</strong></td>
+<td>모델에게 <strong>하나의 예제만</strong> 제공 (One Labeled Example)</td>
+<td><strong>1개</strong></td>
+</tr>
+<tr>
+<td><strong>Zero-shot</strong></td>
+<td>모델에게 <strong>예시 제공 없음, 사전 지식만으로 예측</strong> (No Labeled Example)</td>
+<td><strong>0개</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>예시로 보기 (영어 → 프랑스어 번역)</strong></p>
+<div class="codehilite"><pre><span></span><code>[Zero-shot]
+Translate English to French:
+cheese =&gt;
+
+[One-shot]
+Translate English to French:
+sea otter =&gt; loutre de mer
+cheese =&gt;
+
+[Few-shot]
+Translate English to French:
+sea otter =&gt; loutre de mer
+peppermint =&gt; menthe poivrée
+plush giraffe =&gt; girafe peluche
+cheese =&gt;
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Context Window <code>k</code></strong> = 모델이 <strong>한 번에 읽을 수 있는 분량</strong>. 여기에 맞게 예시를 넣을 수 있는 만큼 넣는다는 뜻.</p>
+</div>
+<p><strong>관찰된 성질 (슬라이드)</strong></p>
+<ul>
+<li><strong>Context Window <code>k</code>가 증가할수록 성능 향상</strong> 확인 (예시를 많이 넣을수록 잘함)</li>
+<li><strong>모델이 커질수록 In-context Learning의 효율 증가</strong> (큰 모델일수록 예시를 더 잘 활용)</li>
+<li><strong>Task에 대한 Prompt의 도움</strong> 확인 (과제 설명을 잘 써주면 도움 됨)</li>
+</ul>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>Zero / One / Few-shot의 <strong>정의와 예시 개수(0 / 1 / 몇 개)</strong> 는 단답 단골입니다.
+<strong>"모델을 업데이트하지 않는다"</strong> 는 In-context Learning의 특징과 함께 쓰면 완벽합니다.</p>
+</div>
+<hr />
+<h2 id="7-gpt-3의-한계와-영향">7. GPT-3의 한계와 영향<a class="headerlink" href="#7-gpt-3의-한계와-영향" title="Permanent link">#</a></h2>
+<h3 id="limitation-of-gpt-3">Limitation of GPT-3 ★<a class="headerlink" href="#limitation-of-gpt-3" title="Permanent link">#</a></h3>
+<ol>
+<li><strong>긴 문장 구성에 일관성을 잃고 Text Sequence를 반복</strong>하는 경향
+   - 글이 길어지면 앞뒤가 안 맞거나 같은 말을 되풀이함</li>
+<li><strong>모델의 단방향성</strong>으로 인해 <strong>자연어 추론과 같은 Task를 잘 해내지 못함</strong>
+   - → <strong>유사한 규모의 양방향 모델</strong> 고려 가능</li>
+<li><strong>각 Token에 동일한 가중치가 부여</strong>되므로 <strong>목표 지향적 예측 개념 결여</strong>
+   - 학습할 때 모든 단어를 똑같이 중요하게 다룸 → "이 단어가 정답의 핵심" 같은 개념이 없음</li>
+</ol>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>단방향성이 왜 추론에 약한가?</strong>
+GPT는 <strong>왼쪽→오른쪽</strong>으로만 읽습니다 (Decoder 기반).
+"그 사과는 ___ 해서 버렸다. 썩었기 때문이다." 같은 문장에서 빈칸을 채우려면 <strong>뒤의 "썩었기 때문이다"</strong> 를 봐야 하는데, 단방향 모델은 <strong>뒤를 못 봅니다.</strong>
+BERT 같은 <strong>양방향</strong> 모델은 문장 앞뒤를 다 보므로 이런 <strong>자연어 추론(NLI)</strong> 에 유리합니다.</p>
+</div>
+<h3 id="broader-impacts-of-gpt-3-사회적-영향">Broader Impacts of GPT-3 (사회적 영향)<a class="headerlink" href="#broader-impacts-of-gpt-3-사회적-영향" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>영향</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>언어모델의 오용</strong></td>
+<td><strong>가짜뉴스, 스팸, 피싱</strong> 등에 악용</td>
+</tr>
+<tr>
+<td><strong>공정성, 편향성 및 대표성</strong></td>
+<td><strong>인터넷에서 수집한 데이터를 기반</strong>으로 하므로 <strong>그곳에 존재하는 편견과 편향을 그대로 학습</strong> → <strong>성별, 민족, 인종, 종교</strong>에 대한 편견과 선입견 존재</td>
+</tr>
+<tr>
+<td><strong>에너지 소비</strong></td>
+<td>모델 학습에 <strong>상당한 자원 소비</strong>, 하지만 <strong>훈련 후에는 효율적</strong> → 한 번 훈련에 <strong>약 50억 소요</strong>, <strong>Tesla V100 하나로 355년 소요</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Tesla V100</strong> = 엔비디아의 AI 계산용 그래픽카드. 이걸 <strong>1대</strong>만 쓰면 GPT-3 학습에 <strong>355년</strong> 걸린다는 뜻 → 실제로는 수천 대를 동시에 씁니다.</p>
+</div>
+<hr />
+<h2 id="8-gpt-시리즈-정리표">8. GPT 시리즈 정리표 ★★★<a class="headerlink" href="#8-gpt-시리즈-정리표" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>이 장의 핵심 표입니다.</strong> 빈칸 채우기로 나와도 전부 쓸 수 있어야 합니다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th><strong>GPT-1</strong></th>
+<th><strong>GPT-2</strong></th>
+<th><strong>GPT-3</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>출현</strong></td>
+<td><strong>2018</strong></td>
+<td><strong>2019</strong></td>
+<td><strong>2020</strong></td>
+</tr>
+<tr>
+<td><strong>핵심 개념</strong></td>
+<td><strong>PLM(Pretrained LM) + SFT</strong></td>
+<td><strong>거대 언어모델 (Generative LM)</strong></td>
+<td><strong>Few-shot / Zero-shot LLM</strong></td>
+</tr>
+<tr>
+<td><strong>훈련 방식</strong></td>
+<td>1. Unsupervised Pre-trained<br>2. DownStream Supervised Fine-Tuning(SFT)</td>
+<td><strong>Pre-trained만으로 여러 작업 수행하게끔!!</strong><br>→ <strong>SFT 과정을 없애자</strong></td>
+<td><strong>프롬프트만으로 대부분 작업 수행</strong> (In-context learning)</td>
+</tr>
+<tr>
+<td><strong>입력</strong></td>
+<td>문장 → 다음 단어 예측</td>
+<td>동일</td>
+<td><strong>"task instruction + examples + input"</strong></td>
+</tr>
+<tr>
+<td><strong>혁신 포인트</strong></td>
+<td><strong>BERT보다 먼저 나온 Transformer LM</strong></td>
+<td><strong>멀티태스킹 가능해짐</strong></td>
+<td><strong>지능적 프롬프트 이해</strong></td>
+</tr>
+<tr>
+<td><strong>파라미터</strong></td>
+<td><strong>117M</strong> (1억 1700만)</td>
+<td><strong>1.5B</strong> (15억)</td>
+<td><strong>175B</strong> (1750억)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>외우는 요령: "가르침이 점점 줄어든다"</strong>
+- GPT-1: 사전학습 + <strong>가르침(SFT)</strong>
+- GPT-2: 사전학습만 (<strong>가르침 없애자</strong>)
+- GPT-3: 사전학습 + <strong>예시만 보여주기</strong></p>
+<p><strong>파라미터는 대략 10배씩</strong>: 1억 → 15억 → 1750억 (GPT-2→3은 100배 이상)
+<strong>SFT</strong> = Supervised Fine-Tuning (지도 미세조정)</p>
+</div>
+<hr />
+<h2 id="9-chatgpt">9. ChatGPT ★<a class="headerlink" href="#9-chatgpt" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>2022년 11월에 OpenAI에서 출시한 대화형 인공지능 챗봇</strong></li>
+<li><strong>GPT-3가 개선된 GPT-3.5 및 GPT-4 모델 기반</strong></li>
+<li><strong>InstructGPT와 유사한 방식으로 학습</strong>되었지만, <strong>대화에 최적화 &amp; 안전성 강화</strong></li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>GPT-3 → ChatGPT의 결정적 변화는 "모델을 더 키운 것"이 아니라 "Adaptation Tuning"</strong> (5장: Instruction Tuning + RLHF)
+쉽게 말해 <strong>"더 똑똑해진 것"이 아니라 "말을 잘 듣게 된 것"</strong> 입니다.</p>
+</div>
+<h3 id="chatgpt-history-gpt-시리즈의-기술적-진화">ChatGPT History — GPT 시리즈의 기술적 진화<a class="headerlink" href="#chatgpt-history-gpt-시리즈의-기술적-진화" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>시기</th>
+<th>모델</th>
+<th>파라미터</th>
+<th>핵심 변화</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2018</strong></td>
+<td><strong>GPT-1</strong></td>
+<td>1.17억</td>
+<td><strong>사전학습 + 미세조정 패러다임 시작</strong></td>
+<td>디코더 기반 트랜스포머로 다음 단어 예측. 대규모 텍스트 사전학습 후 소량 데이터 미세조정 가능성 입증</td>
+</tr>
+<tr>
+<td><strong>2019</strong></td>
+<td><strong>GPT-2</strong></td>
+<td>15억</td>
+<td><strong>Zero-shot / Few-shot 가능성 확대</strong></td>
+<td>모델과 데이터 규모 확대로 번역·요약·문답을 프롬프트만으로 수행. 범용 언어 모델의 잠재력을 보여줌</td>
+</tr>
+<tr>
+<td><strong>2020–2022</strong></td>
+<td><strong>GPT-3 / GPT-3.5</strong></td>
+<td>1,750억</td>
+<td><strong>In-Context Learning 성숙 + RLHF 도입</strong></td>
+<td>코딩·글쓰기·추론 능력이 비약적으로 향상. ChatGPT 출시로 대중화와 AI 혁명을 견인</td>
+</tr>
+<tr>
+<td><strong>2023–2024</strong></td>
+<td><strong>GPT-4 / GPT-4o</strong></td>
+<td>수조 개 추정 · MoE</td>
+<td><strong>멀티모달 + 네이티브 옴니</strong></td>
+<td>텍스트를 넘어 이미지·음성까지 처리, 실시간 상호작용과 향상된 추론 능력으로 새로운 사용자 경험 제공</td>
+</tr>
+<tr>
+<td><strong>2025–2026</strong></td>
+<td><strong>GPT-5 시리즈</strong></td>
+<td>GPT-5 / 5.5 / 5.6</td>
+<td><strong>추론 모드 성숙 + 자율 에이전트화</strong></td>
+<td>긴 컨텍스트, 도구 사용, 웹 탐색, 업무 자동화 강화. AI Co-worker로서의 활용성 확대</td>
+</tr>
+<tr>
+<td><strong>2026</strong></td>
+<td><strong>GPT-6 Astra</strong></td>
+<td>최신 공개 모델</td>
+<td><strong>고도 안전성 + 빠른 컴퓨터 사용</strong></td>
+<td>컴퓨터 제어와 전문 작업 수행 능력 강화. 정렬(Alignment) 개선과 더 안전한 자율 수행이 핵심</td>
+</tr>
+</tbody>
+</table>
+<p><strong>흐름 한 줄</strong>: <strong>사전학습 → 스케일 확장 → 대화형 정렬 → 멀티모달 → 에이전트 → 컴퓨터 사용</strong></p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<ul>
+<li><strong>MoE (Mixture of Experts)</strong> = 모델 안에 <strong>전문가 여러 명</strong>을 두고, 질문마다 <strong>필요한 전문가만 불러서</strong> 쓰는 구조. 크지만 효율적.</li>
+<li><strong>옴니(omni)</strong> = "모든 것". 글·이미지·음성을 <strong>한 모델이 다</strong> 처리</li>
+<li><strong>AI Co-worker</strong> = AI 동료. 도구처럼 쓰는 게 아니라 <strong>같이 일하는 동료</strong>처럼</li>
+</ul>
+</div>
+<hr />
+<h2 id="10-추론-모델-vs-비추론-모델">10. 추론 모델 vs 비추론 모델 ★<a class="headerlink" href="#10-추론-모델-vs-비추론-모델" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>비교 문제로 나오기 좋은 최신 내용입니다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th><strong>추론 모델 (Reasoning Model)</strong></th>
+<th><strong>비추론 모델 (Standard Model)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>동작</strong></td>
+<td>질문을 받으면 <strong>내부적으로 '생각의 사슬(Chain-of-Thought)'을 거치며 스스로 논리적인 단계를 나누어 검토한 뒤</strong> 최종 답변을 냄</td>
+<td>질문을 받으면 그동안 <strong>학습한 패턴을 바탕으로 가장 확률이 높은 단어를 실시간으로 빠르게</strong> 뱉어냄</td>
+</tr>
+<tr>
+<td><strong>비유</strong></td>
+<td><strong>깊게 고민하고 문제를 푸는 수학자</strong></td>
+<td><strong>상식 퀴즈에 바로바로 답하는 퀴즈 달인</strong></td>
+</tr>
+<tr>
+<td><strong>장점</strong></td>
+<td>복잡한 문제를 정확하게</td>
+<td>빠름</td>
+</tr>
+<tr>
+<td><strong>예시</strong></td>
+<td><strong>OpenAI</strong>: o1, o1-preview, o1-mini, o3<br><strong>Gemini</strong>: 1.5 pro, 2.0 flash thinking<br><strong>Claude</strong>: 3.5 Sonnet</td>
+<td><strong>GPT-4o, Gemini 1.5 Flash, Claude 3.5 Haiku</strong> 등</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>추론 모델은 답하기 전에 <strong>속으로 풀이 과정을 쭉 써보는</strong> 모델입니다. 6장의 <strong>CoT(생각의 사슬)</strong> 를 모델이 <strong>스스로, 기본으로</strong> 하는 셈이에요. 그래서 느리지만 어려운 문제에 강합니다.</p>
+</div>
+  <footer class="page-footer"><code>content/isw/04-llm-gpt.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#이-장의-한-줄-요약">이 장의 한 줄 요약</a></li>
+<li><a href="#1-llm이란">1. LLM이란? ★</a><ul>
+<li><a href="#emergent-abilities-창발적-능력">Emergent Abilities (창발적 능력) ★★</a></li>
+<li><a href="#llm을-쓰는-이점-benefits-of-using-llms">LLM을 쓰는 이점 (Benefits of using LLMs) ★</a></li>
+</ul>
+</li>
+<li><a href="#2-gpt란">2. GPT란?</a></li>
+<li><a href="#3-gpt-1-2018">3. GPT-1 (2018) ★</a><ul>
+<li><a href="#gpt-framework-2단계">GPT Framework (2단계) ★</a></li>
+<li><a href="#contribution-of-gpt-1-gpt-1의-공헌">Contribution of GPT-1 (GPT-1의 공헌)</a></li>
+</ul>
+</li>
+<li><a href="#4-gpt-2-2019">4. GPT-2 (2019) ★</a><ul>
+<li><a href="#gpt-2-architecture">GPT-2 Architecture</a></li>
+<li><a href="#task-conditioning-gpt-1과의-핵심-차이">Task Conditioning ★★ (GPT-1과의 핵심 차이)</a></li>
+<li><a href="#zero-shot-learning-zero-shot-task-transfer">Zero-Shot Learning &amp; Zero-Shot Task Transfer</a></li>
+<li><a href="#gpt-2의-결론">GPT-2의 결론</a></li>
+</ul>
+</li>
+<li><a href="#5-gpt-3-2020">5. GPT-3 (2020) ★★</a><ul>
+<li><a href="#gpt-3-architecture">GPT-3 Architecture</a></li>
+<li><a href="#왜-fine-tuning을-없앴나">왜 Fine-tuning을 없앴나?</a></li>
+<li><a href="#limitation-of-fine-tuning-fine-tuning의-한계">Limitation of Fine-tuning (Fine-tuning의 한계) ★★</a></li>
+<li><a href="#gpt-3-no-fine-tuning-required">GPT-3: No Fine-Tuning Required</a></li>
+</ul>
+</li>
+<li><a href="#6-in-context-learning">6. In-context Learning ★★</a><ul>
+<li><a href="#few-shot-one-shot-zero-shot">Few-shot / One-shot / Zero-shot ★</a></li>
+</ul>
+</li>
+<li><a href="#7-gpt-3의-한계와-영향">7. GPT-3의 한계와 영향</a><ul>
+<li><a href="#limitation-of-gpt-3">Limitation of GPT-3 ★</a></li>
+<li><a href="#broader-impacts-of-gpt-3-사회적-영향">Broader Impacts of GPT-3 (사회적 영향)</a></li>
+</ul>
+</li>
+<li><a href="#8-gpt-시리즈-정리표">8. GPT 시리즈 정리표 ★★★</a></li>
+<li><a href="#9-chatgpt">9. ChatGPT ★</a><ul>
+<li><a href="#chatgpt-history-gpt-시리즈의-기술적-진화">ChatGPT History — GPT 시리즈의 기술적 진화</a></li>
+</ul>
+</li>
+<li><a href="#10-추론-모델-vs-비추론-모델">10. 추론 모델 vs 비추론 모델 ★</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

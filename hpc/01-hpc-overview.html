@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1. HPC 개요 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="01-hpc-overview.html" class="active">1. HPC 개요</a></li>
+<li><a href="02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="1-hpc-개요">1. HPC 개요<a class="headerlink" href="#1-hpc-개요" title="Permanent link">#</a></h1>
+<h2 id="고성능-컴퓨팅-hpc-high-performance-computing">고성능 컴퓨팅 (HPC, High Performance Computing)<a class="headerlink" href="#고성능-컴퓨팅-hpc-high-performance-computing" title="Permanent link">#</a></h2>
+<p><strong>HPC</strong>: <strong>병렬로 작동하는 강력한 프로세서 클러스터</strong>를 사용하여 방대한 다차원 데이터 세트를 처리하고 복잡한 문제를 매우 빠른 속도로 해결하는 기술</p>
+<ul>
+<li>현재 가장 복잡한 컴퓨팅 문제를 <strong>실시간으로</strong> 해결</li>
+<li>보통 가장 빠른 상용 데스크톱·노트북·서버 시스템보다 <strong>100만 배 이상 빠른 속도</strong>로 실행</li>
+</ul>
+<hr />
+<h2 id="슈퍼컴퓨터">슈퍼컴퓨터<a class="headerlink" href="#슈퍼컴퓨터" title="Permanent link">#</a></h2>
+<p><strong>1960년대 Cray</strong>란 인물이 만든 회사의 시스템에 <strong>슈퍼컴퓨터</strong>란 말이 최초로 쓰임.</p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>초기 vs 최근 슈퍼컴퓨터의 구조 차이</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>초기</th>
+<th>최근</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>구성</td>
+<td>트랜지스터를 많이 집어넣어 <strong>연산능력이 뛰어난 하나의 코어</strong>를 사용하는 <strong>CPU 기반</strong> 시스템</td>
+<td><strong>여러 개의 코어 기반 CPU와 GPU</strong>를 사용하는 수많은 <strong>계산 노드들이 병렬로 작동</strong>하는 프로세서 클러스터</td>
+</tr>
+<tr>
+<td>한계</td>
+<td>트랜지스터 증가 → <strong>전기 소모 증가</strong> → <strong>발열 증가</strong> → <strong>연산 오류 발생 가능</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>단일 코어 성능 향상이 발열의 벽에 막혀서 <strong>병렬화로 방향이 바뀐 것</strong>이 핵심.</p>
+</div>
+<p>슈퍼컴퓨터라는 명칭을 얻으려면 <strong>Top500 목록</strong>(<a href="https://top500.org/lists/top500/">https://top500.org/lists/top500/</a>)에 포함되어야 한다.</p>
+<h3 id="사용-분야">사용 분야<a class="headerlink" href="#사용-분야" title="Permanent link">#</a></h3>
+<ul>
+<li>기상예보, 암호해독, 핵실험 시뮬레이션, 분자물리학 시뮬레이션</li>
+<li>DNA 염기서열 분석</li>
+<li>주식거래 자동화</li>
+<li><strong>인공지능(AI) 알고리즘 및 시뮬레이션</strong> (예: 자율주행 자동차 알고리즘)</li>
+<li>IoT 센서·레이더·GPS에서 실시간 <strong>테라바이트 규모 데이터 스트리밍 분석</strong></li>
+</ul>
+<hr />
+<h2 id="hpc의-특징-3가지">HPC의 특징 3가지<a class="headerlink" href="#hpc의-특징-3가지" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>대규모 병렬 컴퓨팅 / HPC 클러스터 / 고성능 구성요소</strong> — 세 가지로 묶어서 외울 것</p>
+</div>
+<dl>
+<dt><strong>대규모 병렬 컴퓨팅</strong></dt>
+<dd>병렬 컴퓨팅은 여러 컴퓨터 서버(계산 노드) 또는 프로세서(CPU, GPU)에서 <strong>동시에 여러 작업을 실행</strong>하는 것. 대규모 병렬 컴퓨팅은 <strong>수만에서 수백만 개</strong>에 이르는 프로세서 또는 프로세서 코어를 사용하는 병렬 컴퓨팅.</dd>
+<dt><strong>HPC 클러스터</strong></dt>
+<dd>병렬 컴퓨팅 작업부하를 관리하는 <strong>중앙집중식 스케줄러</strong>(PBS, Slurm, LSF)와 함께 <strong>초고속 네트워크</strong>(InfiniBand, Omni-Path)로 연결된 여러 고속 컴퓨터 서버로 구성.</dd>
+<dt><strong>고성능 구성요소</strong></dt>
+<dd>고속 및 높은 처리량을 제공하는 네트워크, 메모리, 스토리지, 파일 시스템 사용.</dd>
+</dl>
+<hr />
+<h2 id="hpc의-sw-구성요소">HPC의 SW 구성요소<a class="headerlink" href="#hpc의-sw-구성요소" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>5가지 구성요소와 각각의 대표 예시</strong>를 짝지어 묻기 좋다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>구성요소</th>
+<th>역할</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>프로비저닝(provisioning) 도구</strong></td>
+<td>관리 서버에 설치하여 <strong>계산 노드들을 묶어서 클러스터를 구성</strong>하게 해주는 소프트웨어</td>
+<td><strong>Warewulf, xCAT</strong></td>
+</tr>
+<tr>
+<td><strong>작업 스케줄러(job scheduler)</strong></td>
+<td>관리 서버에서 사용자의 작업들을 <strong>계산 노드들에게 적절히 할당</strong></td>
+<td><strong>Slurm, PBS Pro, OpenPBS, LSF, TORQUE</strong></td>
+</tr>
+<tr>
+<td><strong>각종 라이브러리</strong></td>
+<td>특정 용도에 맞는 라이브러리·컴파일러 제공</td>
+<td>MKL(math kernel library), NetCDF, Intel compiler, GNU compiler, VTune profiler</td>
+</tr>
+<tr>
+<td><strong>모니터링 툴</strong></td>
+<td>관리 서버에서 <strong>계산 노드의 상태와 네트워크를 모니터링</strong></td>
+<td><strong>Nagios</strong></td>
+</tr>
+<tr>
+<td><strong>통합 클러스터 관리자</strong></td>
+<td>위의 것들을 <strong>모아서 하나의 패키지로 제공</strong></td>
+<td><strong>OpenHPC</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="hpc-클러스터-아키텍처">HPC 클러스터 아키텍처<a class="headerlink" href="#hpc-클러스터-아키텍처" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code>          인터넷
+            │
+      ┌─────────────┐
+      │  마스터 노드  │ ← Provisioning, 작업 스케줄링
+      └─────────────┘
+            │ Ethernet (전원 제어 및 HW 상태 모니터링)
+            │
+      ┌─────────────┐
+      │   계산 노드   │ (여러 대)
+      └─────────────┘
+            │ InfiniBand, Omni-Path (초고속 네트워크)
+            │
+      ┌─────────────┐
+      │ 병렬 IO 시스템 │ ← 데이터 송수신 및 저장
+      └─────────────┘
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>용도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>마스터 노드</strong></td>
+<td>프로비저닝, 작업 스케줄링, 모니터링</td>
+</tr>
+<tr>
+<td><strong>계산 노드</strong></td>
+<td>실제 연산 수행</td>
+</tr>
+<tr>
+<td><strong>Ethernet</strong></td>
+<td>전원 제어 및 HW 상태 모니터링</td>
+</tr>
+<tr>
+<td><strong>InfiniBand / Omni-Path</strong></td>
+<td>노드 간 <strong>초고속 네트워크</strong></td>
+</tr>
+<tr>
+<td><strong>병렬 IO 시스템</strong></td>
+<td>데이터 송수신 및 저장</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="cpu와-gpu의-하드웨어-구조">CPU와 GPU의 하드웨어 구조<a class="headerlink" href="#cpu와-gpu의-하드웨어-구조" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>구조</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Multi-core CPU</strong></td>
+<td>소수의 고성능 코어</td>
+</tr>
+<tr>
+<td><strong>NVIDIA GPU</strong> (예: Fermi 아키텍처)</td>
+<td><strong>Streaming Multiprocessor(SM)</strong> 안에 다수의 <strong>CUDA core</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>SM(Streaming Multiprocessor)</strong> 과 <strong>CUDA core</strong>의 관계는 <a href="06-cuda-thread-hierarchy.html">CUDA 스레드 계층</a>에서 블록·스레드와 연결된다.
+- CUDA core → <strong>스레드</strong> 처리
+- SM → <strong>블록</strong> 처리
+- GPU(device) → <strong>그리드</strong> 처리</p>
+</div>
+  <footer class="page-footer"><code>content/hpc/01-hpc-overview.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#고성능-컴퓨팅-hpc-high-performance-computing">고성능 컴퓨팅 (HPC, High Performance Computing)</a></li>
+<li><a href="#슈퍼컴퓨터">슈퍼컴퓨터</a><ul>
+<li><a href="#사용-분야">사용 분야</a></li>
+</ul>
+</li>
+<li><a href="#hpc의-특징-3가지">HPC의 특징 3가지</a></li>
+<li><a href="#hpc의-sw-구성요소">HPC의 SW 구성요소</a></li>
+<li><a href="#hpc-클러스터-아키텍처">HPC 클러스터 아키텍처</a></li>
+<li><a href="#cpu와-gpu의-하드웨어-구조">CPU와 GPU의 하드웨어 구조</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

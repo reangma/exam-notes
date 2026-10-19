@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>실기 치트시트 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html" class="active">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="실기-치트시트">실기 치트시트<a class="headerlink" href="#실기-치트시트" title="Permanent link">#</a></h1>
+<p>시험장에서 <strong>머리에서 바로 꺼내 써야 하는 것</strong>만 모았습니다.</p>
+<h2 id="1-기본-템플릿-이것만-외우면-절반">1. 기본 템플릿 (이것만 외우면 절반)<a class="headerlink" href="#1-기본-템플릿-이것만-외우면-절반" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="c1">#-*-coding:utf-8-*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">RPi.GPIO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">GPIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">PIN</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setwarnings</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
+<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">PIN</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">PIN</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">PIN</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>순서는 항상 <strong>setwarnings → setmode → setup → (동작) → cleanup</strong>.
+<code>try/except KeyboardInterrupt</code>로 감싸야 Ctrl+C 로 깔끔히 빠져나온다.</p>
+</div>
+<hr />
+<h2 id="2-입력-버튼">2. 입력 (버튼)<a class="headerlink" href="#2-입력-버튼" title="Permanent link">#</a></h2>
+<h3 id="polling">Polling<a class="headerlink" href="#polling" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">BTN</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">pull_up_down</span><span class="o">=</span><span class="n">GPIO</span><span class="o">.</span><span class="n">PUD_DOWN</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">BTN</span><span class="p">)</span> <span class="o">==</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">HIGH</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Button pushed!"</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="event-handling">Event handling<a class="headerlink" href="#event-handling" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">button_callback</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">light_on</span>
+    <span class="o">...</span>
+
+<span class="n">GPIO</span><span class="o">.</span><span class="n">add_event_detect</span><span class="p">(</span><span class="n">BTN</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">RISING</span><span class="p">,</span>
+                      <span class="n">callback</span><span class="o">=</span><span class="n">button_callback</span><span class="p">,</span> <span class="n">bouncetime</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>pull-down</th>
+<th>pull-up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>안 누름</td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td>누름</td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-pwm">3. PWM<a class="headerlink" href="#3-pwm" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">p</span> <span class="o">=</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">PWM</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>        <span class="c1"># 핀, 주파수(Hz)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                  <span class="c1"># 초기 duty cycle</span>
+<span class="n">p</span><span class="o">.</span><span class="n">ChangeDutyCycle</span><span class="p">(</span><span class="n">dc</span><span class="p">)</span>       <span class="c1"># 0 ~ 100</span>
+<span class="n">p</span><span class="o">.</span><span class="n">ChangeFrequency</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>용도</th>
+<th>핀</th>
+<th>주파수</th>
+<th>조정 대상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LED 밝기</td>
+<td>GPIO 18</td>
+<td><strong>50Hz</strong></td>
+<td><strong>Duty cycle</strong></td>
+</tr>
+<tr>
+<td>부저 음</td>
+<td>GPIO 18</td>
+<td><strong>100Hz</strong> 시작</td>
+<td><strong>Frequency</strong></td>
+</tr>
+<tr>
+<td>서보 각도</td>
+<td>GPIO 18</td>
+<td><strong>50Hz</strong></td>
+<td><strong>Duty cycle</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>서보 각도</strong> — 0° = <strong>2.5</strong>, 90° = <strong>7.5</strong>, 180° = <strong>12.5</strong></p>
+<p><strong>음계</strong> — 262, 294, 330, 349, 392, 440, 493, 523 (도레미파솔라시도)</p>
+<hr />
+<h2 id="4-spi-mcp3008">4. SPI / MCP3008<a class="headerlink" href="#4-spi-mcp3008" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">spidev</span>
+
+<span class="n">spi</span> <span class="o">=</span> <span class="n">spidev</span><span class="o">.</span><span class="n">SpiDev</span><span class="p">()</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">max_speed_hz</span> <span class="o">=</span> <span class="mi">100000</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">readadc</span><span class="p">(</span><span class="n">adcnum</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">adcnum</span> <span class="o">&gt;</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">adcnum</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">spi</span><span class="o">.</span><span class="n">xfer2</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span> <span class="o">+</span> <span class="n">adcnum</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">((</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">data</span>
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><code>readadc</code>는 <strong>토씨 하나 안 틀리고</strong> 쓸 수 있어야 한다. 실습 9~12에 전부 똑같이 등장한다.</p>
+</div>
+<hr />
+<h2 id="5-핀-번호-bcm">5. 핀 번호 (BCM)<a class="headerlink" href="#5-핀-번호-bcm" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>용도</th>
+<th>핀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>I2C</strong></td>
+<td>SDA = <strong>GPIO2</strong>, SCL = <strong>GPIO3</strong></td>
+</tr>
+<tr>
+<td><strong>SPI</strong></td>
+<td>MOSI = <strong>GPIO10</strong>, MISO = <strong>GPIO9</strong>, SCLK = <strong>GPIO11</strong>, CE0 = <strong>GPIO8</strong></td>
+</tr>
+<tr>
+<td><strong>PWM</strong></td>
+<td><strong>GPIO18</strong></td>
+</tr>
+<tr>
+<td><strong>UART</strong></td>
+<td>TXD = GPIO14, RXD = GPIO15</td>
+</tr>
+</tbody>
+</table>
+<h3 id="실습별-사용-핀">실습별 사용 핀<a class="headerlink" href="#실습별-사용-핀" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>실습</th>
+<th>핀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LED Blink</td>
+<td>GPIO 4</td>
+</tr>
+<tr>
+<td>버튼</td>
+<td>GPIO 15 (+ LED GPIO 4)</td>
+</tr>
+<tr>
+<td>PWM 전부</td>
+<td>GPIO 18</td>
+</tr>
+<tr>
+<td>초음파 HC-SR04</td>
+<td>TRIG <strong>23</strong>, ECHO <strong>24</strong></td>
+</tr>
+<tr>
+<td>PIR HC-SR501</td>
+<td>센서 <strong>4</strong>, LED R <strong>20</strong>, LED Y <strong>21</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-계산-공식">6. 계산 공식<a class="headerlink" href="#6-계산-공식" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>공식</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>옴의 법칙</td>
+<td><code>V = I × R</code></td>
+</tr>
+<tr>
+<td>직렬 합성저항</td>
+<td><code>Rt = R1 + R2</code></td>
+</tr>
+<tr>
+<td>병렬 합성저항</td>
+<td><code>1/R = 1/R1 + 1/R2</code></td>
+</tr>
+<tr>
+<td>LED 보호저항</td>
+<td><code>R = (전원V − V_F) / I_F</code> → 5V·2V·20mA 면 <strong>150Ω</strong></td>
+</tr>
+<tr>
+<td>초음파 거리</td>
+<td><code>거리 = 34000(cm/s) × 걸린시간 / 2</code></td>
+</tr>
+<tr>
+<td>전압 분배 (5V→3.3V)</td>
+<td>1kΩ + 2kΩ, <code>Vout = 5 − 1000 × (5/3000) = 3.33V</code></td>
+</tr>
+<tr>
+<td>ADC → 전압</td>
+<td><code>아날로그 = (디지털 × 3.3) / 1023</code></td>
+</tr>
+<tr>
+<td>전압 → ADC</td>
+<td><code>디지털 = (아날로그 / 3.3) × 1023</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-자주-쓰는-리눅스-명령어">7. 자주 쓰는 리눅스 명령어<a class="headerlink" href="#7-자주-쓰는-리눅스-명령어" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>upgrade<span class="w">   </span><span class="c1"># 패키지 업데이트</span>
+$<span class="w"> </span>sudo<span class="w"> </span>raspi-config<span class="w">                             </span><span class="c1"># SPI / I2C / VNC 활성화</span>
+$<span class="w"> </span>sudo<span class="w"> </span>reboot
+
+$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>webapps/ch01<span class="w">                         </span><span class="c1"># 하위 디렉토리까지 생성</span>
+$<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>dir<span class="w">                                    </span><span class="c1"># 디렉토리 삭제</span>
+$<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span>src<span class="w"> </span>dst<span class="w">                                 </span><span class="c1"># 디렉토리 복사</span>
+$<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>log.txt<span class="w">                               </span><span class="c1"># 실시간 로그</span>
+$<span class="w"> </span>ps<span class="w"> </span>-ef<span class="w">                                        </span><span class="c1"># 전체 프로세스</span>
+$<span class="w"> </span><span class="nb">kill</span><span class="w"> </span>-9<span class="w"> </span>PID<span class="w">                                   </span><span class="c1"># 강제 종료</span>
+
+$<span class="w"> </span>ls<span class="w"> </span>/dev/i2c*<span class="w">                                  </span><span class="c1"># I2C 디바이스 확인</span>
+$<span class="w"> </span>i2cdetect<span class="w"> </span>-y<span class="w"> </span><span class="m">1</span><span class="w">                                </span><span class="c1"># I2C 주소 확인 (OLED = 0x3c)</span>
+$<span class="w"> </span>python<span class="w"> </span>LED_Blink.py<span class="w">                           </span><span class="c1"># 실행</span>
+</code></pre></div>
+
+<h3 id="가상환경">가상환경<a class="headerlink" href="#가상환경" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+$<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>spidev
+$<span class="w"> </span>deactivate
+</code></pre></div>
+
+<hr />
+<h2 id="8-자주-틀리는-것">8. 자주 틀리는 것<a class="headerlink" href="#8-자주-틀리는-것" title="Permanent link">#</a></h2>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<ul>
+<li><strong>BOARD vs BCM</strong> — 5강 실습은 전부 <strong>BCM</strong></li>
+<li>초음파 거리에서 <strong>÷2 빠뜨림</strong></li>
+<li><strong>MISO↔DOUT, MOSI↔DIN</strong> 교차 연결</li>
+<li><code>GPIO.cleanup()</code> 빠뜨림</li>
+<li>callback 함수 안 <strong><code>global</code> 빠뜨림</strong></li>
+<li>서보/LED는 duty cycle, <strong>부저는 frequency</strong></li>
+<li>HC-SR04의 Echo는 <strong>5V → 전압분배 필수</strong></li>
+</ul>
+</div>
+  <footer class="page-footer"><code>content/embedded/99-cheatsheet.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#1-기본-템플릿-이것만-외우면-절반">1. 기본 템플릿 (이것만 외우면 절반)</a></li>
+<li><a href="#2-입력-버튼">2. 입력 (버튼)</a><ul>
+<li><a href="#polling">Polling</a></li>
+<li><a href="#event-handling">Event handling</a></li>
+</ul>
+</li>
+<li><a href="#3-pwm">3. PWM</a></li>
+<li><a href="#4-spi-mcp3008">4. SPI / MCP3008</a></li>
+<li><a href="#5-핀-번호-bcm">5. 핀 번호 (BCM)</a><ul>
+<li><a href="#실습별-사용-핀">실습별 사용 핀</a></li>
+</ul>
+</li>
+<li><a href="#6-계산-공식">6. 계산 공식</a></li>
+<li><a href="#7-자주-쓰는-리눅스-명령어">7. 자주 쓰는 리눅스 명령어</a><ul>
+<li><a href="#가상환경">가상환경</a></li>
+</ul>
+</li>
+<li><a href="#8-자주-틀리는-것">8. 자주 틀리는 것</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{
+  "title": "3학년 2학기 시험 정리",
+  "description": "강의 자료 기반 시험 대비 요약 노트",
+  "home": "index.md",
+  "sections": [
+    {
+      "id": "embedded",
+      "title": "임베디드 IoT 프로그래밍",
+      "index": "embedded/index.md",
+      "pages": [
+        { "file": "embedded/01-iot-opensource.md", "title": "1. IoT와 오픈소스" },
+        { "file": "embedded/02-dev-env.md",        "title": "2. 개발 환경 구축" },
+        { "file": "embedded/03-linux.md",          "title": "3. 리눅스 기초" },
+        { "file": "embedded/04-circuit.md",        "title": "4. 전자회로 기초" },
+        { "file": "embedded/05-gpio-sensor.md",    "title": "5. GPIO 및 센서 활용" },
+        { "file": "embedded/98-code.md",           "title": "코드 모음" },
+        { "file": "embedded/99-cheatsheet.md",     "title": "실기 치트시트" }
+      ]
+    },
+    {
+      "id": "hpc",
+      "title": "고성능 컴퓨팅",
+      "index": "hpc/index.md",
+      "pages": [
+        { "file": "hpc/01-hpc-overview.md",          "title": "1. HPC 개요" },
+        { "file": "hpc/02-dev-env.md",               "title": "2. 개발 환경 구축" },
+        { "file": "hpc/03-gpgpu-parallel.md",        "title": "3. GPGPU 및 병렬처리" },
+        { "file": "hpc/04-cuda-intro.md",            "title": "4. CUDA 개요" },
+        { "file": "hpc/05-cuda-flow.md",             "title": "5. CUDA 프로그램의 기본 흐름" },
+        { "file": "hpc/06-cuda-thread-hierarchy.md", "title": "6. CUDA 스레드 계층" },
+        { "file": "hpc/07-cuda-thread-indexing.md",  "title": "7. 스레드 레이아웃과 인덱싱" },
+        { "file": "hpc/98-code.md",                  "title": "코드 모음" },
+        { "file": "hpc/99-cheatsheet.md",            "title": "CUDA 치트시트" }
+      ]
+    },
+    {
+      "id": "isw",
+      "title": "지능형 소프트웨어",
+      "index": "isw/index.md",
+      "pages": [
+        { "file": "isw/00-math-basics.md",            "title": "0. 수학·용어 기초 (먼저 읽기)" },
+        { "file": "isw/01-course-overview.md",        "title": "1. 과목 개요와 AI Agent 역사" },
+        { "file": "isw/02-embedding.md",              "title": "2. 자연어 임베딩" },
+        { "file": "isw/03-transformer.md",            "title": "3. Seq2Seq와 Transformer" },
+        { "file": "isw/04-llm-gpt.md",                "title": "4. LLM과 GPT 시리즈" },
+        { "file": "isw/05-adaptation-tuning.md",      "title": "5. Adaptation Tuning" },
+        { "file": "isw/06-prompt-engineering.md",     "title": "6. Prompt Engineering" },
+        { "file": "isw/07-ai-agent.md",               "title": "7. AI Agent의 개념과 분류" },
+        { "file": "isw/08-react-tool.md",             "title": "8. ReAct와 Tool Use" },
+        { "file": "isw/09-agent-structure.md",        "title": "9. LLM 기반 Agent의 구조" },
+        { "file": "isw/10-agent-practice.md",         "title": "10. Agent의 실제 활용" },
+        { "file": "isw/11-cognitive-architecture.md", "title": "11. Cognitive Architecture와 CoALA" },
+        { "file": "isw/12-agent-architectures.md",    "title": "12. AI Agent 아키텍처 분류" },
+        { "file": "isw/99-cheatsheet.md",             "title": "핵심 암기 치트시트" }
+      ]
+    },
+    {
+      "id": "lang",
+      "title": "언어와 사회",
+      "index": "lang/index.md",
+      "pages": [
+        { "file": "lang/01-sociolinguistics.md",   "title": "1. 사회언어학과 지금 시대의 대화" },
+        { "file": "lang/02-language-user.md",      "title": "2. 언어 능력과 세대" },
+        { "file": "lang/03-language-instinct.md",  "title": "3. 언어 본능 vs 언어 게임" },
+        { "file": "lang/04-social-change.md",      "title": "4. 사회변화와 언어변화" },
+        { "file": "lang/05-language-culture.md",   "title": "5. 언어와 문화, 언어와 사고" },
+        { "file": "lang/99-cheatsheet.md",         "title": "핵심 암기 치트시트 + 연습문제" }
+      ]
+    }
+  ]
+}

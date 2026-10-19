@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12. AI Agent 아키텍처 분류 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="12-agent-architectures.html" class="active">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="12-ai-agent-아키텍처-분류">12. AI Agent 아키텍처 분류<a class="headerlink" href="#12-ai-agent-아키텍처-분류" title="Permanent link">#</a></h1>
+<h2 id="이-장의-한-줄-요약">이 장의 한 줄 요약<a class="headerlink" href="#이-장의-한-줄-요약" title="Permanent link">#</a></h2>
+<blockquote>
+<p><strong>에이전트를 "혼자" 쓸까(Single), "여럿" 쓸까(Multi)? 여럿이면 "팀장이 있는 조직"(Vertical)일까 "다 같이 평등한 회의"(Horizontal)일까?</strong></p>
+</blockquote>
+<div class="codehilite"><pre><span></span><code>AI Agent Architecture
+ ├─ Single Agent Architecture        🧑            (혼자 다 함)
+ └─ Multi-Agent Architecture
+      ├─ Vertical Architecture       🧑            (팀장 1 + 팀원들)
+      │                            ↗   ↖
+      │                          🧑     🧑
+      └─ Horizontal Architecture   🧑 ⇄ 🧑        (전원 평등)
+                                     ↘ ↙
+                                      🧑
+</code></pre></div>
+
+<hr />
+<h2 id="1-들어가며-연구적-관점">1. 들어가며 — 연구적 관점 ★<a class="headerlink" href="#1-들어가며-연구적-관점" title="Permanent link">#</a></h2>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>"Agentic AI 연구의 현황"을 묻는 문제에 그대로 쓸 수 있습니다.</p>
+<ul>
+<li><strong>Agentic AI System의 방법론은 아직 표준화된 설계 정답이 없고, 성능/안정성 개선을 위한 지식이 상당히 empirical하게 축적됨</strong></li>
+<li><strong>Cognitive Architecture의 개념이나 agentic system 필수 구성요소의 피상적인 논리와 필요성 자체는 매우 직관적</strong></li>
+<li><strong>대표적인 설계 패턴 및 분류 소개와 Agent에 대한 연구적 관점에 초점을 두고자 함</strong></li>
+</ul>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>쉽게:</strong>
+- <strong>"정답 설계도가 아직 없다"</strong> — 이렇게 만들면 무조건 좋다는 공식이 없음
+- <strong>empirical(경험적)</strong> = 이론보다 <strong>"해 보니 이게 잘 되더라"</strong> 식으로 지식이 쌓임
+- <strong>피상적인 논리는 직관적</strong> = "기억이 필요하다, 도구가 필요하다" 같은 건 <strong>누구나 당연하게</strong> 이해함
+- 그래서 강의는 <strong>"대표적인 설계 패턴과 분류"</strong> 를 소개하는 데 집중</p>
+</div>
+<p>(출처: ByteByteGo, "What Are AI Agents Really About?")</p>
+<hr />
+<h2 id="2-ai-agent-is-sort-of-a-control-system">2. AI Agent is sort of a control system ★★<a class="headerlink" href="#2-ai-agent-is-sort-of-a-control-system" title="Permanent link">#</a></h2>
+<p><strong>"AI Agent는 일종의 제어 시스템이다"</strong></p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<ul>
+<li><strong>단일 LLM의 추론 능력에 의존하는 것이 아닌, 신뢰 가능한 구조를 설계하고, 인간처럼 과업을 수행하는 것이 AI Agent의 목표</strong></li>
+<li><strong>문제 해결의 자율적 수행을 위해 feedback loop를 포함한 재귀적인 구조의 Cognitive Architecture 설계가 필요</strong></li>
+<li><strong>Observation → Planning &amp; Reasoning → Action → Observation</strong> (+ <strong>Reflection</strong>)</li>
+<li>이를 기반으로 <strong>performance / robustness / reliability / security의 개선</strong>을 위해 시스템의 <strong>structure / process / interface</strong>를 구성</li>
+</ul>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>제어 시스템(control system)이 뭔가?</strong>
+<strong>에어컨</strong>을 생각하세요. 온도를 <strong>재고(관찰)</strong> → 목표 온도와 비교해서 <strong>판단하고</strong> → 냉방을 <strong>켜거나 끄고(행동)</strong> → 다시 온도를 <strong>재고</strong> … 이렇게 <strong>결과를 보고 계속 조절하는 시스템</strong>입니다.</p>
+<p>AI Agent도 똑같이:</p>
+<div class="codehilite"><pre><span></span><code>Observation (관찰) → Planning &amp; Reasoning (계획·추론) → Action (행동) → Observation (결과 관찰) → …
+                                    ↑______ Reflection (돌아보기) ______|
+</code></pre></div>
+
+<p><strong>용어</strong>
+- <strong>feedback loop</strong> = 결과를 다시 입력으로 돌려보내는 <strong>순환 구조</strong>
+- <strong>재귀적</strong> = 자기 자신을 <strong>반복해서 다시 부르는</strong> 구조
+- <strong>Reflection</strong> = 결과를 <strong>돌아보고 반성</strong>하는 단계
+- <strong>performance</strong>(성능) / <strong>robustness</strong>(견고성: 이상한 상황에도 잘 버팀) / <strong>reliability</strong>(신뢰성: 늘 일정하게 잘 작동) / <strong>security</strong>(보안)
+- <strong>structure</strong>(구조) / <strong>process</strong>(과정) / <strong>interface</strong>(연결 방식)</p>
+<p>핵심 메시지: <strong>"LLM 하나가 똑똑한 것"에 기대지 말고, "믿을 수 있는 구조"를 설계하라.</strong></p>
+</div>
+<p>(출처: Cobus Greyling, "WebVoyager AI Agent")</p>
+<hr />
+<h2 id="3-architectural-designs-분류와-필수-구성요소">3. Architectural Designs — 분류와 필수 구성요소 ★★<a class="headerlink" href="#3-architectural-designs-분류와-필수-구성요소" title="Permanent link">#</a></h2>
+<h3 id="ai-agent-architecture의-분류">AI Agent Architecture의 분류<a class="headerlink" href="#ai-agent-architecture의-분류" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>대분류</th>
+<th>소분류</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Single Agent Architecture</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Multi-Agent Architecture</strong></td>
+<td><strong>Vertical Architecture</strong> / <strong>Horizontal Architecture</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="거의-필수-구성요소">(거의) 필수 구성요소 ★<a class="headerlink" href="#거의-필수-구성요소" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>단답으로 나오기 아주 좋습니다.
+- <strong>Components: LLM, tool, database</strong>
+- <strong>Process: reasoning, planning, tool calling</strong></p>
+</div>
+<table>
+<thead>
+<tr>
+<th>종류</th>
+<th>구성</th>
+<th>쉬운 말</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Components</strong> (부품)</td>
+<td><strong>LLM, tool, database</strong></td>
+<td>두뇌, 도구, 저장소</td>
+</tr>
+<tr>
+<td><strong>Process</strong> (과정)</td>
+<td><strong>reasoning, planning, tool calling</strong></td>
+<td>생각하기, 계획하기, 도구 부르기</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>1장의 <strong>"AI Agent 기본 구조 4가지 (LLM / Tool / Memory / Planning)"</strong> 와 같은 이야기입니다.</p>
+</div>
+<p>(출처: Masterman et al., 2024, <em>The Landscape of Emerging AI Agent Architectures for Reasoning, Planning, and Tool Calling: A Survey</em>)</p>
+<hr />
+<h2 id="4-single-agent-vs-multi-agent">4. Single Agent vs Multi-Agent ★★★<a class="headerlink" href="#4-single-agent-vs-multi-agent" title="Permanent link">#</a></h2>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>이 장의 핵심 비교표입니다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th><strong>Single Agent Architecture</strong></th>
+<th><strong>Multi-Agent Architecture</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>정의</strong></td>
+<td><strong>단일 언어모델이 모든 권한을 갖고 reasoning, planning, tool calling을 실행하는 agent</strong></td>
+<td><strong>복수의 언어모델이 서로 다른 페르소나, 권한, 역할을 부여받고 서로 소통, 지시하며 협력적으로 과업을 수행하는 agent</strong></td>
+</tr>
+<tr>
+<td><strong>피드백</strong></td>
+<td><strong>타 모델로부터 피드백을 받을 수 없으나, 인간의 개입은 가능</strong></td>
+<td>여러 모델을 사용하면서 <strong>불필요한 행동, 정보 누락 등 발생 가능</strong></td>
+</tr>
+<tr>
+<td><strong>적합한 문제</strong></td>
+<td><strong>문제가 잘 정의되어 있다면 하나의 모델이 모든 역할을 수행하는 것이 더 나을 수 있음</strong></td>
+<td><strong>복잡하고 모호한 과업 수행에 상대적으로 더 적합</strong></td>
+</tr>
+<tr>
+<td><strong>구성</strong></td>
+<td>—</td>
+<td><strong>다양한 구성이 가능하나, 크게 vertical/horizontal 구조로 분류</strong></td>
+</tr>
+<tr>
+<td><strong>예시</strong></td>
+<td><strong>ReAct, RAISE, Reflexion, AutoGPT+P, LATS</strong></td>
+<td><strong>DyLAN, AgentVerse, MetaGPT</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유</strong>
+- <strong>Single</strong> = <strong>1인 사업자</strong>. 기획·개발·영업을 혼자 다 함. 일이 단순하면 <strong>오히려 빠르고 효율적</strong>. 대신 <strong>옆에서 "이거 틀렸어" 말해줄 동료가 없음</strong> (사람이 봐줄 순 있음)
+- <strong>Multi</strong> = <strong>회사</strong>. 각자 역할이 있음. 복잡한 일엔 유리하지만, <strong>소통 실수</strong>(같은 일 두 번 하기, 정보 전달 누락)가 생길 수 있음</p>
+<p><strong>페르소나(persona)</strong> = AI에게 부여한 <strong>캐릭터·역할</strong> ("너는 꼼꼼한 테스터야")
+<strong>well-defined problem</strong> = <strong>문제가 명확하게 정해진</strong> 문제 ("이 숫자들 정렬해" 같은)</p>
+</div>
+<hr />
+<h2 id="5-single-agent-architecture">5. Single Agent Architecture ★★<a class="headerlink" href="#5-single-agent-architecture" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>타 모델/유저의 피드백이 불필요한 well-defined problem에 대해서는 강점 有</strong></li>
+<li><strong>작업이 복잡해질수록 단일 모델이 모든 도구와 작업을 감당하기 어려움</strong></li>
+</ul>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Single Agent의 한계 2가지</strong>
+- <strong>너무 많은 tool ⇒ 적절한 tool 선택의 난이도 상승</strong>
+- <strong>많은 subtask ⇒ 정보 혼재로 인한 성능 하락, workflow 생성/관리가 어려움</strong></p>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>쉽게</strong>
+- <strong>도구가 너무 많으면</strong>: 공구함에 공구가 100개면 <strong>"이 나사엔 뭘 써야 하지?"</strong> 고르기가 어려워짐
+- <strong>할 일이 너무 많으면</strong>: 한 사람이 10가지 일을 동시에 하면 <strong>정보가 뒤섞여서</strong> 실수가 늘고, <strong>일의 순서(workflow)</strong> 를 관리하기 힘듦</p>
+<p><strong>subtask</strong> = 큰 일을 쪼갠 <strong>작은 일</strong> / <strong>workflow</strong> = 일의 <strong>흐름·순서</strong></p>
+</div>
+<h3 id="사례-raise">사례: RAISE ★<a class="headerlink" href="#사례-raise" title="Permanent link">#</a></h3>
+<p>(Liu et al., 2024, <em>From LLM to Conversational Agent: A Memory Enhanced Architecture with Fine-Tuning of Large Language Models</em>)</p>
+<ul>
+<li><strong>ReAct에 short/long memory mechanism을 추가</strong></li>
+<li><strong>특정 task들에서 기존 연구들에 비해 높은 성능</strong>을 보임</li>
+</ul>
+<p><strong>그러나…</strong></p>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<ul>
+<li><strong>복잡한 logic 이해를 어려워함</strong></li>
+<li><strong>할루시네이션 발생</strong></li>
+<li><strong>세일즈를 시켰더니 Python 코드를 작성..</strong></li>
+<li><strong>복잡한 과업 하에서 부여된 역할을 헷갈리기 때문으로 추측</strong></li>
+</ul>
+<p>→ <strong>"Single Agent의 한계"를 보여주는 구체적 증거</strong>로 쓰입니다.</p>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>세일즈(판매 상담)</strong> 를 하라고 했더니 <strong>갑자기 파이썬 코드</strong>를 짠 것. 혼자서 너무 많은 역할을 맡다 보니 <strong>"내가 지금 뭐 하는 역할이지?"</strong> 를 헷갈린 것으로 보입니다.
+이런 문제 때문에 <strong>역할을 여러 에이전트에게 나누는 Multi-Agent</strong>가 나옵니다.</p>
+</div>
+<hr />
+<h2 id="6-multi-agent-architecture">6. Multi-Agent Architecture ★★★<a class="headerlink" href="#6-multi-agent-architecture" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>복수의 LLM에게 페르소나, 역할, 권한을 부여하여 복잡한 과업을 협력적으로 수행하도록 함</strong></li>
+<li><strong>조직 구성의 두 극단을 Vertical Architecture, Horizontal Architecture로 분류 가능</strong></li>
+</ul>
+<h3 id="vertical-vs-horizontal">Vertical vs Horizontal ★★★<a class="headerlink" href="#vertical-vs-horizontal" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>이 장에서 가장 출제 확률이 높습니다.</strong> 각각 특징을 외우세요.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th><strong>Vertical Architecture</strong> (수직)</th>
+<th><strong>Horizontal Architecture</strong> (수평)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>하나의 리더 agent에게 다른 모든 agent들이 보고하는 구조</strong></td>
+<td><strong>모든 agent들이 평등하며, 집단적 논의를 통해 문제 해결</strong></td>
+</tr>
+<tr>
+<td><strong>각 부하들은 리더와만 소통</strong></td>
+<td><strong>공용 스레드에서 모든 소통을 수행하여, 모든 메시지 확인 가능</strong></td>
+</tr>
+<tr>
+<td><strong>Agent들 간 분업이 매우 명확</strong></td>
+<td><strong>리더로부터 과업을 부여받는 것이 아니라, 특정 task나 tool calling에 agent가 자원할 수 있음</strong></td>
+</tr>
+<tr>
+<td><strong>리더와의 소통이 모두에게 공유되도록 설계도 가능</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span><code>   Vertical (수직)                     Horizontal (수평)
+
+        🧑 리더                          🧑 ⇄ 🧑
+       ↗    ↖                             ↘   ↙
+     🧑      🧑                             🧑
+   (팀원은 리더에게만 보고)            (전원이 한 방에서 다 같이 대화)
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유</strong>
+| | Vertical | Horizontal |
+|---|---|---|
+| 조직 | <strong>회사 조직도</strong> (팀장-팀원) | <strong>원탁 회의</strong> / 단체 카톡방 |
+| 일 배정 | <strong>팀장이 나눠줌</strong> | <strong>하고 싶은 사람이 손 듦</strong> (자원) |
+| 소통 | 팀원 ↔ 팀장만 | <strong>모두가 모든 메시지를 봄</strong> |
+| 장점 | 분업이 명확, 통제 쉬움 | 다양한 의견, 집단지성 |</p>
+<p><strong>공용 스레드</strong> = 모두가 같이 쓰는 <strong>하나의 대화방</strong> / <strong>자원(自願)</strong> = 스스로 하겠다고 나서는 것</p>
+</div>
+<h3 id="프레임워크-스펙트럼">프레임워크 스펙트럼 ★<a class="headerlink" href="#프레임워크-스펙트럼" title="Permanent link">#</a></h3>
+<p>실제 시스템들은 두 극단 사이 어딘가에 있습니다.</p>
+<div class="codehilite"><pre><span></span><code>Vertical ●──────────────────────────────────────────────────● Horizontal
+          ↑        ↑     ↑           ↑         ↑    ↑              ↑
+        CrewAI  ChatDev MetaGPT    AutoGen  AgentVerse CAMEL      DyLAN
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>더 Vertical (수직 쪽)</th>
+<th>중간</th>
+<th>더 Horizontal (수평 쪽)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CrewAI, ChatDev, MetaGPT</strong></td>
+<td><strong>AutoGen, AgentVerse, CAMEL</strong></td>
+<td><strong>DyLAN</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>양 끝 대표 사례</strong>: 수직 쪽 <strong>MetaGPT</strong> / 수평 쪽 <strong>DyLAN</strong> — 아래에서 자세히.</p>
+</div>
+<hr />
+<h2 id="7-vertical-사례-metagpt">7. Vertical 사례: MetaGPT ★★<a class="headerlink" href="#7-vertical-사례-metagpt" title="Permanent link">#</a></h2>
+<p><strong>"MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework"</strong> (Hong et al., 2023)</p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>MetaGPT의 특징 3가지</strong></p>
+<ol>
+<li><strong>Agent끼리의 무의미한 잡담(conversational noise)을 방지하기 위해 structured output을 강제</strong></li>
+<li><strong>정보 공유에 "publish-subscribe" mechanism을 도입</strong>
+   - <strong>한 공간에 모든 정보를 공유하되, 각 agent의 목표 및 과업에 관련된 정보만 읽도록 유도</strong>
+   - <strong>Structured message에 포함된 메타 정보와 agent 정보를 매칭해서 관련된 정보를 연결</strong> (i.e. subscription)</li>
+<li><strong>수직적 업무 구조와 분업, 정보 흐름을 강제하므로 vertical architecture에 가까움</strong></li>
+</ol>
+</div>
+<h3 id="하나씩-쉽게">하나씩 쉽게<a class="headerlink" href="#하나씩-쉽게" title="Permanent link">#</a></h3>
+<p><strong>① Structured output 강제 — "보고서 양식 통일"</strong></p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>AI들끼리 자유롭게 대화하게 두면 <strong>"좋은 생각이네요!" "저도 동의해요~"</strong> 같은 <strong>쓸데없는 말(잡담, noise)</strong> 이 많아집니다.
+그래서 <strong>정해진 양식(structured output)</strong> 으로만 말하게 합니다. 회사에서 <strong>"보고는 이 양식으로만"</strong> 하는 것처럼요.
+→ 예: 기획자 AI는 반드시 "요구사항 문서" 양식으로, 개발자 AI는 "설계 문서" 양식으로</p>
+</div>
+<p><strong>② Publish-subscribe — "신문 구독"</strong></p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<ul>
+<li><strong>Publish(발행)</strong>: 모든 에이전트는 자기 결과를 <strong>공용 게시판에 올림</strong></li>
+<li><strong>Subscribe(구독)</strong>: 각 에이전트는 <strong>자기 일에 필요한 정보만 골라서 읽음</strong></li>
+</ul>
+<p><strong>비유:</strong> 신문사는 모든 기사를 발행하지만, 독자는 <strong>자기가 구독한 섹션(스포츠, 경제…)</strong> 만 받아 봅니다.</p>
+<p><strong>왜 이렇게?</strong> 모든 메시지를 다 읽으면 <strong>정보가 너무 많아서</strong> 헷갈리고 성능이 떨어집니다 (5절 Single Agent 한계와 같은 문제). 필요한 것만 읽게 해서 해결.</p>
+<p><strong>메타 정보</strong> = 메시지에 붙은 <strong>꼬리표</strong> ("이건 설계 문서야, 개발자용"). 이걸 보고 누가 읽을지 매칭합니다.</p>
+</div>
+<p><strong>③ Vertical에 가까운 이유</strong></p>
+<ul>
+<li><strong>업무 구조가 수직적</strong> (정해진 순서와 역할)</li>
+<li><strong>분업이 명확</strong></li>
+<li><strong>정보 흐름이 강제됨</strong> (양식과 구독으로)</li>
+</ul>
+<hr />
+<h2 id="8-horizontal-사례-dylan">8. Horizontal 사례: DyLAN ★★<a class="headerlink" href="#8-horizontal-사례-dylan" title="Permanent link">#</a></h2>
+<p><strong>"A Dynamic LLM-Powered Agent Network for Task-Oriented Agent Collaboration"</strong> (Liu et al., 2024)</p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>DyLAN의 동작 — "round"와 "기여도 평가"가 핵심</strong></p>
+<ul>
+<li><strong>공용 스레드에서 함께 과업을 수행 후, round마다 각 agent의 기여도를 평가, 기여도가 높은 agent만 다음 round 진출</strong></li>
+<li><strong>모든 모델이 각 1개의 메시지를 생성하는 것이 하나의 round</strong></li>
+<li><strong>기여도 평가는 별도의 LLM Ranker 또는 agent끼리의 peer rating</strong></li>
+<li><strong>이를 반복하면서 팀 구성을 최적화</strong></li>
+<li><strong>리더 없이 수평적으로 협력하여 수행한 후 성과 기반으로 멤버 재편이 이루어지므로, horizontal architecture에 매우 가까움</strong></li>
+</ul>
+</div>
+<h3 id="쉽게">쉽게<a class="headerlink" href="#쉽게" title="Permanent link">#</a></h3>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 서바이벌 오디션 프로그램</strong></p>
+<div class="codehilite"><pre><span></span><code>Round 1: 에이전트 A, B, C, D, E 가 한 방에서 각자 의견 1개씩 냄
+         → 심사(LLM Ranker 또는 서로 점수 매기기)
+         → C, E 탈락 (기여도 낮음)
+
+Round 2: A, B, D 가 다시 각자 의견 1개씩
+         → 심사 → B 탈락
+
+Round 3: A, D 로 최종 팀 구성 ✅
+</code></pre></div>
+
+<ul>
+<li><strong>round</strong> = 모든 참가자가 <strong>한 번씩 말하는 한 바퀴</strong></li>
+<li><strong>LLM Ranker</strong> = 순위를 매기는 <strong>별도의 심사위원 AI</strong></li>
+<li><strong>peer rating</strong> = 참가자끼리 <strong>서로 점수 매기기</strong> (동료 평가)</li>
+<li><strong>Dynamic(동적)</strong> = 팀 구성이 <strong>고정되지 않고 계속 바뀜</strong></li>
+</ul>
+</div>
+<p><strong>Horizontal에 가까운 이유</strong>
+- <strong>리더가 없음</strong> (전원 평등)
+- <strong>공용 스레드</strong>에서 모두 소통
+- <strong>성과에 따라</strong> 멤버가 재편됨 (누가 시켜서가 아니라)</p>
+<h3 id="metagpt-vs-dylan">MetaGPT vs DyLAN<a class="headerlink" href="#metagpt-vs-dylan" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>MetaGPT</strong></th>
+<th><strong>DyLAN</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>구조</td>
+<td><strong>Vertical</strong>에 가까움</td>
+<td><strong>Horizontal</strong>에 매우 가까움</td>
+</tr>
+<tr>
+<td>소통</td>
+<td><strong>Structured output 강제</strong> + <strong>publish-subscribe</strong></td>
+<td><strong>공용 스레드</strong>에서 자유롭게</td>
+</tr>
+<tr>
+<td>팀 구성</td>
+<td><strong>고정된 역할 분업</strong></td>
+<td><strong>round마다 기여도 평가 → 재편</strong></td>
+</tr>
+<tr>
+<td>핵심 아이디어</td>
+<td>잡담 방지, 필요한 정보만 읽기</td>
+<td>잘하는 에이전트만 남기기</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="이-장-정리">이 장 정리<a class="headerlink" href="#이-장-정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Single Agent</strong></th>
+<th><strong>Multi-Agent (Vertical)</strong></th>
+<th><strong>Multi-Agent (Horizontal)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>구조</strong></td>
+<td>모델 1개가 모든 권한</td>
+<td><strong>리더 1 + 부하 N</strong></td>
+<td><strong>전원 평등</strong></td>
+</tr>
+<tr>
+<td><strong>소통</strong></td>
+<td>(타 모델 피드백 없음, 인간 개입만)</td>
+<td>부하는 <strong>리더와만</strong></td>
+<td><strong>공용 스레드</strong>에서 전원, 모든 메시지 확인</td>
+</tr>
+<tr>
+<td><strong>과업 배정</strong></td>
+<td>혼자 다 함</td>
+<td><strong>리더가 분배</strong>, 분업 매우 명확</td>
+<td><strong>agent가 자원</strong></td>
+</tr>
+<tr>
+<td><strong>적합</strong></td>
+<td><strong>well-defined 문제</strong></td>
+<td>복잡·모호한 과업</td>
+<td>복잡·모호한 과업</td>
+</tr>
+<tr>
+<td><strong>단점</strong></td>
+<td>tool 많으면 선택 어려움 / subtask 많으면 성능 하락·workflow 관리 어려움</td>
+<td>(역할 고정)</td>
+<td>(통제 어려움)</td>
+</tr>
+<tr>
+<td><strong>Multi 공통 단점</strong></td>
+<td></td>
+<td>불필요한 행동, 정보 누락</td>
+<td>불필요한 행동, 정보 누락</td>
+</tr>
+<tr>
+<td><strong>예시</strong></td>
+<td><strong>ReAct, RAISE, Reflexion, AutoGPT+P, LATS</strong></td>
+<td><strong>CrewAI, ChatDev, MetaGPT</strong></td>
+<td><strong>DyLAN</strong>, AgentVerse, CAMEL</td>
+</tr>
+</tbody>
+</table>
+<p><strong>필수 구성요소</strong>: Components = <strong>LLM, tool, database</strong> / Process = <strong>reasoning, planning, tool calling</strong></p>
+  <footer class="page-footer"><code>content/isw/12-agent-architectures.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#이-장의-한-줄-요약">이 장의 한 줄 요약</a></li>
+<li><a href="#1-들어가며-연구적-관점">1. 들어가며 — 연구적 관점 ★</a></li>
+<li><a href="#2-ai-agent-is-sort-of-a-control-system">2. AI Agent is sort of a control system ★★</a></li>
+<li><a href="#3-architectural-designs-분류와-필수-구성요소">3. Architectural Designs — 분류와 필수 구성요소 ★★</a><ul>
+<li><a href="#ai-agent-architecture의-분류">AI Agent Architecture의 분류</a></li>
+<li><a href="#거의-필수-구성요소">(거의) 필수 구성요소 ★</a></li>
+</ul>
+</li>
+<li><a href="#4-single-agent-vs-multi-agent">4. Single Agent vs Multi-Agent ★★★</a></li>
+<li><a href="#5-single-agent-architecture">5. Single Agent Architecture ★★</a><ul>
+<li><a href="#사례-raise">사례: RAISE ★</a></li>
+</ul>
+</li>
+<li><a href="#6-multi-agent-architecture">6. Multi-Agent Architecture ★★★</a><ul>
+<li><a href="#vertical-vs-horizontal">Vertical vs Horizontal ★★★</a></li>
+<li><a href="#프레임워크-스펙트럼">프레임워크 스펙트럼 ★</a></li>
+</ul>
+</li>
+<li><a href="#7-vertical-사례-metagpt">7. Vertical 사례: MetaGPT ★★</a><ul>
+<li><a href="#하나씩-쉽게">하나씩 쉽게</a></li>
+</ul>
+</li>
+<li><a href="#8-horizontal-사례-dylan">8. Horizontal 사례: DyLAN ★★</a><ul>
+<li><a href="#쉽게">쉽게</a></li>
+<li><a href="#metagpt-vs-dylan">MetaGPT vs DyLAN</a></li>
+</ul>
+</li>
+<li><a href="#이-장-정리">이 장 정리</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

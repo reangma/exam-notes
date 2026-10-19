@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5. CUDA 프로그램의 기본 흐름 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="05-cuda-flow.html" class="active">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="5-cuda-프로그램의-기본-흐름">5. CUDA 프로그램의 기본 흐름<a class="headerlink" href="#5-cuda-프로그램의-기본-흐름" title="Permanent link">#</a></h1>
+<h2 id="cuda-프로그램의-실행-3단계">CUDA 프로그램의 실행 3단계<a class="headerlink" href="#cuda-프로그램의-실행-3단계" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>이 3단계가 모든 CUDA 프로그램의 뼈대다.</strong> 순서를 그대로 외울 것.</p>
+<ol>
+<li><strong>메모리 복사 (host → device)</strong> — <code>cudaMemcpy()</code></li>
+<li><strong>GPU 연산</strong> — 각 CUDA 스레드에서 커널을 <strong>비동기적으로</strong> 실행</li>
+<li><strong>메모리 복사 (device → host)</strong> — <code>cudaMemcpy()</code></li>
+</ol>
+</div>
+<h3 id="1단계-메모리-복사-host-device">1단계: 메모리 복사 (host → device)<a class="headerlink" href="#1단계-메모리-복사-host-device" title="Permanent link">#</a></h3>
+<p>호스트 메모리에 있는, GPU에서 처리해야 할 데이터를 <strong>디바이스 메모리로 복사</strong>. 데이터는 <strong>PCI bus</strong>를 통해 이동한다.</p>
+<h3 id="2단계-gpu-연산">2단계: GPU 연산<a class="headerlink" href="#2단계-gpu-연산" title="Permanent link">#</a></h3>
+<p>호스트에서 커널 호출을 하면 디바이스에서 <strong>CUDA core들과 디바이스 메모리의 데이터</strong>를 사용하여 각 CUDA 스레드가 커널을 실행.</p>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>커널은 비동기적으로 수행된다.</strong>
+호스트는 디바이스에게 커널 수행을 요청한 뒤 <strong>완료될 때까지 기다리지 않고 다음 라인의 코드를 수행</strong>한다.
+→ 그래서 <code>cudaDeviceSynchronize()</code> 가 필요하다.</p>
+</div>
+<h3 id="3단계-메모리-복사-device-host">3단계: 메모리 복사 (device → host)<a class="headerlink" href="#3단계-메모리-복사-device-host" title="Permanent link">#</a></h3>
+<p>디바이스 메모리에 있는 GPU 연산 결과를 <strong>호스트 메모리로 복사</strong>.</p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>커널은 비동기, <code>cudaMemcpy()</code>는 동기</strong>다.
+즉 <code>cudaMemcpy()</code>는 호스트가 메모리 복사가 완료될 때까지 기다린다.</p>
+</div>
+<hr />
+<h2 id="cuda-기초-메모리-api-목록">CUDA 기초 메모리 API 목록<a class="headerlink" href="#cuda-기초-메모리-api-목록" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>함수</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>cudaMalloc()</code></strong></td>
+<td>디바이스 메모리 <strong>할당</strong></td>
+</tr>
+<tr>
+<td><strong><code>cudaFree()</code></strong></td>
+<td>디바이스 메모리 <strong>해제</strong></td>
+</tr>
+<tr>
+<td><strong><code>cudaMemset()</code></strong></td>
+<td>디바이스 메모리 <strong>초기화</strong></td>
+</tr>
+<tr>
+<td><strong><code>cudaMemcpy()</code></strong></td>
+<td>호스트와 디바이스 사이의 <strong>메모리 복사</strong></td>
+</tr>
+<tr>
+<td><strong><code>cudaMemGetInfo()</code></strong></td>
+<td>디바이스 메모리의 <strong>총 크기 및 사용 가능한 크기</strong> 확인</td>
+</tr>
+<tr>
+<td><strong><code>cudaGetErrorName()</code></strong></td>
+<td><strong>에러 코드(정수)를 문자열로 변환</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>모든 CUDA API는 <strong>성공 시 <code>cudaSuccess</code> (0)</strong> 을 반환하고, <strong>실패 시 0 이외의 에러 코드</strong>를 반환한다. 반환형은 <strong><code>cudaError_t</code> 열거형</strong>이다.</p>
+</div>
+<hr />
+<h2 id="cudamalloc">cudaMalloc()<a class="headerlink" href="#cudamalloc" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">cudaError_t</span><span class="w"> </span><span class="n">cudaMalloc</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">**</span><span class="n">ptr</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">)</span>
+</code></pre></div>
+
+<p>GPU에 <strong>디바이스 메모리(global memory) 할당</strong></p>
+<table>
+<thead>
+<tr>
+<th>인자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ptr</code></td>
+<td>할당할 디바이스 메모리 공간의 <strong>시작 주소의 포인터</strong></td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td>할당할 메모리 공간의 크기 (<strong>byte 단위</strong>)</td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">dDataPtr</span><span class="p">;</span>
+<span class="n">cudaMalloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dDataPtr</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">32</span><span class="p">);</span><span class="w">     </span><span class="c1">// 4 * 32 byte 할당</span>
+</code></pre></div>
+
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p>첫 번째 인자가 <strong>포인터의 포인터(<code>void **</code>)</strong> 이므로 <strong><code>&amp;dDataPtr</code></strong> 처럼 <strong>주소를 넘겨야</strong> 한다.</p>
+</div>
+<hr />
+<h2 id="cudafree">cudaFree()<a class="headerlink" href="#cudafree" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">cudaError_t</span><span class="w"> </span><span class="n">cudaFree</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">ptr</span><span class="p">)</span>
+</code></pre></div>
+
+<p>디바이스 메모리 <strong>해제</strong>. 인자는 <strong>해제할 메모리 공간의 시작 주소</strong>.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">cudaFree</span><span class="p">(</span><span class="n">dDataPtr</span><span class="p">);</span>
+</code></pre></div>
+
+<hr />
+<h2 id="cudamemset">cudaMemset()<a class="headerlink" href="#cudamemset" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">cudaError_t</span><span class="w"> </span><span class="n">cudaMemset</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">ptr</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">)</span>
+</code></pre></div>
+
+<p>디바이스 메모리 <strong>초기화</strong></p>
+<table>
+<thead>
+<tr>
+<th>인자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ptr</code></td>
+<td>초기화할 메모리 공간의 <strong>시작 주소</strong></td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><strong>초기화할 값</strong></td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td>초기화할 메모리 공간의 크기 (byte 단위)</td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">dDataPtr</span><span class="p">;</span>
+<span class="n">cudaMalloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dDataPtr</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">32</span><span class="p">);</span><span class="w">     </span><span class="c1">// 할당</span>
+<span class="n">cudaMemset</span><span class="p">(</span><span class="n">dDataPtr</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">32</span><span class="p">);</span><span class="w">   </span><span class="c1">// 0으로 초기화</span>
+<span class="n">cudaFree</span><span class="p">(</span><span class="n">dDataPtr</span><span class="p">);</span><span class="w">                          </span><span class="c1">// 해제</span>
+</code></pre></div>
+
+<hr />
+<h2 id="cudamemgetinfo-cudageterrorname">cudaMemGetInfo() / cudaGetErrorName()<a class="headerlink" href="#cudamemgetinfo-cudageterrorname" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">cudaError_t</span><span class="w"> </span><span class="nf">cudaMemGetInfo</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">free</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">total</span><span class="p">);</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="nf">cudaGetErrorName</span><span class="p">(</span><span class="n">cudaError_t</span><span class="w"> </span><span class="n">error</span><span class="p">);</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>인자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>free</code></td>
+<td>디바이스 메모리의 <strong>현재 사용 가능한 크기</strong>를 저장할 변수의 주소</td>
+</tr>
+<tr>
+<td><code>total</code></td>
+<td>디바이스 메모리의 <strong>총 크기</strong>를 저장할 변수의 주소</td>
+</tr>
+</tbody>
+</table>
+<h3 id="코드-lec03-03cu">코드 (lec03_03.cu)<a class="headerlink" href="#코드-lec03-03cu" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"cuda_runtime.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"device_launch_parameters.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">checkDeviceMemory</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">free</span><span class="p">,</span><span class="w"> </span><span class="n">total</span><span class="p">;</span>
+<span class="w">    </span><span class="n">cudaMemGetInfo</span><span class="p">(</span><span class="o">&amp;</span><span class="n">free</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">total</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"Device memory (free/total) = %ld/%ld bytes</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="p">,</span><span class="w"> </span><span class="n">total</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">dDataPtr</span><span class="p">;</span>
+<span class="w">    </span><span class="n">cudaError_t</span><span class="w"> </span><span class="n">errorCode</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">checkDeviceMemory</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">errorCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cudaMalloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dDataPtr</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span><span class="w">   </span><span class="c1">// 4MB 할당</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"cudaMalloc - %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">cudaGetErrorName</span><span class="p">(</span><span class="n">errorCode</span><span class="p">));</span>
+<span class="w">    </span><span class="n">checkDeviceMemory</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">errorCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cudaMemset</span><span class="p">(</span><span class="n">dDataPtr</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span><span class="w"> </span><span class="c1">// 초기화</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"cudaMemset - %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">cudaGetErrorName</span><span class="p">(</span><span class="n">errorCode</span><span class="p">));</span>
+
+<span class="w">    </span><span class="n">errorCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cudaFree</span><span class="p">(</span><span class="n">dDataPtr</span><span class="p">);</span><span class="w">                                 </span><span class="c1">// 해제</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"cudaFree - %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">cudaGetErrorName</span><span class="p">(</span><span class="n">errorCode</span><span class="p">));</span>
+<span class="w">    </span><span class="n">checkDeviceMemory</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Device memory (free/total) = 7444889600/8589410304 bytes
+cudaMalloc - cudaSuccess
+Device memory (free/total) = 7440695296/8589410304 bytes
+cudaMemset - cudaSuccess
+cudaFree - cudaSuccess
+Device memory (free/total) = 7444889600/8589410304 bytes
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>free 크기와 total 크기가 같지 않은 이유</strong>: GPU는 <strong>화면 렌더링 등 다른 작업에도 사용</strong>되기 때문.</p>
+</div>
+<hr />
+<h2 id="cudamemcpy">cudaMemcpy()<a class="headerlink" href="#cudamemcpy" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">cudaError_t</span><span class="w"> </span><span class="nf">cudaMemcpy</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">dst</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span>
+<span class="w">                       </span><span class="k">enum</span><span class="w"> </span><span class="n">cudaMemcpyKind</span><span class="w"> </span><span class="n">kind</span><span class="p">);</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>인자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dst</code></td>
+<td><strong>복사될</strong> 데이터(destination)의 시작 주소</td>
+</tr>
+<tr>
+<td><code>src</code></td>
+<td><strong>복사할 원본</strong> 데이터(source)의 시작 주소</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td>복사할 원본 데이터의 크기 (byte 단위)</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td><strong>데이터 복사 방향</strong> (<code>cudaMemcpyKind</code> 열거형)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong><code>cudaMemcpyKind</code> 열거형 — 인자 순서가 <code>dst, src</code> 임에 주의</strong></p>
+<table>
+<thead>
+<tr>
+<th>열거형</th>
+<th>복사 방향</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cudaMemcpyHostToHost</code></td>
+<td>호스트 → 호스트</td>
+</tr>
+<tr>
+<td><strong><code>cudaMemcpyHostToDevice</code></strong></td>
+<td><strong>호스트 → 디바이스</strong></td>
+</tr>
+<tr>
+<td><strong><code>cudaMemcpyDeviceToHost</code></strong></td>
+<td><strong>디바이스 → 호스트</strong></td>
+</tr>
+<tr>
+<td><code>cudaMemcpyDeviceToDevice</code></td>
+<td>디바이스 → 디바이스</td>
+</tr>
+<tr>
+<td><code>cudaMemcpyDefault</code></td>
+<td><strong>통합 메모리(unified memory)</strong> 를 지원하는 경우(CUDA 6.0 이상), 주소값을 통해 <strong>런타임이 자동으로 복사 방향을 판단</strong>. 단, <strong>명시적으로 복사 방향을 설정하는 것을 권장</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>통합 메모리(unified memory)</strong>: 호스트 메모리와 디바이스 메모리를 <strong>하나의 논리적 주소 공간</strong>으로 표현하는 기술</p>
+</div>
+<h3 id="코드-lec03-04cu">코드 (lec03_04.cu)<a class="headerlink" href="#코드-lec03-04cu" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"cuda_runtime.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"device_launch_parameters.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">printData</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">_dDataPtr</span><span class="p">)</span><span class="w">       </span><span class="c1">// printData 커널</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span><span class="w"> </span><span class="n">_dDataPtr</span><span class="p">[</span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">]);</span><span class="w">       </span><span class="c1">// threadIdx.x: 블록 내 스레드 번호</span>
+<span class="p">}</span>
+
+<span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">setData</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">_dDataPtr</span><span class="p">)</span><span class="w">         </span><span class="c1">// setData 커널</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_dDataPtr</span><span class="p">[</span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span><span class="w">                         </span><span class="c1">// 호스트 메모리에 배열 할당</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">                            </span><span class="c1">// 1로 초기화</span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">dDataPtr</span><span class="p">;</span>
+<span class="w">    </span><span class="n">cudaMalloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dDataPtr</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w">    </span><span class="c1">// 디바이스 메모리 할당</span>
+<span class="w">    </span><span class="n">cudaMemset</span><span class="p">(</span><span class="n">dDataPtr</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w">  </span><span class="c1">// 0으로 초기화</span>
+
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"Data in device: "</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printData</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">dDataPtr</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 호스트 -&gt; 디바이스</span>
+<span class="w">    </span><span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">dDataPtr</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">cudaMemcpyHostToDevice</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Host -&gt; Device: "</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printData</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">dDataPtr</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">setData</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">dDataPtr</span><span class="p">);</span><span class="w">             </span><span class="c1">// 값을 2로 변경</span>
+
+<span class="w">    </span><span class="c1">// 디바이스 -&gt; 호스트</span>
+<span class="w">    </span><span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">dDataPtr</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">cudaMemcpyDeviceToHost</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Device -&gt; Host: "</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">cudaFree</span><span class="p">(</span><span class="n">dDataPtr</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Data in device: 0000000000
+Host -&gt; Device: 1111111111
+Device -&gt; Host: 2222222222
+</code></pre></div>
+
+<hr />
+<h2 id="cuda-기반-벡터합-프로그램">CUDA 기반 벡터합 프로그램<a class="headerlink" href="#cuda-기반-벡터합-프로그램" title="Permanent link">#</a></h2>
+<h3 id="벡터합">벡터합<a class="headerlink" href="#벡터합" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>벡터 a = [a1, a2, ..., an]
+벡터 b = [b1, b2, ..., bn]
+벡터 c = a + b = [a1+b1, a2+b2, ..., an+bn]
+</code></pre></div>
+
+<h3 id="cpu만-사용한-벡터합-lec03-05cu">CPU만 사용한 벡터합 (lec03_05.cu)<a class="headerlink" href="#cpu만-사용한-벡터합-lec03-05cu" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+
+<span class="cp">#define NUM_DATA 1024</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">memsize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">NUM_DATA</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// 호스트 메모리 할당</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">memsize</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 호스트 메모리 초기화</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NUM_DATA</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">        </span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NUM_DATA</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w">    </span><span class="c1">// CPU 연산</span>
+<span class="w">        </span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w"> </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w"> </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h3 id="gpu를-이용한-벡터합-lec03-06cu">GPU를 이용한 벡터합 (lec03_06.cu)<a class="headerlink" href="#gpu를-이용한-벡터합-lec03-06cu" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>실기에서 가장 중요한 코드.</strong> 할당 → 초기화 → 복사 → 커널 → 동기화 → 복사 → 해제 순서를 그대로 쓸 수 있어야 한다.</p>
+</div>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"cuda_runtime.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"device_launch_parameters.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+
+<span class="cp">#define NUM_DATA 1024</span>
+
+<span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">vecAdd</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">_a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">_b</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">_c</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">tID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span><span class="w">              </span><span class="c1">// 블록 내 각 CUDA 스레드의 번호</span>
+<span class="w">    </span><span class="n">_c</span><span class="p">[</span><span class="n">tID</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_a</span><span class="p">[</span><span class="n">tID</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">_b</span><span class="p">[</span><span class="n">tID</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">hc</span><span class="p">;</span><span class="w">                </span><span class="c1">// 호스트 메모리</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">dc</span><span class="p">;</span><span class="w">                  </span><span class="c1">// 디바이스 메모리</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">memsize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">NUM_DATA</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// 1. 호스트 메모리 할당</span>
+<span class="w">    </span><span class="n">a</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">b</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">c</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">hc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">memsize</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 2. 호스트 메모리 초기화</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">hc</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NUM_DATA</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">        </span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// 3. 호스트에서 벡터합 계산 (비교용 CPU 연산)</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NUM_DATA</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="n">hc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+<span class="w">    </span><span class="c1">// 4. 디바이스 메모리 할당</span>
+<span class="w">    </span><span class="n">cudaMalloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cudaMalloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cudaMalloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dc</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 5. 디바이스 메모리 초기화</span>
+<span class="w">    </span><span class="n">cudaMemset</span><span class="p">(</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cudaMemset</span><span class="p">(</span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cudaMemset</span><span class="p">(</span><span class="n">dc</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 6. 메모리 복사 (host -&gt; device)</span>
+<span class="w">    </span><span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">,</span><span class="w"> </span><span class="n">cudaMemcpyHostToDevice</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">,</span><span class="w"> </span><span class="n">cudaMemcpyHostToDevice</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 7. GPU 연산 (커널은 비동기적 수행)</span>
+<span class="w">    </span><span class="n">vecAdd</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">NUM_DATA</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="n">dc</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cudaDeviceSynchronize</span><span class="p">();</span><span class="w">            </span><span class="c1">// 커널 수행 완료까지 대기</span>
+
+<span class="w">    </span><span class="c1">// 8. 메모리 복사 (device -&gt; host)</span>
+<span class="w">    </span><span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">dc</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">,</span><span class="w"> </span><span class="n">cudaMemcpyDeviceToHost</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 9. 디바이스 메모리 해제</span>
+<span class="w">    </span><span class="n">cudaFree</span><span class="p">(</span><span class="n">da</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cudaFree</span><span class="p">(</span><span class="n">db</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cudaFree</span><span class="p">(</span><span class="n">dc</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 10. CPU와 GPU 결과 비교</span>
+<span class="w">    </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">memcmp</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">hc</span><span class="p">,</span><span class="w"> </span><span class="n">memsize</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">"The vector sum on the device (GPU) is the same as the host (CPU)</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">"The vector sum on the device (GPU) is not the same as the host (CPU)</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 11. 호스트 메모리 해제</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w"> </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w"> </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w"> </span><span class="n">free</span><span class="p">(</span><span class="n">hc</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong><code>memcmp(c, hc, memsize)</code></strong> 로 GPU 결과(<code>c</code>)와 CPU 결과(<code>hc</code>)를 비교한다. <strong>같으면 0을 반환</strong>한다.</p>
+</div>
+<hr />
+<h2 id="연산-시간-측정-및-성능-분석">연산 시간 측정 및 성능 분석<a class="headerlink" href="#연산-시간-측정-및-성능-분석" title="Permanent link">#</a></h2>
+<h3 id="시간-측정-방법">시간 측정 방법<a class="headerlink" href="#시간-측정-방법" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;time.h&gt;</span>
+
+<span class="kt">clock_t</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">;</span>
+
+<span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clock</span><span class="p">();</span>
+<span class="c1">// ... 측정할 구간 ...</span>
+<span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clock</span><span class="p">();</span>
+
+<span class="n">printf</span><span class="p">(</span><span class="s">"%f ms</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1000.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">CLOCKS_PER_SEC</span><span class="p">);</span>
+</code></pre></div>
+
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>GPU 연산 시간을 측정할 때는 반드시 <code>cudaDeviceSynchronize()</code> 를 <code>end = clock()</code> 앞에 넣어야 한다.</strong>
+커널이 비동기적으로 수행되므로, 동기화 함수가 없으면 <strong>커널 수행 시간이 정상적으로 측정되지 않는다.</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clock</span><span class="p">();</span>
+<span class="n">vecAdd</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">NUM_DATA</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">da</span><span class="p">,</span><span class="w"> </span><span class="n">db</span><span class="p">,</span><span class="w"> </span><span class="n">dc</span><span class="p">);</span>
+<span class="n">cudaDeviceSynchronize</span><span class="p">();</span><span class="w">      </span><span class="c1">// 이것이 없으면 측정값이 엉뚱해짐</span>
+<span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clock</span><span class="p">();</span>
+</code></pre></div>
+
+</div>
+<h3 id="측정-구간-4개">측정 구간 4개<a class="headerlink" href="#측정-구간-4개" title="Permanent link">#</a></h3>
+<ol>
+<li>CPU 연산</li>
+<li>메모리 복사 (host → device)</li>
+<li>GPU 연산 (커널 실행)</li>
+<li>메모리 복사 (device → host)</li>
+</ol>
+<p><strong>CUDA Total = 메모리 복사 시간 + GPU 연산 시간</strong></p>
+<hr />
+<h3 id="실행-결과-비교-lec03-07cu">실행 결과 비교 (lec03_07.cu)<a class="headerlink" href="#실행-결과-비교-lec03-07cu" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>데이터 크기에 따라 결론이 뒤집힌다.</strong> 이 비교가 핵심.</p>
+</div>
+<p><strong>NUM_DATA = 1024 인 경우</strong></p>
+<div class="codehilite"><pre><span></span><code>Computation on host (CPU):     0.003000 ms
+Memory copy: host -&gt; device:   0.017000 ms
+Computation on device (GPU):   0.223000 ms
+Memory copy: device -&gt; host:   0.012000 ms
+CUDA Total:                    0.259000 ms
+→ GPU 연산 결과와 CPU 연산 결과가 같음
+</code></pre></div>
+
+<ul>
+<li><strong>GPU 연산 시간이 CPU 연산 시간보다 많이 소요됨</strong> (데이터가 적으면 GPU가 오히려 느림)</li>
+<li>메모리 복사 시간이 많이 소요됨</li>
+</ul>
+<p><strong>NUM_DATA = 1048576 (1024×1024) 인 경우</strong></p>
+<div class="codehilite"><pre><span></span><code>Computation on host (CPU):     3.054000 ms
+Memory copy: host -&gt; device:   0.866000 ms
+Computation on device (GPU):   0.217000 ms
+Memory copy: device -&gt; host:   0.566000 ms
+CUDA Total:                    1.657000 ms
+→ GPU 연산 결과와 CPU 연산 결과가 다름
+</code></pre></div>
+
+<ul>
+<li><strong>GPU 연산 시간이 CPU 연산 시간보다 적게 소요됨</strong> (데이터가 많아지면 GPU가 유리)</li>
+<li>그런데 <strong>결과가 틀렸다!</strong></li>
+</ul>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p><strong>왜 결과가 달라졌는가?</strong></p>
+<p><code>vecAdd &lt;&lt;&lt;1, NUM_DATA&gt;&gt;&gt;</code> 는 <strong>블록 1개에 NUM_DATA개의 스레드</strong>를 요청한다.
+그런데 <strong>한 블록 내의 최대 스레드 수는 1024개</strong>다.
+→ NUM_DATA가 1024를 넘으면 <strong>스레드가 부족해서 일부 데이터가 계산되지 않는다.</strong></p>
+<p>해결하려면 <strong>스레드 계층 구조와 인덱싱</strong>을 알아야 한다.
+→ <a href="06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a>, <a href="07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></p>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>메모리 복사 시간 때문에 <strong>CUDA Total은 GPU 연산 시간보다 훨씬 크다.</strong>
+즉 <strong>데이터가 충분히 크지 않으면 GPU를 써도 전체적으로는 이득이 없다</strong>는 것이 이 실습의 결론이다.</p>
+</div>
+  <footer class="page-footer"><code>content/hpc/05-cuda-flow.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#cuda-프로그램의-실행-3단계">CUDA 프로그램의 실행 3단계</a><ul>
+<li><a href="#1단계-메모리-복사-host-device">1단계: 메모리 복사 (host → device)</a></li>
+<li><a href="#2단계-gpu-연산">2단계: GPU 연산</a></li>
+<li><a href="#3단계-메모리-복사-device-host">3단계: 메모리 복사 (device → host)</a></li>
+</ul>
+</li>
+<li><a href="#cuda-기초-메모리-api-목록">CUDA 기초 메모리 API 목록</a></li>
+<li><a href="#cudamalloc">cudaMalloc()</a></li>
+<li><a href="#cudafree">cudaFree()</a></li>
+<li><a href="#cudamemset">cudaMemset()</a></li>
+<li><a href="#cudamemgetinfo-cudageterrorname">cudaMemGetInfo() / cudaGetErrorName()</a><ul>
+<li><a href="#코드-lec03-03cu">코드 (lec03_03.cu)</a></li>
+</ul>
+</li>
+<li><a href="#cudamemcpy">cudaMemcpy()</a><ul>
+<li><a href="#코드-lec03-04cu">코드 (lec03_04.cu)</a></li>
+</ul>
+</li>
+<li><a href="#cuda-기반-벡터합-프로그램">CUDA 기반 벡터합 프로그램</a><ul>
+<li><a href="#벡터합">벡터합</a></li>
+<li><a href="#cpu만-사용한-벡터합-lec03-05cu">CPU만 사용한 벡터합 (lec03_05.cu)</a></li>
+<li><a href="#gpu를-이용한-벡터합-lec03-06cu">GPU를 이용한 벡터합 (lec03_06.cu)</a></li>
+</ul>
+</li>
+<li><a href="#연산-시간-측정-및-성능-분석">연산 시간 측정 및 성능 분석</a><ul>
+<li><a href="#시간-측정-방법">시간 측정 방법</a></li>
+<li><a href="#측정-구간-4개">측정 구간 4개</a></li>
+<li><a href="#실행-결과-비교-lec03-07cu">실행 결과 비교 (lec03_07.cu)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

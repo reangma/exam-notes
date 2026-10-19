@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>핵심 암기 치트시트 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="99-cheatsheet.html" class="active">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="핵심-암기-치트시트">핵심 암기 치트시트<a class="headerlink" href="#핵심-암기-치트시트" title="Permanent link">#</a></h1>
+<p>시험 직전 30분용. <strong>숫자, 이름, 분류, 비교표</strong>만 모았습니다.</p>
+<h2 id="전체-흐름-한-줄">전체 흐름 한 줄<a class="headerlink" href="#전체-흐름-한-줄" title="Permanent link">#</a></h2>
+<blockquote>
+<p><strong>글자를 숫자로(임베딩) → 그 숫자로 다음 단어 예측(LLM) → 말 잘 듣게 조정(Adaptation Tuning) → 질문 잘하기(Prompt) → 손발·기억·계획 붙이기(Agent) → 구조화(Cognitive Architecture) → 여럿으로(Multi-Agent)</strong></p>
+</blockquote>
+<hr />
+<h2 id="숫자로-외우는-것">숫자로 외우는 것<a class="headerlink" href="#숫자로-외우는-것" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>코사인 유사도 범위</td>
+<td><strong>−1 ~ 1</strong> (1에 가까울수록 유사)</td>
+</tr>
+<tr>
+<td>임베딩 논문</td>
+<td><strong>2003년, "A Neural Probabilistic Language Model"</strong></td>
+</tr>
+<tr>
+<td>AutoEncoder 논문</td>
+<td><strong>1986년, "Learning Internal Representation by Error Backpropagation"</strong></td>
+</tr>
+<tr>
+<td>Seq2Seq</td>
+<td><strong>Google, 2014</strong></td>
+</tr>
+<tr>
+<td>Transformer</td>
+<td><strong>"Attention Is All You Need", 2017</strong></td>
+</tr>
+<tr>
+<td>GPT-1</td>
+<td><strong>2018, 117M</strong></td>
+</tr>
+<tr>
+<td>GPT-2</td>
+<td><strong>2019, 1.5B</strong> (GPT-1의 <strong>10배</strong>)</td>
+</tr>
+<tr>
+<td>GPT-3</td>
+<td><strong>2020, 175B (1,750억)</strong></td>
+</tr>
+<tr>
+<td>ChatGPT</td>
+<td><strong>2022년 11월, OpenAI</strong></td>
+</tr>
+<tr>
+<td>FLAN</td>
+<td><strong>2021</strong></td>
+</tr>
+<tr>
+<td>GPT-3 학습 비용</td>
+<td>약 <strong>50억</strong>, Tesla V100 1대로 <strong>355년</strong></td>
+</tr>
+<tr>
+<td>CoT 효과 (PaLM 540B)</td>
+<td>수학 문제 정확도 <strong>17.7% → 58.1%</strong></td>
+</tr>
+<tr>
+<td>프롬프트 서식 변경 영향</td>
+<td>성능 최대 <strong>76%p</strong> 변화</td>
+</tr>
+<tr>
+<td>프롬프트 템플릿 영향 (GPT-3.5-turbo)</td>
+<td>코드 번역 과제에서 최대 <strong>40%</strong> 차이</td>
+</tr>
+<tr>
+<td>Adapter 예시</td>
+<td>d=1024, m=16 → 1,048,576개 → <strong>32,768개</strong></td>
+</tr>
+<tr>
+<td>LoRA 예시</td>
+<td>d=1024, m=8 → <strong>16,384개</strong></td>
+</tr>
+<tr>
+<td>양자화</td>
+<td><strong>FP16 → INT8 → INT4</strong></td>
+</tr>
+<tr>
+<td>ELIZA</td>
+<td><strong>MIT 인공지능 연구소</strong>, 룰 기반 챗봇</td>
+</tr>
+<tr>
+<td>The Society of Mind</td>
+<td><strong>Marvin Minsky, 1986</strong></td>
+</tr>
+<tr>
+<td>Cognitive Architecture 인물</td>
+<td><strong>Allen Newell, Herbert A. Simon</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2장-임베딩">2장 — 임베딩<a class="headerlink" href="#2장-임베딩" title="Permanent link">#</a></h2>
+<p><strong>임베딩의 역할 2가지</strong>: ① 자연어의 의미적인 정보 함축 ② 자연어 간 유사도 계산</p>
+<p><strong>One-hot의 한계 2가지</strong>: ① <strong>희소 문제(Sparsity problem)</strong> ② <strong>단어의 유사도를 표현할 수 없음</strong></p>
+<p><strong>TF-IDF 공식</strong></p>
+<div class="codehilite"><pre><span></span><code>tf(d,t) = (d에서 t의 등장 횟수) / (d의 전체 단어 빈도)
+idf(d,t) = log( n / (1 + df(t)) )
+TF-IDF = tf × idf
+</code></pre></div>
+
+<p><strong>log를 쓰는 이유 2가지</strong>: ① 가중치를 적절히 조절 ② 분모가 0이 되는 경우 방지</p>
+<p><strong>Sparse vs Dense</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Sparse</th>
+<th>Dense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>차원</td>
+<td>단어 사전 크기</td>
+<td>사용자가 정한 고정값</td>
+</tr>
+<tr>
+<td>값</td>
+<td>0/1, 0/가중치</td>
+<td>연속 실수</td>
+</tr>
+<tr>
+<td>의미 정보</td>
+<td>없음</td>
+<td>있음</td>
+</tr>
+<tr>
+<td>공간 복잡도</td>
+<td>단어 늘면 증가</td>
+<td>일정</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AutoEncoder</strong>: 입력 X / <strong>Latent vector Z</strong> / 출력 X̃ 의 <strong>3계층</strong>, <strong>비지도 학습</strong></p>
+<p><strong>차원 축소 기법</strong>: <strong>t-SNE, PCA</strong></p>
+<hr />
+<h2 id="언어-모델-발전-4단계-slm-nlm-plm-llm">언어 모델 발전 4단계 (SLM → NLM → PLM → LLM)<a class="headerlink" href="#언어-모델-발전-4단계-slm-nlm-plm-llm" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>SLM</strong></th>
+<th><strong>NLM</strong></th>
+<th><strong>PLM</strong></th>
+<th><strong>LLM</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>시기</td>
+<td>1990s</td>
+<td>2010s</td>
+<td>2018+</td>
+<td>2020+</td>
+</tr>
+<tr>
+<td>핵심</td>
+<td><strong>N-gram, MLE</strong> 확률 기반</td>
+<td><strong>신경망 + 단어 임베딩</strong></td>
+<td><strong>대규모 비지도 사전학습 + 파인튜닝</strong></td>
+<td><strong>수십억~수천억 파라미터 + 인간 가치 정렬</strong></td>
+</tr>
+<tr>
+<td>대표</td>
+<td>N-gram LM, Kneser-Ney</td>
+<td><strong>word2vec, LSTM, Seq2Seq</strong></td>
+<td><strong>BERT, GPT-2, T5</strong></td>
+<td><strong>GPT-4, PaLM 2, LLaMA 3</strong></td>
+</tr>
+<tr>
+<td>한계/특징</td>
+<td>데이터 의존, 맥락 이해 한계, 긴 문장 어려움</td>
+<td>분산 표현, 문맥 개선, <strong>기울기 소실</strong></td>
+<td>범용 언어 이해, 전이 가능</td>
+<td>복잡한 추론, <strong>안전성·정렬 중요성 확대</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>핵심 전환</strong>: <strong>대규모 사전학습 + 다운스트림 파인튜닝이 표준 패러다임이 되었다</strong></p>
+<p><strong>NLP 패러다임 쌓임</strong>: 언어모델(LM) → <strong>트랜스포머</strong>(인코더/디코더/어텐션) → <strong>대규모 언어모델</strong>(BERT=인코더, GPT=디코더) → <strong>초거대 AI</strong></p>
+<p><strong>PLM vs LLM의 결정적 차이</strong> = <strong>Emergent Abilities</strong></p>
+<hr />
+<h2 id="3장-transformer">3장 — Transformer<a class="headerlink" href="#3장-transformer" title="Permanent link">#</a></h2>
+<p><strong>RNN/Seq2Seq의 한계 3가지</strong> (= Transformer가 해결한 것)</p>
+<ol>
+<li><strong>고정 크기 벡터에 모든 정보 압축 → 정보 손실</strong></li>
+<li><strong>Vanishing Gradient Problem</strong></li>
+<li><strong>순차적 처리 → 병렬화 불가능</strong></li>
+</ol>
+<p><strong>Seq2Seq 구성</strong>: Encoder → <strong>Context Vector</strong> → Decoder (<code>&lt;sos&gt;</code> ~ <code>&lt;eos&gt;</code>)</p>
+<p><strong>Transformer 입력</strong> = <strong>Embedding + Positional Encoding</strong></p>
+<p><strong>Attention 3종류</strong></p>
+<table>
+<thead>
+<tr>
+<th>이름</th>
+<th>위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Encoder Self-Attention</td>
+<td>인코더</td>
+</tr>
+<tr>
+<td><strong>Masked</strong> Decoder Self-Attention</td>
+<td>디코더 (미래 단어 가림)</td>
+</tr>
+<tr>
+<td>Encoder-Decoder Attention</td>
+<td>디코더가 인코더 출력 참조</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4장-llm-gpt">4장 — LLM / GPT<a class="headerlink" href="#4장-llm-gpt" title="Permanent link">#</a></h2>
+<p><strong>LLM 정의</strong>: 방대한 텍스트 데이터로 학습된 <strong>수천 억 개 파라미터</strong>를 가진 <strong>Transformer 기반</strong> Language Model</p>
+<p><strong>Emergent Abilities 3가지</strong>: <strong>In-context Learning / Instruction Following / Step-by-Step Reasoning</strong></p>
+<p><strong>GPT 정리표</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>GPT-1</th>
+<th>GPT-2</th>
+<th>GPT-3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>연도</td>
+<td>2018</td>
+<td>2019</td>
+<td>2020</td>
+</tr>
+<tr>
+<td>파라미터</td>
+<td>117M</td>
+<td>1.5B</td>
+<td>175B</td>
+</tr>
+<tr>
+<td>Objective</td>
+<td><code>P(Out\|In)</code></td>
+<td><code>P(Out\|In, Task)</code></td>
+<td>프롬프트만으로</td>
+</tr>
+<tr>
+<td>훈련</td>
+<td>Pre-train + SFT</td>
+<td>Pre-train만 (SFT 제거)</td>
+<td>In-context learning</td>
+</tr>
+<tr>
+<td>혁신</td>
+<td>Transformer LM</td>
+<td><strong>멀티태스킹</strong></td>
+<td><strong>지능적 프롬프트 이해</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fine-tuning의 한계 3가지</strong>: ① Task별 Labeled Dataset 필요 ② 과적합 → 분포 밖 일반화 성능 상실 ③ 적은 샘플로 수행하는 능력 필요</p>
+<p><strong>Zero / One / Few-shot</strong>: 예시 <strong>0개 / 1개 / 몇 개</strong></p>
+<p><strong>GPT-3 한계 3가지</strong>: ① 긴 문장 일관성 상실·반복 ② <strong>단방향성</strong> → 자연어 추론 약함 ③ 토큰에 동일 가중치 → 목표 지향적 예측 결여</p>
+<hr />
+<h2 id="5장-adaptation-tuning">5장 — Adaptation Tuning<a class="headerlink" href="#5장-adaptation-tuning" title="Permanent link">#</a></h2>
+<p><strong>LLM 학습 3단계</strong>: <strong>Pre-training → Adaptation Tuning → Utilization</strong></p>
+<p><strong>Adaptation Tuning 3가지</strong>: <strong>Instruction Tuning → Alignment Tuning → Parameter Efficient Model Adaptation</strong></p>
+<p><strong>Instruction Tuning 등장 배경 2가지</strong>: ① <strong>사용자의 의도에 맞는 답변 출력</strong> (Users intent ≠ Language modeling) ② <strong>Zero-shot 성능 향상</strong></p>
+<p><strong>FLAN 결론 3가지</strong>: ① zero-shot 향상 기법 최초 제안 ② <strong>task cluster 수가 많을수록</strong> unseen task 성능 향상 ③ <strong>모델이 작으면 오히려 성능 하락</strong></p>
+<p><strong>Alignment 기준 3H</strong>: <strong>Helpfulness / Honesty / Harmlessness</strong></p>
+<p><strong>RLHF 3단계</strong></p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>이름</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Supervised Fine-tuning</strong></td>
+<td>인간이 작성한 prompt 데이터로 LM fine-tuning</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Reward Model Training</strong></td>
+<td>여러 답변에 인간이 <strong>선호도 순위(Ranking)</strong> → reward model 학습</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>RL Fine-tuning</strong></td>
+<td>reward model을 보상 함수로 <strong>PPO</strong>로 정책 fine-tuning</td>
+</tr>
+</tbody>
+</table>
+<p><strong>RLHF 요소 3가지</strong>: Human annotator / Reward model / Aligned model</p>
+<p><strong>RLHF 한계</strong>: 비용 많이 듦, 주관적 요인에 따른 <strong>품질 편차</strong></p>
+<p><strong>PEFT 근거</strong>: PLM은 <strong>low intrinsic dimension</strong> → RoBERTa는 <strong>200개 파라미터로 90% 성능</strong></p>
+<p><strong>LoRA</strong>: <code>W0 + ΔW = W0 + A·B</code>, <code>A ∈ ℝ^(d×m)</code>, <code>B ∈ ℝ^(m×d)</code></p>
+<p><strong>LoRA가 Adapter보다 나은 이유 3가지</strong>: ① 더 적은 파라미터로 fast adaptation ② <strong>병렬 처리 → 추론 지연 없음</strong> ③ 입력 시퀀스 길이를 줄이지 않음</p>
+<p><strong>한 문장 정리</strong>: <strong>PEFT는 학습할 파라미터를 줄이고, Quantization은 메모리를 줄인다. 둘을 결합한 것이 QLoRA.</strong></p>
+<hr />
+<h2 id="6장-prompt-engineering">6장 — Prompt Engineering<a class="headerlink" href="#6장-prompt-engineering" title="Permanent link">#</a></h2>
+<p><strong>Prompt 구성요소 4가지</strong>: <strong>Instruction / Context / Input Data / Output Indicator</strong></p>
+<p><strong>Prompting 기법</strong>: Zero-shot → One/Few-shot → <strong>CoT</strong></p>
+<p><strong>Few-shot의 한계</strong>: <strong>여러 단계의 추론이 필요한 복잡한 문제는 풀 수 없음</strong> → CoT 등장</p>
+<p><strong>Prompt Engineering이 어려운 이유 4가지</strong></p>
+<ol>
+<li><strong>표현과 서식에 대한 민감도</strong></li>
+<li><strong>예시와 샘플 순서의 민감도</strong></li>
+<li><strong>재서술 문장 변화에 의한 성능 분산</strong></li>
+<li><strong>모델 평가의 어려움</strong></li>
+</ol>
+<hr />
+<h2 id="7장-ai-agent-개념">7장 — AI Agent 개념<a class="headerlink" href="#7장-ai-agent-개념" title="Permanent link">#</a></h2>
+<p><strong>Agent 정의</strong>: <strong>특정 환경과 상호작용할 수 있는 지능적인 시스템</strong> (정의에 <strong>지능 + 환경</strong> 필요)</p>
+<p><strong>Agent / AI Agent / Agentic AI</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>한 줄</th>
+<th>의사결정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent</td>
+<td>환경을 관찰·행동하는 개념</td>
+<td>규칙·탐색·강화학습 (LLM 없이도 가능)</td>
+</tr>
+<tr>
+<td>AI Agent</td>
+<td>LLM을 두뇌로 쓰는 개체</td>
+<td><strong>LLM 추론 + ReAct 루프</strong></td>
+</tr>
+<tr>
+<td>Agentic AI</td>
+<td>여러 에이전트를 조율하는 시스템</td>
+<td><strong>Orchestrator가 계획·분배·통합·검증</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>AI Agent 정의 3요소</strong>: ① LLM으로 추론 ② 외부 도구(API, DB) 연동해 자동화 ③ <strong>실시간 환경 변화에 따라 실행 계획을 동적으로 조정</strong></p>
+<p><strong>Models vs Agents</strong>: 지식 범위 / 추론 방식 / 도구 구현 / 논리 계층</p>
+<p><strong>Agent 분류 (포함관계)</strong>: <strong>Text Agent ⊃ LLM Agent ⊃ Reasoning Agent</strong></p>
+<p><strong>LLM Agent vs Reasoning Agent</strong>: 전자는 <strong>프롬프트 엔지니어링 중요</strong>, 후자는 <strong>목표만 주면 알아서 단계별로 생각·검증(인지적 제어)</strong></p>
+<p><strong>LLM이 Agent에 적합한 이유 4가지</strong></p>
+<table>
+<thead>
+<tr>
+<th>성질</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>자율성 (Autonomy)</strong></td>
+<td>상세 지침 없이도 작업 수행</td>
+</tr>
+<tr>
+<td><strong>반응성 (Reactivity)</strong></td>
+<td>Multi-modal fusion → <strong>지각 공간</strong> 확장 / Embodiment·Tool → <strong>행동 공간</strong> 확장</td>
+</tr>
+<tr>
+<td><strong>능동성 (Pro-activeness)</strong></td>
+<td>next token prediction → 추론·계획 능력</td>
+</tr>
+<tr>
+<td><strong>사회성 (Social ability)</strong></td>
+<td>NLU·NLG로 상호작용</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8장-react-tool">8장 — ReAct / Tool<a class="headerlink" href="#8장-react-tool" title="Permanent link">#</a></h2>
+<p><strong>ReAct = Reasoning + Acting</strong>, <strong>시너지: 추론은 행동을 돕고, 행동은 추론을 도움</strong></p>
+<p><strong>Agent task 수행 필요요건 3가지</strong></p>
+<table>
+<thead>
+<tr>
+<th>요건</th>
+<th>해결책</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reasoning</strong></td>
+<td>프롬프트 기법 (Instructions, Few-shot, Context, CoT, 과제 분해)</td>
+</tr>
+<tr>
+<td><strong>Knowledge</strong></td>
+<td><strong>RAG</strong> (Retriever: <strong>BM25, DPR</strong>)</td>
+</tr>
+<tr>
+<td><strong>Computation</strong></td>
+<td><strong>Tool Use</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>과제 분해 확장</strong>: <strong>Tree-of-Thought, Graph-of-Thoughts</strong></p>
+<p><strong>Tool 예시 3가지</strong>: Web-search / Get-weather / Python-interpreter</p>
+<p><strong>Tool 생성 형식의 문제점</strong>: <strong>인터넷의 일반적인 텍스트와 형식이 매우 다름</strong></p>
+<p><strong>Extension vs Function</strong>: <strong>Extension = Agent-Side Control</strong>, <strong>Function = Client-Side Control</strong></p>
+<hr />
+<h2 id="9장-agent-구조">9장 — Agent 구조<a class="headerlink" href="#9장-agent-구조" title="Permanent link">#</a></h2>
+<p><strong>Perception → Brain → Action</strong> (단순 LLM과의 차이: <strong>반복하며 피드백·상호작용</strong>)</p>
+<p><strong>Brain의 5가지</strong>: ① Natural Language Interaction ② Knowledge ③ Memory ④ Reasoning &amp; Planning ⑤ Transferability &amp; Generation</p>
+<p><strong>Memory challenge 2가지</strong>: ① 데이터 양이 방대 (Transformer 제약 초과) ② 관련 Memory 추출의 어려움</p>
+<p><strong>Memory Retrieval 기준 3가지</strong>: <strong>Recency / Relevance / Importance</strong></p>
+<p><strong>Reasoning 기법</strong>: CoT, Self-consistency, Self-polish/Self-refine, Selection-inference</p>
+<p><strong>Planning 2단계</strong>: <strong>Plan formulation</strong>(하위 작업 분해: One-shot / Step-by-Step / Hierarchical) + <strong>Plan reflection</strong>(내부·인간·환경 피드백)</p>
+<p><strong>Transferability 3가지</strong>: Unseen task Generalization / In-context learning / Continual learning</p>
+<p><strong>HuggingGPT 3단계</strong>: Task Planning → <strong>Model Selection (model card 기반)</strong> → 응답 생성</p>
+<hr />
+<h2 id="10장-활용">10장 — 활용<a class="headerlink" href="#10장-활용" title="Permanent link">#</a></h2>
+<p><strong>Single Agent 3가지</strong>: <strong>Task-oriented → Innovation-oriented → (Future) Lifecycle-oriented (AGI의 최종 목표)</strong></p>
+<p><strong>Multi-Agent 장단점 쌍</strong></p>
+<table>
+<thead>
+<tr>
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>자유로운 아이디어 생성</td>
+<td>통제의 어려움</td>
+</tr>
+<tr>
+<td>효율적·책임 소재 명확 (분업)</td>
+<td>역할의 고정성</td>
+</tr>
+<tr>
+<td>반박하며 개선 (게임이론)</td>
+<td><strong>잘못된 합의로의 수렴 가능성</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>사례</strong>: <strong>ChatDev = 협력형</strong>(Design→Coding→Testing) / <strong>ChatEval = 적대형</strong>(Multi-Agent Debate 평가)</p>
+<p><strong>Human-Agent 2가지</strong>: <strong>Instructor-Executor</strong>(현재 기본 모드) / <strong>Equal Partnership</strong>(Empathetic Communicator, Human-level Participant)</p>
+<hr />
+<h2 id="11장-coala">11장 — CoALA<a class="headerlink" href="#11장-coala" title="Permanent link">#</a></h2>
+<p><strong>CoALA 3요소</strong>: <strong>Memory Modules(기억) / Action Space(행동) / Decision-making Process(의사결정)</strong></p>
+<p><strong>Memory 4종</strong></p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>종류</th>
+<th>저장하는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Short-term</td>
+<td><strong>Working Memory</strong></td>
+<td>현재 처리 중인 정보</td>
+</tr>
+<tr>
+<td>Long-term</td>
+<td><strong>Semantic</strong></td>
+<td>일반적 사실·개념·지식</td>
+</tr>
+<tr>
+<td>Long-term</td>
+<td><strong>Episodic</strong></td>
+<td>과거 경험한 사건·상호작용</td>
+</tr>
+<tr>
+<td>Long-term</td>
+<td><strong>Procedural</strong></td>
+<td>작업 수행 방법·규칙(스킬)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Action Space</strong></p>
+<ul>
+<li><strong>External Actions (Grounding)</strong>: API 호출, 대화, 인터넷 검색</li>
+<li><strong>Internal Actions (Memory Access)</strong>: <strong>Retrieval</strong>(장기→Working) / <strong>Reasoning</strong>(Working 내 가공) / <strong>Learning</strong>(→장기 저장)</li>
+</ul>
+<p><strong>Decision-making</strong>: <strong>Planning Stage (Proposal → Evaluation → Selection)</strong> + <strong>Execution Stage</strong> (만족스러운 Action 없으면 Proposal로 복귀)</p>
+<p><strong>CoALA로 본 ReAct의 빈칸</strong>: <strong>Long-term memory ✗ / learning·retrieval ✗ / evaluate·select ✗</strong></p>
+<hr />
+<h2 id="12장-아키텍처">12장 — 아키텍처<a class="headerlink" href="#12장-아키텍처" title="Permanent link">#</a></h2>
+<p><strong>필수 구성요소</strong>: Components = <strong>LLM, tool, database</strong> / Process = <strong>reasoning, planning, tool calling</strong></p>
+<p><strong>Agent as control system</strong>: <strong>Observation → Planning &amp; Reasoning → Action → Observation</strong> (+ Reflection), 개선 목표는 <strong>performance / robustness / reliability / security</strong></p>
+<p><strong>Single Agent 한계 2가지</strong>: ① <strong>tool이 너무 많으면 선택 난이도 상승</strong> ② <strong>subtask가 많으면 정보 혼재로 성능 하락, workflow 관리 어려움</strong></p>
+<p><strong>RAISE</strong>: ReAct + short/long memory → 그러나 <strong>복잡한 logic 이해 어려움, 할루시네이션</strong>(세일즈 시켰더니 Python 코드 작성)</p>
+<p><strong>Vertical vs Horizontal</strong></p>
+<table>
+<thead>
+<tr>
+<th>Vertical</th>
+<th>Horizontal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>리더 1명에게 전원 보고</td>
+<td>전원 평등, 집단 논의</td>
+</tr>
+<tr>
+<td>부하는 <strong>리더와만</strong> 소통</td>
+<td><strong>공용 스레드</strong>에서 전원 소통</td>
+</tr>
+<tr>
+<td>분업이 매우 명확</td>
+<td>task·tool calling에 <strong>자원</strong> 가능</td>
+</tr>
+<tr>
+<td>CrewAI, ChatDev, <strong>MetaGPT</strong></td>
+<td><strong>DyLAN</strong>, AgentVerse, CAMEL</td>
+</tr>
+</tbody>
+</table>
+<p><strong>MetaGPT</strong>: <strong>structured output 강제</strong>(conversational noise 방지) + <strong>publish-subscribe</strong> 메커니즘</p>
+<p><strong>DyLAN</strong>: <strong>round</strong>마다 기여도 평가(<strong>LLM Ranker 또는 peer rating</strong>) → 높은 agent만 다음 round 진출 → <strong>팀 구성 최적화</strong></p>
+  <footer class="page-footer"><code>content/isw/99-cheatsheet.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#전체-흐름-한-줄">전체 흐름 한 줄</a></li>
+<li><a href="#숫자로-외우는-것">숫자로 외우는 것</a></li>
+<li><a href="#2장-임베딩">2장 — 임베딩</a></li>
+<li><a href="#언어-모델-발전-4단계-slm-nlm-plm-llm">언어 모델 발전 4단계 (SLM → NLM → PLM → LLM)</a></li>
+<li><a href="#3장-transformer">3장 — Transformer</a></li>
+<li><a href="#4장-llm-gpt">4장 — LLM / GPT</a></li>
+<li><a href="#5장-adaptation-tuning">5장 — Adaptation Tuning</a></li>
+<li><a href="#6장-prompt-engineering">6장 — Prompt Engineering</a></li>
+<li><a href="#7장-ai-agent-개념">7장 — AI Agent 개념</a></li>
+<li><a href="#8장-react-tool">8장 — ReAct / Tool</a></li>
+<li><a href="#9장-agent-구조">9장 — Agent 구조</a></li>
+<li><a href="#10장-활용">10장 — 활용</a></li>
+<li><a href="#11장-coala">11장 — CoALA</a></li>
+<li><a href="#12장-아키텍처">12장 — 아키텍처</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

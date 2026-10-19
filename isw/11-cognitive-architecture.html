@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11. Cognitive Architecture와 CoALA · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="11-cognitive-architecture.html" class="active">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="11-cognitive-architecture와-coala">11. Cognitive Architecture와 CoALA<a class="headerlink" href="#11-cognitive-architecture와-coala" title="Permanent link">#</a></h1>
+<h2 id="이-장의-한-줄-요약">이 장의 한 줄 요약<a class="headerlink" href="#이-장의-한-줄-요약" title="Permanent link">#</a></h2>
+<blockquote>
+<p><strong>"사람이 생각하는 구조"를 본떠서 Agent를 설계하자. 그 설계도가 CoALA이고, 구성은 기억(Memory) · 행동(Action) · 의사결정(Decision-making) 3가지.</strong></p>
+</blockquote>
+<div class="codehilite"><pre><span></span><code>CoALA = ① Memory (기억)          : Working + Semantic / Episodic / Procedural
+        ② Action Space (행동)     : 외부 행동 + 내부 행동(Retrieval / Reasoning / Learning)
+        ③ Decision-making (의사결정): Proposal → Evaluation → Selection → Execution
+</code></pre></div>
+
+<hr />
+<h2 id="1-예시로-시작-출장을-스스로-준비하는-ai-agent">1. 예시로 시작 — 출장을 스스로 준비하는 AI Agent<a class="headerlink" href="#1-예시로-시작-출장을-스스로-준비하는-ai-agent" title="Permanent link">#</a></h2>
+<blockquote>
+<p><strong>"다음 주 화요일에 부산에서 고객님과 미팅을 해야 하는데, 지난달에 부산에 다녀온 스케줄대로 이동·숙박·일정 예약 모두 준비해줘."</strong></p>
+</blockquote>
+<p>Agent Runtime 구조(<a href="07-ai-agent.html">7장</a>)의 각 부분이 이렇게 생각합니다.</p>
+<p><strong>① Profile, goals, Instructions (목표 이해)</strong></p>
+<blockquote>
+<p>유저는 <strong>정기적으로 출장을 다니는 직장인</strong>이네.
+다음 주 화요일 <strong>부산에서 고객 미팅이 목적</strong>이구나.
+<strong>"지난달에 다녀온 스케줄대로"</strong> 라고 했으니, <strong>지난 출장 기록을 확인</strong>해 봐야겠다.</p>
+</blockquote>
+<p><strong>② Memory (기억 참조)</strong></p>
+<blockquote>
+<p>지난달에는 <strong>KTX 이동 + 숙박 포함</strong> 일정이었고,
+이번엔 <strong>고객 미팅</strong>이니까,
+이동은 <strong>여유 있게</strong>, <strong>미팅 일정 중심</strong>으로 조금 더 <strong>보수적으로</strong> 조정해야겠다.</p>
+</blockquote>
+<p><strong>③ Model-based Reasoning / Planning (계획 수립)</strong></p>
+<blockquote>
+<p>지난달 출장 스케줄을 기준으로 이번 부산 고객 미팅 일정에 맞게 전체 흐름을 다시 짜야겠다.
+먼저 <strong>고객 미팅 시간을 확인</strong>하고, 그 시간에 맞춰 <strong>이동 시간을 역산</strong>하자.
+지난번처럼 <strong>KTX 이동</strong>이 가장 안정적일 것 같고, <strong>미팅 전날 도착</strong>하는 일정이 더 안전하겠다.
+숙박은 <strong>지난달 이용했던 호텔을 우선 확인</strong>하되, 미팅 장소와 동선이 맞는지 다시 한번 점검하자.</p>
+</blockquote>
+<p><strong>④ Tools (실행)</strong></p>
+<div class="codehilite"><pre><span></span><code>calendar.get_event()        ← 캘린더에서 미팅 시간 확인
+hotel.lookup(last_trip)     ← 지난 출장 때 호텔 조회
+ktx.search()                ← KTX 표 검색
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>역산</strong> = 거꾸로 계산하기. "미팅이 화요일 10시니까 → 월요일 저녁엔 도착해야 하고 → 그럼 월요일 오후 KTX…"
+<strong>보수적으로</strong> = 위험을 줄이는 쪽으로, 여유 있게</p>
+<p>이 예시는 <strong>목표 이해 → 기억 참조 → 계획 → 도구 실행</strong> 순서를 보여줍니다. 이 구조를 <strong>체계적으로 정리한 게 Cognitive Architecture</strong> 입니다.</p>
+</div>
+<hr />
+<h2 id="2-ai-agent의-발전-왜-구조가-필요해졌나">2. AI Agent의 발전 — 왜 "구조"가 필요해졌나 ★<a class="headerlink" href="#2-ai-agent의-발전-왜-구조가-필요해졌나" title="Permanent link">#</a></h2>
+<p>(논문: <strong>Cognitive Architectures for Language Agents</strong>, <em>Transactions on Machine Learning Research</em>, 2024)</p>
+<p>슬라이드는 같은 그림을 여러 장에 걸쳐 단계별로 강조하며 보여줍니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>구조</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1단계</strong></td>
+<td><code>Prompt construction → LLM → String parsing → Execution</code></td>
+<td><strong>LLM을 한 번 부르고 끝.</strong> 프롬프트 만들기 → LLM 호출 → 결과 글 해석 → 실행</td>
+</tr>
+<tr>
+<td><strong>2단계</strong></td>
+<td><strong>Self-Critique</strong>: <code>Question → Answer → Critique → Refinement → Answer</code><br><strong>Selection-Inference</strong>: <code>Context + Question → Selection → Inference → Answer</code></td>
+<td><strong>LLM을 여러 번 엮음.</strong> 답하고 → 스스로 비판하고 → 고치기 / 필요한 정보 고르고 → 추론하기</td>
+</tr>
+<tr>
+<td><strong>3단계</strong></td>
+<td><strong>Inner Monologue</strong>: <code>Environment / Human → VLM → Act</code><br><strong>ReAct</strong>: <code>Environment → Reason → Act</code> (루프)</td>
+<td><strong>환경과 주고받는 Agent.</strong> 환경을 보고 → 생각하고 → 행동 → 다시 환경 …</td>
+</tr>
+</tbody>
+</table>
+<p>그림 범례: <strong>○ Input</strong> (입력) / <strong>□ LLM calls</strong> (LLM 호출) / <strong>둥근 사각형 = Chain / Agent</strong></p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>용어</strong>
+- <strong>String parsing</strong> = LLM이 쓴 <strong>글(문자열)을 해석</strong>해서 프로그램이 쓸 수 있게 만드는 것
+- <strong>Critique</strong> = 비평, <strong>Refinement</strong> = 다듬기
+- <strong>Inner Monologue</strong> = 속마음 독백. 로봇이 <strong>"지금 이걸 보니 이렇게 해야겠다"고 속으로 말하며</strong> 행동하는 방식
+- <strong>VLM</strong> (Vision-Language Model) = <strong>그림도 볼 수 있는</strong> 언어 모델</p>
+<p><strong>흐름 한 줄</strong>: <strong>LLM 한 번 호출 → 여러 번 엮어서 스스로 고치기 → 환경과 계속 주고받는 루프</strong>
+점점 <strong>LLM 호출 하나하나는 "부품"이 되고, 그 부품을 어떻게 엮을지(구조)가 중요</strong>해졌다는 이야기입니다.</p>
+</div>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Cognitive Architecture가 필요해진 이유 (서술형 소재 1순위)</strong></p>
+<ul>
+<li><strong>LLM 기반의 Agent는 점점 복잡한 일을 수행하도록 발전해 왔음</strong></li>
+<li><strong>과거 AI는 "Task를 잘 수행하기 위해 어떤 기능을 추가할 것인가"에 집중했다면,</strong></li>
+<li><strong>현재는 "AI가 다양한 Task를 잘 수행하기 위해 어떤 구조로 시스템을 설계해야 하는가"를 고민</strong>하게 되었음</li>
+<li>→ <strong>Agent가 더욱 사람처럼 행동하도록 하기 위한 체계적인 Architecture 설계가 필요!</strong></li>
+<li>→ <strong>Cognitive Architecture</strong></li>
+</ul>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 요리사</strong>
+- <strong>과거</strong>: "칼질 기술 추가, 불 조절 기술 추가…" <strong>기능을 하나씩 붙이기</strong>
+- <strong>현재</strong>: "재료 손질 → 조리 → 플레이팅을 <strong>어떤 순서와 체계로 운영</strong>할까" <strong>주방 시스템 설계</strong></p>
+</div>
+<hr />
+<h2 id="3-cognitive-architecture란">3. Cognitive Architecture란? ★<a class="headerlink" href="#3-cognitive-architecture란" title="Permanent link">#</a></h2>
+<dl>
+<dt>Cognitive Architecture (인지 아키텍처)</dt>
+<dd><strong>인간이 정보를 인식하고, 기억하고, 추론하고, 행동을 결정하는 기본적인 구조</strong></dd>
+</dl>
+<ul>
+<li><strong>심리학, 인지과학 분야에서 인간의 인지 과정을 체계적으로 모델링하기 위해</strong> 도입</li>
+<li>대표 인물: <strong>Allen Newell (1927~1992)</strong>, <strong>Herbert Alexander Simon (1916~2001)</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<ul>
+<li><strong>Cognitive(인지)</strong> = 알고, 생각하고, 기억하는 정신 작용</li>
+<li><strong>Architecture(아키텍처)</strong> = 구조, 설계도</li>
+<li><strong>모델링</strong> = 복잡한 걸 <strong>단순화한 모형</strong>으로 만드는 것</li>
+</ul>
+<p>즉 <strong>"사람의 머리가 돌아가는 구조의 설계도"</strong> 입니다. 원래 심리학 개념인데, AI Agent 설계에 가져온 것입니다.</p>
+</div>
+<h3 id="인간의-인지-과정-슬라이드-예시-형사">인간의 인지 과정 (슬라이드 예시: 형사)<a class="headerlink" href="#인간의-인지-과정-슬라이드-예시-형사" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>형사의 머릿속</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Observation</strong> (관찰)</td>
+<td>"…지금 범인이 웃은 거 맞나?"</td>
+</tr>
+<tr>
+<td><strong>Perception</strong> (지각)</td>
+<td>(본 것을 "웃었다"는 정보로 인식)</td>
+</tr>
+<tr>
+<td><strong>Memory</strong> (기억)</td>
+<td>"예전에 비슷한 사건에서, 범인이 안 들킨다고 확신하면 저런 표정을 지었었어."</td>
+</tr>
+<tr>
+<td><strong>Reasoning</strong> (추론)</td>
+<td>"저 시간에 웃고 있었다는 건, 최소한 그때는 안전하다고 느꼈다는 뜻일 수도 있겠네."</td>
+</tr>
+<tr>
+<td><strong>Action</strong> (행동)</td>
+<td>"비슷한 시간대에, 식당에서는 누가 있었는지 다시 한번 찾아봐야겠어."</td>
+</tr>
+</tbody>
+</table>
+<p>→ <strong>Observation → Perception → Memory → Reasoning → Action</strong></p>
+<h3 id="cognitive-architecture-for-ai-agent">Cognitive Architecture for AI Agent<a class="headerlink" href="#cognitive-architecture-for-ai-agent" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>AI Agent가 더욱 인간처럼 동작하기 위해, Cognitive Architecture를 기반으로 시스템을 설계할 필요</strong></li>
+<li><strong>환경을 인지하고, 기억하고, 추론하며, 계획하고, 행동한 후 결과를 학습할 수 있어야 함</strong></li>
+<li>논문에서 <strong>기억, 행동, 의사결정이라는 세 가지 요소</strong>를 통해 LLM 기반 Agent를 설계하는 프레임워크를 제안</li>
+<li>→ <strong>CoALA (Cognitive Architectures for Language Agents) 프레임워크</strong></li>
+</ul>
+<hr />
+<h2 id="4-coala-프레임워크">4. CoALA 프레임워크 ★★★<a class="headerlink" href="#4-coala-프레임워크" title="Permanent link">#</a></h2>
+<p><strong>CoALA</strong> = <strong>Co</strong>gnitive <strong>A</strong>rchitectures for <strong>L</strong>anguage <strong>A</strong>gents ("코알라"라고 읽음)</p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>3가지 구성요소와 각각의 정의</strong> — 이 장에서 가장 확실한 출제 포인트. 정의를 그대로 외우세요.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>구성요소</th>
+<th>정의</th>
+<th>한 단어</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>① Memory Modules [기억]</strong></td>
+<td><strong>에이전트가 과거의 경험, 지식, 현재의 정보 등을 저장하고 유지하기 위한 정보 저장 시스템</strong></td>
+<td><strong>저장</strong></td>
+</tr>
+<tr>
+<td><strong>② Action Space [행동]</strong></td>
+<td><strong>에이전트가 외부 환경과 상호작용하거나, 내부 상태를 조절하기 위해 수행할 수 있는 모든 가능한 동작들의 집합</strong></td>
+<td><strong>할 수 있는 것</strong></td>
+</tr>
+<tr>
+<td><strong>③ Decision making [의사결정]</strong></td>
+<td><strong>에이전트가 주어진 목표를 달성하기 위해, 어떤 행동을 선택하고 실행할지 결정하는 과정</strong></td>
+<td><strong>고르기</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="coala-구조도">CoALA 구조도<a class="headerlink" href="#coala-구조도" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>  ┌───────────────────────────────────────────────────────────────┐
+  │ Procedural Memory          Semantic Memory    Episodic Memory │
+  │ [LLM] [Agent Code]           [DB 🛢]            [기록 📄]      │
+  │  ↑Prompt ↓Parse ↓Retrieval ↑Learning  ↓Retrieval ↑Learning  ↓Retrieval ↑Learning
+  │                                                               │
+  │ ┌──────────────┐  ⇄  ┌──────────────────────────────────┐     │
+  │ │  Decision    │     │        Working Memory            │     │
+  │ │  Procedure   │     │        (⟲ Reasoning)             │     │
+  │ └──────────────┘     └──────────────────────────────────┘     │
+  └──────────────────────────↓ Actions ───── ↑ Observations ──────┘
+                    [ Dialogue 🗣 ]  [ Physical 🌍 ]  [ Digital 💻 ]
+                      (대화)           (물리 세계)      (디지털 세계)
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>그림 읽는 법</strong>
+- 위쪽 3개 = <strong>장기 기억</strong> (Procedural / Semantic / Episodic)
+- 가운데 = <strong>Working Memory</strong> (지금 작업 중인 머릿속 메모장) — 여기서 <strong>Reasoning(추론)</strong> 이 일어남
+- 왼쪽 = <strong>Decision Procedure</strong> (무엇을 할지 결정)
+- 아래 = <strong>바깥 환경</strong> 3종류 (대화 상대 / 물리 세계 / 디지털 세계)
+- 화살표 <strong>Retrieval</strong> = 장기 기억에서 꺼내오기, <strong>Learning</strong> = 장기 기억에 저장하기
+- <strong>Procedural Memory에 LLM이 들어 있다</strong>는 점이 특이: LLM 자체가 "어떻게 하는지"를 담은 <strong>절차적 기억</strong>으로 취급됨</p>
+</div>
+<hr />
+<h2 id="5-1-memory-modules-기억">5. ① Memory Modules (기억) ★★★<a class="headerlink" href="#5-1-memory-modules-기억" title="Permanent link">#</a></h2>
+<p><strong>에이전트가 과거의 경험, 지식, 현재의 정보 등을 저장하고 유지하기 위한 정보 저장 시스템</strong></p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Short-term 1개 + Long-term 3개 = 총 4가지 메모리.</strong> 이름과 정의 거의 확실히 출제됩니다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>종류</th>
+<th>정의</th>
+<th>사람으로 치면</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Short-term Memory</strong></td>
+<td><strong>Working Memory</strong></td>
+<td><strong>Working Memory로 불리며, 현재 처리하고 있는 정보를 저장하는 공간</strong></td>
+<td>지금 머릿속에 <strong>잠깐 붙잡고 있는 것</strong> (전화번호 외우며 누르기)</td>
+</tr>
+<tr>
+<td><strong>Long-term Memory</strong></td>
+<td><strong>Semantic</strong> (의미 기억)</td>
+<td><strong>세상에 대한 일반적인 사실, 개념, 학습된 지식을 저장하는 공간</strong></td>
+<td><strong>"서울은 한국의 수도"</strong> 같은 <strong>지식</strong></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Episodic</strong> (일화 기억)</td>
+<td><strong>과거에 경험했던 사건이나 상호작용을 저장하는 공간</strong></td>
+<td><strong>"작년 생일에 친구랑 바다 갔지"</strong> 같은 <strong>경험</strong></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Procedural</strong> (절차 기억)</td>
+<td><strong>특정 작업을 수행하는 방법이나 규칙(스킬)을 저장하는 공간</strong></td>
+<td><strong>자전거 타는 법</strong> 같은 <strong>몸에 밴 방법</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>세 Long-term memory 구분 요령</strong>
+| 종류 | 질문 | 예 |
+|---|---|---|
+| <strong>Semantic</strong> | <strong>"그게 뭔데?"</strong> (사실·개념) | 파스타 = 면 + 소스 |
+| <strong>Episodic</strong> | <strong>"그때 어땠지?"</strong> (경험·사건) | 전에 물이 적어서 실패했지 |
+| <strong>Procedural</strong> | <strong>"어떻게 하더라?"</strong> (방법·스킬) | 물 끓이고 → 면 넣고 → … |</p>
+</div>
+<h3 id="사용-예시-친구-집에서-파스타를-만들자-사람-한결이">사용 예시 — "친구 집에서 파스타를 만들자!" (사람: 한결이)<a class="headerlink" href="#사용-예시-친구-집에서-파스타를-만들자-사람-한결이" title="Permanent link">#</a></h3>
+<p>슬라이드는 이 예시를 한 장씩 쌓아 가며 보여줍니다.</p>
+<p><strong>Working Memory</strong> (지금 상황 — 단기 기억)</p>
+<div class="codehilite"><pre><span></span><code>장소: 친구 집 주방
+목표: 파스타 완성
+정보: 가스레인지, 냄비 있음
+상태: 배부름                    ← (나중 슬라이드에서 추가)
+</code></pre></div>
+
+<p><strong>Semantic Memory</strong> — "파스타를 만들려면 뭐가 필요하지?"</p>
+<div class="codehilite"><pre><span></span><code>파스타 = 면 + 소스
+끓는 물이 필요
+면은 물에 삶는다
+소스는 토마토/크림/오일
+파스타는 500원 크기 정도가 1인분    ← (추가)
+</code></pre></div>
+
+<p><strong>Episodic Memory</strong> — "전에 파스타 만들 때 어땠지?"</p>
+<div class="codehilite"><pre><span></span><code>물이 너무 적어서 면이 안 익었어
+면을 먼저 삶으니 타이밍이 안 맞았어
+친구 집에는 소금이 없었어
+친구 집 가스불이 약해서 오래 걸려    ← (추가)
+</code></pre></div>
+
+<p><strong>Procedural Memory</strong> — "뭐부터 해야 하지?"</p>
+<div class="codehilite"><pre><span></span><code>냄비에 물 붓고, 가스불 켜고,
+물 끓으면 소금 넣고 면 투입하고,
+남은 시간 동안 소스를 만들자
+불이 약하면 기다리는 동안 소스랑 다른 반찬도 같이 준비하자    ← (추가)
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>기억들이 서로 영향을 줍니다</strong>
+- Working Memory에 "<strong>배부름</strong>"이 들어오자 → Semantic에서 "<strong>1인분 양</strong>" 지식을 떠올림 (조금만 만들자)
+- Episodic에 "<strong>가스불이 약했다</strong>"는 경험 → Procedural에서 "<strong>기다리는 동안 다른 거 하자</strong>"로 방법을 바꿈</p>
+<p>이렇게 <strong>4가지 기억이 함께 작동</strong>해서 더 나은 행동을 만듭니다.</p>
+</div>
+<h3 id="같은-예시-agent의-경우-코드처럼-표현">같은 예시 — Agent의 경우 (코드처럼 표현)<a class="headerlink" href="#같은-예시-agent의-경우-코드처럼-표현" title="Permanent link">#</a></h3>
+<p><strong>Working Memory</strong></p>
+<div class="codehilite"><pre><span></span><code>stove = detected        (가스레인지 = 감지됨)
+pot = detected          (냄비 = 감지됨)
+ingredients = unknown   (재료 = 모름)
+</code></pre></div>
+
+<p><strong>Semantic Memory</strong></p>
+<div class="codehilite"><pre><span></span><code>pasta   = requires(noodle, sauce)      (파스타는 면과 소스가 필요)
+noodle  = boiled_in(water)             (면은 물에 삶는다)
+water   = heated_by(stove)             (물은 가스레인지로 데운다)
+boiling = temperature &gt; threshold      (끓는다 = 온도가 기준보다 높다)
+</code></pre></div>
+
+<p><strong>Episodic Memory</strong></p>
+<div class="codehilite"><pre><span></span><code>Episode #42:  - env: tiny pot           - result: fail      (작은 냄비 → 실패)
+Episode #82:  - env: hotel restaurant   - result: success   (호텔 주방 → 성공)
+</code></pre></div>
+
+<p><strong>Procedural Memory</strong></p>
+<div class="codehilite"><pre><span></span><code>Skill: find_ingredients()     (재료 찾기)
+Skill: boil_water()           (물 끓이기)
+Skill: cook_noodle(time)      (면 삶기)
+Skill: mix_sauce()            (소스 섞기)
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>사람의 기억을 <strong>컴퓨터가 다룰 수 있는 형태</strong>로 바꾼 것입니다.
+- Semantic → <strong>사실 관계</strong> (A는 B가 필요하다)
+- Episodic → <strong>사건 기록</strong> (번호, 환경, 결과)
+- Procedural → <strong>함수(스킬)</strong> 이름 — 실제로 실행할 수 있는 코드</p>
+</div>
+<hr />
+<h2 id="6-2-action-space-행동">6. ② Action Space (행동) ★★★<a class="headerlink" href="#6-2-action-space-행동" title="Permanent link">#</a></h2>
+<p><strong>에이전트가 외부 환경과 상호작용하거나, 내부 상태를 조절하기 위해 수행할 수 있는 모든 가능한 동작들의 집합</strong></p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>외부 행동 1가지 + 내부 행동 3가지</strong> — 분류와 정의가 핵심.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>종류</th>
+<th>정의</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>외부 행동</strong> (External Actions; <strong>Grounding</strong>)</td>
+<td>—</td>
+<td><strong>API 호출, 인간 혹은 다른 에이전트와의 대화, 인터넷 검색</strong> 등</td>
+<td>검색하기, 예약하기, 말하기</td>
+</tr>
+<tr>
+<td><strong>내부 행동</strong> (Internal Actions; <strong>Memory Access</strong>)</td>
+<td><strong>검색 (Retrieval)</strong></td>
+<td><strong>장기 기억에서 정보를 검색해 Working Memory로 가져오는 행동</strong></td>
+<td>"전에 파스타 어땠지?" 떠올리기</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>추론 (Reasoning)</strong></td>
+<td><strong>Working Memory의 내용을 처리하여 새로운 정보를 생성하는 행동</strong></td>
+<td>"불이 약하니 오래 걸리겠다" 판단</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>학습 (Learning)</strong></td>
+<td><strong>새로운 정보를 Long-term memory에 저장하는 행동</strong><br>(예) <strong>Episodic memory에 일화 추가</strong><br>(예) <strong>LLM parameter update</strong></td>
+<td>"이번엔 소금 챙겨서 성공!" 기억해 두기</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>방향으로 외우면 쉽습니다</strong></p>
+<div class="codehilite"><pre><span></span><code>                 Long-term Memory (장기 기억)
+                   │            ↑
+       Retrieval   │            │  Learning
+       (꺼내오기)   ↓            │  (저장하기)
+                 Working Memory (작업 기억)
+                   ⟲ Reasoning (안에서 가공하기)
+</code></pre></div>
+
+<ul>
+<li><strong>Retrieval</strong>: 장기 <strong>→</strong> 작업</li>
+<li><strong>Reasoning</strong>: 작업 <strong>→</strong> 작업</li>
+<li><strong>Learning</strong>: 작업 <strong>→</strong> 장기</li>
+</ul>
+<p><strong>Grounding</strong> = 생각을 <strong>바깥 실제 세계에 연결</strong>하는 것 → 그래서 외부 행동 = Grounding
+<strong>LLM parameter update</strong> = 모델 자체를 다시 학습시키는 것도 "학습" 행동의 일종</p>
+</div>
+<hr />
+<h2 id="7-3-decision-making-process-의사결정">7. ③ Decision-making Process (의사결정) ★★★<a class="headerlink" href="#7-3-decision-making-process-의사결정" title="Permanent link">#</a></h2>
+<p><strong>에이전트가 주어진 목표를 달성하기 위해, 어떤 행동을 선택하고 실행할지 결정하는 과정</strong></p>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Planning Stage 3단계 (Proposal → Evaluation → Selection) + Execution Stage</strong> — 순서까지 출제될 수 있습니다.</p>
+</div>
+<h3 id="planning-stage-계획-단계">Planning Stage (계획 단계)<a class="headerlink" href="#planning-stage-계획-단계" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>정의</th>
+<th>쉬운 말</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Proposal</strong> (제안)</td>
+<td><strong>LLM의 추론을 통해 하나 이상의 Action 후보를 생성</strong></td>
+<td><strong>"할 수 있는 거 뭐 있지?"</strong> 후보 내기</td>
+</tr>
+<tr>
+<td><strong>Evaluation</strong> (평가)</td>
+<td><strong>여러 Action 후보들의 가치를 평가</strong> (<strong>Heuristic, Simulation</strong> 등을 이용)</td>
+<td><strong>"각각 해보면 어떨까?"</strong> 점수 매기기</td>
+</tr>
+<tr>
+<td><strong>Selection</strong> (선택)</td>
+<td><strong>평가된 행동 중 가장 좋은 Action을 선택</strong><br><strong>만족스러운 Action이 없는 경우 다시 Proposal 단계로 돌아갈 수 있음</strong></td>
+<td><strong>"이게 제일 낫다!"</strong> 고르기 (없으면 다시 후보 내기)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="execution-stage-실행-단계">Execution Stage (실행 단계)<a class="headerlink" href="#execution-stage-실행-단계" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>Planning Stage에서 선택된 행동(내부 or 외부)을 실행</strong>하고, <strong>환경으로부터 피드백을 받아 다음 cycle로 이동</strong></li>
+</ul>
+<h3 id="전체-흐름-decision-procedure-그림">전체 흐름 (Decision Procedure 그림)<a class="headerlink" href="#전체-흐름-decision-procedure-그림" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>        Observation (관찰)
+             ↓
+   ┌──── Planning ────────┐
+   │   ┌→ Proposal        │
+   │   │      ↓           │
+   │   │  Evaluation      │
+   │   │      ↓           │
+   │   └─ Selection       │  ← 마음에 드는 게 없으면 Proposal로 되돌아감
+   └──────────┬───────────┘
+              ↓
+          Execution (실행)
+              │
+              └──→ 다시 Planning으로 (다음 cycle)
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>예: 점심 메뉴 고르기</strong>
+1. <strong>Proposal</strong>: "김치찌개, 파스타, 햄버거" 후보 생각
+2. <strong>Evaluation</strong>: 김치찌개(어제 먹음, 3점) / 파스타(멀어, 5점) / 햄버거(가깝고 빨라, 8점)
+3. <strong>Selection</strong>: 햄버거! (전부 별로였으면 → 다시 후보 생각)
+4. <strong>Execution</strong>: 햄버거 가게로 가서 주문 → "품절이네?" (피드백) → 다시 Planning</p>
+<p><strong>Heuristic(휴리스틱)</strong> = <strong>경험상 대충 맞는 판단 규칙</strong> ("가까운 게 보통 낫다")
+<strong>Simulation(시뮬레이션)</strong> = <strong>머릿속으로 미리 해보기</strong> ("파스타 가면 왕복 40분 걸리겠네")</p>
+</div>
+<hr />
+<h2 id="8-cognitive-architecture의-필요성-정리">8. Cognitive Architecture의 필요성 (정리) ★★<a class="headerlink" href="#8-cognitive-architecture의-필요성-정리" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>마무리 3문장 — 서술형 마지막 문단으로 쓰기 좋습니다.</p>
+<ul>
+<li><strong>Cognitive Architecture를 통해 Agent가 더욱 인간처럼 행동해 복잡한 Task를 수행할 수 있음</strong></li>
+<li><strong>CoALA 프레임워크를 통해 서로 다른 에이전트들이 세 가지 요소(기억, 행동, 의사결정)를 어떻게 사용하는지 분석 가능</strong></li>
+<li><strong>이를 통해 각 에이전트 간 비교가 용이하며, 어떤 부분을 보완하거나 발전시킬 수 있을지에 대한 방향 제시 가능</strong></li>
+</ul>
+</div>
+<h3 id="coala로-기존-에이전트들을-분석한-표-table-2">CoALA로 기존 에이전트들을 분석한 표 (Table 2)<a class="headerlink" href="#coala로-기존-에이전트들을-분석한-표-table-2" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>에이전트</th>
+<th>Long-term Memory</th>
+<th>External Grounding</th>
+<th>Internal Actions</th>
+<th>Decision Making</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SayCan</strong> (Ahn et al., 2022)</td>
+<td>–</td>
+<td>physical</td>
+<td>–</td>
+<td>evaluate</td>
+</tr>
+<tr>
+<td><strong>ReAct</strong> (Yao et al., 2022b)</td>
+<td><strong>–</strong></td>
+<td><strong>digital</strong></td>
+<td><strong>reason</strong></td>
+<td><strong>propose</strong></td>
+</tr>
+<tr>
+<td><strong>Voyager</strong> (Wang et al., 2023a)</td>
+<td>procedural</td>
+<td>digital</td>
+<td>reason / retrieve / learn</td>
+<td>propose</td>
+</tr>
+<tr>
+<td><strong>Generative Agents</strong> (Park et al., 2023)</td>
+<td>episodic / semantic</td>
+<td>digital / agent</td>
+<td>reason / retrieve / learn</td>
+<td>propose</td>
+</tr>
+<tr>
+<td><strong>Tree of Thoughts</strong> (Yao et al., 2023)</td>
+<td>–</td>
+<td>digital</td>
+<td>reason</td>
+<td>propose, evaluate, select</td>
+</tr>
+</tbody>
+</table>
+<p><strong>표 읽는 법</strong>
+- <strong>Long-term Memory</strong>: 어떤 장기 기억을 가졌나 (– = 없음)
+- <strong>External Grounding</strong>: 어떤 외부 환경과 상호작용하나 (physical = 물리 로봇, digital = 컴퓨터, agent = 다른 에이전트)
+- <strong>Internal Actions</strong>: 내부 행동 중 뭘 하나
+- <strong>Decision Making</strong>: Proposal / Evaluation / Selection 중 뭘 하나</p>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>강의에서 <strong>ReAct 행</strong>에 빨간 박스를 치고 이렇게 적었습니다:
+<strong>"Long-term memory ✗ / learning, retrieval ✗ / evaluate, select ✗"</strong></p>
+<p>즉 <strong>ReAct는</strong>
+- <strong>장기 기억이 없고</strong>
+- 내부 행동 중 <strong>reason(추론)만</strong> 하고 <strong>learning·retrieval은 안 하며</strong>
+- 의사결정 중 <strong>propose(제안)만</strong> 하고 <strong>evaluate·select는 안 한다</strong></p>
+<p>→ <strong>"CoALA로 분석하면 어떤 부분이 비어 있는지 보인다"</strong> = 이 프레임워크의 가치. 이 예시가 그 증거입니다.</p>
+</div>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>다른 에이전트 간단 소개</strong>
+- <strong>SayCan</strong>: 구글의 <strong>로봇</strong> 에이전트 (physical). 할 수 있는 행동을 <strong>평가</strong>해서 고름
+- <strong>Voyager</strong>: <strong>마인크래프트</strong> 게임 에이전트. 배운 기술을 <strong>procedural memory(스킬 라이브러리)</strong> 에 쌓음
+- <strong>Generative Agents</strong>: 가상 마을에 사는 <strong>25명의 AI 주민</strong>. 일화·의미 기억을 가지고 서로 대화함 (agent)
+- <strong>Tree of Thoughts</strong>: 생각을 나무처럼 펼쳐 <strong>제안·평가·선택을 모두</strong> 함 (<a href="08-react-tool.html">8장</a>)</p>
+</div>
+<hr />
+<h2 id="이-장-정리">이 장 정리<a class="headerlink" href="#이-장-정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>구성요소</th>
+<th>세부</th>
+<th>핵심</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>필요성</strong></td>
+<td>과거: 기능 추가 → 현재: <strong>구조 설계</strong></td>
+<td>사람처럼 행동하도록</td>
+</tr>
+<tr>
+<td><strong>정의</strong></td>
+<td>인간이 인식·기억·추론·행동 결정하는 기본 구조</td>
+<td>Newell, Simon</td>
+</tr>
+<tr>
+<td><strong>① Memory</strong></td>
+<td><strong>Working</strong> (현재 처리 중)</td>
+<td>Short-term</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Semantic</strong> (사실·개념·지식) / <strong>Episodic</strong> (경험·사건) / <strong>Procedural</strong> (방법·스킬)</td>
+<td>Long-term</td>
+</tr>
+<tr>
+<td><strong>② Action Space</strong></td>
+<td><strong>External (Grounding)</strong>: API, 대화, 검색</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Internal (Memory Access)</strong>: <strong>Retrieval</strong>(장기→작업) / <strong>Reasoning</strong>(작업 가공) / <strong>Learning</strong>(→장기)</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>③ Decision-making</strong></td>
+<td><strong>Planning</strong>: <strong>Proposal → Evaluation → Selection</strong> (불만족 시 Proposal로)</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Execution</strong>: 실행 + 피드백 → 다음 cycle</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>분석 예</strong></td>
+<td><strong>ReAct</strong>: 장기 기억 ✗ / learning·retrieval ✗ / evaluate·select ✗</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+  <footer class="page-footer"><code>content/isw/11-cognitive-architecture.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#이-장의-한-줄-요약">이 장의 한 줄 요약</a></li>
+<li><a href="#1-예시로-시작-출장을-스스로-준비하는-ai-agent">1. 예시로 시작 — 출장을 스스로 준비하는 AI Agent</a></li>
+<li><a href="#2-ai-agent의-발전-왜-구조가-필요해졌나">2. AI Agent의 발전 — 왜 "구조"가 필요해졌나 ★</a></li>
+<li><a href="#3-cognitive-architecture란">3. Cognitive Architecture란? ★</a><ul>
+<li><a href="#인간의-인지-과정-슬라이드-예시-형사">인간의 인지 과정 (슬라이드 예시: 형사)</a></li>
+<li><a href="#cognitive-architecture-for-ai-agent">Cognitive Architecture for AI Agent</a></li>
+</ul>
+</li>
+<li><a href="#4-coala-프레임워크">4. CoALA 프레임워크 ★★★</a><ul>
+<li><a href="#coala-구조도">CoALA 구조도</a></li>
+</ul>
+</li>
+<li><a href="#5-1-memory-modules-기억">5. ① Memory Modules (기억) ★★★</a><ul>
+<li><a href="#사용-예시-친구-집에서-파스타를-만들자-사람-한결이">사용 예시 — "친구 집에서 파스타를 만들자!" (사람: 한결이)</a></li>
+<li><a href="#같은-예시-agent의-경우-코드처럼-표현">같은 예시 — Agent의 경우 (코드처럼 표현)</a></li>
+</ul>
+</li>
+<li><a href="#6-2-action-space-행동">6. ② Action Space (행동) ★★★</a></li>
+<li><a href="#7-3-decision-making-process-의사결정">7. ③ Decision-making Process (의사결정) ★★★</a><ul>
+<li><a href="#planning-stage-계획-단계">Planning Stage (계획 단계)</a></li>
+<li><a href="#execution-stage-실행-단계">Execution Stage (실행 단계)</a></li>
+<li><a href="#전체-흐름-decision-procedure-그림">전체 흐름 (Decision Procedure 그림)</a></li>
+</ul>
+</li>
+<li><a href="#8-cognitive-architecture의-필요성-정리">8. Cognitive Architecture의 필요성 (정리) ★★</a><ul>
+<li><a href="#coala로-기존-에이전트들을-분석한-표-table-2">CoALA로 기존 에이전트들을 분석한 표 (Table 2)</a></li>
+</ul>
+</li>
+<li><a href="#이-장-정리">이 장 정리</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

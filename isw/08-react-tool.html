@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8. ReAct와 Tool Use · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="08-react-tool.html" class="active">8. ReAct와 Tool Use</a></li>
+<li><a href="09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="8-react와-tool-use">8. ReAct와 Tool Use<a class="headerlink" href="#8-react와-tool-use" title="Permanent link">#</a></h1>
+<h2 id="이-장의-한-줄-요약">이 장의 한 줄 요약<a class="headerlink" href="#이-장의-한-줄-요약" title="Permanent link">#</a></h2>
+<blockquote>
+<p><strong>Agent가 일을 하려면 ① 생각(Reasoning) ② 최신 지식(Knowledge) ③ 정확한 계산(Computation)이 필요하다. 각각을 프롬프트 기법 / RAG / Tool Use로 해결하고, 생각과 행동을 번갈아 하는 게 ReAct.</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>필요한 것</th>
+<th>왜 LLM 혼자 안 되나</th>
+<th>해결책</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reasoning</strong> (생각)</td>
+<td>복잡한 문제는 한 번에 못 풂</td>
+<td>프롬프트 기법 (CoT, 과제 분해 등)</td>
+</tr>
+<tr>
+<td><strong>Knowledge</strong> (지식)</td>
+<td>학습 이후 정보를 모름</td>
+<td><strong>RAG</strong> (검색해서 넣어주기)</td>
+</tr>
+<tr>
+<td><strong>Computation</strong> (계산)</td>
+<td>정확한 계산을 못 함</td>
+<td><strong>Tool Use</strong> (계산기·코드 도구)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-react">1. ReAct ★★<a class="headerlink" href="#1-react" title="Permanent link">#</a></h2>
+<p><strong>ReAct = Reasoning + Acting</strong> (추론 + 행동)</p>
+<ul>
+<li><strong>Reasoning과 Acting이라는 두 가지 방식을 둘 다 생성</strong></li>
+<li><strong>기존에는 모델이 추론만 하거나 행동만 생성했지만, ReAct는 둘 다 생성함</strong></li>
+<li><strong>시너지 효과: 추론은 행동을 돕고, 행동은 추론을 도움</strong></li>
+<li><strong>ReAct 방식은 다양한 QA 작업을 해결하는 데 사용될 수 있으며, 다른 예시와 도구만 제공하면 됨</strong></li>
+</ul>
+<h3 id="세-가지-방식-비교-슬라이드-그림">세 가지 방식 비교 (슬라이드 그림)<a class="headerlink" href="#세-가지-방식-비교-슬라이드-그림" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>① Reasoning (update internal belief)        ② Acting (obtain external feedback)
+   Question                                      Action
+      ↓                                            ↓
+   [LLM] ⟲ Reasoning                           🤖 ⟲ 🌍
+      ↓                                            ↓
+   Answer                                      Observation
+
+   "머릿속으로만 생각"                          "생각 없이 행동만"
+
+                      ↘          ↙
+           ③ ReAct: a new paradigm of agents that reason and act
+              Reasoning ⟲ 🤖 ⟲ 🌍  (Action / Observation)
+              "생각하고 → 행동하고 → 결과 보고 → 다시 생각"
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>방식</th>
+<th>하는 일</th>
+<th>문제</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reasoning만</strong></td>
+<td>머릿속으로 <strong>생각만</strong> (내부 믿음을 업데이트)</td>
+<td><strong>최신 정보가 없음</strong> → 틀린 걸 그럴듯하게 말함</td>
+</tr>
+<tr>
+<td><strong>Acting만</strong></td>
+<td>생각 없이 <strong>행동만</strong> (외부 피드백 얻기)</td>
+<td><strong>왜 그 행동을 하는지 판단 못 함</strong> → 엉뚱한 검색 반복</td>
+</tr>
+<tr>
+<td><strong>ReAct</strong></td>
+<td><strong>생각 ↔ 행동 번갈아</strong></td>
+<td>둘의 장점을 합침 ✅</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>용어</strong>: <strong>internal belief(내부 믿음)</strong> = 모델이 머릿속에 가진 생각 / <strong>external feedback(외부 피드백)</strong> = 바깥 세상에서 받은 결과</p>
+</div>
+<h3 id="react의-장점-3가지-슬라이드">ReAct의 장점 3가지 (슬라이드)<a class="headerlink" href="#react의-장점-3가지-슬라이드" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>Synergy of reasoning and acting</strong> — 추론과 행동의 <strong>시너지</strong></li>
+<li><strong>Simple and intuitive to use</strong> — <strong>단순하고 직관적</strong>으로 사용 가능</li>
+<li><strong>General across domains</strong> — 여러 <strong>분야에 범용적</strong></li>
+</ul>
+<h3 id="예시로-이해하기">예시로 이해하기<a class="headerlink" href="#예시로-이해하기" title="Permanent link">#</a></h3>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>질문: "올해 노벨 문학상 수상자의 대표작은?"</strong></p>
+<div class="codehilite"><pre><span></span><code>Thought 1    : 올해 수상자를 모르니 검색해야겠다.                  ← 생각
+Action 1     : Search["올해 노벨 문학상 수상자"]                    ← 행동
+Observation 1: "OOO 작가가 수상했다."                              ← 결과
+Thought 2    : OOO 작가의 대표작을 찾아야겠다.                     ← 결과를 보고 다시 생각
+Action 2     : Search["OOO 대표작"]                                ← 행동
+Observation 2: "『XXX』가 대표작으로 꼽힌다."                       ← 결과
+Thought 3    : 답을 찾았다.
+Final Answer : 『XXX』입니다.
+</code></pre></div>
+
+<ul>
+<li><strong>생각이 행동을 도움</strong>: "모르니까 검색해야겠다", "다음엔 대표작을 찾자" → <strong>무엇을 할지 결정</strong></li>
+<li><strong>행동이 생각을 도움</strong>: 검색 결과를 보고 → <strong>다음 생각을 정확하게 고침</strong></li>
+</ul>
+</div>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>예상 문제: "ReAct의 시너지 효과를 설명하시오"</strong></p>
+<p><strong>모범 답안</strong>: ReAct는 추론(Reasoning)과 행동(Acting)을 <strong>번갈아 생성</strong>한다. <strong>추론은 어떤 행동을 할지 결정하도록 행동을 돕고</strong>, <strong>행동으로 얻은 관찰 결과(Observation)는 추론을 보정하여 추론을 돕는다.</strong> 추론만 하면 외부 정보가 없어 틀리기 쉽고, 행동만 하면 행동의 근거를 판단할 수 없는데, ReAct는 둘을 결합해 이 한계를 해결한다. 또한 <strong>다른 예시와 도구만 제공하면</strong> 다양한 QA 작업에 적용할 수 있다.</p>
+</div>
+<hr />
+<h2 id="2-agent의-task-수행의-필요-요건-3가지">2. Agent의 task 수행의 필요 요건 3가지 ★★★<a class="headerlink" href="#2-agent의-task-수행의-필요-요건-3가지" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Reasoning / Knowledge / Computation</strong> 과 각 해결책을 <strong>짝지어</strong> 외우세요.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>요건</th>
+<th>슬라이드 정의</th>
+<th>해결 방법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reasoning</strong></td>
+<td><strong>복잡한 질문 해결을 위해서는 추론이 필요</strong></td>
+<td><strong>프롬프트 기법</strong> (Instructions, Few-shot, Context, CoT, 과제 분해)</td>
+</tr>
+<tr>
+<td><strong>Knowledge</strong></td>
+<td><strong>모델이 훈련된 시점 이후에 발생한 정보</strong>(예: 2026년 1월 5일 뉴스)에 대해서는 <strong>새로운 지식이 필요</strong></td>
+<td><strong>RAG</strong> (Retrieval-Augmented Generation)</td>
+</tr>
+<tr>
+<td><strong>Computation</strong></td>
+<td><strong>매우 수학적이고 어려운 질문의 경우, 트랜스포머의 auto-regression을 넘어서는 계산 방식이 필요</strong></td>
+<td><strong>Tool Use</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Computation이 왜 필요?</strong> LLM은 <strong>다음 단어를 확률로 맞히는 기계</strong>(auto-regression)입니다. "3847 × 2961 = ?" 를 물으면 <strong>계산하는 게 아니라 그럴듯한 숫자를 "짐작"</strong> 합니다. 그래서 자주 틀려요.
+사람도 큰 곱셈은 <strong>계산기</strong>를 쓰죠. AI에게도 <strong>계산기(도구)</strong> 를 쥐여 주는 겁니다.</p>
+<p><strong>Knowledge가 왜 필요?</strong> LLM은 <strong>학습이 끝난 날까지의 정보만</strong> 압니다 (knowledge cutoff). 그 이후 뉴스는 모릅니다.</p>
+</div>
+<hr />
+<h2 id="3-1-reasoning-추론을-돕는-5가지-방법">3. ① Reasoning — 추론을 돕는 5가지 방법 ★<a class="headerlink" href="#3-1-reasoning-추론을-돕는-5가지-방법" title="Permanent link">#</a></h2>
+<p>슬라이드 목록:</p>
+<ol>
+<li><strong>명확하고 충분한 설명을 포함하는 Instructions</strong></li>
+<li><strong>Few-shot examples</strong></li>
+<li><strong>Provide relevant context</strong></li>
+<li><strong>Chain of thought (CoT)</strong></li>
+<li><strong>Break down Complex tasks</strong> (<strong>Tree-of-Thought, Graph-of-Thoughts</strong>)</li>
+</ol>
+<h3 id="1-instructions-명확한-지시">1) Instructions — 명확한 지시<a class="headerlink" href="#1-instructions-명확한-지시" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>❌ Bad : "맛있는 저녁 레시피 하나 알려줘."
+
+✅ Good (Instructions):
+   "너는 전문 요리사야. 냉장고에 남은 두부와 김치를 활용해서 만들 수 있는
+    15분 내외의 간단한 저녁 메뉴를 추천해줘. 단, 내가 매운 걸 잘 못 먹으니까
+    최대한 덜 맵게 만드는 법을 알려줘야 해."
+</code></pre></div>
+
+<p><strong>Good이 좋은 이유</strong>: <strong>역할</strong>(전문 요리사) + <strong>재료 조건</strong>(두부, 김치) + <strong>시간 조건</strong>(15분) + <strong>개인 조건</strong>(덜 맵게) 이 모두 명확함</p>
+<h3 id="2-few-shot-examples-예시-제공">2) Few-shot examples — 예시 제공<a class="headerlink" href="#2-few-shot-examples-예시-제공" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>"내가 좋아하는 영화 스타일로 오늘 볼 영화를 추천해줘.
+ '인셉션'      -&gt; 복잡한 설정과 반전이 있는 영화
+ '어바웃 타임'  -&gt; 따뜻하고 감동적인 로맨스 영화
+ '극한직업'    -&gt; 생각 없이 웃을 수 있는 코미디 영화
+ '라라랜드'    -&gt; [이 영화의 스타일을 모델이 설명함]"
+</code></pre></div>
+
+<p><strong>좋은 이유</strong>: 예시 3개로 <strong>"영화 → 스타일 설명"이라는 패턴</strong>을 보여줌 → 모델이 따라 함</p>
+<h3 id="3-provide-relevant-context-관련-맥락-제공">3) Provide relevant context — 관련 맥락 제공<a class="headerlink" href="#3-provide-relevant-context-관련-맥락-제공" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>❌ Bad : "부모님 선물로 뭐가 좋을까?"
+
+✅ Good (Context):
+   "우리 부모님은 올해 환갑이셔. 평소에 등산을 아주 좋아하시고 주말마다 산에 가셔.
+    하지만 최근에 무릎이 조금 안 좋으시다고 하셨어. 이런 상황에서 부모님이
+    감동하실 만한 20만원대 선물을 3가지 추천해줘."
+</code></pre></div>
+
+<p><strong>좋은 이유</strong>: <strong>상황 정보</strong>(환갑, 등산 좋아함, 무릎 안 좋음, 예산) → 맞춤형 답 가능</p>
+<h3 id="4-chain-of-thought-cot-단계별-사고-유도">4) Chain of thought (CoT) — 단계별 사고 유도<a class="headerlink" href="#4-chain-of-thought-cot-단계별-사고-유도" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>"편의점에서 1+1 행사를 하는 3,000원짜리 우유를 사는 게 좋을까,
+ 아니면 대형마트에서 900ml 한 팩에 2,500원 하는 우유를 사는 게 좋을까?
+ 우유 100ml당 가격을 비교해서 어느 쪽이 얼마나 더 저렴한지 단계별로 계산해줘."
+</code></pre></div>
+
+<p><strong>좋은 이유</strong>: <strong>"100ml당 가격으로 비교해서 단계별로"</strong> → 풀이 과정을 거치게 해서 정확도 ↑ (<a href="06-prompt-engineering.html">6장</a>)</p>
+<h3 id="5-break-down-complex-tasks-복잡한-과제-쪼개기">5) Break down Complex tasks — 복잡한 과제 쪼개기<a class="headerlink" href="#5-break-down-complex-tasks-복잡한-과제-쪼개기" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>Task를 더 간단한 subtask로 나누어서 각각을 다른 prompt에 넣기</strong></li>
+<li><strong>각 subtask는 전체 task보다 간단하기에 error가 줄어듦</strong></li>
+</ul>
+<div class="codehilite"><pre><span></span><code>Prompt 1                        → SubTask 1
+Prompt 2  + Previous result 1   → SubTask 2
+Prompt 3  + Previous result 2   → SubTask 3
+Prompt 4  + Previous result 3   → SubTask 4
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 보고서 쓰기를 한 번에 시키지 말고 나눠서</strong>
+1. "주제에 대한 자료 정리해줘" → 결과 1
+2. "결과 1을 보고 목차 짜줘" → 결과 2
+3. "결과 2 목차대로 본문 써줘" → 결과 3
+4. "결과 3을 다듬어줘" → 완성</p>
+<p>한 번에 "보고서 써줘"보다 <strong>각 단계가 쉬워서 실수가 줄어듭니다.</strong> 앞 결과를 다음 프롬프트에 넣는 게 포인트.</p>
+</div>
+<p><strong>확장 기법</strong></p>
+<table>
+<thead>
+<tr>
+<th>기법</th>
+<th>생각의 모양</th>
+<th>쉬운 설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CoT</strong> (Chain-of-Thought)</td>
+<td><strong>일직선</strong> ───</td>
+<td>한 갈래로 차례차례</td>
+</tr>
+<tr>
+<td><strong>ToT</strong> (Tree-of-Thought)</td>
+<td><strong>나무</strong> ─┬─</td>
+<td>여러 갈래로 뻗어 보고, <strong>좋은 가지를 골라</strong> 계속</td>
+</tr>
+<tr>
+<td><strong>GoT</strong> (Graph-of-Thoughts)</td>
+<td><strong>그물</strong> ─╳─</td>
+<td>갈래들이 다시 <strong>합쳐지기도</strong> 하는 자유로운 형태</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-2-knowledge-rag">4. ② Knowledge — RAG ★★<a class="headerlink" href="#4-2-knowledge-rag" title="Permanent link">#</a></h2>
+<dl>
+<dt>RAG (Retrieval-Augmented Generation, 검색 증강 생성)</dt>
+<dd><strong>외부 자료에서 질문에 관련된 정보를 찾아와서, 그걸 언어 모델의 입력에 덧붙여 답을 만들게 하는 방식</strong></dd>
+</dl>
+<p><strong>이름 풀이</strong>: <strong>Retrieval</strong>(검색해서) + <strong>Augmented</strong>(보강된) + <strong>Generation</strong>(생성)</p>
+<h3 id="동작-슬라이드">동작 (슬라이드)<a class="headerlink" href="#동작-슬라이드" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>위키피디아와 같은 추가 코퍼스가 존재</strong></li>
+<li><strong>Retriever(BM25, DPR 등)가 질문에 가장 관련 있는 정보를 코퍼스에서 끌어옴</strong></li>
+<li><strong>검색된 정보를 언어 모델의 컨텍스트에 추가하여 답변을 쉽게 생성하도록 함</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 오픈북 시험</strong>
+- RAG 없는 LLM = <strong>클로즈드북 시험</strong>. 외운 것만으로 답해야 함 → 모르면 지어냄 (할루시네이션)
+- RAG 있는 LLM = <strong>오픈북 시험</strong>. 관련 페이지를 <strong>먼저 찾아서 펼쳐 놓고</strong> 답함 → 정확</p>
+<p><strong>Retriever(검색기)</strong> = 관련 자료를 찾아오는 부품
+- <strong>BM25</strong> = 단어가 <strong>겹치는 정도</strong>로 찾는 전통적 방식 (2장 TF-IDF의 친척, sparse)
+- <strong>DPR (Dense Passage Retrieval)</strong> = <strong>의미가 비슷한 걸</strong> 벡터로 찾는 방식 (2장 Dense 표현)</p>
+</div>
+<h3 id="rag-프레임워크-플로우-5단계">RAG 프레임워크 플로우 (5단계) ★<a class="headerlink" href="#rag-프레임워크-플로우-5단계" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code> ① 사용자 ──── Prompt와 Query ────→ [시스템]
+                                       │
+ ② [시스템] ──────── Query ─────────→ [지식 컨텐츠 저장소] (문서, DB)
+                                       │
+ ③ [시스템] ←── 증강된 컨텍스트(관련 정보) ── [지식 컨텐츠 저장소]
+                                       │
+ ④ [시스템] ── Prompt + Query + 증강된 컨텍스트 ──→ [LLM]
+                                       │
+ ⑤ 사용자 ←──── 생성된 텍스트 응답 ──── [시스템]
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①</td>
+<td>사용자가 <strong>질문</strong>을 보냄</td>
+</tr>
+<tr>
+<td>②</td>
+<td>시스템이 질문으로 <strong>자료 저장소를 검색</strong></td>
+</tr>
+<tr>
+<td>③</td>
+<td>저장소가 <strong>관련 정보</strong>를 돌려줌</td>
+</tr>
+<tr>
+<td>④</td>
+<td><strong>질문 + 찾은 정보</strong>를 합쳐서 LLM에 보냄</td>
+</tr>
+<tr>
+<td>⑤</td>
+<td>LLM이 그걸 바탕으로 <strong>답을 생성</strong>해 사용자에게</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Agent 관점 (Google Cloud)</strong></p>
+<div class="codehilite"><pre><span></span><code>Agent ──→ Data Store ──┬──→ Private Docs     (사내 문서 등 비공개 자료)
+                       ├──→ Websites         (웹 페이지)
+                       └──→ Structured Data  (표 형태의 정형 데이터)
+</code></pre></div>
+
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>순서 포인트: 검색이 먼저, 생성이 나중</strong>
+질문을 받자마자 답하는 게 아니라 <strong>① 관련 자료 찾기 → ② 질문에 끼워 넣기 → ③ 생성</strong>.</p>
+<p><strong>RAG가 필요한 이유 (서술형용)</strong>
+- LLM은 <strong>학습 시점 이후의 정보를 모름</strong>
+- 모르는 걸 <strong>그럴듯하게 지어냄 (할루시네이션)</strong>
+- RAG는 <strong>모델을 다시 학습시키지 않고도</strong> 최신·전문 지식을 넣어줄 수 있음
+- (1장 커리큘럼: <strong>"RAG: 검색 기반 생성으로 할루시네이션 방지 및 Agent별 지식 베이스를 생성하고 업데이트"</strong>)</p>
+</div>
+<hr />
+<h2 id="5-3-computation-tool-use">5. ③ Computation — Tool Use ★★<a class="headerlink" href="#5-3-computation-tool-use" title="Permanent link">#</a></h2>
+<dl>
+<dt>Tool Use (도구 사용)</dt>
+<dd><strong>언어 생성의 자연스러운 형식에 특수 토큰을 도입하여 tool calls(도구 호출)를 포함시키는 것</strong></dd>
+</dl>
+<ul>
+<li>예: <strong>계산기, 위키피디아 검색, 날씨 API 호출</strong> 등</li>
+<li><strong>Tool을 통해 언어모델을 다양한 지식, 정보, 심지어 계산 능력으로 augment(증강)할 수 있음</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>"특수 토큰을 도입"이 무슨 뜻?</strong>
+모델이 글을 쓰다가 <strong>"여기서 도구 써!"라는 특별한 표시</strong>를 출력하게 가르치는 겁니다.
+그 표시가 나오면 프로그램이 <strong>진짜 도구를 실행</strong>하고, 결과를 다시 모델에게 넘겨줍니다.</p>
+</div>
+<h3 id="일반-lm-vs-tool-augmented-lm-talm-2022">일반 LM vs Tool Augmented LM (TALM, 2022)<a class="headerlink" href="#일반-lm-vs-tool-augmented-lm-talm-2022" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>[Language Model]
+   input ──→ [LM] ──→ output
+
+[Tool Augmented Language Model]
+   input ──→ [LM] ──→ tool input ──→ (call external tool 🔧) ──→ tool result
+                                                                     ↓
+                                     [LM] ←── (append tool result) ──┘
+                                       ↓
+                                    output
+</code></pre></div>
+
+<p><strong>흐름</strong>: 입력 → 모델이 <strong>도구에 줄 입력</strong>을 만듦 → <strong>외부 도구 호출</strong> → <strong>결과를 붙여서</strong> 다시 모델에 → 최종 출력</p>
+<p><strong>추상적 형식 (슬라이드)</strong></p>
+<div class="codehilite"><pre><span></span><code>An abstract task:
+  task input text |tool-call tool input text |result tool output text |output task output text
+
+A weather task:
+  how hot will it get in NYC today?                         ← 질문
+  |weather lookup region=NYC                                ← 도구 호출 (날씨 조회, 지역=뉴욕)
+  |result precipitation chance: 10, high temp: 20c, low-temp: 12c   ← 도구 결과
+  |output today's high will be 20C                          ← 최종 답
+</code></pre></div>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><code>|</code> 기호로 <strong>질문 / 도구 호출 / 도구 결과 / 최종 답</strong>을 구분합니다. 모델은 이 형식을 배워서 <strong>필요할 때 도구 호출 부분을 스스로 써냅니다.</strong></p>
+</div>
+<h3 id="tool-사용-예시-3가지">Tool 사용 예시 3가지 ★<a class="headerlink" href="#tool-사용-예시-3가지" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>그대로 나오기 좋습니다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>도구</th>
+<th>질문</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>웹 검색 (Web-search)</strong></td>
+<td>"사용자 리뷰를 바탕으로 가장 좋은 카페는 어디야?"</td>
+<td>모델이 <code>{tool: web-search, query: "cafe reviews"}</code> 생성 → 외부 도구가 결과 전달</td>
+</tr>
+<tr>
+<td><strong>날씨 API (Get-weather)</strong></td>
+<td>"샌프란시스코 날씨 어때?"</td>
+<td>모델이 <code>{tool: get-weather, query: "SF"}</code> 생성 → 실시간 날씨 정보 반환</td>
+</tr>
+<tr>
+<td><strong>코드 인터프리터 (Python-interpreter)</strong></td>
+<td>"100달러를 연 7% 복리로 12년 투자하면 최종 금액이 얼마야?"</td>
+<td>모델이 <strong>파이썬 코드 생성 및 실행</strong> → 결과값 도출</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<ul>
+<li><strong>API</strong> = 프로그램끼리 대화하는 창구 (날씨 API에 "SF" 주면 날씨 데이터를 돌려줌)</li>
+<li><strong>코드 인터프리터</strong> = 파이썬 코드를 <strong>실제로 실행해주는</strong> 도구. 복리 계산은 <code>100 * (1.07 ** 12)</code> 를 실행하면 정확히 약 225달러가 나옴
+  (슬라이드엔 <code>100 * (1+0.07)*12</code> 로 적혀 있는데, 복리는 <strong>12제곱</strong>(<code>**12</code>)이 맞습니다. 의도는 "파이썬으로 계산한다"는 것)</li>
+<li><strong>복리</strong> = 이자에 또 이자가 붙는 방식</li>
+</ul>
+</div>
+<h3 id="tool-생성-형식의-문제점">Tool 생성 형식의 문제점 ★<a class="headerlink" href="#tool-생성-형식의-문제점" title="Permanent link">#</a></h3>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>Tool을 사용하기 위한 생성 형식은 인터넷에서 볼 수 있는 일반적인 텍스트와는 매우 다름</strong></p>
+<p>LLM은 <strong>자연스러운 글</strong>(블로그, 뉴스, 책)로 학습했는데, <code>{tool: get-weather, query: "SF"}</code> 같은 <strong>기계적인 형식</strong>은 인터넷에 거의 없습니다. 그래서 <strong>형식을 틀리기 쉽습니다</strong> (괄호 빠뜨리기, 이름 틀리기 등).
+→ 이게 <strong>Structured Output / Function Calling</strong> (5주차 주제)이 필요한 이유입니다.</p>
+</div>
+<h3 id="extension-function을-이용해서-agent와-api를-연동">Extension / Function을 이용해서 Agent와 API를 연동 ★<a class="headerlink" href="#extension-function을-이용해서-agent와-api를-연동" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>┌──────────── Agent ────────────┐
+│  Reasoning Loop               │
+│    [Model]   [Tools]          │
+│                ├── Flights Extension ──→ Flights API
+│                ├── Maps Extension    ──→ Maps API
+│                └── Weather Extension ──→ Weather API
+└───────────────────────────────┘
+</code></pre></div>
+
+<p><strong>두 가지 방식</strong></p>
+<div class="codehilite"><pre><span></span><code>A. Extension (Agent-Side Control)
+   UI / Middleware → Agent → Extension → Google Flights API
+                              └── 에이전트 쪽이 API를 직접 호출
+
+B. Function (Client-Side Control)
+   UI / Middleware → Agent → Function ┐
+                     ↓                │ "이 함수를 이 값으로 불러" 라고만 알려줌
+   UI / Middleware ─────────────────→ Google Flights API
+                     └── 실제 호출은 클라이언트(앱) 쪽이 함
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>방식</th>
+<th>제어 주체</th>
+<th>누가 API를 실제 호출?</th>
+<th>언제 유리?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Extension</strong></td>
+<td><strong>Agent-Side Control</strong></td>
+<td><strong>에이전트</strong>가 직접</td>
+<td>에이전트에게 맡겨도 될 때, 간단할 때</td>
+</tr>
+<tr>
+<td><strong>Function</strong></td>
+<td><strong>Client-Side Control</strong></td>
+<td><strong>클라이언트(앱)</strong> 가</td>
+<td>보안·인증·권한을 <strong>앱이 쥐고 있어야</strong> 할 때</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>비유: 비서에게 항공권 예약 시키기</strong>
+- <strong>Extension</strong> = 비서에게 <strong>내 카드를 주고</strong> "알아서 예약해" → 비서가 직접 결제
+- <strong>Function</strong> = 비서는 <strong>"이 항공편을 이 날짜로 예약하세요"라고 메모만</strong> 써주고, <strong>결제는 내가</strong> 직접</p>
+<p><strong>클라이언트(client)</strong> = 사용자가 쓰는 앱·프로그램 쪽. <strong>Middleware</strong> = 중간에서 연결해주는 소프트웨어.</p>
+</div>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>Extension과 Function의 차이 = 누가 실제로 API를 호출하는가</strong>
+- <strong>Extension</strong>: <strong>Agent-Side Control</strong> — 에이전트가 직접 호출
+- <strong>Function</strong>: <strong>Client-Side Control</strong> — 클라이언트가 호출</p>
+</div>
+<hr />
+<h2 id="이-장-정리">이 장 정리<a class="headerlink" href="#이-장-정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>주제</th>
+<th>핵심</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ReAct</strong></td>
+<td>Reasoning + Acting 둘 다 생성 / <strong>추론은 행동을, 행동은 추론을 도움</strong> / 장점: Synergy, Simple, General</td>
+</tr>
+<tr>
+<td><strong>필요 요건 3가지</strong></td>
+<td><strong>Reasoning</strong> → 프롬프트 기법 / <strong>Knowledge</strong> → RAG / <strong>Computation</strong> → Tool Use</td>
+</tr>
+<tr>
+<td><strong>Reasoning 5방법</strong></td>
+<td>Instructions, Few-shot, Context, CoT, 과제 분해(ToT, GoT)</td>
+</tr>
+<tr>
+<td><strong>RAG</strong></td>
+<td>Retriever(<strong>BM25, DPR</strong>)가 코퍼스에서 찾아 컨텍스트에 추가 / 5단계 플로우</td>
+</tr>
+<tr>
+<td><strong>Tool Use</strong></td>
+<td>특수 토큰으로 tool call / 예: web-search, get-weather, python-interpreter / 문제: 형식이 일반 텍스트와 다름</td>
+</tr>
+<tr>
+<td><strong>Extension vs Function</strong></td>
+<td><strong>Agent-Side</strong> vs <strong>Client-Side</strong> Control</td>
+</tr>
+</tbody>
+</table>
+  <footer class="page-footer"><code>content/isw/08-react-tool.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#이-장의-한-줄-요약">이 장의 한 줄 요약</a></li>
+<li><a href="#1-react">1. ReAct ★★</a><ul>
+<li><a href="#세-가지-방식-비교-슬라이드-그림">세 가지 방식 비교 (슬라이드 그림)</a></li>
+<li><a href="#react의-장점-3가지-슬라이드">ReAct의 장점 3가지 (슬라이드)</a></li>
+<li><a href="#예시로-이해하기">예시로 이해하기</a></li>
+</ul>
+</li>
+<li><a href="#2-agent의-task-수행의-필요-요건-3가지">2. Agent의 task 수행의 필요 요건 3가지 ★★★</a></li>
+<li><a href="#3-1-reasoning-추론을-돕는-5가지-방법">3. ① Reasoning — 추론을 돕는 5가지 방법 ★</a><ul>
+<li><a href="#1-instructions-명확한-지시">1) Instructions — 명확한 지시</a></li>
+<li><a href="#2-few-shot-examples-예시-제공">2) Few-shot examples — 예시 제공</a></li>
+<li><a href="#3-provide-relevant-context-관련-맥락-제공">3) Provide relevant context — 관련 맥락 제공</a></li>
+<li><a href="#4-chain-of-thought-cot-단계별-사고-유도">4) Chain of thought (CoT) — 단계별 사고 유도</a></li>
+<li><a href="#5-break-down-complex-tasks-복잡한-과제-쪼개기">5) Break down Complex tasks — 복잡한 과제 쪼개기</a></li>
+</ul>
+</li>
+<li><a href="#4-2-knowledge-rag">4. ② Knowledge — RAG ★★</a><ul>
+<li><a href="#동작-슬라이드">동작 (슬라이드)</a></li>
+<li><a href="#rag-프레임워크-플로우-5단계">RAG 프레임워크 플로우 (5단계) ★</a></li>
+</ul>
+</li>
+<li><a href="#5-3-computation-tool-use">5. ③ Computation — Tool Use ★★</a><ul>
+<li><a href="#일반-lm-vs-tool-augmented-lm-talm-2022">일반 LM vs Tool Augmented LM (TALM, 2022)</a></li>
+<li><a href="#tool-사용-예시-3가지">Tool 사용 예시 3가지 ★</a></li>
+<li><a href="#tool-생성-형식의-문제점">Tool 생성 형식의 문제점 ★</a></li>
+<li><a href="#extension-function을-이용해서-agent와-api를-연동">Extension / Function을 이용해서 Agent와 API를 연동 ★</a></li>
+</ul>
+</li>
+<li><a href="#이-장-정리">이 장 정리</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

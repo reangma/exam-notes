@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6. CUDA 스레드 계층 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="06-cuda-thread-hierarchy.html" class="active">6. CUDA 스레드 계층</a></li>
+<li><a href="07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="6-cuda-스레드-계층">6. CUDA 스레드 계층<a class="headerlink" href="#6-cuda-스레드-계층" title="Permanent link">#</a></h1>
+<h2 id="스레드-계층-구조-thread-hierarchy">스레드 계층 구조 (thread hierarchy)<a class="headerlink" href="#스레드-계층-구조-thread-hierarchy" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>계층 구조와 각 계층을 처리하는 하드웨어의 대응</strong>이 핵심.</p>
+<table>
+<thead>
+<tr>
+<th>소프트웨어 계층</th>
+<th>처리하는 하드웨어</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>스레드(thread)</strong></td>
+<td><strong>CUDA core</strong></td>
+</tr>
+<tr>
+<td><strong>블록(block)</strong></td>
+<td><strong>Streaming Multiprocessor (SM)</strong></td>
+</tr>
+<tr>
+<td><strong>그리드(grid)</strong></td>
+<td><strong>GPU (device)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>계층 구성: <strong>스레드(thread) → 워프(warp) → 블록(block) → 그리드(grid)</strong></p>
+<p>커널이 호출되면 스레드·블록·그리드가 생성되고, <strong>블록 내의 스레드들은 워프(연속된 32개의 스레드) 단위로 실행</strong>된다.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 740 320" role="img" aria-label="그리드는 블록들의 집합이고 블록은 스레드들의 집합이며, 그리드는 GPU가, 블록은 SM이, 스레드는 CUDA 코어가 처리한다">
+  <defs>
+    <marker id="hier-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+
+  <text x="170" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">Grid (그리드)</text>
+  <rect x="20" y="36" width="300" height="200" rx="8" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
+
+  <rect x="34"  y="50"  width="83" height="80" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="128" y="50"  width="83" height="80" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="222" y="50"  width="83" height="80" rx="4" fill="var(--accent)" fill-opacity="0.14" stroke="var(--accent)" stroke-width="2"/>
+  <rect x="34"  y="141" width="83" height="80" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="128" y="141" width="83" height="80" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="222" y="141" width="83" height="80" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+
+  <text x="75"  y="94"  text-anchor="middle" font-size="12" fill="currentColor">Block</text>
+  <text x="169" y="94"  text-anchor="middle" font-size="12" fill="currentColor">Block</text>
+  <text x="263" y="94"  text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent)">Block</text>
+  <text x="75"  y="185" text-anchor="middle" font-size="12" fill="currentColor">Block</text>
+  <text x="169" y="185" text-anchor="middle" font-size="12" fill="currentColor">Block</text>
+  <text x="263" y="185" text-anchor="middle" font-size="12" fill="currentColor">Block</text>
+
+  <line x1="307" y1="90" x2="412" y2="90" stroke="currentColor" stroke-width="1.5" marker-end="url(#hier-arrow)"/>
+  <text x="359" y="80" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.75">블록 1개 확대</text>
+
+  <text x="570" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">Block (블록) 내부</text>
+  <rect x="420" y="36" width="300" height="200" rx="8" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
+
+  <rect x="434" y="50"  width="60" height="50" rx="3" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="504" y="50"  width="60" height="50" rx="3" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="574" y="50"  width="60" height="50" rx="3" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="644" y="50"  width="60" height="50" rx="3" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="434" y="111" width="60" height="50" rx="3" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="504" y="111" width="60" height="50" rx="3" fill="var(--accent)" fill-opacity="0.14" stroke="var(--accent)" stroke-width="2"/>
+  <rect x="574" y="111" width="60" height="50" rx="3" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="644" y="111" width="60" height="50" rx="3" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="434" y="172" width="60" height="50" rx="3" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="504" y="172" width="60" height="50" rx="3" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="574" y="172" width="60" height="50" rx="3" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+  <rect x="644" y="172" width="60" height="50" rx="3" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45"/>
+
+  <text x="464" y="80"  text-anchor="middle" font-size="11" fill="currentColor">스레드</text>
+  <text x="534" y="80"  text-anchor="middle" font-size="11" fill="currentColor">스레드</text>
+  <text x="604" y="80"  text-anchor="middle" font-size="11" fill="currentColor">스레드</text>
+  <text x="674" y="80"  text-anchor="middle" font-size="11" fill="currentColor">스레드</text>
+  <text x="464" y="141" text-anchor="middle" font-size="11" fill="currentColor">스레드</text>
+  <text x="534" y="141" text-anchor="middle" font-size="11" font-weight="700" fill="var(--accent)">스레드</text>
+  <text x="604" y="141" text-anchor="middle" font-size="11" fill="currentColor">스레드</text>
+  <text x="674" y="141" text-anchor="middle" font-size="11" fill="currentColor">스레드</text>
+  <text x="464" y="202" text-anchor="middle" font-size="11" fill="currentColor">스레드</text>
+  <text x="534" y="202" text-anchor="middle" font-size="11" fill="currentColor">스레드</text>
+  <text x="604" y="202" text-anchor="middle" font-size="11" fill="currentColor">스레드</text>
+  <text x="674" y="202" text-anchor="middle" font-size="11" fill="currentColor">스레드</text>
+
+  <text x="170" y="258" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">블록들의 집합</text>
+  <text x="570" y="258" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">스레드들의 집합</text>
+  <text x="170" y="280" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity="0.75">GPU (device) 가 처리</text>
+  <text x="570" y="280" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity="0.75">SM (Streaming Multiprocessor) 가 처리</text>
+  <text x="170" y="302" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity="0.75">커널 호출 1번 = 그리드 1개</text>
+  <text x="570" y="302" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity="0.75">스레드 1개 = CUDA core 1개가 처리</text>
+</svg>
+<figcaption>
+그리드 안에 블록이, 블록 안에 스레드가 들어 있는 <strong>3단 포함 관계</strong>다. 각 계층을 처리하는 하드웨어가 하나씩 대응된다 — 그리드는 GPU 전체, 블록 하나는 SM 하나, 스레드 하나는 CUDA 코어 하나. 커널을 한 번 호출하면 이 구조 전체가 한 세트 생성된다.
+</figcaption>
+</figure>
+
+<hr />
+<h2 id="스레드-thread">스레드 (thread)<a class="headerlink" href="#스레드-thread" title="Permanent link">#</a></h2>
+<ul>
+<li>각 스레드는 <strong>하나의 CUDA 코어</strong>를 사용하여 <strong>독립적으로 커널 수행</strong></li>
+<li>코어는 스레드 간의 <strong>문맥 교환(context switching)</strong> 을 통해 여러 스레드를 처리
+  → 여러 스레드가 동시에 실행되는 것처럼 보임</li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>CUDA 스레드 vs CPU 스레드 — 문맥 교환 overhead 차이</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>CUDA(GPU) 스레드</strong></th>
+<th><strong>CPU 스레드</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>레지스터</td>
+<td><strong>자신만의 레지스터를 사용</strong></td>
+<td><strong>자신만의 레지스터를 갖지 않음</strong></td>
+</tr>
+<tr>
+<td>문맥 교환 overhead</td>
+<td><strong>없음</strong></td>
+<td><strong>큼</strong></td>
+</tr>
+<tr>
+<td>결론</td>
+<td><strong>코어 수보다 많은 스레드를 써도 성능 저하가 거의 없음</strong></td>
+<td><strong>코어 수보다 많은 스레드를 쓰면 성능 저하가 큼</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="워프-warp">워프 (warp)<a class="headerlink" href="#워프-warp" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>연속된 32개의 스레드</strong>로 구성됨</li>
+<li><strong>SIMT (Single Instruction Multiple Thread)</strong>: 하나의 명령어를 통해 <strong>연속된 32개의 스레드(워프)</strong> 가 여러 데이터를 동시에 처리</li>
+</ul>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>스레드의 연속성은 <code>blockDim.x</code> → <code>blockDim.y</code> → <code>blockDim.z</code> 차원 순으로 결정된다.</strong></p>
+<table>
+<thead>
+<tr>
+<th>조건</th>
+<th>하나의 워프를 구성하는 스레드</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>blockDim.x ≥ 32</code> 이고 <code>blockDim.y ≥ 32</code></td>
+<td><strong>(0,0,0) ~ (31,0,0)</strong></td>
+</tr>
+<tr>
+<td><code>blockDim.x = 1</code> 이고 <code>blockDim.y ≥ 32</code></td>
+<td><strong>(0,0,0) ~ (0,31,0)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>즉 <strong>x축을 먼저 다 채우고 y축으로 넘어간다.</strong></p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 740 300" role="img" aria-label="블록 안의 스레드는 threadIdx.x 방향으로 먼저 번호가 매겨지고, x축을 다 채운 뒤 threadIdx.y 방향으로 넘어간다. 연속된 32개가 워프 하나를 이룬다">
+  <defs>
+    <marker id="warp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+
+  <text x="340" y="18" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">blockDim = (8, 4, 1) — 블록 안의 스레드 32개</text>
+
+  <line x1="80" y1="38" x2="600" y2="38" stroke="currentColor" stroke-width="1.5" marker-end="url(#warp-arrow)"/>
+  <text x="341" y="32" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.75">threadIdx.x 증가</text>
+  <line x1="46" y1="66" x2="46" y2="242" stroke="currentColor" stroke-width="1.5" marker-end="url(#warp-arrow)"/>
+  <text transform="rotate(-90 28 155)" x="28" y="155" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.75">threadIdx.y 증가</text>
+
+  <rect x="60" y="46" width="562" height="218" rx="8" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
+
+  <g fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45">
+    <rect x="80"  y="66" width="60" height="40" rx="3"/><rect x="146" y="66" width="60" height="40" rx="3"/>
+    <rect x="212" y="66" width="60" height="40" rx="3"/><rect x="278" y="66" width="60" height="40" rx="3"/>
+    <rect x="344" y="66" width="60" height="40" rx="3"/><rect x="410" y="66" width="60" height="40" rx="3"/>
+    <rect x="476" y="66" width="60" height="40" rx="3"/><rect x="542" y="66" width="60" height="40" rx="3"/>
+    <rect x="80"  y="112" width="60" height="40" rx="3"/><rect x="146" y="112" width="60" height="40" rx="3"/>
+    <rect x="212" y="112" width="60" height="40" rx="3"/><rect x="278" y="112" width="60" height="40" rx="3"/>
+    <rect x="344" y="112" width="60" height="40" rx="3"/><rect x="410" y="112" width="60" height="40" rx="3"/>
+    <rect x="476" y="112" width="60" height="40" rx="3"/><rect x="542" y="112" width="60" height="40" rx="3"/>
+    <rect x="80"  y="158" width="60" height="40" rx="3"/><rect x="146" y="158" width="60" height="40" rx="3"/>
+    <rect x="212" y="158" width="60" height="40" rx="3"/><rect x="278" y="158" width="60" height="40" rx="3"/>
+    <rect x="344" y="158" width="60" height="40" rx="3"/><rect x="410" y="158" width="60" height="40" rx="3"/>
+    <rect x="476" y="158" width="60" height="40" rx="3"/><rect x="542" y="158" width="60" height="40" rx="3"/>
+    <rect x="80"  y="204" width="60" height="40" rx="3"/><rect x="146" y="204" width="60" height="40" rx="3"/>
+    <rect x="212" y="204" width="60" height="40" rx="3"/><rect x="278" y="204" width="60" height="40" rx="3"/>
+    <rect x="344" y="204" width="60" height="40" rx="3"/><rect x="410" y="204" width="60" height="40" rx="3"/>
+    <rect x="476" y="204" width="60" height="40" rx="3"/><rect x="542" y="204" width="60" height="40" rx="3"/>
+  </g>
+
+  <g text-anchor="middle" font-size="12" fill="currentColor">
+    <text x="110" y="91">0</text><text x="176" y="91">1</text><text x="242" y="91">2</text><text x="308" y="91">3</text>
+    <text x="374" y="91">4</text><text x="440" y="91">5</text><text x="506" y="91">6</text><text x="572" y="91">7</text>
+    <text x="110" y="137">8</text><text x="176" y="137">9</text><text x="242" y="137">10</text><text x="308" y="137">11</text>
+    <text x="374" y="137">12</text><text x="440" y="137">13</text><text x="506" y="137">14</text><text x="572" y="137">15</text>
+    <text x="110" y="183">16</text><text x="176" y="183">17</text><text x="242" y="183">18</text><text x="308" y="183">19</text>
+    <text x="374" y="183">20</text><text x="440" y="183">21</text><text x="506" y="183">22</text><text x="572" y="183">23</text>
+    <text x="110" y="229">24</text><text x="176" y="229">25</text><text x="242" y="229">26</text><text x="308" y="229">27</text>
+    <text x="374" y="229">28</text><text x="440" y="229">29</text><text x="506" y="229">30</text><text x="572" y="229">31</text>
+  </g>
+
+  <path d="M626,66 H636 V244 H626" fill="none" stroke="var(--accent)" stroke-width="2"/>
+  <text x="648" y="148" font-size="12" font-weight="700" fill="var(--accent)">연속된 32개</text>
+  <text x="648" y="166" font-size="12" font-weight="700" fill="var(--accent)">= 워프 1개</text>
+
+  <text x="340" y="288" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity="0.75">blockDim.x = 1 이면 x축에 1개뿐이므로 y축으로 32개 → (0,0,0) ~ (0,31,0) 이 한 워프</text>
+</svg>
+<figcaption>
+스레드 번호는 <strong>x축을 끝까지 채운 뒤 y축으로, 그 다음 z축으로</strong> 이어진다. 이 순서로 셌을 때 <strong>연속된 32개</strong>가 워프 하나다. 그래서 같은 32개 스레드라도 블록 모양에 따라 어느 스레드들이 한 워프가 되는지가 달라진다.
+</figcaption>
+</figure>
+
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>비교: <strong>CPU의 SIMD</strong>는 하나의 명령어로 <strong>전용 레지스터에 있는 여러 데이터(벡터)</strong> 를 동시에 처리한다.
+→ <a href="03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a>의 SIMT vs SIMD 표 참고</p>
+</div>
+<hr />
+<h2 id="블록-block">블록 (block)<a class="headerlink" href="#블록-block" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>스레드들의 집합</strong></li>
+<li><strong>최대 3차원</strong>까지 표현 가능</li>
+<li><strong>Streaming Multiprocessor(SM)</strong> 에 의해 처리됨</li>
+<li>SM 내부의 <strong>워프 스케줄러</strong>에 의해 블록 내의 스레드들이 <strong>워프 단위로 실행</strong>됨</li>
+</ul>
+<h2 id="그리드-grid">그리드 (grid)<a class="headerlink" href="#그리드-grid" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>블록들의 집합</strong></li>
+<li><strong>최대 3차원</strong>까지 표현 가능</li>
+<li><strong>GPU(device)</strong> 에 의해 처리됨</li>
+</ul>
+<hr />
+<h2 id="스레드-계층-표현을-위한-내장-변수">스레드 계층 표현을 위한 내장 변수<a class="headerlink" href="#스레드-계층-표현을-위한-내장-변수" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>4개 내장 변수의 의미를 정확히 구분할 것.</strong> 이름이 비슷해서 가장 많이 틀린다.</p>
+<table>
+<thead>
+<tr>
+<th>변수</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>gridDim</code></strong></td>
+<td><strong>그리드 내의 각 차원에 대한 블록 수</strong></td>
+</tr>
+<tr>
+<td><strong><code>blockIdx</code></strong></td>
+<td><strong>그리드 내의 블록 번호(인덱스)</strong></td>
+</tr>
+<tr>
+<td><strong><code>blockDim</code></strong></td>
+<td><strong>블록 내의 각 차원에 대한 스레드 수</strong></td>
+</tr>
+<tr>
+<td><strong><code>threadIdx</code></strong></td>
+<td><strong>블록 내의 스레드 번호(인덱스)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>외우는 법: <strong><code>Dim</code>은 개수(크기), <code>Idx</code>는 번호.</strong> <strong><code>grid-</code>는 블록에 대한 것, <code>block-</code>은 스레드에 대한 것.</strong></p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 740 310" role="img" aria-label="gridDim은 그리드 안의 블록 개수이고 blockIdx는 그 블록의 번호이며, blockDim은 블록 안의 스레드 개수이고 threadIdx는 그 스레드의 번호다">
+  <text x="170" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">gridDim = (3, 2, 1)</text>
+  <text x="170" y="38" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.75">각 칸 = 블록 1개, 칸 안의 숫자 = blockIdx (x, y)</text>
+  <rect x="20" y="50" width="300" height="170" rx="8" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
+
+  <g fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45">
+    <rect x="34"  y="64"  width="83" height="65" rx="4"/>
+    <rect x="128" y="64"  width="83" height="65" rx="4"/>
+    <rect x="222" y="64"  width="83" height="65" rx="4"/>
+    <rect x="34"  y="140" width="83" height="65" rx="4"/>
+    <rect x="128" y="140" width="83" height="65" rx="4"/>
+  </g>
+  <rect x="222" y="140" width="83" height="65" rx="4" fill="var(--accent)" fill-opacity="0.14" stroke="var(--accent)" stroke-width="2"/>
+
+  <g text-anchor="middle" font-size="13" fill="currentColor">
+    <text x="75"  y="101">(0, 0)</text><text x="169" y="101">(1, 0)</text><text x="263" y="101">(2, 0)</text>
+    <text x="75"  y="177">(0, 1)</text><text x="169" y="177">(1, 1)</text>
+  </g>
+  <text x="263" y="177" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)">(2, 1)</text>
+
+  <line x1="370" y1="50" x2="370" y2="220" stroke="currentColor" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="5 5"/>
+
+  <text x="570" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">blockDim = (4, 3, 1)</text>
+  <text x="570" y="38" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.75">각 칸 = 스레드 1개, 칸 안의 숫자 = threadIdx (x, y)</text>
+  <rect x="420" y="50" width="300" height="170" rx="8" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
+
+  <g fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.45">
+    <rect x="434" y="64"  width="60" height="40" rx="3"/><rect x="504" y="64"  width="60" height="40" rx="3"/>
+    <rect x="574" y="64"  width="60" height="40" rx="3"/><rect x="644" y="64"  width="60" height="40" rx="3"/>
+    <rect x="434" y="114" width="60" height="40" rx="3"/><rect x="504" y="114" width="60" height="40" rx="3"/>
+    <rect x="574" y="114" width="60" height="40" rx="3"/><rect x="644" y="114" width="60" height="40" rx="3"/>
+    <rect x="434" y="164" width="60" height="40" rx="3"/><rect x="504" y="164" width="60" height="40" rx="3"/>
+    <rect x="644" y="164" width="60" height="40" rx="3"/>
+  </g>
+  <rect x="574" y="164" width="60" height="40" rx="3" fill="var(--accent)" fill-opacity="0.14" stroke="var(--accent)" stroke-width="2"/>
+
+  <g text-anchor="middle" font-size="12" fill="currentColor">
+    <text x="464" y="88">(0, 0)</text><text x="534" y="88">(1, 0)</text><text x="604" y="88">(2, 0)</text><text x="674" y="88">(3, 0)</text>
+    <text x="464" y="138">(0, 1)</text><text x="534" y="138">(1, 1)</text><text x="604" y="138">(2, 1)</text><text x="674" y="138">(3, 1)</text>
+    <text x="464" y="188">(0, 2)</text><text x="534" y="188">(1, 2)</text><text x="674" y="188">(3, 2)</text>
+  </g>
+  <text x="604" y="188" text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent)">(2, 2)</text>
+
+  <text x="170" y="248" text-anchor="middle" font-size="12.5" fill="currentColor"><tspan font-weight="700">gridDim</tspan> = 블록이 몇 개인가 (3 × 2 = 6개)</text>
+  <text x="570" y="248" text-anchor="middle" font-size="12.5" fill="currentColor"><tspan font-weight="700">blockDim</tspan> = 스레드가 몇 개인가 (4 × 3 = 12개)</text>
+  <text x="170" y="270" text-anchor="middle" font-size="12.5" fill="var(--accent)"><tspan font-weight="700">blockIdx</tspan> = 그 블록이 몇 번인가</text>
+  <text x="570" y="270" text-anchor="middle" font-size="12.5" fill="var(--accent)"><tspan font-weight="700">threadIdx</tspan> = 그 스레드가 몇 번인가</text>
+
+  <text x="370" y="298" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity="0.8">상자의 크기 = Dim · 칸의 이름 = Idx  /  grid- 는 블록을, block- 은 스레드를 가리킨다</text>
+</svg>
+<figcaption>
+왼쪽은 <strong>그리드를 블록 단위로</strong> 쪼갠 것, 오른쪽은 <strong>블록 하나를 스레드 단위로</strong> 쪼갠 것이다. 두 그림의 생김새가 똑같다는 점이 핵심 — 같은 "상자와 칸" 구조가 한 계층 아래에서 반복될 뿐이다. 그래서 변수도 네 개가 아니라 <strong>(개수, 번호) 두 쌍</strong>이다.
+</figcaption>
+</figure>
+
+<h3 id="griddim">gridDim<a class="headerlink" href="#griddim" title="Permanent link">#</a></h3>
+<p>그리드의 <strong>차원 크기 정보</strong>를 포함하는 구조체. <code>gridDim.x</code>, <code>gridDim.y</code>, <code>gridDim.z</code></p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>최대값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>gridDim.x</code></strong></td>
+<td><strong>2³¹ − 1</strong> (거의 무제한)</td>
+</tr>
+<tr>
+<td><strong><code>gridDim.y</code>, <code>gridDim.z</code></strong></td>
+<td><strong>65535</strong></td>
+</tr>
+</tbody>
+</table>
+<p>예: <code>gridDim = (3,2,1)</code> → 한 그리드 내에 <strong>6개의 블록</strong></p>
+<h3 id="blockdim">blockDim<a class="headerlink" href="#blockdim" title="Permanent link">#</a></h3>
+<p>블록의 <strong>차원 크기 정보</strong>를 포함하는 구조체. <code>blockDim.x</code>, <code>blockDim.y</code>, <code>blockDim.z</code></p>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>최대값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>blockDim.x</code>, <code>blockDim.y</code></strong></td>
+<td><strong>1024</strong></td>
+</tr>
+<tr>
+<td><strong><code>blockDim.z</code></strong></td>
+<td><strong>64</strong></td>
+</tr>
+<tr>
+<td><strong>한 블록 내의 최대 스레드 수</strong></td>
+<td><strong>1024</strong> (<code>blockDim.x × blockDim.y × blockDim.z ≤ 1024</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>블록당 스레드 수를 너무 작거나 크게 설정하면 CUDA 프로그램 성능 저하를 초래</strong>한다.</p>
+</div>
+<p>예: <code>blockDim = (4,3,1)</code> → 한 블록 내에 <strong>12개의 스레드</strong></p>
+<h3 id="blockidx-threadidx">blockIdx / threadIdx<a class="headerlink" href="#blockidx-threadidx" title="Permanent link">#</a></h3>
+<ul>
+<li><strong><code>blockIdx</code></strong>: 그리드 내의 블록 번호. <code>blockIdx.x</code>, <code>blockIdx.y</code>, <code>blockIdx.z</code></li>
+<li><strong><code>threadIdx</code></strong>: 블록 내의 스레드 번호. <code>threadIdx.x</code>, <code>threadIdx.y</code>, <code>threadIdx.z</code></li>
+</ul>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p><strong>서로 다른 블록에서 동일한 <code>threadIdx</code>가 존재한다.</strong>
+<code>threadIdx</code>는 <strong>블록 내에서만</strong> 유일한 번호이므로, 전체 데이터를 다루려면 <strong>전역 번호(global ID)</strong> 를 따로 계산해야 한다.
+→ <a href="07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></p>
+</div>
+<hr />
+<h2 id="compute-capability-상의-제약-정리">Compute capability 상의 제약 정리<a class="headerlink" href="#compute-capability-상의-제약-정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Maximum dimensionality of grid of thread blocks</td>
+<td><strong>3</strong></td>
+</tr>
+<tr>
+<td>Maximum <strong>x</strong>-dimension of a grid of thread blocks</td>
+<td><strong>2³¹ − 1</strong></td>
+</tr>
+<tr>
+<td>Maximum <strong>y-</strong> or <strong>z</strong>-dimension of a grid of thread blocks</td>
+<td><strong>65535</strong></td>
+</tr>
+<tr>
+<td>Maximum dimensionality of thread block</td>
+<td><strong>3</strong></td>
+</tr>
+<tr>
+<td>Maximum <strong>x-</strong> or <strong>y</strong>-dimension of a block</td>
+<td><strong>1024</strong></td>
+</tr>
+<tr>
+<td>Maximum <strong>z</strong>-dimension of a block</td>
+<td><strong>64</strong></td>
+</tr>
+<tr>
+<td><strong>Maximum number of threads per block</strong></td>
+<td><strong>1024</strong></td>
+</tr>
+<tr>
+<td><strong>Warp size</strong></td>
+<td><strong>32</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="cuda-스레드-레이아웃-thread-layout">CUDA 스레드 레이아웃 (thread layout)<a class="headerlink" href="#cuda-스레드-레이아웃-thread-layout" title="Permanent link">#</a></h2>
+<p><strong>스레드 레이아웃</strong>: <strong>스레드 배치 형태</strong>를 정의한 것</p>
+<ul>
+<li>커널의 <strong>성능 특성과 GPU 자원(레지스터와 공유 메모리)</strong> 등을 고려하여 정해야 함</li>
+<li>커널 호출 시 <strong>그리드 차원 크기</strong>(그리드 내의 블록 수)와 <strong>블록 차원 크기</strong>(블록 내의 스레드 수)로 설정</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>kernel &lt;&lt;&lt; 그리드 차원 크기, 블록 차원 크기 &gt;&gt;&gt; ();
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>호출</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kernel &lt;&lt;&lt; 1, n &gt;&gt;&gt; ();</code></td>
+<td><strong>1개의 블록</strong>과 <strong>n개의 스레드</strong> 생성</td>
+</tr>
+<tr>
+<td><code>kernel &lt;&lt;&lt; n, m &gt;&gt;&gt; ();</code></td>
+<td><strong>n개의 블록</strong>과 (블록당) <strong>m개의 스레드</strong> 생성</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dim3-자료형">dim3 자료형<a class="headerlink" href="#dim3-자료형" title="Permanent link">#</a></h3>
+<p><strong><code>dim3</code></strong>: CUDA에서 제공하는 자료형으로 3차원 크기를 설정</p>
+<div class="codehilite"><pre><span></span><code><span class="n">dim3</span><span class="w"> </span><span class="nf">dimGrid</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">dim3</span><span class="w"> </span><span class="nf">dimBlock</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="n">kernel</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="n">dimGrid</span><span class="p">,</span><span class="w"> </span><span class="n">dimBlock</span><span class="w"> </span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">();</span>
+<span class="c1">// 3 x 2 개의 블록, 각 블록에 6 x 4 x 2 개의 스레드 생성</span>
+</code></pre></div>
+
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>차원 크기가 1이면 생략 가능</strong>하다.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">dim3</span><span class="w"> </span><span class="nf">dimGrid</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span><span class="w">     </span><span class="c1">// dim3 dimGrid(4,1,1); 과 동일</span>
+<span class="n">dim3</span><span class="w"> </span><span class="nf">dimBlock</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span><span class="w">    </span><span class="c1">// dim3 dimBlock(8,1,1); 과 동일</span>
+<span class="n">kernel</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="n">dimGrid</span><span class="p">,</span><span class="w"> </span><span class="n">dimBlock</span><span class="w"> </span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">();</span>
+</code></pre></div>
+
+<p>그리고 <code>kernel &lt;&lt;&lt; dimGrid, dimBlock &gt;&gt;&gt;</code> 는 <code>kernel &lt;&lt;&lt; 4, 8 &gt;&gt;&gt;</code> 와 동일하다.</p>
+</div>
+<hr />
+<h2 id="내장-변수-확인-예제-lec04-01cu">내장 변수 확인 예제 (lec04_01.cu)<a class="headerlink" href="#내장-변수-확인-예제-lec04-01cu" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"cuda_runtime.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"device_launch_parameters.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+
+<span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">checkIndex</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"gridDim:(%d, %d, %d) blockDim:(%d, %d, %d) "</span>
+<span class="w">           </span><span class="s">"blockIdx:(%d, %d, %d) threadIdx:(%d, %d, %d)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+<span class="w">           </span><span class="n">gridDim</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w">  </span><span class="n">gridDim</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w">  </span><span class="n">gridDim</span><span class="p">.</span><span class="n">z</span><span class="p">,</span>
+<span class="w">           </span><span class="n">blockDim</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">blockDim</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">blockDim</span><span class="p">.</span><span class="n">z</span><span class="p">,</span>
+<span class="w">           </span><span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">blockIdx</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">blockIdx</span><span class="p">.</span><span class="n">z</span><span class="p">,</span>
+<span class="w">           </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">dim3</span><span class="w"> </span><span class="nf">dimGrid</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">                      </span><span class="c1">// dim3 dimGrid(2); 와 동일</span>
+<span class="w">    </span><span class="n">dim3</span><span class="w"> </span><span class="nf">dimBlock</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">                     </span><span class="c1">// dim3 dimBlock(3); 와 동일</span>
+
+<span class="w">    </span><span class="n">checkIndex</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="n">dimGrid</span><span class="p">,</span><span class="w"> </span><span class="n">dimBlock</span><span class="w"> </span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">();</span><span class="w">    </span><span class="c1">// checkIndex &lt;&lt;&lt; 2, 3 &gt;&gt;&gt; (); 와 동일</span>
+<span class="w">    </span><span class="n">cudaDeviceSynchronize</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="실행-결과">실행 결과<a class="headerlink" href="#실행-결과" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>gridDim:(2, 1, 1) blockDim:(3, 1, 1) blockIdx:(1, 0, 0) threadIdx:(0, 0, 0)
+gridDim:(2, 1, 1) blockDim:(3, 1, 1) blockIdx:(1, 0, 0) threadIdx:(1, 0, 0)
+gridDim:(2, 1, 1) blockDim:(3, 1, 1) blockIdx:(1, 0, 0) threadIdx:(2, 0, 0)
+gridDim:(2, 1, 1) blockDim:(3, 1, 1) blockIdx:(0, 0, 0) threadIdx:(0, 0, 0)
+gridDim:(2, 1, 1) blockDim:(3, 1, 1) blockIdx:(0, 0, 0) threadIdx:(1, 0, 0)
+gridDim:(2, 1, 1) blockDim:(3, 1, 1) blockIdx:(0, 0, 0) threadIdx:(2, 0, 0)
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>이 출력에서 읽어야 할 두 가지</p>
+<ol>
+<li><strong>서로 다른 블록(<code>blockIdx</code> 0과 1)에서 동일한 <code>threadIdx</code>(0,1,2)가 존재</strong>한다.</li>
+<li><strong>블록의 실행 순서는 보장되지 않는다.</strong> (블록 1이 블록 0보다 먼저 출력됨)</li>
+</ol>
+</div>
+  <footer class="page-footer"><code>content/hpc/06-cuda-thread-hierarchy.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#스레드-계층-구조-thread-hierarchy">스레드 계층 구조 (thread hierarchy)</a></li>
+<li><a href="#스레드-thread">스레드 (thread)</a></li>
+<li><a href="#워프-warp">워프 (warp)</a></li>
+<li><a href="#블록-block">블록 (block)</a></li>
+<li><a href="#그리드-grid">그리드 (grid)</a></li>
+<li><a href="#스레드-계층-표현을-위한-내장-변수">스레드 계층 표현을 위한 내장 변수</a><ul>
+<li><a href="#griddim">gridDim</a></li>
+<li><a href="#blockdim">blockDim</a></li>
+<li><a href="#blockidx-threadidx">blockIdx / threadIdx</a></li>
+</ul>
+</li>
+<li><a href="#compute-capability-상의-제약-정리">Compute capability 상의 제약 정리</a></li>
+<li><a href="#cuda-스레드-레이아웃-thread-layout">CUDA 스레드 레이아웃 (thread layout)</a><ul>
+<li><a href="#dim3-자료형">dim3 자료형</a></li>
+</ul>
+</li>
+<li><a href="#내장-변수-확인-예제-lec04-01cu">내장 변수 확인 예제 (lec04_01.cu)</a><ul>
+<li><a href="#실행-결과">실행 결과</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

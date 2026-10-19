@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1. 사회언어학과 지금 우리 시대의 대화 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">언어와 사회</a>
+<ul>
+<li><a href="01-sociolinguistics.html" class="active">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="1-사회언어학과-지금-우리-시대의-대화">1. 사회언어학과 지금 우리 시대의 대화<a class="headerlink" href="#1-사회언어학과-지금-우리-시대의-대화" title="Permanent link">#</a></h1>
+<p>2주차 「'언어와 사회' 시작합니다」. 앞부분은 <strong>사회언어학이라는 학문의 정의</strong>, 뒷부분은 <strong>지금 시대에 대화가 어떻게 망가지고 있는지</strong>(맥커뮤니케이션·보이스피싱·AI 대화) 세 가지 사례입니다.</p>
+<p><strong>수업 목표</strong>
+- 사회언어학의 개념과 연구 목표, 대상, 방법론을 이해한다
+- 인간 사회를 살아가는 데 있어서 언어 사용의 중요성을 안다
+- 사람다운 대화, 대화다운 대화에 대해 생각해 본다</p>
+<hr />
+<h2 id="1-사회언어학의-개념과-연구-대상">1. 사회언어학의 개념과 연구 대상 ★<a class="headerlink" href="#1-사회언어학의-개념과-연구-대상" title="Permanent link">#</a></h2>
+<dl>
+<dt>사회언어학 (sociolinguistics)</dt>
+<dd><strong>언어와 사회의 상호작용을 연구하는 학문 분야</strong></dd>
+</dl>
+<ul>
+<li>사회언어학은 <strong>언어의 본성</strong>을 연구하는 분야</li>
+<li>언어는 의사소통 체계를 넘어 <strong>사회적 요인에 따라 변화하고 기능</strong>함</li>
+<li>언어는 인간의 복잡한 의사소통 및 사고와 관련된 문제들을 탐구하는 핵심 요소</li>
+<li>(질문) 언어가 없으면 인류에게 문화와 역사가 있었을까?</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>연구 대상</strong></td>
+<td><strong>언어의 내부 변이와 언어 변화</strong>, <strong>다양한 사회적 요인과 언어의 상호작용</strong></td>
+</tr>
+<tr>
+<td><strong>학문적 관점</strong></td>
+<td>언어를 <strong>독립적 개체가 아닌 사회적 맥락 속에서 실현되는 양상</strong>으로 파악</td>
+</tr>
+<tr>
+<td><strong>학제적 성격</strong></td>
+<td><strong>이론 언어학과 응용 언어학의 교차점</strong>에 위치. 음운론·형태론·통사론 등 <strong>언어학</strong> + 사회학·인류학 등 <strong>사회과학</strong>이 결합된 학제적 연구 분야</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>"사회언어학의 연구 대상은?"</strong> (교수님 예고 질문 1번)
+→ <strong>언어의 내부 변이와 언어 변화, 다양한 사회적 요인과 언어의 상호작용</strong>
+관점은 "언어 = 독립적 개체 ✗ / <strong>사회적 맥락 속에서 실현되는 양상</strong> ○"</p>
+</div>
+<hr />
+<h2 id="2-언어-변이의-사회적-요인-5가지">2. 언어 변이의 사회적 요인 (5가지) ★★★<a class="headerlink" href="#2-언어-변이의-사회적-요인-5가지" title="Permanent link">#</a></h2>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>사회계층 · 성(gender) · 연령 · 민족성(ethnicity) · 힘(power/status)</strong> — 5개를 순서대로 외우세요. (교수님 예고 질문 2번)</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>요인</th>
+<th>핵심 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>(1) 사회 계층</strong></td>
+<td>언어 변이에 <strong>가장 큰 영향</strong>을 미치는 요인 중 하나. 사회적 지위·직업·소득·교육 수준 → 사회경제적 계층 → 언어 차이. <strong>노동 계층은 비표준형, 상위 계층은 표준형</strong>을 더 많이 사용</td>
+</tr>
+<tr>
+<td><strong>(2) 성(gender)</strong></td>
+<td><strong>생물학적 성과 사회적 성(gender role)</strong> 모두 영향. <strong>여성은 표준형을 더 많이, 남성은 비표준형을 더 많이</strong> 사용하는 경향. 여성 언어의 특징 연구, 남성어/여성어 비교 연구</td>
+</tr>
+<tr>
+<td><strong>(3) 연령</strong></td>
+<td><strong>어린 연령 집단이 언어 변화를 주도</strong>, 새로운 언어 형태 사용에 적극적</td>
+</tr>
+<tr>
+<td><strong>(4) 민족성(ethnicity)</strong></td>
+<td>특정 민족 집단이 고유한 언어 변이를 사용하거나 <strong>언어 정책</strong>에 따라 사용 방식이 달라짐. 예: <strong>아프리카계 미국인 영어 방언(AAVE, African American Vernacular English)</strong></td>
+</tr>
+<tr>
+<td><strong>(5) 힘(power/status)</strong></td>
+<td>언어는 사회 내 <strong>힘의 불균형을 반영하고 표현</strong>하는 수단. <strong>존대/하대, 공적/비공식적 언어 사용</strong> = 권력 관계를 나타내는 언어 장치. 언어 정책·언어 교육이 힘의 불균형을 <strong>야기</strong>할 수도 있음</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>표준형 vs 비표준형 짝 맞추기</strong> (선다형 단골)
+- 상위 계층 → <strong>표준형</strong> / 노동 계층 → <strong>비표준형</strong>
+- 여성 → <strong>표준형</strong> / 남성 → <strong>비표준형</strong>
+- 언어 변화를 주도하는 쪽 → <strong>어린 연령 집단</strong>
+- AAVE의 예가 해당하는 요인 → <strong>민족성</strong>
+- 존대/하대가 해당하는 요인 → <strong>힘(power/status)</strong></p>
+</div>
+<hr />
+<h2 id="3-사회언어학의-연구-방법-3가지">3. 사회언어학의 연구 방법 (3가지) ★<a class="headerlink" href="#3-사회언어학의-연구-방법-3가지" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>(1) 현지 조사</strong></td>
+<td>연구자가 <strong>직접</strong> 언어 공동체·지역사회에 들어가 관찰, <strong>자연스러운 언어 사용 데이터</strong> 수집. <strong>면담, 녹음, 비디오 촬영</strong> 등으로 <strong>구어 자료</strong> 확보</td>
+</tr>
+<tr>
+<td><strong>(2) 설문 조사</strong></td>
+<td><strong>대규모</strong> 언어 사용자로부터 데이터 수집. <strong>언어 태도나 특정 언어 형태에 대한 인식</strong>을 파악하는 데 활용. <strong>표본의 대표성 확보</strong>와 <strong>질문 설계의 명확성</strong>이 중요</td>
+</tr>
+<tr>
+<td><strong>(3) 담화 분석 및 말뭉치 분석</strong></td>
+<td><strong>담화 분석(conversational analysis)</strong>: 실제 대화·상호작용의 구조와 특징 분석 → 언어 사용의 사회적 맥락 이해. <strong>말뭉치 분석(corpus analysis)</strong>: 방대한 실제 언어 자료(말뭉치)를 수집·분석 → 패턴과 변이를 <strong>정량적</strong>으로 연구. <strong>빈도, 분포, 공기(共起) 관계</strong> 등을 파악 → 객관적 증거 제공</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p>각 방법의 <strong>키워드</strong>로 구별하세요.
+- "직접 들어가서", "자연스러운", "녹음·촬영" → <strong>현지 조사</strong>
+- "대규모", "언어 태도·인식", "표본 대표성" → <strong>설문 조사</strong>
+- "정량적", "빈도·분포·공기 관계" → <strong>말뭉치 분석</strong></p>
+</div>
+<hr />
+<h2 id="4-왜-지금-언어와-사회를-같이-봐야-하나">4. 왜 지금 언어와 사회를 같이 봐야 하나<a class="headerlink" href="#4-왜-지금-언어와-사회를-같이-봐야-하나" title="Permanent link">#</a></h2>
+<h3 id="관계는-말로써-생긴다">관계는 말로써 생긴다<a class="headerlink" href="#관계는-말로써-생긴다" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>하버드대학교 성인발달연구소</strong>: <strong>1930년대 후반부터 2,000명 이상</strong>을 대상으로 한 인간 평생 발달 연구</li>
+<li><strong>행복의 조건 중 가장 중요한 것 = 관계</strong>. 외로움은 독</li>
+<li><strong>관계는 말로써 생긴다.</strong> 우리가 사회를 이루고 사는 것도 결국 <strong>말이 있었기 때문</strong></li>
+</ul>
+<h3 id="보컬-그루밍">보컬 그루밍<a class="headerlink" href="#보컬-그루밍" title="Permanent link">#</a></h3>
+<dl>
+<dt>보컬 그루밍 (vocal grooming)</dt>
+<dd>뇌 용량과 공동체 규모가 팽창함에 따라 <strong>그루밍(털 고르기)의 간극을 언어가 메운다</strong>는 것. (로빈 던바 외, 『사회성』)</dd>
+</dl>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>원숭이는 서로 털을 골라주며(그루밍) 유대를 쌓지만, 손으로 할 수 있는 상대 수는 한정돼 있습니다. 집단이 커지자 인간은 <strong>말(수다)</strong> 로 한 번에 여러 명과 유대를 쌓게 되었다는 설명입니다.</p>
+</div>
+<h3 id="생각해-볼-질문">생각해 볼 질문<a class="headerlink" href="#생각해-볼-질문" title="Permanent link">#</a></h3>
+<ul>
+<li>지금의 시대를 사는 우리, 대화를 잘 하고 있나?</li>
+<li><strong>대화다운 대화</strong>란? <strong>사람다운 대화</strong>란?</li>
+<li>사람하고 하는 대화와 <strong>기계와 나누는 대화</strong>는 어떤 차이가 있나?</li>
+</ul>
+<p>→ 이 질문에 대한 사례 세 가지가 아래 <strong>맥커뮤니케이션 / 보이스피싱 / 인공지능과의 대화</strong>입니다.</p>
+<hr />
+<h2 id="5-맥커뮤니케이션-mccommunication">5. 맥커뮤니케이션 (McCommunication) ★<a class="headerlink" href="#5-맥커뮤니케이션-mccommunication" title="Permanent link">#</a></h2>
+<p>슬라이드는 맥도날드 주문 대화(영어)로 시작합니다. "Welcome to McDonald's. May I take your order?" → "Big Mac meal" → "What to drink?" → "For here or to go?" … 매뉴얼처럼 <strong>정해진 순서대로 정해진 말만</strong> 주고받는 대화입니다.</p>
+<dl>
+<dt>맥커뮤니케이션</dt>
+<dd><strong>맥도날드식 의사소통.</strong> 대화가 <strong>맥도날드화된 현실을 비판</strong>하는 개념 (<strong>Block, D. 2002</strong>)</dd>
+</dl>
+<h3 id="왜-생겼나">왜 생겼나<a class="headerlink" href="#왜-생겼나" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>경쟁주의, 경제주의 시대</strong>가 본격화되면서 <strong>언어도 하나의 상품이고 기술</strong>이라는 관점이 수용됨</li>
+<li>언어 시험을 포함한 교육 영역은 <strong>사교육에 의해 상품화</strong></li>
+<li><strong>시장 논리와 획일적인 표준화</strong> 과정을 거치면서 <strong>언어의 존재론적 속성이 왜곡</strong>됨</li>
+</ul>
+<h3 id="문제점">문제점<a class="headerlink" href="#문제점" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>효율성 끝판왕</strong> — 일터에서 매뉴얼을 읽듯이 말끔하게만 대화해야 한다면?</li>
+<li><strong>감정노동</strong>: 패밀리레스토랑 근무자 대다수가 정서적 과부하, 감정노동의 괴리감 호소</li>
+<li><strong>70% 이상</strong>: 고객을 맞을 때 <strong>억지로 미소</strong>를 띠어야 할 것 같다</li>
+<li><strong>66%</strong>: 고객 응대 시 <strong>행복감을 드러내는 연기</strong>를 한다</li>
+<li>→ 자신의 정서적 자원을 동원해 <strong>표정·동작·감정·말투를 상품의 가치로 전환</strong>하여 서빙하는 셈</li>
+<li>언어 사용자 상호 간에 체감하는 <strong>언어능숙도, 자아정체성, 문화적 친밀감</strong>이 무시됨</li>
+<li>조직 구성원이 모두 비슷하게 말하게 됨 → <strong>능동성, 다양성의 가치 소멸</strong></li>
+<li>예: <strong>전화영어, 고객 응대 서비스</strong></li>
+</ul>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>감정노동 통계: <strong>70%↑ 억지 미소 / 66% 행복 연기</strong>
+맥커뮤니케이션 비판 학자: <strong>Block (2002)</strong>
+맥커뮤니케이션으로 사라지는 가치: <strong>능동성, 다양성</strong></p>
+</div>
+<hr />
+<h2 id="6-보이스피싱-voice-phishing">6. 보이스피싱 (voice phishing) ★<a class="headerlink" href="#6-보이스피싱-voice-phishing" title="Permanent link">#</a></h2>
+<dl>
+<dt>보이스피싱 대화</dt>
+<dd><strong>금전 편취</strong>라는 뚜렷한 의사소통 목적을 달성하기 위한 <strong>과제 중심의 경쟁적-인지적 대화</strong>. 보이스피싱범이 대화를 주도하고 상대방의 정보를 강요하는 <strong>심문 대화의 하위 유형</strong> (배승희 외 2023)</dd>
+</dl>
+<h3 id="통계">통계<a class="headerlink" href="#통계" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>수치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2017 → 2022 전체 건수 / 피해액</td>
+<td>각각 <strong>10% / 30% 감소</strong></td>
+</tr>
+<tr>
+<td>2017 → 2022 <strong>기관사칭형</strong> 건수 / 피해액</td>
+<td>각각 <strong>57% / 19.3% 증가</strong></td>
+</tr>
+<tr>
+<td>국내 최초 발생</td>
+<td><strong>2006년</strong> (이후 16년간 피해 증가, 수법은 다양화·전문화)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-warning">
+<p class="callout-title">주의</p>
+<p><strong>전체는 감소, 기관사칭형은 증가.</strong> 숫자 짝을 바꿔 내는 보기에 주의 (전체 10%·30% 감소 / 기관사칭형 57%·19.3% 증가).</p>
+</div>
+<h3 id="기관사칭형-전형적-대화-6단계">기관사칭형 전형적 대화 6단계 ★★<a class="headerlink" href="#기관사칭형-전형적-대화-6단계" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>목적</th>
+<th>수법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. 피해자 접근</strong></td>
+<td>신뢰감 형성, 대화 우위 차지</td>
+<td><strong>조직명+부서+이름+직위</strong> 자기소개로 지위 노출, <strong>피해자 실명 거론</strong>으로 공포심·의심 차단</td>
+</tr>
+<tr>
+<td><strong>2. 범죄 연루 협박</strong></td>
+<td>공포심 유발, 조사 협조 유도, 피해자 신분 내면화</td>
+<td>범죄 연루 사실 통보, 상세한 사건 설명, <strong>'예/아니오' 폐쇄형 질문</strong>으로 답변 통제, 장소·개인정보 유출 언급</td>
+</tr>
+<tr>
+<td><strong>3. 사회적 고립화</strong></td>
+<td>주변 조력 차단, 판단력 상실, 범인에게 의존</td>
+<td><strong>타인에게 발설 금지</strong>, <strong>증거인멸죄·위증죄</strong> 등 구체적 죄목 언급</td>
+</tr>
+<tr>
+<td><strong>4. 수직 관계 강화</strong></td>
+<td>의심 차단, 수직적 위계 관계를 더 견고하게</td>
+<td>범죄 심각성 강조(예: <strong>180명 이상 연루</strong>), 실제 수사기관 소속임을 알림, <strong>녹취·진술</strong> 등 법률 용어 → <strong>수사관-피의자 역할</strong> 부여</td>
+</tr>
+<tr>
+<td><strong>5. 인출 유도</strong></td>
+<td><strong>핵심 단계</strong> — 실질적 현금 인출 유도</td>
+<td>조직 내 다른 인물(<strong>검사</strong> 등) 등장 → 심문 대신 해결 방법 안내. 계좌·잔고 진술 요구('진술'로 포장), <strong>대검찰청 보안 IP</strong> 명목 가짜 홈페이지·악성 앱, <strong>대포통장</strong> 명분 현금 인출 지시, '직원 월급' 등 인출 명목 교육. <strong>여기서 실패하면 대화 종료</strong></td>
+</tr>
+<tr>
+<td><strong>6. 인출 여부 확인</strong></td>
+<td>금전 편취 최종 성공</td>
+<td>인출 현금을 <strong>금융감독원 직원 사칭</strong> 조직원에게 전달 강요, 인계 확인 녹취 요구</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>순서 암기: <strong>접근 → 협박 → 고립 → 수직 → 인출 유도 → 인출 확인</strong>
+<strong>보이스피싱 대화의 핵심 단계 = 5단계(인출 유도)</strong></p>
+</div>
+<h3 id="수법이-뻔한데-왜-당하나">수법이 뻔한데 왜 당하나?<a class="headerlink" href="#수법이-뻔한데-왜-당하나" title="Permanent link">#</a></h3>
+<ul>
+<li>범죄자는 <strong>전화 대화</strong>를 선호함</li>
+<li>피해자가 <strong>취약한 선험적 지식</strong>(예: 금융 사기)을 이용해 <strong>소송·송금 방식에 관한 복잡하고 전문적인 용어</strong>를 활용</li>
+<li>협상은커녕 <strong>참조물에 대한 속성 파악도 이루어지지 않고 대화 주도권을 빼앗김</strong></li>
+<li><strong>일방적인 말하기는 정상적인 대화가 될 수 없음</strong></li>
+<li>보이스피싱이 아니어도 이런 경험 없을까?</li>
+</ul>
+<hr />
+<h2 id="7-인공지능과의-대화">7. 인공지능과의 대화 ★<a class="headerlink" href="#7-인공지능과의-대화" title="Permanent link">#</a></h2>
+<h3 id="영화-그녀her">영화 「그녀(her)」<a class="headerlink" href="#영화-그녀her" title="Permanent link">#</a></h3>
+<ul>
+<li>테오도르와 OS <strong>사만다</strong>의 대화. 사만다가 동시에 대화하는 상대 <strong>8,316명</strong>, 그중 사랑에 빠진 상대 <strong>641명</strong></li>
+<li>테오도르의 직업: <strong>다른 사람의 편지를 대신 써주는 일</strong> (생각해 볼 질문 5번)</li>
+</ul>
+<h3 id="생성형-ai의-현재">생성형 AI의 현재<a class="headerlink" href="#생성형-ai의-현재" title="Permanent link">#</a></h3>
+<ul>
+<li>머신러닝·딥러닝을 넘어 <strong>생성형 AI의 시대</strong></li>
+<li>산업 생산성 증가, 데이터 수집·분석 연구 성과 기대</li>
+<li>대화·서사·논증 생성 → 교육, 번역, 통역, 창작, 편집, 교정 / 논문 기획·제목·초록·목차·초안 작성 보조</li>
+<li><strong>대화형 AI 현황</strong>: <strong>AI 스피커, 콜봇, 챗봇</strong> 등 대화 앱 형태로 출시</li>
+<li><strong>NLP(Natural Language Processing, 자연어 처리)</strong> 기술로 인간처럼 언어 생성, <strong>LLM(Large Language Model, 초대규모 언어 모델)</strong> 기반 방대한 데이터로 자연스러운 말을 <strong>모방</strong></li>
+<li><strong>확률 기반 예측 문장 완성</strong></li>
+<li>NLP: 입력 문장을 <strong>형태소, 구문, 담화 단위</strong>로 분석 → 의미 추론 → 문장 생성기로 출력</li>
+<li>NLP + <strong>음성 엔진</strong> = 음성 기반 대화, 여기에 <strong>전화</strong>가 연결되면 <strong>콜봇</strong></li>
+<li><strong>GPT = Generative Pre-trained Transformer</strong> (생성형 미리 학습된 트랜스포머)</li>
+</ul>
+<h3 id="대화형-ai가-대화의-기본-속성을-감당하지-못하는-한계-5가지">대화형 AI가 대화의 기본 속성을 감당하지 못하는 한계 (5가지) ★★★<a class="headerlink" href="#대화형-ai가-대화의-기본-속성을-감당하지-못하는-한계-5가지" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>한계</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>(1) 능동적이고 즉흥적인 개입의 부재</strong></td>
+<td>AI는 <strong>목표지향적 시스템</strong>. 사용자의 지시나 <strong>주제어(참조물)</strong> 가 주어져야 반응, <strong>끼어들지 않음</strong> → 즉흥성·변주성 없음</td>
+</tr>
+<tr>
+<td><strong>(2) 화제 협상의 어려움</strong></td>
+<td>AI는 <strong>화제를 협상하지 못하는 반응자</strong>. 시작된 화제를 반드시 마쳐야 하는 <strong>전형적인 맥커뮤니케이션 대화법</strong></td>
+</tr>
+<tr>
+<td><strong>(3) 유연한 수정 전략의 부재</strong></td>
+<td>인간은 말을 다시 시작하거나 보완하지만, AI는 이를 <strong>오류로 취급</strong> → 유연하게 수정하지 않고 <strong>버퍼링 없이 능숙하고 즉각적으로</strong> 말함</td>
+</tr>
+<tr>
+<td><strong>(4) 구어체 및 비언어적 정보 처리의 한계</strong></td>
+<td>인간은 구어체, 파편화된 정보, 중단, 망설임, 애매한 발화를 쓰고 <strong>공유된 지식·경험을 전제</strong>하나 AI는 그 변수 조합을 감당하기 어려움</td>
+</tr>
+<tr>
+<td><strong>(5) 사회문화적 지식 및 감정 이해의 부족</strong></td>
+<td><strong>과장, 반문, 은유, 풍자</strong>로 추론되는 사회문화적 지식, <strong>억양·동작·표정</strong>으로 전달되는 함축적 의도를 데이터로 관리하기 어려움. 감정 담긴 억양·말 속도 차이를 구분해 <strong>공감하는 수준</strong>에 도달하기 어려움</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>키워드 → 한계 번호 매칭
+- "끼어들지 않는다", "참조물이 주어져야" → <strong>(1) 즉흥적 개입 부재</strong>
+- "시작한 화제를 반드시 마친다" → <strong>(2) 화제 협상의 어려움</strong>
+- "버퍼링 없이 즉각적으로", "수정을 오류로 취급" → <strong>(3) 수정 전략 부재</strong>
+- "망설임, 중단, 파편화" → <strong>(4) 구어체·비언어 한계</strong>
+- "과장·반문·은유·풍자", "공감" → <strong>(5) 사회문화·감정 이해 부족</strong></p>
+</div>
+<h3 id="결론-아직-ai는-대화의-협력자가-아니다-신동일-2025">결론: 아직 AI는 대화의 협력자가 아니다 (신동일 2025)<a class="headerlink" href="#결론-아직-ai는-대화의-협력자가-아니다-신동일-2025" title="Permanent link">#</a></h3>
+<ul>
+<li>AI는 주어진 <strong>키워드(참조물)에 의존</strong>하여 <strong>목적 지향적이고 예측 가능한 맥커뮤니케이션 대화만</strong> 생성</li>
+<li>자연스러운 대화는 <strong>비참조적</strong>일 수 있고 예측하기 쉽지 않으며, 참조물이 없어도 <strong>공간적·기호적 자원과 정서적 교감만으로도</strong> 시작·유지될 수 있음</li>
+<li><strong>인간다운 대화는 합리성과 지능의 원리로만 구성되지 않음</strong></li>
+</ul>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>슬라이드에는 관련 기사 3개가 실렸습니다: "인공지능과 대화한 사람이 죽었다"(6주간 AI와 대화한 30대 남성 사망), "AI 챗봇과 대화한 사람들 외로움 15% 줄었다"(UNIST, 소셜 챗봇의 정신건강 증진 효과), "'AI 정신병'(AI psychosis) 대비해야" 경고.</p>
+</div>
+<h3 id="생각해-볼-질문-조별활동">생각해 볼 질문 (조별활동)<a class="headerlink" href="#생각해-볼-질문-조별활동" title="Permanent link">#</a></h3>
+<ol>
+<li><strong>토크포비아</strong> 현상과 대안</li>
+<li>대화에서 효율성을 추구한다는 것의 의미, 장단점</li>
+<li>일방적인 대화여서 힘들었던 경험</li>
+<li>AI가 하는 말이 어색하다고 느낀 경험</li>
+<li>「그녀」에서 테오도르의 직업(편지 대필)이 의미하는 것</li>
+<li>AI 기술이 어디까지 발달하기를 바라는가</li>
+</ol>
+<hr />
+<h2 id="이-장-정리">이 장 정리<a class="headerlink" href="#이-장-정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>주제</th>
+<th>외울 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>사회언어학</td>
+<td>언어와 사회의 <strong>상호작용</strong> 연구 / 대상: 내부 변이·언어 변화·사회적 요인과의 상호작용 / 이론+응용 언어학 교차점</td>
+</tr>
+<tr>
+<td>변이 요인 5</td>
+<td><strong>사회계층, 성, 연령, 민족성, 힘</strong></td>
+</tr>
+<tr>
+<td>연구방법 3</td>
+<td><strong>현지 조사, 설문 조사, 담화·말뭉치 분석</strong></td>
+</tr>
+<tr>
+<td>관계</td>
+<td>하버드 성인발달연구(1930년대 후반~, 2,000명↑) → 행복 조건 1위 <strong>관계</strong>, <strong>보컬 그루밍</strong></td>
+</tr>
+<tr>
+<td>맥커뮤니케이션</td>
+<td><strong>Block(2002)</strong>, 언어의 상품화·표준화, 감정노동(70%·66%), 능동성·다양성 소멸</td>
+</tr>
+<tr>
+<td>보이스피싱</td>
+<td><strong>과제 중심의 경쟁적-인지적 대화</strong>, <strong>심문 대화의 하위 유형</strong>, 6단계, 핵심은 <strong>5단계 인출 유도</strong></td>
+</tr>
+<tr>
+<td>AI 대화 한계 5</td>
+<td>즉흥 개입 부재 / 화제 협상 / 수정 전략 / 구어·비언어 / 사회문화·감정</td>
+</tr>
+</tbody>
+</table>
+  <footer class="page-footer"><code>content/lang/01-sociolinguistics.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#1-사회언어학의-개념과-연구-대상">1. 사회언어학의 개념과 연구 대상 ★</a></li>
+<li><a href="#2-언어-변이의-사회적-요인-5가지">2. 언어 변이의 사회적 요인 (5가지) ★★★</a></li>
+<li><a href="#3-사회언어학의-연구-방법-3가지">3. 사회언어학의 연구 방법 (3가지) ★</a></li>
+<li><a href="#4-왜-지금-언어와-사회를-같이-봐야-하나">4. 왜 지금 언어와 사회를 같이 봐야 하나</a><ul>
+<li><a href="#관계는-말로써-생긴다">관계는 말로써 생긴다</a></li>
+<li><a href="#보컬-그루밍">보컬 그루밍</a></li>
+<li><a href="#생각해-볼-질문">생각해 볼 질문</a></li>
+</ul>
+</li>
+<li><a href="#5-맥커뮤니케이션-mccommunication">5. 맥커뮤니케이션 (McCommunication) ★</a><ul>
+<li><a href="#왜-생겼나">왜 생겼나</a></li>
+<li><a href="#문제점">문제점</a></li>
+</ul>
+</li>
+<li><a href="#6-보이스피싱-voice-phishing">6. 보이스피싱 (voice phishing) ★</a><ul>
+<li><a href="#통계">통계</a></li>
+<li><a href="#기관사칭형-전형적-대화-6단계">기관사칭형 전형적 대화 6단계 ★★</a></li>
+<li><a href="#수법이-뻔한데-왜-당하나">수법이 뻔한데 왜 당하나?</a></li>
+</ul>
+</li>
+<li><a href="#7-인공지능과의-대화">7. 인공지능과의 대화 ★</a><ul>
+<li><a href="#영화-그녀her">영화 「그녀(her)」</a></li>
+<li><a href="#생성형-ai의-현재">생성형 AI의 현재</a></li>
+<li><a href="#대화형-ai가-대화의-기본-속성을-감당하지-못하는-한계-5가지">대화형 AI가 대화의 기본 속성을 감당하지 못하는 한계 (5가지) ★★★</a></li>
+<li><a href="#결론-아직-ai는-대화의-협력자가-아니다-신동일-2025">결론: 아직 AI는 대화의 협력자가 아니다 (신동일 2025)</a></li>
+<li><a href="#생각해-볼-질문-조별활동">생각해 볼 질문 (조별활동)</a></li>
+</ul>
+</li>
+<li><a href="#이-장-정리">이 장 정리</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

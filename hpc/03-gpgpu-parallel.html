@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3. GPGPU 및 병렬처리 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="03-gpgpu-parallel.html" class="active">3. GPGPU 및 병렬처리</a></li>
+<li><a href="04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="3-gpgpu-및-병렬처리">3. GPGPU 및 병렬처리<a class="headerlink" href="#3-gpgpu-및-병렬처리" title="Permanent link">#</a></h1>
+<h2 id="gpu와-gpgpu">GPU와 GPGPU<a class="headerlink" href="#gpu와-gpgpu" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>GPU</strong></dt>
+<dd><strong>그래픽스 연산</strong>(이미지 데이터를 화면에 표현하기 위해 화면을 구성하는 여러 <strong>픽셀의 색상값을 계산</strong>)에 특화된 장치</dd>
+</dl>
+<ul>
+<li>같은 연산을 여러 픽셀에 적용하므로 <strong>저사양의 많은 코어</strong> 사용</li>
+<li><strong>고대역폭 메모리</strong>(GDDR6, HBM) 사용</li>
+</ul>
+<dl>
+<dt><strong>GPGPU (General-Purpose computing on Graphics Processing Units)</strong></dt>
+<dd>GPU를 <strong>일반적인 목적</strong>에 사용한다는 것</dd>
+</dl>
+<ul>
+<li>GPU의 연산 기능을 <strong>픽셀 색상 계산뿐만 아니라 다양한 연산</strong>에 적용</li>
+<li>적용 분야: <strong>행렬 연산</strong>, <strong>인공지능</strong>, <strong>암호화폐</strong></li>
+</ul>
+<hr />
+<h2 id="벡터화-vectorization">벡터화 (vectorization)<a class="headerlink" href="#벡터화-vectorization" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>SIMD (Single Instruction Multiple Data)</strong></dt>
+<dd><strong>하나의 명령어로 여러 데이터를 처리</strong>하는 기술 (= 벡터화)</dd>
+</dl>
+<ul>
+<li>하나의 명령어로 <strong>전용 레지스터에 있는 여러 데이터(벡터)</strong> 를 동시에 처리</li>
+<li><strong>벡터 연산</strong>에 사용됨</li>
+<li>비교: <strong>SISD</strong>는 스칼라 연산 (하나의 명령어가 하나의 데이터를 처리)</li>
+</ul>
+<hr />
+<h2 id="병렬화-parallelization">병렬화 (parallelization)<a class="headerlink" href="#병렬화-parallelization" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>태스크 병렬화 vs 데이터 병렬화</strong> — 정의와 예시를 구분</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>정의</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>태스크 병렬화</strong>(task parallelism)</td>
+<td><strong>여러 작업</strong>을 여러 코어에서 실행</td>
+<td>여러 함수 실행</td>
+</tr>
+<tr>
+<td><strong>데이터 병렬화</strong>(data parallelism)</td>
+<td><strong>데이터를 나눠서</strong> 여러 코어에서 실행</td>
+<td><strong>행렬 연산</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>GPU는 둘 다 가능하지만, SIMT를 활용한 데이터 병렬처리에 더 적합</strong>하다.</p>
+</div>
+<hr />
+<h2 id="simt-single-instruction-multiple-thread">SIMT (Single Instruction Multiple Thread)<a class="headerlink" href="#simt-single-instruction-multiple-thread" title="Permanent link">#</a></h2>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>SIMT vs SIMD</strong> — 가장 헷갈리는 지점</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>SIMT</strong> (GPU)</th>
+<th><strong>SIMD</strong> (CPU)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>풀네임</td>
+<td>Single Instruction <strong>Multiple Thread</strong></td>
+<td>Single Instruction <strong>Multiple Data</strong></td>
+</tr>
+<tr>
+<td>처리 단위</td>
+<td>하나의 제어장치의 명령어로 <strong>연속된 32개의 스레드(워프)</strong> 가 동시에 여러 데이터에 접근하여 처리</td>
+<td>하나의 명령어로 <strong>전용 레지스터에 있는 여러 데이터(벡터)</strong> 를 동시에 처리</td>
+</tr>
+<tr>
+<td>레지스터</td>
+<td><strong>각 CUDA 스레드가 자신만의 레지스터를 가짐</strong></td>
+<td>전용 벡터 레지스터 공유</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>워프(warp)</strong>: 연속된 <strong>32개</strong>의 스레드</p>
+<hr />
+<h2 id="cpu와-gpu의-코어-비교">CPU와 GPU의 코어 비교<a class="headerlink" href="#cpu와-gpu의-코어-비교" title="Permanent link">#</a></h2>
+<h3 id="구성">구성<a class="headerlink" href="#구성" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>코어 구성</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CPU의 core</strong></td>
+<td><strong>ALU</strong>(산술논리연산장치) + <strong>제어장치</strong>(control unit) + <strong>L1 cache</strong></td>
+</tr>
+<tr>
+<td><strong>GPU의 core</strong></td>
+<td><strong>ALU만으로 구성</strong> (연산에 특화됨)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="장단점">장단점<a class="headerlink" href="#장단점" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>어떤 연산에 어떤 장치가 유리한가</strong> — 표를 통째로 외울 것</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>CPU</strong></th>
+<th><strong>GPU</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>운영체제 실행</strong></td>
+<td><strong>가능</strong></td>
+<td><strong>불가능</strong></td>
+</tr>
+<tr>
+<td><strong>분기문이 많은 불규칙한 흐름</strong></td>
+<td><strong>높은 성능</strong> (유리)</td>
+<td><strong>취약</strong></td>
+</tr>
+<tr>
+<td><strong>연속되지 않은 메모리 접근</strong></td>
+<td><strong>높은 성능</strong> (유리)</td>
+<td><strong>취약</strong></td>
+</tr>
+<tr>
+<td><strong>분기문이 적고 연속된 메모리 접근</strong> (예: 행렬 연산)</td>
+<td><strong>낮은 성능</strong> (불리)</td>
+<td><strong>최적</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="사양-비교">사양 비교<a class="headerlink" href="#사양-비교" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>CPU</th>
+<th>GPU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>코어 수</strong></td>
+<td><strong>1 ~ 수십 개</strong></td>
+<td><strong>수백 ~ 수천 개</strong></td>
+</tr>
+<tr>
+<td><strong>코어 성능</strong></td>
+<td><strong>2~5 GHz</strong></td>
+<td><strong>1~2 GHz</strong></td>
+</tr>
+<tr>
+<td><strong>메모리 크기</strong></td>
+<td>수십 GB ~</td>
+<td>~ 수십 GB</td>
+</tr>
+<tr>
+<td><strong>메모리 대역폭</strong></td>
+<td><strong>수십 GB/s</strong></td>
+<td><strong>수백 GB/s</strong> (GDDR6, HBM)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>GPU는 코어 하나하나는 CPU보다 느리다</strong>(1~2GHz vs 2~5GHz). 대신 <strong>개수가 압도적으로 많고 메모리 대역폭이 높다.</strong>
+그래서 <strong>SIMT 기반의 데이터 병렬 연산</strong>에 적합하다.</p>
+</div>
+  <footer class="page-footer"><code>content/hpc/03-gpgpu-parallel.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#gpu와-gpgpu">GPU와 GPGPU</a></li>
+<li><a href="#벡터화-vectorization">벡터화 (vectorization)</a></li>
+<li><a href="#병렬화-parallelization">병렬화 (parallelization)</a></li>
+<li><a href="#simt-single-instruction-multiple-thread">SIMT (Single Instruction Multiple Thread)</a></li>
+<li><a href="#cpu와-gpu의-코어-비교">CPU와 GPU의 코어 비교</a><ul>
+<li><a href="#구성">구성</a></li>
+<li><a href="#장단점">장단점</a></li>
+<li><a href="#사양-비교">사양 비교</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

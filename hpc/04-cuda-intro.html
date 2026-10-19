@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4. CUDA 개요 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="04-cuda-intro.html" class="active">4. CUDA 개요</a></li>
+<li><a href="05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="4-cuda-개요">4. CUDA 개요<a class="headerlink" href="#4-cuda-개요" title="Permanent link">#</a></h1>
+<h2 id="cuda-compute-unified-device-architecture">CUDA (Compute Unified Device Architecture)<a class="headerlink" href="#cuda-compute-unified-device-architecture" title="Permanent link">#</a></h2>
+<p><strong>CUDA</strong>: GPU를 <strong>GPGPU 목적으로 사용할 수 있게 제공하는 프로그래밍 인터페이스</strong></p>
+<h3 id="제공-api">제공 API<a class="headerlink" href="#제공-api" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>언어별</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CUDA C++</strong></td>
+<td>C/C++ 언어로 작성되는 프로그램에서 사용 가능한 CUDA API</td>
+</tr>
+<tr>
+<td><strong>CUDA Fortran</strong></td>
+<td>Fortran 언어용</td>
+</tr>
+<tr>
+<td><strong>CUDA Python</strong></td>
+<td>CUDA driver API와 runtime API에 대한 <strong>wrapper</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="driver-api-vs-runtime-api">driver API vs runtime API<a class="headerlink" href="#driver-api-vs-runtime-api" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>CUDA driver API</strong></th>
+<th><strong>CUDA runtime API</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>수준</td>
+<td><strong>저수준(low-level)</strong> 제어</td>
+<td><strong>고수준(high-level)</strong> 제어</td>
+</tr>
+<tr>
+<td>메모리</td>
+<td>메모리 자원을 <strong>더 효율적으로</strong> 사용 가능</td>
+<td>—</td>
+</tr>
+<tr>
+<td>난이도</td>
+<td>구현 방법이 <strong>복잡하여 사용하기 어려움</strong></td>
+<td><strong>사용하기 간단함</strong></td>
+</tr>
+<tr>
+<td>사용</td>
+<td>—</td>
+<td><strong>대부분의 CUDA 프로그램이 사용</strong>, <strong>본 강의에서 사용</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="cuda-enabled-gpu">CUDA-enabled GPU<a class="headerlink" href="#cuda-enabled-gpu" title="Permanent link">#</a></h3>
+<p>CUDA 프로그래밍을 하려면 <strong>CUDA를 지원하는 GPU</strong>를 사용해야 한다.
+지원 여부 확인: <a href="https://developer.nvidia.com/cuda-gpus">https://developer.nvidia.com/cuda-gpus</a></p>
+<hr />
+<h2 id="compute-capability">Compute capability<a class="headerlink" href="#compute-capability" title="Permanent link">#</a></h2>
+<p><strong>Compute capability</strong>: <strong>GPU 아키텍처(하드웨어)의 사양</strong>(register, shared/local/constant memory 등)을 나타냄</p>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>Compute capability 버전 ≠ CUDA 버전</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Compute capability 버전</strong></td>
+<td><strong>GPU 아키텍처(하드웨어)</strong> 의 버전</td>
+</tr>
+<tr>
+<td><strong>CUDA 버전</strong></td>
+<td><strong>CUDA 플랫폼(소프트웨어)</strong> 의 버전. 여러 GPU 아키텍처를 지원</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>주요 사양 (compute capability 전반 공통값):</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number of 32-bit registers per SM</td>
+<td>64K</td>
+</tr>
+<tr>
+<td>Maximum number of 32-bit registers per <strong>thread</strong></td>
+<td><strong>255</strong></td>
+</tr>
+<tr>
+<td>Maximum amount of <strong>local memory per thread</strong></td>
+<td><strong>512KB</strong></td>
+</tr>
+<tr>
+<td><strong>Constant memory size</strong></td>
+<td><strong>64KB</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="gpu-정보-확인-nvidia-smi">GPU 정보 확인 — nvidia-smi<a class="headerlink" href="#gpu-정보-확인-nvidia-smi" title="Permanent link">#</a></h2>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>nvidia-smi<span class="w">                      </span><span class="c1"># GPU 상태 확인</span>
+$<span class="w"> </span>watch<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">"nvidia-smi"</span><span class="w">      </span><span class="c1"># 1초마다 GPU 상태 확인</span>
+</code></pre></div>
+
+<p><code>nvidia-smi</code> = <strong>NVIDIA System Management Interface</strong></p>
+<h3 id="출력-항목">출력 항목<a class="headerlink" href="#출력-항목" title="Permanent link">#</a></h3>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>항목 중 <strong>Perf, Persistence-M, Compute M., MIG M.</strong> 의 설명을 묻기 좋다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>정보</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Driver Version</strong></td>
+<td>GPU의 driver version</td>
+</tr>
+<tr>
+<td><strong>CUDA Version</strong></td>
+<td>CUDA의 version</td>
+</tr>
+<tr>
+<td><strong>GPU</strong></td>
+<td>설치된 GPU의 ID (<strong>0부터</strong> 설정됨)</td>
+</tr>
+<tr>
+<td>Fan</td>
+<td>GPU fan 사용량(속도)</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>GPU의 model명</td>
+</tr>
+<tr>
+<td>Temp</td>
+<td>GPU의 현재 온도(섭씨)</td>
+</tr>
+<tr>
+<td><strong>Perf</strong></td>
+<td>GPU performance. <strong>P0부터 P12까지</strong> 존재하고 <strong>숫자가 작을수록 성능이 좋음</strong></td>
+</tr>
+<tr>
+<td><strong>Persistence-M</strong></td>
+<td>파워 지속성 모드. GPU를 사용하지 않아도 <strong>nvidia driver를 항상 미리 로딩</strong>해두는 모드. 빠른 GPU 사용에 유리하지만 <strong>전력을 낭비</strong></td>
+</tr>
+<tr>
+<td>Pwr:Usage/Cap</td>
+<td>GPU의 현재 전력 사용량과 최대 용량</td>
+</tr>
+<tr>
+<td>Bus-ID</td>
+<td>GPU가 설치된 PCI slot의 Bus ID</td>
+</tr>
+<tr>
+<td>Disp.A</td>
+<td>GPU를 <strong>모니터 화면 출력용</strong>으로 사용하면 on</td>
+</tr>
+<tr>
+<td><strong>Memory-Usage</strong></td>
+<td>현재 사용 중인 GPU memory / 총 memory (1 MiB = 1024² byte)</td>
+</tr>
+<tr>
+<td>GPU-Util</td>
+<td>GPU 사용량 (최대 100%)</td>
+</tr>
+<tr>
+<td><strong>Volatile Uncorr. ECC</strong></td>
+<td>Volatile Uncorrectable error correction code. 데이터 처리 중 발생하는 에러 수치. 증가하면 <strong>system이 hang 상태</strong>가 될 수 있어 일반적으로 <strong>N/A로 설정</strong></td>
+</tr>
+<tr>
+<td><strong>Compute M.</strong></td>
+<td>Compute-Mode (아래 표)</td>
+</tr>
+<tr>
+<td><strong>MIG M.</strong></td>
+<td>Multi-Instance GPU (아래 설명)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute-mode">Compute Mode<a class="headerlink" href="#compute-mode" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>모드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Default</strong></td>
+<td>여러 host 스레드들이 GPU 사용 가능 (<strong>여러 개의 CUDA context 생성</strong>)</td>
+</tr>
+<tr>
+<td><strong>Exclusive-process</strong></td>
+<td><strong>단지 하나의 CUDA context</strong>만 생성됨</td>
+</tr>
+<tr>
+<td><strong>Prohibited</strong></td>
+<td><strong>CUDA context가 생성되지 않음</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>CUDA context</strong>: CUDA 프로그램이 실행되는 데 필요한 <strong>모든 GPU 하드웨어 리소스를 캡슐화</strong>한 것</p>
+</div>
+<h3 id="mig-multi-instance-gpu">MIG (Multi-Instance GPU)<a class="headerlink" href="#mig-multi-instance-gpu" title="Permanent link">#</a></h3>
+<ul>
+<li>NVIDIA GPU를 <strong>slice하는 기능</strong>으로 <strong>최대 7개의 개별 GPU instance</strong>로 분할</li>
+<li>여러 사용자에게 별도의 GPU를 제공하여 작업 가속화</li>
+<li><strong>NVIDIA H100, A100, A30에서만 가능</strong></li>
+</ul>
+<hr />
+<h2 id="cuda-toolkit-설치-ubuntu">CUDA toolkit 설치 (Ubuntu)<a class="headerlink" href="#cuda-toolkit-설치-ubuntu" title="Permanent link">#</a></h2>
+<p><strong>CUDA toolkit</strong>: CUDA 프로그램 개발 도구(라이브러리, 디버깅·최적화 도구, <strong>NVCC</strong> 컴파일러) 제공</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>list<span class="w"> </span>nvidia-utils*<span class="w">            </span><span class="c1"># 설치 가능한 nvidia-utils 패키지 확인</span>
+$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nvidia-utils-550<span class="w">      </span><span class="c1"># GPU driver, nvidia-smi 설치</span>
+$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nvidia-cuda-toolkit<span class="w">   </span><span class="c1"># CUDA 프로그램 개발 도구 설치</span>
+
+$<span class="w"> </span>nvidia-smi<span class="w">                             </span><span class="c1"># GPU 상태 확인</span>
+$<span class="w"> </span>nvcc<span class="w"> </span>--version<span class="w">                         </span><span class="c1"># 설치된 NVCC 버전 확인</span>
+</code></pre></div>
+
+<p><strong>NVCC</strong> = <strong>NVIDIA CUDA Compiler</strong></p>
+<hr />
+<h2 id="호스트와-디바이스">호스트와 디바이스<a class="headerlink" href="#호스트와-디바이스" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>확장자까지 묻는다.</strong> 표를 통째로 외울 것.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>호스트(host)</strong></th>
+<th><strong>디바이스(device)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>하드웨어</td>
+<td><strong>CPU</strong></td>
+<td><strong>GPU</strong></td>
+</tr>
+<tr>
+<td>메모리</td>
+<td><strong>호스트 메모리</strong> (CPU가 사용)</td>
+<td><strong>디바이스 메모리</strong> (GPU가 사용)</td>
+</tr>
+<tr>
+<td>코드 실행 위치</td>
+<td><strong>CPU에서 실행</strong></td>
+<td><strong>GPU에서 실행</strong></td>
+</tr>
+<tr>
+<td>문법</td>
+<td><strong>C/C++ 문법</strong></td>
+<td><strong>CUDA 문법</strong></td>
+</tr>
+<tr>
+<td>파일 확장자</td>
+<td><strong><code>.c</code> 또는 <code>.cpp</code></strong></td>
+<td><strong><code>.cu</code></strong></td>
+</tr>
+<tr>
+<td>헤더 확장자</td>
+<td><strong><code>.h</code></strong></td>
+<td><strong><code>.cuh</code></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="함수-실행-위치-지정-키워드">함수 실행 위치 지정 키워드<a class="headerlink" href="#함수-실행-위치-지정-키워드" title="Permanent link">#</a></h2>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<table>
+<thead>
+<tr>
+<th>키워드</th>
+<th>호출되는 곳</th>
+<th>실행되는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>__host__</code></strong></td>
+<td><strong>host</strong></td>
+<td><strong>host</strong></td>
+</tr>
+<tr>
+<td><strong><code>__device__</code></strong></td>
+<td><strong>device</strong></td>
+<td><strong>device</strong></td>
+</tr>
+<tr>
+<td><strong><code>__global__</code></strong></td>
+<td><strong>host</strong></td>
+<td><strong>device</strong> → 이것이 <strong>커널(kernel)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>함수 선언/정의 시 <strong>키워드를 붙이지 않으면 기본값은 <code>__host__</code></strong> 이다.</p>
+</div>
+<hr />
+<h2 id="cuda-프로그램의-구성과-컴파일">CUDA 프로그램의 구성과 컴파일<a class="headerlink" href="#cuda-프로그램의-구성과-컴파일" title="Permanent link">#</a></h2>
+<ul>
+<li>CUDA 프로그램은 <strong>호스트 코드(.c, .cpp)와 디바이스 코드(.cu)</strong> 로 구성</li>
+<li>호스트 코드와 디바이스 코드는 <strong>NVCC 컴파일러로 컴파일 가능</strong></li>
+<li><strong>커널과 커널 호출 함수가 포함된 디바이스 코드는 NVCC 컴파일러만 컴파일 가능</strong></li>
+</ul>
+<hr />
+<h2 id="hello-cuda">Hello CUDA<a class="headerlink" href="#hello-cuda" title="Permanent link">#</a></h2>
+<h3 id="커널-호출-문법">커널 호출 문법<a class="headerlink" href="#커널-호출-문법" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>kernel &lt;&lt;&lt; 스레드 블록 수, 블록당 스레드 수 &gt;&gt;&gt; (인자);
+</code></pre></div>
+
+<ul>
+<li><code>&lt;&lt;&lt; &gt;&gt;&gt;</code> 를 <strong>실행 구성(execution configuration) 문법</strong>이라고 함</li>
+<li>각 스레드는 <strong>하나의 CUDA 코어</strong>를 사용하여 <strong>독립적으로</strong> 커널 수행</li>
+</ul>
+<h3 id="코드-lec02-01cu">코드 (lec02_01.cu)<a class="headerlink" href="#코드-lec02-01cu" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"cuda_runtime.h"</span><span class="w">              </span><span class="c1">// CUDA runtime API 헤더 파일</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"device_launch_parameters.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">helloCUDA</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w">        </span><span class="c1">// helloCUDA() 커널 정의</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"Hello CUDA from GPU!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"Hello CUDA from CPU!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 1개의 스레드 블록, 블록당 10개의 스레드로 커널 실행</span>
+<span class="w">    </span><span class="n">helloCUDA</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">&gt;&gt;&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// 디바이스 동기화 (호스트가 커널 수행 완료까지 대기)</span>
+<span class="w">    </span><span class="n">cudaDeviceSynchronize</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong><code>cudaDeviceSynchronize()</code> 를 왜 호출해야 하는가?</strong></p>
+<p>호스트는 디바이스에게 task들(메모리 복사, 커널 실행 등)을 맡긴 뒤 <strong>기다리지 않고 다음 작업을 수행(비동기적)</strong> 한다.
+따라서 <strong>동기화 함수를 호출하지 않으면 커널 내의 <code>printf</code> 문이 출력되기 전에 프로그램이 종료</strong>되어 버린다.</p>
+</div>
+<h3 id="컴파일-및-실행">컴파일 및 실행<a class="headerlink" href="#컴파일-및-실행" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>nvcc<span class="w"> </span>-o<span class="w"> </span>lec02_01<span class="w"> </span>lec02_01.cu
+$<span class="w"> </span>./lec02_01
+Hello<span class="w"> </span>CUDA<span class="w"> </span>from<span class="w"> </span>CPU!
+Hello<span class="w"> </span>CUDA<span class="w"> </span>from<span class="w"> </span>GPU!<span class="w">      </span>←<span class="w"> </span>10번<span class="w"> </span>출력
+</code></pre></div>
+
+<hr />
+<h2 id="호스트디바이스-코드-분리">호스트/디바이스 코드 분리<a class="headerlink" href="#호스트디바이스-코드-분리" title="Permanent link">#</a></h2>
+<h3 id="올바른-분리">올바른 분리<a class="headerlink" href="#올바른-분리" title="Permanent link">#</a></h3>
+<p><strong>lec02_02_device.cuh</strong> (헤더)</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"cuda_runtime.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"device_launch_parameters.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">helloCUDA</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="n">__host__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">helloCUDACall</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span><span class="w">      </span><span class="c1">// __host__ 키워드는 생략 가능</span>
+</code></pre></div>
+
+<p><strong>lec02_02_device.cu</strong> (디바이스 코드)</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"lec02_02_device.cuh"</span>
+
+<span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">helloCUDA</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w">         </span><span class="c1">// 커널 정의</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"Hello CUDA from GPU!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w">   </span><span class="c1">// device에서 커널 실행</span>
+<span class="p">}</span>
+
+<span class="n">__host__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">helloCUDACall</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">helloCUDA</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">();</span><span class="w">           </span><span class="c1">// host에서 커널 호출</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>lec02_02_host.cpp</strong> (호스트 코드)</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"lec02_02_device.cuh"</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"Hello CUDA from CPU!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="w">    </span><span class="n">helloCUDACall</span><span class="p">();</span>
+<span class="w">    </span><span class="n">cudaDeviceSynchronize</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>nvcc<span class="w"> </span>-o<span class="w"> </span>lec02_02<span class="w"> </span>lec02_02_device.cu<span class="w"> </span>lec02_02_host.cpp
+</code></pre></div>
+
+<h3 id="잘못된-분리-에러-발생">잘못된 분리 (에러 발생)<a class="headerlink" href="#잘못된-분리-에러-발생" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">// lec02_03_host.cpp</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"lec02_03_device.cuh"</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"Hello CUDA from CPU!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="w">    </span><span class="n">helloCUDA</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">();</span><span class="w">      </span><span class="c1">// 에러 발생 지점</span>
+<span class="w">    </span><span class="n">cudaDeviceSynchronize</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>왜 에러가 나는가?</strong></p>
+<p>NVCC로 컴파일할 때 <strong>NVCC는 <code>.cpp</code> 파일을 C++ 코드로 컴파일</strong>하기 때문에, CUDA 문법인 <strong><code>&lt;&lt;&lt;1, 10&gt;&gt;&gt;</code> 을 해석하지 못해서 에러가 발생</strong>한다.</p>
+<p>→ <strong>커널 호출(<code>&lt;&lt;&lt; &gt;&gt;&gt;</code>)은 반드시 <code>.cu</code> 파일 안에</strong> 있어야 하고, <code>.cpp</code>에서는 그 커널 호출을 감싼 <strong>일반 함수(<code>helloCUDACall</code>)를 호출</strong>해야 한다.</p>
+</div>
+<hr />
+<h2 id="slurm으로-cuda-프로그램-실행">Slurm으로 CUDA 프로그램 실행<a class="headerlink" href="#slurm으로-cuda-프로그램-실행" title="Permanent link">#</a></h2>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p>강의계획서에는 <strong>PBS</strong>라고 되어 있지만, 실제 슬라이드의 예제는 전부 <strong>Slurm</strong>(<code>sbatch</code>, <code>#SBATCH</code>)을 사용한다.</p>
+</div>
+<h3 id="1-컴파일">1) 컴파일<a class="headerlink" href="#1-컴파일" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>nvcc<span class="w"> </span>-o<span class="w"> </span>lec02_01<span class="w"> </span>lec02_01.cu
+</code></pre></div>
+
+<h3 id="2-job-스크립트-작성-job-gpush">2) Job 스크립트 작성 (job_gpu.sh)<a class="headerlink" href="#2-job-스크립트-작성-job-gpush" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/sh</span>
+<span class="c1">#SBATCH -J job_name               # Job name</span>
+<span class="c1">#SBATCH -p gpu                    # Partition (queue) name</span>
+<span class="c1">#SBATCH --wait</span>
+<span class="c1">#SBATCH --nodes=1                 # number of nodes</span>
+<span class="c1">#SBATCH --ntasks-per-node=1       # number of mpi tasks (processes) per a node</span>
+<span class="c1">#SBATCH --gres=gpu:1              # number of GPUs</span>
+<span class="c1">#SBATCH -t 01:30:00               # Run time (hh:mm:ss)</span>
+<span class="c1">#SBATCH -o job_stdout.%j.log      # Name of stdout output file (%j expands to jobId)</span>
+<span class="c1">#SBATCH -e job_stderr.%j.log      # Name of stderr output file</span>
+
+<span class="nb">cd</span><span class="w"> </span><span class="nv">$SLURM_SUBMIT_DIR</span>
+./lec02_01<span class="w"> </span>&gt;<span class="p">&amp;</span><span class="w"> </span>lec02_01.log
+</code></pre></div>
+
+<h3 id="3-job-제출-및-결과-확인">3) Job 제출 및 결과 확인<a class="headerlink" href="#3-job-제출-및-결과-확인" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sbatch<span class="w"> </span>job_gpu.sh
+$<span class="w"> </span>cat<span class="w"> </span>lec02_01.log
+$<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>lec02_01.log
+</code></pre></div>
+
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong><code>#SBATCH</code> 옵션 의미</strong></p>
+<table>
+<thead>
+<tr>
+<th>옵션</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-J</code></td>
+<td>Job name</td>
+</tr>
+<tr>
+<td><code>-p gpu</code></td>
+<td><strong>Partition(queue) 이름</strong></td>
+</tr>
+<tr>
+<td><code>--nodes=1</code></td>
+<td>노드 수</td>
+</tr>
+<tr>
+<td><code>--ntasks-per-node=1</code></td>
+<td>노드당 MPI task(프로세스) 수</td>
+</tr>
+<tr>
+<td><strong><code>--gres=gpu:1</code></strong></td>
+<td><strong>사용할 GPU 개수</strong></td>
+</tr>
+<tr>
+<td><code>-t 01:30:00</code></td>
+<td>실행 시간 제한 (hh:mm:ss)</td>
+</tr>
+<tr>
+<td><code>-o</code> / <code>-e</code></td>
+<td>stdout / stderr 출력 파일명 (<code>%j</code> = jobId)</td>
+</tr>
+<tr>
+<td><code>$SLURM_SUBMIT_DIR</code></td>
+<td>job을 제출한 디렉토리</td>
+</tr>
+</tbody>
+</table>
+</div>
+  <footer class="page-footer"><code>content/hpc/04-cuda-intro.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#cuda-compute-unified-device-architecture">CUDA (Compute Unified Device Architecture)</a><ul>
+<li><a href="#제공-api">제공 API</a></li>
+<li><a href="#driver-api-vs-runtime-api">driver API vs runtime API</a></li>
+<li><a href="#cuda-enabled-gpu">CUDA-enabled GPU</a></li>
+</ul>
+</li>
+<li><a href="#compute-capability">Compute capability</a></li>
+<li><a href="#gpu-정보-확인-nvidia-smi">GPU 정보 확인 — nvidia-smi</a><ul>
+<li><a href="#출력-항목">출력 항목</a></li>
+<li><a href="#compute-mode">Compute Mode</a></li>
+<li><a href="#mig-multi-instance-gpu">MIG (Multi-Instance GPU)</a></li>
+</ul>
+</li>
+<li><a href="#cuda-toolkit-설치-ubuntu">CUDA toolkit 설치 (Ubuntu)</a></li>
+<li><a href="#호스트와-디바이스">호스트와 디바이스</a></li>
+<li><a href="#함수-실행-위치-지정-키워드">함수 실행 위치 지정 키워드</a></li>
+<li><a href="#cuda-프로그램의-구성과-컴파일">CUDA 프로그램의 구성과 컴파일</a></li>
+<li><a href="#hello-cuda">Hello CUDA</a><ul>
+<li><a href="#커널-호출-문법">커널 호출 문법</a></li>
+<li><a href="#코드-lec02-01cu">코드 (lec02_01.cu)</a></li>
+<li><a href="#컴파일-및-실행">컴파일 및 실행</a></li>
+</ul>
+</li>
+<li><a href="#호스트디바이스-코드-분리">호스트/디바이스 코드 분리</a><ul>
+<li><a href="#올바른-분리">올바른 분리</a></li>
+<li><a href="#잘못된-분리-에러-발생">잘못된 분리 (에러 발생)</a></li>
+</ul>
+</li>
+<li><a href="#slurm으로-cuda-프로그램-실행">Slurm으로 CUDA 프로그램 실행</a><ul>
+<li><a href="#1-컴파일">1) 컴파일</a></li>
+<li><a href="#2-job-스크립트-작성-job-gpush">2) Job 스크립트 작성 (job_gpu.sh)</a></li>
+<li><a href="#3-job-제출-및-결과-확인">3) Job 제출 및 결과 확인</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

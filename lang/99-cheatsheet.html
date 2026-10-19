@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>핵심 암기 치트시트 + 연습문제 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">언어와 사회</a>
+<ul>
+<li><a href="01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="99-cheatsheet.html" class="active">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="핵심-암기-치트시트-연습문제">핵심 암기 치트시트 + 연습문제<a class="headerlink" href="#핵심-암기-치트시트-연습문제" title="Permanent link">#</a></h1>
+<p>시험 직전 30분용. 7주차 복습 강의 「지금까지 나눈 이야기」의 15개 항목을 뼈대로 <strong>선다형·단답형에 나올 만한 것</strong>만 모았습니다.</p>
+<h2 id="전체-흐름-한-줄">전체 흐름 한 줄<a class="headerlink" href="#전체-흐름-한-줄" title="Permanent link">#</a></h2>
+<blockquote>
+<p><strong>사회언어학(언어 × 사회) → 지금 시대의 대화(맥커뮤니케이션·보이스피싱·AI) → 언어 능력과 세대 → 언어는 본능인가(핑커 vs 크리스티안센&amp;채터) → 인식이 바뀌면 말이 바뀐다 → 언어가 다르면 생각도 다른가(사피어-워프)</strong></p>
+</blockquote>
+<hr />
+<h2 id="개수로-외우는-목록">개수로 외우는 목록<a class="headerlink" href="#개수로-외우는-목록" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>목록</th>
+<th>개수</th>
+<th>항목</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>언어 변이의 사회적 요인</td>
+<td><strong>5</strong></td>
+<td>사회 계층, 성(gender), 연령, 민족성(ethnicity), 힘(power/status)</td>
+</tr>
+<tr>
+<td>사회언어학 연구 방법</td>
+<td><strong>3</strong></td>
+<td>현지 조사, 설문 조사, 담화 분석·말뭉치 분석</td>
+</tr>
+<tr>
+<td>보이스피싱(기관사칭형) 대화</td>
+<td><strong>6단계</strong></td>
+<td>접근 → 범죄 연루 협박 → 사회적 고립화 → 수직 관계 강화 → <strong>인출 유도(핵심)</strong> → 인출 여부 확인</td>
+</tr>
+<tr>
+<td>대화형 AI의 한계</td>
+<td><strong>5</strong></td>
+<td>즉흥적 개입 부재, 화제 협상 어려움, 유연한 수정 전략 부재, 구어체·비언어 처리 한계, 사회문화적 지식·감정 이해 부족</td>
+</tr>
+<tr>
+<td>ACTFL 등급</td>
+<td><strong>5</strong></td>
+<td>초급 Novice → 중급 Intermediate → 상급 Advanced → 최상급 Superior → 최고 Distinguished</td>
+</tr>
+<tr>
+<td>대화의 기능</td>
+<td><strong>5</strong></td>
+<td>사람을 사람되게, 문화 전달, 대인관계 형성·유지, 타인과 자신 알기, 협동</td>
+</tr>
+<tr>
+<td>공정성 유형</td>
+<td><strong>4</strong></td>
+<td>절차적, 분배적, 관계적, 정보적</td>
+</tr>
+<tr>
+<td>언어가 본능이라는 증거</td>
+<td><strong>4</strong></td>
+<td>언어 보편성, 언어 습득, 언어의 재창조, 일반지능과 분리되는 언어능력</td>
+</tr>
+<tr>
+<td>언어의 작동 원리</td>
+<td><strong>2</strong></td>
+<td>단어, 문법 및 조합 능력</td>
+</tr>
+<tr>
+<td>핑커의 입장</td>
+<td><strong>3</strong></td>
+<td>진화적 적응, 언어 보편성 존재, 언어는 사고에 영향은 주나 전적으로 제약 ✗</td>
+</tr>
+<tr>
+<td>촘스키 반박의 축</td>
+<td><strong>3</strong></td>
+<td>언어 구조의 기원·본질, 언어 진화의 메커니즘, 보편문법의 필요성 여부</td>
+</tr>
+<tr>
+<td>언어 진화 메커니즘 (채터 등)</td>
+<td><strong>4</strong></td>
+<td>뇌에 내장 ✗ 형성·진화, 비언어적 능력에 편승, 사회성의 역할, 다발적 출현</td>
+</tr>
+<tr>
+<td>줄임말 유형</td>
+<td><strong>5</strong></td>
+<td>앞음절(이해 불필요), 앞음절(이해 필요), 의미 이해 필요, 합성, 탈경계성</td>
+</tr>
+<tr>
+<td>은어·비어·속어 사용 이유</td>
+<td><strong>3</strong></td>
+<td>반항적 심리, 수치심 은폐, 유희적 쾌감</td>
+</tr>
+<tr>
+<td>혐오 표출 방식</td>
+<td><strong>3</strong></td>
+<td>약자에 대한 분노, 평가절하로 무력화, 정당한 차별·혐오 인식의 공고화</td>
+</tr>
+<tr>
+<td>언어와 사고의 관계</td>
+<td><strong>3경우</strong></td>
+<td>언어→사고 / 사고→언어 / 언어가 영향 못 줌</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="인물-책-연도">인물 · 책 · 연도<a class="headerlink" href="#인물-책-연도" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>누구</th>
+<th>무엇</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Block (2002)</strong></td>
+<td>맥커뮤니케이션 — 대화의 맥도날드화 비판</td>
+</tr>
+<tr>
+<td><strong>로빈 던바</strong> 외</td>
+<td>『사회성』 — <strong>보컬 그루밍</strong></td>
+</tr>
+<tr>
+<td><strong>하버드 성인발달연구소</strong></td>
+<td>1930년대 후반~, 2,000명↑, 행복 조건 1위 = <strong>관계</strong></td>
+</tr>
+<tr>
+<td><strong>Dale Carnegie</strong></td>
+<td>효과적인 대화법 → 성공적인 인생</td>
+</tr>
+<tr>
+<td><strong>신동일 (2025)</strong></td>
+<td>『모두를 위한 대화감수성 수업』 — ACTFL, 대화 기술, AI는 대화의 협력자가 아니다</td>
+</tr>
+<tr>
+<td><strong>구현정·전영옥 (2013)</strong></td>
+<td>『의사소통의 기법』 — 대화의 정의, 대화의 기능 5</td>
+</tr>
+<tr>
+<td><strong>Jean Twenge (2023)</strong></td>
+<td>『Generations』 — 세대 차이 = 문화적 변화 + 기술 발전</td>
+</tr>
+<tr>
+<td><strong>신지영 (2024)</strong></td>
+<td>『언어감수성 수업』 — '어떤 게요?' 억양</td>
+</tr>
+<tr>
+<td><strong>스티븐 핑커</strong></td>
+<td>『언어본능』 (슬라이드 1995) — "언어는 인간의 본능이다!"</td>
+</tr>
+<tr>
+<td><strong>촘스키 (1928~)</strong></td>
+<td><strong>보편문법</strong>, 선천주의</td>
+</tr>
+<tr>
+<td><strong>크리스티안센 &amp; 채터 (2022)</strong></td>
+<td>『진화하는 언어(The Language Game)』 — 협력적 즉흥연주, 문화적 진화, 보편문법 불필요</td>
+</tr>
+<tr>
+<td><strong>공옥진 (1931~2012)</strong></td>
+<td>병신춤을 널리 알림 → 비판으로 연행 중단</td>
+</tr>
+<tr>
+<td><strong>박순형 (2022)</strong></td>
+<td>MZ세대 언어 — 밈, 멀티페르소나, 줄임말 5유형</td>
+</tr>
+<tr>
+<td><strong>이종임 외 (2021)</strong></td>
+<td>청년세대 혐오 표현 (에브리타임)</td>
+</tr>
+<tr>
+<td><strong>허새로미 (2019)</strong></td>
+<td>『내 언어에 속지 않는 법』 — 드세다·당돌하다·맹랑하다</td>
+</tr>
+<tr>
+<td><strong>김지혜 (2019)</strong></td>
+<td>『선량한 차별주의자』 — 결정장애, "한국 사람 다 되었네요"</td>
+</tr>
+<tr>
+<td><strong>프란츠 보애스 (1858~1942)</strong></td>
+<td><strong>문화상대주의</strong> 제안 (20세기 초)</td>
+</tr>
+<tr>
+<td><strong>사피어 (1884~1939) &amp; 워프 (1897~1941)</strong></td>
+<td><strong>사피어-워프 가설</strong> = 언어상대성 가설 = 언어결정주의</td>
+</tr>
+<tr>
+<td><strong>Clark &amp; Clark (1977)</strong></td>
+<td>어휘 사용만으로 언어 특징 판단 ✗ (전문성 문제)</td>
+</tr>
+<tr>
+<td><strong>Carmichael et al. (1932)</strong></td>
+<td><strong>심상 왜곡</strong> (안경 vs 아령)</td>
+</tr>
+<tr>
+<td><strong>Glucksberg (1988)</strong></td>
+<td>그림에 제목 붙이기</td>
+</tr>
+<tr>
+<td><strong>Santa &amp; Ranken (1972)</strong></td>
+<td>이름 있는 그림을 더 잘 기억</td>
+</tr>
+<tr>
+<td><strong>Winawer et al. (2007)</strong></td>
+<td>러시아어 goluboy / siniy</td>
+</tr>
+<tr>
+<td><strong>Kay &amp; Regier (2007)</strong></td>
+<td>베린모어 nol / wor</td>
+</tr>
+<tr>
+<td><strong>Özgen (2004)</strong></td>
+<td>파랑-녹색 경계 B2–G2 차이를 더 크게 느낌</td>
+</tr>
+<tr>
+<td><strong>Schaller (1991)</strong></td>
+<td>27세 청각장애인 일데폰소 — 언어 상실 ≠ 개념 상실</td>
+</tr>
+<tr>
+<td><strong>Wynn (1992)</strong></td>
+<td>생후 5개월 아기 암산</td>
+</tr>
+<tr>
+<td><strong>Berlin &amp; Kay (1969)</strong></td>
+<td>기본 색채어 출현 순서</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="숫자">숫자<a class="headerlink" href="#숫자" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>감정노동</td>
+<td><strong>70%↑</strong> 억지 미소 / <strong>66%</strong> 행복 연기</td>
+</tr>
+<tr>
+<td>보이스피싱 2017→2022 전체</td>
+<td>건수 <strong>10%</strong>·피해액 <strong>30% 감소</strong></td>
+</tr>
+<tr>
+<td>보이스피싱 2017→2022 기관사칭형</td>
+<td>건수 <strong>57%</strong>·피해액 <strong>19.3% 증가</strong></td>
+</tr>
+<tr>
+<td>보이스피싱 국내 최초</td>
+<td><strong>2006년</strong></td>
+</tr>
+<tr>
+<td>「그녀」 사만다</td>
+<td>동시 대화 <strong>8,316명</strong>, 사랑 <strong>641명</strong></td>
+</tr>
+<tr>
+<td>사일런트 세대</td>
+<td><strong>1920년대 후반~1940년대 중반</strong>, 1951년 『타임』</td>
+</tr>
+<tr>
+<td>베이비붐 세대</td>
+<td><strong>1946~1964</strong>, 미국 <strong>7,600만 명</strong>, 우울증 <strong>2배</strong></td>
+</tr>
+<tr>
+<td>X세대</td>
+<td><strong>1965~1979</strong>, 워라밸 최초</td>
+</tr>
+<tr>
+<td>밀레니얼 세대</td>
+<td><strong>1980~1994</strong>, 70% 상위 20% 믿음, 80% 평균 이상 리더, <strong>22%</strong> 친구 없음(베이비붐 9%)</td>
+</tr>
+<tr>
+<td>Z세대</td>
+<td><strong>1995~2012</strong></td>
+</tr>
+<tr>
+<td>adulting</td>
+<td><strong>22세</strong> 기준 경험 부족, X↔밀레니얼 사회적 연령 차 <strong>5~7세</strong></td>
+</tr>
+<tr>
+<td>3요 설문</td>
+<td><strong>74%</strong> 가장 힘든 세대, <strong>65%</strong> 더 많이 해고, <strong>12%</strong> 첫 주 해고</td>
+</tr>
+<tr>
+<td>언어 발달</td>
+<td><strong>5~6개월</strong> 옹알이, <strong>12개월</strong> 첫 단어, <strong>3세</strong> 복잡한 문장</td>
+</tr>
+<tr>
+<td>한국어 과잉 일반화 예</td>
+<td>생후 <strong>33~36개월</strong></td>
+</tr>
+<tr>
+<td>중국 피진 영어</td>
+<td><strong>300년</strong> 유지</td>
+</tr>
+<tr>
+<td>니카라과 수어</td>
+<td><strong>1980년경</strong>, <strong>6~9세</strong> 아이들</td>
+</tr>
+<tr>
+<td>지적장애 사례</td>
+<td><strong>IQ 50</strong></td>
+</tr>
+<tr>
+<td>어휘량</td>
+<td>고등학생 <strong>6만 단어</strong>, <strong>90분</strong>마다 1단어</td>
+</tr>
+<tr>
+<td>조합</td>
+<td>20단어 이하 문장 <strong>100조 이상</strong></td>
+</tr>
+<tr>
+<td>덴마크어·힌디어</td>
+<td><strong>7,000년</strong> 만에 공통 조상에서 분화</td>
+</tr>
+<tr>
+<td>Now or Never Bottleneck</td>
+<td>소리 <strong>0.1초</strong> 내 소멸, 분당 최대 <strong>150단어</strong></td>
+</tr>
+<tr>
+<td>뇌 크기</td>
+<td><strong>2백만 년</strong> 전 조상보다 약 <strong>3배</strong> (폭주 선택)</td>
+</tr>
+<tr>
+<td>간호부 / 간호사</td>
+<td><strong>1907</strong> / <strong>1987</strong> 의료법 개정</td>
+</tr>
+<tr>
+<td>수어</td>
+<td><strong>2016</strong> 한국수화언어법</td>
+</tr>
+<tr>
+<td>국민학교 / 초등학교</td>
+<td><strong>1941</strong> 일본 칙서 / <strong>1996.3.1</strong></td>
+</tr>
+<tr>
+<td>귀여니체 / 급식체</td>
+<td><strong>2000년대 초반</strong> / <strong>2015~2019</strong></td>
+</tr>
+<tr>
+<td>아랍 낙타</td>
+<td><strong>20개 넘음</strong></td>
+</tr>
+<tr>
+<td>에스키모 눈</td>
+<td><strong>10개 정도</strong> (영어도 10개 정도)</td>
+</tr>
+<tr>
+<td>사모어</td>
+<td>문장의 <strong>81%</strong> (복습 슬라이드: 80% 이상) 지리 정보</td>
+</tr>
+<tr>
+<td>일데폰소</td>
+<td><strong>27세</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="헷갈리는-비교">헷갈리는 비교<a class="headerlink" href="#헷갈리는-비교" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>비교</th>
+<th>A</th>
+<th>B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>표준형 사용</td>
+<td><strong>상위 계층, 여성</strong></td>
+<td>비표준형: 노동 계층, 남성</td>
+</tr>
+<tr>
+<td>피진 vs 크리올</td>
+<td>피진: 두 언어 화자의 <strong>혼성어</strong>, 어휘=상층어·문법=하층어, 단순, 수명 짧음</td>
+<td>크리올: 피진이 <strong>모국어</strong>로 정착, 아이들이 시제·부정 등 문법 보완</td>
+</tr>
+<tr>
+<td>핑커 vs 채터</td>
+<td><strong>선천주의</strong>, 보편문법 내장(hardwired), 생물학적 진화</td>
+<td><strong>문화적 진화론</strong>, 즉흥연주·charades, 빠른 문화적 진화, 보편문법 불필요</td>
+</tr>
+<tr>
+<td>언어 간 공통점의 원인</td>
+<td>촘스키: <strong>보편문법</strong></td>
+<td>채터 등: 공유하는 <strong>인지적 제약</strong>(기억·지각), 공통된 의사소통 문제</td>
+</tr>
+<tr>
+<td>언어능력 ✗ / 지능 ○</td>
+<td><strong>실어증</strong>(좌반구 손상), <strong>SLI</strong></td>
+<td>언어능력 ○ / 지능 ✗: <strong>수다쟁이·서번트·윌리엄스 증후군</strong></td>
+</tr>
+<tr>
+<td>은어 / 비어 / 속어</td>
+<td>은어: 집단 내부, <strong>사회적 방언</strong> (꼰대, 띵작)</td>
+<td>비어: <strong>낮춤</strong> (대가리) / 속어: <strong>저속·욕</strong> (존맛탱)</td>
+</tr>
+<tr>
+<td>문화상대주의 vs 자문화중심주의</td>
+<td>그 문화 사람의 시각, 보애스</td>
+<td>내 문화를 <strong>당연하게 여기는 것까지</strong> 포함</td>
+</tr>
+<tr>
+<td>언어상대주의 vs 사피어-워프</td>
+<td>모든 언어는 <strong>대등</strong>·완전</td>
+<td>언어가 <strong>사고를 결정</strong> (언어결정주의)</td>
+</tr>
+<tr>
+<td>언어상대성 vs 전문성</td>
+<td>언어가 세계관을 만든다</td>
+<td>어휘 차이는 <strong>유용성·전문성</strong>의 차이 (Clark &amp; Clark)</td>
+</tr>
+<tr>
+<td>6.1 vs 6.2 vs 6.3</td>
+<td>언어→사고: 색채 실험, 심상 왜곡</td>
+<td>사고→언어: 피라항, 사모 / 영향 ✗: 착시</td>
+</tr>
+<tr>
+<td>밈 vs 멀티페르소나</td>
+<td>밈: mimesis+gene, 모방·패러디</td>
+<td>멀티페르소나: multi+persona, <strong>다중 자아</strong>, 줄임말의 <strong>숨김 기능</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7주차-복습-강의-15개-항목-체크리스트">7주차 복습 강의 15개 항목 체크리스트<a class="headerlink" href="#7주차-복습-강의-15개-항목-체크리스트" title="Permanent link">#</a></h2>
+<p>각 항목을 보고 핵심을 30초 안에 말할 수 있는지 확인하세요.</p>
+<ol>
+<li>사회언어학의 개념과 연구 대상 → <a href="01-sociolinguistics.html">1장</a></li>
+<li>지금 우리 시대의 언어 (맥커뮤니케이션 / 보이스피싱 / AI) → <a href="01-sociolinguistics.html">1장</a></li>
+<li>언어능력의 측정 (ACTFL) → <a href="02-language-user.html">2장</a></li>
+<li>대화기술의 습득 → <a href="02-language-user.html">2장</a></li>
+<li>세대별 언어가 다른 이유 (트웬지, adulting) → <a href="02-language-user.html">2장</a></li>
+<li>인식의 변화에 따른 언어의 변화 → <a href="04-social-change.html">4장</a></li>
+<li>유행의 언어 (밈, 멀티페르소나, 귀여니체, 급식체) → <a href="04-social-change.html">4장</a></li>
+<li>혐오의 언어 (+ 개와 벌레, 드세다, 꼰대, 장애, "한국 사람 다 되었네요") → <a href="04-social-change.html">4장</a></li>
+<li>언어가 본능이라는 증거 → <a href="03-language-instinct.html">3장</a></li>
+<li>언어의 작동 원리 → <a href="03-language-instinct.html">3장</a></li>
+<li>핑커 선생님의 생각 → <a href="03-language-instinct.html">3장</a></li>
+<li>촘스키 선생님 반박하기 → <a href="03-language-instinct.html">3장</a></li>
+<li>언어와 사회의 관계 → <a href="03-language-instinct.html">3장</a></li>
+<li>사피어-워프 가설 → <a href="05-language-culture.html">5장</a></li>
+<li>언어와 사고의 관계 → <a href="05-language-culture.html">5장</a></li>
+</ol>
+<hr />
+<h2 id="연습문제">연습문제<a class="headerlink" href="#연습문제" title="Permanent link">#</a></h2>
+<p>슬라이드 내용으로 만든 예상 문제입니다. 답은 눌러서 확인하세요.</p>
+<h3 id="단답형">단답형<a class="headerlink" href="#단답형" title="Permanent link">#</a></h3>
+<p><strong>1.</strong> 언어와 사회의 상호작용을 연구하는 학문 분야는?</p>
+<details>
+<summary>정답</summary>
+<p>사회언어학(sociolinguistics)</p>
+</details>
+<p><strong>2.</strong> 언어 변이의 사회적 요인 5가지를 쓰시오.</p>
+<details>
+<summary>정답</summary>
+<p>사회 계층, 성(gender), 연령, 민족성(ethnicity), 힘(power/status)</p>
+</details>
+<p><strong>3.</strong> 경쟁주의·경제주의 시대에 언어가 상품·기술로 취급되면서 대화가 맥도날드화된 현실을 비판하는 개념은?</p>
+<details>
+<summary>정답</summary>
+<p>맥커뮤니케이션(McCommunication) — Block(2002)</p>
+</details>
+<p><strong>4.</strong> 보이스피싱 대화의 6단계 중 '핵심 단계'로 불리는 것은?</p>
+<details>
+<summary>정답</summary>
+<p>5단계 인출 유도</p>
+</details>
+<p><strong>5.</strong> 뇌 용량과 공동체 규모가 커지면서 그루밍의 간극을 언어가 메운다는 개념은?</p>
+<details>
+<summary>정답</summary>
+<p>보컬 그루밍(vocal grooming)</p>
+</details>
+<p><strong>6.</strong> ACTFL 등급에서 '스토리텔링이 가능한 수준'은?</p>
+<details>
+<summary>정답</summary>
+<p>상급(Advanced)</p>
+</details>
+<p><strong>7.</strong> 'I'm going to stop adulting.'처럼 '어른'을 동사로 쓰는 현상과 관련된 더 큰 문화적 맥락은?</p>
+<details>
+<summary>정답</summary>
+<p>성장 지연, 느린 삶의 전략(slow life strategy)</p>
+</details>
+<p><strong>8.</strong> 리더가 의사결정의 근거를 투명하게 공유하는 것은 어떤 공정성인가?</p>
+<details>
+<summary>정답</summary>
+<p>정보적 공정성</p>
+</details>
+<p><strong>9.</strong> 인간이 태어날 때부터 가지고 있는, 모든 언어에 존재하는 문법을 제안한 학자와 그 문법의 이름은?</p>
+<details>
+<summary>정답</summary>
+<p>촘스키(Noam Chomsky), 보편문법(universal grammar)</p>
+</details>
+<p><strong>10.</strong> 피진이 뿌리내려 모국어로 사용되는 말은?</p>
+<details>
+<summary>정답</summary>
+<p>크리올(creole)</p>
+</details>
+<p><strong>11.</strong> 언어가 사회를 복잡하게 만들고, 그로 인해 사회적 지능에 압력이 생겨 다시 언어가 복잡해지는 순환 구조는? 그리고 이 '폭주 선택'으로 설명되는 현상은?</p>
+<details>
+<summary>정답</summary>
+<p>사회적 지능에 대한 긍정적 피드백 루프(positive feedback loop) / 인간의 뇌가 2백만 년 전 조상보다 약 3배 커진 것</p>
+</details>
+<p><strong>12.</strong> '다양함'과 '가면'의 합성어로, 다중적 자아정체성을 뜻하는 말은?</p>
+<details>
+<summary>정답</summary>
+<p>멀티페르소나(Multi Persona)</p>
+</details>
+<p><strong>13.</strong> 특수한 집단에서 남이 모르게 자기들끼리만 알도록 쓰는 말(사회적 방언)은?</p>
+<details>
+<summary>정답</summary>
+<p>은어</p>
+</details>
+<p><strong>14.</strong> 문화상대주의를 처음 제안한 인류학자는?</p>
+<details>
+<summary>정답</summary>
+<p>프란츠 보애스(Franz Boas)</p>
+</details>
+<p><strong>15.</strong> 언어 자극으로 인해 원래의 기억이 왜곡되는 현상은?</p>
+<details>
+<summary>정답</summary>
+<p>심상 왜곡(image-distorting) — Carmichael et al.(1932)</p>
+</details>
+<p><strong>16.</strong> 언어가 사고에 영향을 주지 못하는 경우의 예로 든 두 가지 착시는?</p>
+<details>
+<summary>정답</summary>
+<p>뮐러-라이어 착시, 폰조 착시</p>
+</details>
+<p><strong>17.</strong> 색채어가 두 개뿐인 언어에서 그 두 색은? 세 번째로 생기는 색은?</p>
+<details>
+<summary>정답</summary>
+<p>검정·하양(다니어 mili·mola) / 빨강 — Berlin &amp; Kay(1969)</p>
+</details>
+<h3 id="선다형">선다형<a class="headerlink" href="#선다형" title="Permanent link">#</a></h3>
+<p><strong>18.</strong> 사회언어학에서 표준형을 더 많이 사용하는 경향이 있는 집단끼리 바르게 묶은 것은?</p>
+<p>① 노동 계층, 여성 ② 상위 계층, 남성 ③ 상위 계층, 여성 ④ 노동 계층, 남성</p>
+<details>
+<summary>정답</summary>
+<p>③ 상위 계층, 여성</p>
+</details>
+<p><strong>19.</strong> 대화형 AI의 한계 중 "시작된 화제를 반드시 마쳐야 하는 전형적인 맥커뮤니케이션 대화법을 따른다"에 해당하는 것은?</p>
+<p>① 능동적·즉흥적 개입의 부재 ② 화제 협상의 어려움 ③ 유연한 수정 전략의 부재 ④ 사회문화적 지식의 부족</p>
+<details>
+<summary>정답</summary>
+<p>② 화제 협상의 어려움</p>
+</details>
+<p><strong>20.</strong> '워라밸(Work-Life Balance)' 개념을 처음 제시한 세대는?</p>
+<p>① 사일런트 세대 ② 베이비붐 세대 ③ X세대 ④ 밀레니얼 세대</p>
+<details>
+<summary>정답</summary>
+<p>③ X세대</p>
+</details>
+<p><strong>21.</strong> 핑커가 제시한 '언어가 본능이라는 증거'가 <strong>아닌</strong> 것은?</p>
+<p>① 언어 보편성 ② 언어의 재창조 ③ 일반지능과 분리되는 언어능력 ④ 비언어적 능력에의 편승</p>
+<details>
+<summary>정답</summary>
+<p>④ — 비언어적 능력에 편승(piggybacking)은 크리스티안센 &amp; 채터의 주장</p>
+</details>
+<p><strong>22.</strong> 크리스티안센 &amp; 채터의 주장으로 옳지 <strong>않은</strong> 것은?</p>
+<p>① 언어는 협력적인 즉흥연주의 산물이다 ② 언어 진화는 빠른 문화적 진화로 이루어졌다 ③ 언어 간 유사성은 뇌에 내장된 보편문법 때문이다 ④ 아이들은 입력 자극의 통계적 규칙성을 포착해 언어를 학습한다</p>
+<details>
+<summary>정답</summary>
+<p>③ — 이들은 유사성을 공유하는 <strong>인지적 제약</strong>과 공통된 의사소통 문제 때문이라고 봄</p>
+</details>
+<p><strong>23.</strong> 실어증 환자처럼 '언어 장애가 있지만 지능은 유지'되는 사례가 <strong>아닌</strong> 것은?</p>
+<p>① 좌반구 손상으로 인한 실어증 ② 특정언어장애(SLI) ③ 윌리엄스 증후군</p>
+<details>
+<summary>정답</summary>
+<p>③ — 윌리엄스 증후군은 반대로 '언어능력 유지, 지능 장애' 사례</p>
+</details>
+<p><strong>24.</strong> '간호사'로 명칭이 바뀐 계기와 그 의미로 옳은 것은?</p>
+<p>① 1907년 대한의원 설치, 여성을 뜻함 ② 광복 이후, 직업인으로 ③ 1987년 의료법 개정, '선생'의 뜻으로 격을 높임</p>
+<details>
+<summary>정답</summary>
+<p>③</p>
+</details>
+<p><strong>25.</strong> '킹받네', '어쩔티비'는 줄임말의 어떤 유형인가?</p>
+<p>① 앞음절만 딴 줄임말 ② 합성 방식의 새로운 단어 ③ 탈경계성(trans-boundary) 방식의 단어</p>
+<details>
+<summary>정답</summary>
+<p>③</p>
+</details>
+<p><strong>26.</strong> 자문화중심주의에 대한 설명으로 옳은 것은?</p>
+<p>① 자기 문화에 우월감을 느끼고 강요하는 태도만을 말한다 ② 자기 문화의 가치를 자연스럽고 당연하게 여기는 것도 포함한다 ③ 문화인류학의 기본 원리다</p>
+<details>
+<summary>정답</summary>
+<p>② — ①은 "~만"이 틀림, ③은 문화상대주의</p>
+</details>
+<p><strong>27.</strong> 다음 중 '사고가 언어에 영향을 주는 경우'의 사례는?</p>
+<p>① 러시아어 goluboy/siniy ② 베린모어 nol/wor ③ 피라항어에 숫자·색채어가 없음 ④ 뮐러-라이어 착시</p>
+<details>
+<summary>정답</summary>
+<p>③ — ①②는 언어→사고, ④는 언어가 영향 못 주는 경우</p>
+</details>
+<p><strong>28.</strong> "어휘 사용만 가지고 한 언어의 특징으로 생각하는 것은 잘못이다"라는 주장과 관련된 개념은?</p>
+<p>① 언어결정주의 ② 전문성의 문제 ③ 자문화중심주의</p>
+<details>
+<summary>정답</summary>
+<p>② — Clark &amp; Clark(1977), 언어 상대성 문제는 전문성 문제와 구별해야 함</p>
+</details>
+  <footer class="page-footer"><code>content/lang/99-cheatsheet.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#전체-흐름-한-줄">전체 흐름 한 줄</a></li>
+<li><a href="#개수로-외우는-목록">개수로 외우는 목록</a></li>
+<li><a href="#인물-책-연도">인물 · 책 · 연도</a></li>
+<li><a href="#숫자">숫자</a></li>
+<li><a href="#헷갈리는-비교">헷갈리는 비교</a></li>
+<li><a href="#7주차-복습-강의-15개-항목-체크리스트">7주차 복습 강의 15개 항목 체크리스트</a></li>
+<li><a href="#연습문제">연습문제</a><ul>
+<li><a href="#단답형">단답형</a></li>
+<li><a href="#선다형">선다형</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

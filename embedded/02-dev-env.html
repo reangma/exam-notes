@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2. 개발 환경 구축 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="02-dev-env.html" class="active">2. 개발 환경 구축</a></li>
+<li><a href="03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="98-code.html">코드 모음</a></li>
+<li><a href="99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="2-개발-환경-구축">2. 개발 환경 구축<a class="headerlink" href="#2-개발-환경-구축" title="Permanent link">#</a></h1>
+<h2 id="rpi-4-model-b-하드웨어-구성">RPi 4 Model B 하드웨어 구성<a class="headerlink" href="#rpi-4-model-b-하드웨어-구성" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>포트 이름과 <strong>약어의 full name</strong>(GPIO, CSI, DSI, PoE)을 묻기 좋음</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>번호</th>
+<th>포트</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①</td>
+<td><strong>GPIO</strong> (general-purpose input/output)</td>
+<td>범용 입출력 포트. 디지털 값의 입력과 출력에 사용</td>
+</tr>
+<tr>
+<td>②</td>
+<td>USB 포트</td>
+<td>마우스·키보드·무선랜카드 연결. USB 2.0과 3.0 지원</td>
+</tr>
+<tr>
+<td>③</td>
+<td>Ethernet 포트</td>
+<td>인터넷/인트라넷 네트워크 연결</td>
+</tr>
+<tr>
+<td>④</td>
+<td>아날로그 오디오 출력</td>
+<td>오디오 연결 단자</td>
+</tr>
+<tr>
+<td>⑤</td>
+<td><strong>CSI</strong> (camera serial interface)</td>
+<td><strong>카메라</strong> 연결 인터페이스</td>
+</tr>
+<tr>
+<td>⑥</td>
+<td>HDMI</td>
+<td><strong>micro HDMI 2개</strong> → 듀얼 모니터 가능</td>
+</tr>
+<tr>
+<td>⑦</td>
+<td>USB-C</td>
+<td>전원. <strong>5V, 700mA 이상</strong> 공급. 스마트폰 충전 케이블과 연결 가능</td>
+</tr>
+<tr>
+<td>⑧</td>
+<td><strong>DSI</strong> (display serial interface)</td>
+<td><strong>디스플레이 장치</strong> 연결 인터페이스</td>
+</tr>
+<tr>
+<td>⑨</td>
+<td>Micro SD 카드 슬롯</td>
+<td>보드 <strong>아래쪽</strong>에 위치</td>
+</tr>
+<tr>
+<td>⑩</td>
+<td>Wi-Fi 안테나</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="rpi-4-model-b-주요-스펙">RPi 4 Model B 주요 스펙<a class="headerlink" href="#rpi-4-model-b-주요-스펙" title="Permanent link">#</a></h3>
+<ul>
+<li>고성능 <strong>64비트 쿼드코어</strong> 프로세서</li>
+<li>micro HDMI <strong>2개</strong> → <strong>4K 해상도 듀얼 디스플레이</strong></li>
+<li>최대 <strong>4Kp60</strong> 하드웨어 비디오 디코딩</li>
+<li>최대 <strong>8GB</strong> RAM</li>
+<li>듀얼 대역 <strong>2.4/5.0GHz</strong> 무선 LAN</li>
+<li><strong>Bluetooth 5.0</strong></li>
+<li><strong>기가비트</strong> Ethernet</li>
+<li>USB 2.0 + USB 3.0</li>
+<li><strong>PoE (Power over Ethernet)</strong>: Ethernet을 통한 전원 공급</li>
+</ul>
+<div class="callout callout-important">
+<p class="callout-title">중요</p>
+<p><strong>Model A vs Model B</strong>: Model B는 <strong>유선 LAN(Ethernet 포트)이 있고</strong>, Model A는 <strong>없다</strong>.</p>
+</div>
+<hr />
+<h2 id="모델별-스펙-비교">모델별 스펙 비교<a class="headerlink" href="#모델별-스펙-비교" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>모델</th>
+<th>RPi 4 Model B</th>
+<th>RPi 3 Model B+</th>
+<th>RPi 3 Model B</th>
+<th>RPi Zero</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>출시일</td>
+<td>2019.06.24</td>
+<td>2018.03.14</td>
+<td>2016.01.29</td>
+<td>2015.11.25</td>
+</tr>
+<tr>
+<td>SoC</td>
+<td><strong>BCM2711</strong></td>
+<td>BCM2837B0</td>
+<td>BCM2837</td>
+<td>BCM2835</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Quad core <strong>Cortex-A72</strong> 64bit @1.5GHz</td>
+<td>Quad core Cortex-A53 @1.4GHz</td>
+<td>Quad core Cortex-A53 @1.2GHz</td>
+<td>ARM11 @1GHz</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>1/2/4/<strong>8GB</strong></td>
+<td>1GB</td>
+<td>1GB</td>
+<td>512MB</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Micro SD</td>
+<td>Micro SD</td>
+<td>Micro SD</td>
+<td>Micro SD</td>
+</tr>
+<tr>
+<td>Ethernet</td>
+<td><strong>Gigabit</strong></td>
+<td>Gigabit</td>
+<td>10/100 Mbit/s</td>
+<td><strong>None</strong></td>
+</tr>
+<tr>
+<td>무선 LAN</td>
+<td>802.11 b/g/n/ac <strong>dual band 2.4/5GHz</strong></td>
+<td>b/g/n/ac dual band</td>
+<td>b/g/n <strong>single band 2.4GHz</strong></td>
+<td>None</td>
+</tr>
+<tr>
+<td>Bluetooth</td>
+<td><strong>5.0</strong> + BLE</td>
+<td>4.2 + BLE</td>
+<td>4.1 + BLE</td>
+<td>None</td>
+</tr>
+<tr>
+<td><strong>GPIO</strong></td>
+<td><strong>40</strong></td>
+<td><strong>40</strong></td>
+<td><strong>40</strong></td>
+<td><strong>40</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p><strong>GPIO 핀 수는 모든 모델이 40개로 동일</strong>. RPi 3와 RPi 4는 <strong>GPIO 핀 번호도 동일</strong>하다.</p>
+</div>
+<h3 id="rpi-3부터-내장된-것">RPi 3부터 내장된 것<a class="headerlink" href="#rpi-3부터-내장된-것" title="Permanent link">#</a></h3>
+<p><strong>Wi-Fi, 블루투스</strong>가 기본 내장됨.</p>
+<hr />
+<h2 id="전원-케이블-준비물">전원 / 케이블 준비물<a class="headerlink" href="#전원-케이블-준비물" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>RPi 4 Model B</th>
+<th>RPi 3 Model B/B+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>영상</td>
+<td>HDMI to <strong>micro HDMI</strong> 케이블</td>
+<td><strong>HDMI</strong> 케이블</td>
+</tr>
+<tr>
+<td>전원</td>
+<td><strong>5VDC 3A</strong> 어댑터 (<strong>USB-C</strong>)</td>
+<td><strong>5VDC 2.1A</strong> 어댑터 (<strong>micro 5pin</strong>)</td>
+</tr>
+<tr>
+<td>저장</td>
+<td>Micro SD 16GB 이상 + 리더기</td>
+<td>동일</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="raspberry-pi-os">Raspberry Pi OS<a class="headerlink" href="#raspberry-pi-os" title="Permanent link">#</a></h2>
+<ul>
+<li>RPi의 <strong>공식 운영체제</strong> (이전 이름: <strong>Raspbian</strong>)</li>
+<li><strong>Debian 계열</strong> 리눅스 배포판 — Debian을 RPi용으로 수정 후 <strong>재빌드</strong>한 것</li>
+<li>RPi는 <strong>저전력을 목표로 한 ARM 아키텍처</strong>를 사용하므로 Raspberry Pi OS가 <strong>가장 안정적</strong></li>
+<li>LibreELEC, Ubuntu 등 다른 OS도 설치 가능</li>
+</ul>
+<h3 id="설치-흐름-요약">설치 흐름 (요약)<a class="headerlink" href="#설치-흐름-요약" title="Permanent link">#</a></h3>
+<ol>
+<li><strong>SD Card Formatter</strong>로 micro SD 포맷 (Overwrite format)</li>
+<li><strong>Raspberry Pi Imager</strong> 실행 → 장치 / 운영체제(<strong>Raspberry Pi OS 64bit</strong>) / 저장소 선택</li>
+<li>"사용자 지정"에서 설정
+   - <strong>호스트 이름</strong>: 네트워크에서 RPi를 구분하기 위해 부여하는 이름
+   - 시간대(Asia/Seoul), 키보드 레이아웃(kr)
+   - 사용자 ID / 비밀번호
+   - <strong>Wi-Fi SSID + 비밀번호</strong>
+   - <strong>SSH 사용 켜기</strong> (비밀번호 인증)</li>
+<li>기록 → SD 카드를 RPi 하단 슬롯에 삽입 → 부팅</li>
+</ol>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>Raspberry Pi Connect</strong>: 라즈베리파이 재단이 공식 제공하는 <strong>웹브라우저 기반 원격접속 서비스</strong></p>
+</div>
+<hr />
+<h2 id="패키지-및-커널-업데이트">패키지 및 커널 업데이트<a class="headerlink" href="#패키지-및-커널-업데이트" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>명령어와 <strong>각 명령어의 의미</strong>를 정확히 알아야 함</p>
+</div>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update<span class="w">      </span><span class="c1"># 설치된 패키지의 최신 버전 "정보" 확인</span>
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>upgrade<span class="w">     </span><span class="c1"># 설치된 패키지를 최신 버전으로 "업그레이드"</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>rpi-update<span class="w">          </span><span class="c1"># Raspberry Pi OS "커널" 업데이트</span>
+$<span class="w"> </span>sudo<span class="w"> </span>reboot<span class="w">              </span><span class="c1"># 업데이트된 커널 반영을 위해 재시작</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>명령어</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sudo</code></td>
+<td><strong>super user(root)의 권한</strong>(윈도우의 관리자 권한)으로 명령어를 실행</td>
+</tr>
+<tr>
+<td><code>apt-get</code></td>
+<td><strong>데비안 계열</strong>(Ubuntu, Raspberry Pi OS)의 <strong>패키지 관리</strong>(설치/삭제/업데이트) 명령어</td>
+</tr>
+<tr>
+<td><code>rpi-update</code></td>
+<td>커널 업데이트</td>
+</tr>
+</tbody>
+</table>
+<p>설치 중 <code>y/n</code> 물음이 나오면 특별한 경우가 아니면 <strong>y</strong> 입력.</p>
+<hr />
+<h2 id="원격-접속-방법-4가지">원격 접속 방법 4가지<a class="headerlink" href="#원격-접속-방법-4가지" title="Permanent link">#</a></h2>
+<div class="callout callout-exam">
+<p class="callout-title">시험 포인트</p>
+<p>어떤 방식이 <strong>무엇을 제공하는지</strong>(터미널 / GUI 화면 / 파일 전송 / 코드 편집) 구분</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>방식</th>
+<th>제공</th>
+<th>포트</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Termius (SSH)</strong></td>
+<td>원격 터미널 + <strong>SFTP 파일 송수신</strong></td>
+<td>22</td>
+</tr>
+<tr>
+<td><strong>VNC</strong></td>
+<td>RPi의 <strong>GUI 화면</strong> 원격 조작</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Windows 원격 데스크톱 (xrdp)</strong></td>
+<td>RPi의 <strong>데스크톱 화면</strong></td>
+<td><strong>3389/tcp</strong></td>
+</tr>
+<tr>
+<td><strong>VSCode Remote-SSH</strong></td>
+<td><strong>소스코드 편집 + 터미널</strong></td>
+<td>22</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-termius-ssh-원격-접속-파일-전송">1) Termius (SSH 원격 접속 + 파일 전송)<a class="headerlink" href="#1-termius-ssh-원격-접속-파일-전송" title="Permanent link">#</a></h3>
+<p>호스트 접속 정보:</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Address</td>
+<td>호스트의 <strong>IP 주소</strong> (예: 192.168.0.40) 또는 <strong>도메인 이름</strong></td>
+</tr>
+<tr>
+<td>General</td>
+<td>호스트 이름 설정</td>
+</tr>
+<tr>
+<td>SSH</td>
+<td>서버의 <strong>port 번호</strong> (예: <strong>22</strong>)</td>
+</tr>
+<tr>
+<td>Credentials</td>
+<td>사용자 계정 이름 + 암호</td>
+</tr>
+</tbody>
+</table>
+<p>파일 송수신은 화면 상단의 <strong>SFTP</strong> 클릭.</p>
+<h3 id="2-vnc">2) VNC<a class="headerlink" href="#2-vnc" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>raspi-config
+</code></pre></div>
+
+<p>→ <strong>3 Interface Options</strong> → <strong>VNC</strong> → <strong>Yes</strong> → OK → Finish → 재부팅</p>
+<ul>
+<li>PC에 <strong>VNC Viewer</strong> 설치 후 <strong>RPi의 IP 주소</strong> 입력</li>
+<li><strong>RPi와 PC가 같은 네트워크(같은 공유기)</strong> 에 있어야 함</li>
+</ul>
+<h3 id="3-windows-원격-데스크톱-xrdp">3) Windows 원격 데스크톱 (xrdp)<a class="headerlink" href="#3-windows-원격-데스크톱-xrdp" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>xrdp
+$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>xrdp
+$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>xrdp
+$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ufw
+$<span class="w"> </span>sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">3389</span>/tcp
+$<span class="w"> </span>sudo<span class="w"> </span>reboot
+</code></pre></div>
+
+<p>추가로 <strong>Wayland → X11</strong> 설정 필요:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>raspi-config
+</code></pre></div>
+
+<p>→ <strong>6 Advanced Options</strong> → <strong>A7 Wayland</strong> → <strong>W1 X11</strong> → OK → Finish → 재부팅</p>
+<h3 id="4-vscode-remote-ssh">4) VSCode Remote-SSH<a class="headerlink" href="#4-vscode-remote-ssh" title="Permanent link">#</a></h3>
+<ol>
+<li>VSCode → Extensions → <strong>remote-ssh</strong> 검색 후 설치</li>
+<li>좌측 하단 <strong>"open a remote window"</strong> 아이콘 클릭</li>
+<li><strong>Remote-SSH: Connect to Host...</strong> → <code>사용자이름@IP주소</code> 입력 (예: <code>pi@192.168.0.5</code>)</li>
+<li>플랫폼은 <strong>Linux</strong> 선택 → 암호 입력</li>
+<li><code>File &gt; Open Folder</code>로 작업 디렉토리 열기</li>
+<li><code>Terminal &gt; New Terminal</code>로 터미널 생성</li>
+</ol>
+<h3 id="rpi에-직접-vscode-설치">RPi에 직접 VSCode 설치<a class="headerlink" href="#rpi에-직접-vscode-설치" title="Permanent link">#</a></h3>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>code
+$<span class="w"> </span>sudo<span class="w"> </span>reboot
+</code></pre></div>
+
+<p>실행: RPi 아이콘 → Programming → Visual Studio Code</p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p>RPi에서 터미널 단축키: <strong>Ctrl + Alt + T</strong></p>
+</div>
+<hr />
+<h2 id="네트워크-구성-핫스팟-활용">네트워크 구성 (핫스팟 활용)<a class="headerlink" href="#네트워크-구성-핫스팟-활용" title="Permanent link">#</a></h2>
+<p>RPi와 PC가 <strong>같은 네트워크</strong>에 있어야 원격 접속이 가능하다.</p>
+<ul>
+<li>인터넷 공유기가 없으면 <strong>Windows 노트북의 모바일 핫스팟</strong> 또는 <strong>스마트폰 핫스팟</strong>이 공유기 역할</li>
+<li>Windows: <code>설정 &gt; 네트워크 및 인터넷 &gt; 모바일 핫스팟</code>에서 <strong>SSID / 암호 / 대역(2.4GHz)</strong> 설정</li>
+<li>핫스팟 연결 목록에서 <strong>RPi의 IP 주소 확인</strong> 가능</li>
+<li>스마트폰 핫스팟 사용 시 <strong>Network Analyzer 앱</strong>의 LAN → Scan으로 IP 확인</li>
+</ul>
+<h3 id="iphone-핫스팟-사용-시-맥북-수동-ip-설정-예시">iPhone 핫스팟 사용 시 (맥북 수동 IP 설정 예시)<a class="headerlink" href="#iphone-핫스팟-사용-시-맥북-수동-ip-설정-예시" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IPv4 구성</td>
+<td>수동</td>
+</tr>
+<tr>
+<td>IP 주소</td>
+<td>172.20.10.2</td>
+</tr>
+<tr>
+<td>서브넷 마스크</td>
+<td>255.255.255.240</td>
+</tr>
+<tr>
+<td>라우터</td>
+<td>172.20.10.1</td>
+</tr>
+</tbody>
+</table>
+  <footer class="page-footer"><code>content/embedded/02-dev-env.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#rpi-4-model-b-하드웨어-구성">RPi 4 Model B 하드웨어 구성</a><ul>
+<li><a href="#rpi-4-model-b-주요-스펙">RPi 4 Model B 주요 스펙</a></li>
+</ul>
+</li>
+<li><a href="#모델별-스펙-비교">모델별 스펙 비교</a><ul>
+<li><a href="#rpi-3부터-내장된-것">RPi 3부터 내장된 것</a></li>
+</ul>
+</li>
+<li><a href="#전원-케이블-준비물">전원 / 케이블 준비물</a></li>
+<li><a href="#raspberry-pi-os">Raspberry Pi OS</a><ul>
+<li><a href="#설치-흐름-요약">설치 흐름 (요약)</a></li>
+</ul>
+</li>
+<li><a href="#패키지-및-커널-업데이트">패키지 및 커널 업데이트</a></li>
+<li><a href="#원격-접속-방법-4가지">원격 접속 방법 4가지</a><ul>
+<li><a href="#1-termius-ssh-원격-접속-파일-전송">1) Termius (SSH 원격 접속 + 파일 전송)</a></li>
+<li><a href="#2-vnc">2) VNC</a></li>
+<li><a href="#3-windows-원격-데스크톱-xrdp">3) Windows 원격 데스크톱 (xrdp)</a></li>
+<li><a href="#4-vscode-remote-ssh">4) VSCode Remote-SSH</a></li>
+<li><a href="#rpi에-직접-vscode-설치">RPi에 직접 VSCode 설치</a></li>
+</ul>
+</li>
+<li><a href="#네트워크-구성-핫스팟-활용">네트워크 구성 (핫스팟 활용)</a><ul>
+<li><a href="#iphone-핫스팟-사용-시-맥북-수동-ip-설정-예시">iPhone 핫스팟 사용 시 (맥북 수동 IP 설정 예시)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>
