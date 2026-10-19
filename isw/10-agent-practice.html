@@ -51,6 +51,7 @@
 <a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
 <ul>
 <li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
 <li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
 <li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
 <li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
@@ -63,6 +64,8 @@
 <li><a href="10-agent-practice.html" class="active">10. Agent의 실제 활용</a></li>
 <li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
 <li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
 <li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
 </ul>
 </div>
@@ -118,6 +121,8 @@
 </div>
 <hr />
 <h2 id="2-single-agent-시나리오">2. Single Agent 시나리오 ★★<a class="headerlink" href="#2-single-agent-시나리오" title="Permanent link">#</a></h2>
+<figure class="fig" id="fig-stairs"><svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Single Agent 3단계" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-stairs-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-stairs-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-stairs-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-stairs-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="20" y="140" width="200" height="66" rx="10" fill="#EAF0FA" stroke="#CBD9EE"/> <text x="120" y="166" font-size="14" fill="#1E3A6E">Task-oriented</text><text x="120" y="186" font-size="12" fill="#4A5568">시킨 일을 쪼개서 수행</text><text x="120" y="201" font-size="11.5" fill="#8A93A3">예: 연구계획서 초안</text> <rect x="240" y="95" width="200" height="111" rx="10" fill="#FBF0D8" stroke="#EBCF95"/> <text x="340" y="122" font-size="14" fill="#C77E16">Innovation-oriented</text><text x="340" y="142" font-size="12" fill="#4A5568">새 지식 · 과학적 발견</text><text x="340" y="158" font-size="11.5" fill="#8A93A3">예: 졸업 논문 (연구 공백 찾기)</text> <rect x="460" y="40" width="200" height="166" rx="10" fill="#E4F2EA" stroke="#BFE0CC"/> <text x="560" y="67" font-size="14" fill="#2E7D55">(Future) Lifecycle</text><text x="560" y="87" font-size="12" fill="#4A5568">장기 생존 · 스스로 능력 확장</text><text x="560" y="105" font-size="12" fill="#2E7D55">→ AGI의 최종 목표</text> <text x="120" y="60" font-size="13" fill="#C77E16">자율성 · 난이도 ↑</text> <path d="M60 76L420 40" stroke="#C77E16" stroke-width="2" fill="none" marker-end="url(#fig-stairs-b)"/> </svg><figcaption>Single Agent 배포 3단계: Task → Innovation → Lifecycle로 갈수록 스스로 하는 일이 커진다</figcaption></figure>
+
 <p>에이전트 <strong>하나</strong>를 쓰는 방식이 3단계로 나뉩니다.</p>
 <div class="callout callout-important">
 <p class="callout-title">중요</p>
@@ -157,9 +162,11 @@
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
 <p><strong>연구 공백(research gap)</strong> = 아직 <strong>아무도 연구하지 않은 빈틈</strong>. 이걸 찾아내는 건 <strong>새로운 지식을 만드는 일</strong>이라 Task-oriented보다 어렵습니다.</p>
-<p><strong>Task vs Innovation 차이</strong>
-- 연구 <strong>계획서 초안</strong> (기존 정보 정리) → <strong>Task</strong>
-- 졸업 <strong>논문</strong> (새로운 발견, 실험) → <strong>Innovation</strong></p>
+<p><strong>Task vs Innovation 차이</strong></p>
+<ul>
+<li>연구 <strong>계획서 초안</strong> (기존 정보 정리) → <strong>Task</strong></li>
+<li>졸업 <strong>논문</strong> (새로운 발견, 실험) → <strong>Innovation</strong></li>
+</ul>
 </div>
 <h3 id="3-future-lifecycle-oriented-deployment-생애주기-지향">3) (Future) Lifecycle-oriented deployment (생애주기 지향)<a class="headerlink" href="#3-future-lifecycle-oriented-deployment-생애주기-지향" title="Permanent link">#</a></h3>
 <ul>
@@ -225,10 +232,12 @@
 </table>
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p><strong>하나씩 쉽게</strong>
-- <strong>자유 토론</strong>: 브레인스토밍처럼 마음껏 의견 → 아이디어는 많지만 <strong>배가 산으로</strong> 갈 수 있음
-- <strong>역할 분담</strong>: "넌 기획, 넌 개발, 넌 테스트" → 효율적이고 <strong>누구 잘못인지 명확</strong>하지만, <strong>정해진 역할 밖의 일</strong>은 못 함
-- <strong>반박·토론</strong>: 서로 "그건 틀렸어" 하며 개선 → 질이 좋아지지만, <strong>다 같이 틀린 답에 동의</strong>해 버릴 수도 있음</p>
+<p><strong>하나씩 쉽게</strong></p>
+<ul>
+<li><strong>자유 토론</strong>: 브레인스토밍처럼 마음껏 의견 → 아이디어는 많지만 <strong>배가 산으로</strong> 갈 수 있음</li>
+<li><strong>역할 분담</strong>: "넌 기획, 넌 개발, 넌 테스트" → 효율적이고 <strong>누구 잘못인지 명확</strong>하지만, <strong>정해진 역할 밖의 일</strong>은 못 함</li>
+<li><strong>반박·토론</strong>: 서로 "그건 틀렸어" 하며 개선 → 질이 좋아지지만, <strong>다 같이 틀린 답에 동의</strong>해 버릴 수도 있음</li>
+</ul>
 <p><strong>게임이론</strong> = 여러 참가자가 서로의 선택을 고려하며 최선을 찾는 이론. 여기선 "서로 견제하며 더 나은 답을 찾는다"는 뜻
 <strong>잘못된 합의로의 수렴</strong> = 토론하다 보니 <strong>다 같이 틀린 결론에 의견이 모이는 것</strong> (집단 착각)</p>
 </div>
@@ -293,6 +302,8 @@
 </div>
 <hr />
 <h2 id="4-human-agent-interaction-인간-에이전트-상호작용">4. Human-Agent Interaction (인간-에이전트 상호작용) ★★<a class="headerlink" href="#4-human-agent-interaction-인간-에이전트-상호작용" title="Permanent link">#</a></h2>
+<figure class="fig" id="fig-human"><svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="인간과 에이전트 관계" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-human-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-human-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-human-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-human-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="8" y="8" width="324" height="184" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="170" y="34" font-size="14" fill="#1E3A6E">Instructor-Executor (현재 기본)</text> <text x="170" y="82" font-size="34">🧑</text> <path d="M170 92V128" stroke="#1E3A6E" stroke-width="2.2" marker-end="url(#fig-human-a)"/> <text x="180" y="116" font-size="12" fill="#4A5568" text-anchor="start">지시 · 정량/정성 피드백</text> <text x="170" y="164" font-size="30">🤖</text> <text x="170" y="184" font-size="12" fill="#8A93A3">상사 - 부하</text> <rect x="348" y="8" width="324" height="184" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="510" y="34" font-size="14" fill="#2E7D55">Equal Partnership</text> <text x="430" y="120" font-size="34">🧑</text><text x="590" y="120" font-size="34">🤖</text> <path d="M466 108H554" stroke="#2E7D55" stroke-width="2.2" marker-end="url(#fig-human-c)" marker-start="url(#fig-human-c)"/> <text x="510" y="96" font-size="12" fill="#4A5568">공동 목표 · 공감</text> <text x="510" y="184" font-size="12" fill="#8A93A3">동료 - 동료 (대칭 관계)</text> </svg><figcaption>지금은 사람이 시키고 AI가 하는 관계, 앞으로는 같이 목표를 세우는 동료 관계로</figcaption></figure>
+
 <p><strong>인간과 Agent는 어떻게 협력해야 하는가?</strong></p>
 <div class="callout callout-exam">
 <p class="callout-title">시험 포인트</p>

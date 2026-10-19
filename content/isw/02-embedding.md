@@ -141,6 +141,7 @@ Tokenization  →  Vocabulary  →  Word
 > **"벡터 공간에 끼워 넣는다"를 그림으로 상상하기**
 >
 > 커다란 **지도**가 있다고 생각하세요. 단어 하나하나를 지도 위의 **한 점**에 찍습니다.
+>
 > - "강아지", "고양이", "햄스터"는 **서로 가까운 곳**에 (동물 동네)
 > - "사과", "바나나", "포도"는 **또 다른 동네**에 (과일 동네)
 >
@@ -191,6 +192,7 @@ Tokenization  →  Vocabulary  →  Word
 {: .참고 }
 > 더 유명한 예시로 이해하면 쉽습니다.
 > **`왕 − 남자 + 여자 = 여왕`**
+>
 > - 왕에서 "남자다움"을 빼고 "여자다움"을 더하면 → 여왕
 >
 > 이게 된다는 건 **"성별"이라는 개념이 벡터 안에 하나의 방향으로 들어 있다**는 뜻입니다. 컴퓨터가 단어의 **의미 관계**를 숫자로 이해하고 있는 거죠.
@@ -319,6 +321,8 @@ Tokenization  →  Vocabulary  →  Word
 
 ### 직관 — 왜 두 개를 곱하나?
 
+<figure class="fig" id="fig-tfidf"><svg viewBox="0 0 660 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TF-IDF 직관" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-tfidf-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-tfidf-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-tfidf-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-tfidf-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="130" y="40" width="240" height="95" fill="#F2EFE8" stroke="#fff" stroke-width="3"/> <rect x="370" y="40" width="240" height="95" fill="#FBF0D8" stroke="#fff" stroke-width="3"/> <rect x="130" y="135" width="240" height="95" fill="#F2EFE8" stroke="#fff" stroke-width="3"/> <rect x="370" y="135" width="240" height="95" fill="#F2EFE8" stroke="#fff" stroke-width="3"/> <text x="490" y="78" font-size="16" fill="#C77E16">점수 높음 ★</text><text x="490" y="102" font-size="13" fill="#4A5568">이 문서의 핵심 키워드</text><text x="490" y="122" font-size="12" fill="#8A93A3">예: 자소서의 "드론 대회 우승"</text> <text x="250" y="80" font-size="14" fill="#4A5568">중간</text><text x="250" y="104" font-size="12.5" fill="#8A93A3">희귀하지만 한두 번만 나옴</text> <text x="490" y="175" font-size="14" fill="#4A5568">낮음</text><text x="490" y="199" font-size="12.5" fill="#8A93A3">"그리고", "했습니다"</text><text x="490" y="217" font-size="12" fill="#8A93A3">모든 문서에 다 나옴</text> <text x="250" y="175" font-size="14" fill="#4A5568">낮음</text><text x="250" y="199" font-size="12.5" fill="#8A93A3">드물고 흔한 단어</text> <path d="M130 236H612" stroke="#1E3A6E" stroke-width="2" marker-end="url(#fig-tfidf-a)"/> <path d="M124 232V38" stroke="#1E3A6E" stroke-width="2" marker-end="url(#fig-tfidf-a)"/> <text x="370" y="262" font-size="13" fill="#1E3A6E">이 문서에 자주 나오나? (TF) → 자주</text> <text x="70" y="137" font-size="13" fill="#1E3A6E" transform="rotate(-90 70 137)">다른 문서엔 드문가? (IDF) → 희귀</text> </svg><figcaption>TF(이 문서에서 자주)와 IDF(다른 문서엔 드묾)가 둘 다 높을 때만 점수가 높다 → TF × IDF</figcaption></figure>
+
 {: .참고 }
 > **"자기소개서에서 그 사람을 대표하는 단어"를 찾는다고 해 봅시다.**
 >
@@ -326,6 +330,7 @@ Tokenization  →  Vocabulary  →  Word
 > - "**드론 대회 우승**" → **이 사람 자소서에만** 여러 번 나옴 → 이 사람을 대표함 ✅
 >
 > 즉 좋은 키워드는:
+>
 > 1. **이 문서에 자주 나오고** (TF가 높고)
 > 2. **다른 문서엔 잘 안 나와야** 합니다 (IDF가 높고)
 >
@@ -450,6 +455,7 @@ log가 없으면 희귀 단어 하나가 **점수 백만 점**을 받아서 다�
 
 {: .주의 }
 > **슬라이드 숫자의 함정 (알고만 있으세요)**
+>
 > - 공식에는 분모가 `1 + df(t)` 인데, 예시 계산은 `+1` 없이 `log(N/df)` 로 했습니다.
 > - 또 `0.176`은 **밑이 10인 log**(log₁₀ 1.5), `1.099`는 **밑이 e인 자연로그**(ln 3) 값이라 두 줄의 log 종류가 다릅니다.
 > - **시험에서 계산을 시키면 문제에 주어진 공식·조건을 따르면 되고**, 이 표가 그대로 나오면 **슬라이드 숫자를 그대로 쓰는 게 안전**합니다. 결론(희귀 단어일수록 점수가 높다)은 어느 쪽이든 같습니다.
@@ -479,11 +485,13 @@ One-hot과 TF-IDF의 **공통된 한계**입니다.
 
 {: .시험 }
 > 표 채우기로 나오기 좋습니다. 특히:
+>
 > - **공통점**: 둘 다 **벡터 차원 = 어휘(단어 사전) 크기**, 둘 다 **희소**
 > - TF-IDF의 한계 단어 3개: **문맥 무시 / 희소성 / 동의어·다의어 처리 불가**
 
 {: .참고 }
 > **용어 풀이**
+>
 > - **문맥 무시**: "나는 **배**가 아프다"와 "**배**를 깎아 먹었다"의 "배"를 **같은 단어로 취급**함 (단어 횟수만 세니까)
 > - **동의어**: 뜻이 같은 다른 단어 (강아지 = 멍멍이). TF-IDF는 이 둘을 **전혀 다른 단어**로 봄
 > - **다의어**: 한 단어에 뜻이 여럿 (배 = 몸/과일/탈것). TF-IDF는 이걸 **구별 못 함**
@@ -491,6 +499,8 @@ One-hot과 TF-IDF의 **공통된 한계**입니다.
 ---
 
 ## 8. Dense representation (밀집 표현) ★★
+
+<figure class="fig" id="fig-dense"><svg viewBox="0 0 740 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One-hot과 Dense 비교" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-dense-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-dense-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-dense-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-dense-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="8" y="8" width="354" height="254" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="185" y="34" font-size="15" fill="#C0463F">One-hot: 모든 단어가 남남</text> <text x="185" y="54" font-size="12" fill="#8A93A3">세 축이 서로 직각 → 어느 둘도 '더 가깝지' 않음</text> <g stroke="#1E3A6E" stroke-width="2.2" fill="none"><path d="M150 190H288" marker-end="url(#fig-dense-a)"/><path d="M150 190V76" marker-end="url(#fig-dense-a)"/><path d="M150 190L76 236" marker-end="url(#fig-dense-a)"/></g> <g stroke="#C0463F" stroke-width="1.5" stroke-dasharray="5 5" fill="none"><path d="M290 190L150 72"/><path d="M150 72L72 238"/><path d="M72 238L290 190"/></g> <text x="300" y="180" font-size="13" text-anchor="end">중학교 [1,0,0]</text> <text x="160" y="76" font-size="13" text-anchor="start">고등학교 [0,1,0]</text> <text x="90" y="252" font-size="13" text-anchor="start">대학교 [0,0,1]</text> <rect x="378" y="8" width="354" height="254" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="555" y="34" font-size="15" fill="#2E7D55">Dense: 비슷한 단어끼리 모임</text> <text x="555" y="54" font-size="12" fill="#8A93A3">의미가 가까우면 벡터(점)도 가까움</text> <ellipse cx="460" cy="118" rx="62" ry="38" fill="#E4F2EA"/> <ellipse cx="648" cy="122" rx="62" ry="36" fill="#FBF0D8"/> <ellipse cx="555" cy="212" rx="85" ry="32" fill="#EAF0FA"/> <g fill="#1E3A6E"><circle cx="440" cy="100" r="5"/><circle cx="470" cy="118" r="5"/><circle cx="430" cy="136" r="5"/><circle cx="622" cy="106" r="5"/><circle cx="656" cy="124" r="5"/><circle cx="628" cy="140" r="5"/><circle cx="505" cy="206" r="5"/><circle cx="548" cy="226" r="5"/><circle cx="600" cy="200" r="5"/></g> <g font-size="12.5" text-anchor="start"><text x="448" y="104">강아지</text><text x="478" y="122">멍멍이</text><text x="438" y="140">고양이</text><text x="630" y="110">사과</text><text x="664" y="128">바나나</text><text x="636" y="144">포도</text><text x="513" y="210">중학교</text><text x="556" y="230">고등학교</text><text x="608" y="204">대학교</text></g> </svg><figcaption>희소 표현(왼쪽)은 유사도를 표현 못 하고, 밀집 표현(오른쪽)은 비슷한 단어가 가까이 모여 일반화가 된다</figcaption></figure>
 
 딥러닝 기반 모델에서 쓰는 방식이며, **희소 표현의 문제를 해결**합니다.
 
@@ -512,6 +522,7 @@ One-hot과 TF-IDF의 **공통된 한계**입니다.
 
 {: .참고 }
 > **binary / 실수 / 연속적**
+>
 > - **binary(이진)**: 0 아니면 1, 둘 중 하나
 > - **실수**: 0.12, 0.84 처럼 **소수점이 있는 숫자**
 > - **연속적**: 0과 1 사이 **아무 값이나** 될 수 있음
@@ -531,6 +542,7 @@ One-hot과 TF-IDF의 **공통된 한계**입니다.
 > **그대로 외우면 좋은 예시**
 >
 > '강아지'는 자주 출현하고, '멍멍이'는 적게 출현한다고 할 때:
+>
 > - **희소 표현** → '강아지'-'멍멍이' 간의 관계가 **전혀 표현되지 않음** → '멍멍이'를 **따로 학습**해야 함
 > - **밀집 표현** → '강아지'와 '멍멍이'가 **서로 비슷한 벡터**로 표현됨 → **일반화 가능**
 
@@ -619,6 +631,8 @@ One-hot과 TF-IDF의 **공통된 한계**입니다.
 | 3층 | **출력 계층 X̃** (엑스 틸드) | Z를 보고 **원래 데이터를 복원**한 것 |
 
 ### 어떻게 학습하나? — "요약했다가 다시 풀어쓰기"
+
+<figure class="fig" id="fig-ae"><svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AutoEncoder 구조" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-ae-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-ae-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-ae-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-ae-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="30" y="30" width="90" height="160" rx="10" fill="#EAF0FA" stroke="#CBD9EE"/> <g fill="#1E3A6E"><circle cx="75" cy="48" r="7"/><circle cx="75" cy="73" r="7"/><circle cx="75" cy="98" r="7"/><circle cx="75" cy="123" r="7"/><circle cx="75" cy="148" r="7"/><circle cx="75" cy="173" r="7"/></g> <polygon points="124,30 300,84 300,136 124,190" fill="#F2EFE8"/> <text x="212" y="115" font-size="13" fill="#4A5568">압축 (encode)</text> <rect x="305" y="80" width="70" height="60" rx="10" fill="#FBF0D8" stroke="#EBCF95" stroke-width="2"/> <g fill="#C77E16"><circle cx="340" cy="98" r="7"/><circle cx="340" cy="122" r="7"/></g> <polygon points="380,84 556,30 556,190 380,136" fill="#F2EFE8"/> <text x="468" y="115" font-size="13" fill="#4A5568">복원 (decode)</text> <rect x="560" y="30" width="90" height="160" rx="10" fill="#E4F2EA" stroke="#BFE0CC"/> <g fill="#2E7D55"><circle cx="605" cy="48" r="7"/><circle cx="605" cy="73" r="7"/><circle cx="605" cy="98" r="7"/><circle cx="605" cy="123" r="7"/><circle cx="605" cy="148" r="7"/><circle cx="605" cy="173" r="7"/></g> <text x="75" y="212" font-size="13.5">입력 X</text> <text x="340" y="164" font-size="12.5" fill="#C77E16">Latent vector Z</text><text x="340" y="182" font-size="12" fill="#8A93A3">(핵심만 남은 압축)</text> <text x="605" y="212" font-size="13.5">출력 X̃ (복원)</text> <text x="340" y="215" font-size="12.5" fill="#C0463F">원래 입력이 곧 정답 → 정답지(label) 불필요 = 비지도</text> </svg><figcaption>AutoEncoder 3계층: 입력 X → 압축된 Latent vector Z → 복원한 출력 X̃. 복원이 잘 되면 Z에 핵심이 담긴 것</figcaption></figure>
 
 {: .참고 }
 > **비유: 책 한 권을 3줄 요약 → 그 3줄만 보고 다시 책을 써보기**

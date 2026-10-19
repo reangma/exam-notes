@@ -41,6 +41,8 @@
 
 ## 2. Single Agent 시나리오 ★★
 
+<figure class="fig" id="fig-stairs"><svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Single Agent 3단계" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-stairs-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-stairs-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-stairs-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-stairs-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="20" y="140" width="200" height="66" rx="10" fill="#EAF0FA" stroke="#CBD9EE"/> <text x="120" y="166" font-size="14" fill="#1E3A6E">Task-oriented</text><text x="120" y="186" font-size="12" fill="#4A5568">시킨 일을 쪼개서 수행</text><text x="120" y="201" font-size="11.5" fill="#8A93A3">예: 연구계획서 초안</text> <rect x="240" y="95" width="200" height="111" rx="10" fill="#FBF0D8" stroke="#EBCF95"/> <text x="340" y="122" font-size="14" fill="#C77E16">Innovation-oriented</text><text x="340" y="142" font-size="12" fill="#4A5568">새 지식 · 과학적 발견</text><text x="340" y="158" font-size="11.5" fill="#8A93A3">예: 졸업 논문 (연구 공백 찾기)</text> <rect x="460" y="40" width="200" height="166" rx="10" fill="#E4F2EA" stroke="#BFE0CC"/> <text x="560" y="67" font-size="14" fill="#2E7D55">(Future) Lifecycle</text><text x="560" y="87" font-size="12" fill="#4A5568">장기 생존 · 스스로 능력 확장</text><text x="560" y="105" font-size="12" fill="#2E7D55">→ AGI의 최종 목표</text> <text x="120" y="60" font-size="13" fill="#C77E16">자율성 · 난이도 ↑</text> <path d="M60 76L420 40" stroke="#C77E16" stroke-width="2" fill="none" marker-end="url(#fig-stairs-b)"/> </svg><figcaption>Single Agent 배포 3단계: Task → Innovation → Lifecycle로 갈수록 스스로 하는 일이 커진다</figcaption></figure>
+
 에이전트 **하나**를 쓰는 방식이 3단계로 나뉩니다.
 
 {: .중요 }
@@ -80,6 +82,7 @@
 > **연구 공백(research gap)** = 아직 **아무도 연구하지 않은 빈틈**. 이걸 찾아내는 건 **새로운 지식을 만드는 일**이라 Task-oriented보다 어렵습니다.
 >
 > **Task vs Innovation 차이**
+>
 > - 연구 **계획서 초안** (기존 정보 정리) → **Task**
 > - 졸업 **논문** (새로운 발견, 실험) → **Innovation**
 
@@ -128,6 +131,7 @@
 
 {: .참고 }
 > **하나씩 쉽게**
+>
 > - **자유 토론**: 브레인스토밍처럼 마음껏 의견 → 아이디어는 많지만 **배가 산으로** 갈 수 있음
 > - **역할 분담**: "넌 기획, 넌 개발, 넌 테스트" → 효율적이고 **누구 잘못인지 명확**하지만, **정해진 역할 밖의 일**은 못 함
 > - **반박·토론**: 서로 "그건 틀렸어" 하며 개선 → 질이 좋아지지만, **다 같이 틀린 답에 동의**해 버릴 수도 있음
@@ -175,6 +179,8 @@
 ---
 
 ## 4. Human-Agent Interaction (인간-에이전트 상호작용) ★★
+
+<figure class="fig" id="fig-human"><svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="인간과 에이전트 관계" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-human-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-human-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-human-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-human-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="8" y="8" width="324" height="184" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="170" y="34" font-size="14" fill="#1E3A6E">Instructor-Executor (현재 기본)</text> <text x="170" y="82" font-size="34">🧑</text> <path d="M170 92V128" stroke="#1E3A6E" stroke-width="2.2" marker-end="url(#fig-human-a)"/> <text x="180" y="116" font-size="12" fill="#4A5568" text-anchor="start">지시 · 정량/정성 피드백</text> <text x="170" y="164" font-size="30">🤖</text> <text x="170" y="184" font-size="12" fill="#8A93A3">상사 - 부하</text> <rect x="348" y="8" width="324" height="184" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="510" y="34" font-size="14" fill="#2E7D55">Equal Partnership</text> <text x="430" y="120" font-size="34">🧑</text><text x="590" y="120" font-size="34">🤖</text> <path d="M466 108H554" stroke="#2E7D55" stroke-width="2.2" marker-end="url(#fig-human-c)" marker-start="url(#fig-human-c)"/> <text x="510" y="96" font-size="12" fill="#4A5568">공동 목표 · 공감</text> <text x="510" y="184" font-size="12" fill="#8A93A3">동료 - 동료 (대칭 관계)</text> </svg><figcaption>지금은 사람이 시키고 AI가 하는 관계, 앞으로는 같이 목표를 세우는 동료 관계로</figcaption></figure>
 
 **인간과 Agent는 어떻게 협력해야 하는가?**
 

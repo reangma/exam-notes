@@ -339,6 +339,7 @@ Transformer 마지막 단계에 나옵니다 ([3장](03-transformer.html)).
 
 {: .중요 }
 > **Softmax vs Sigmoid 한 줄 구분**
+>
 > - **Sigmoid**: 선택지가 **둘 중 하나**일 때 (스팸이다 / 아니다)
 > - **Softmax**: 선택지가 **여럿**일 때 (다음 단어가 5만 개 후보 중 무엇인가)
 

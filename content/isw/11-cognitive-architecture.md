@@ -69,6 +69,7 @@ ktx.search()                ← KTX 표 검색
 
 {: .참고 }
 > **용어**
+>
 > - **String parsing** = LLM이 쓴 **글(문자열)을 해석**해서 프로그램이 쓸 수 있게 만드는 것
 > - **Critique** = 비평, **Refinement** = 다듬기
 > - **Inner Monologue** = 속마음 독백. 로봇이 **"지금 이걸 보니 이렇게 해야겠다"고 속으로 말하며** 행동하는 방식
@@ -88,6 +89,7 @@ ktx.search()                ← KTX 표 검색
 
 {: .참고 }
 > **비유: 요리사**
+>
 > - **과거**: "칼질 기술 추가, 불 조절 기술 추가…" **기능을 하나씩 붙이기**
 > - **현재**: "재료 손질 → 조리 → 플레이팅을 **어떤 순서와 체계로 운영**할까" **주방 시스템 설계**
 
@@ -131,6 +133,8 @@ Cognitive Architecture (인지 아키텍처)
 
 ## 4. CoALA 프레임워크 ★★★
 
+<figure class="fig" id="fig-coala"><svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CoALA 구조" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-coala-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-coala-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-coala-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-coala-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <text x="350" y="20" font-size="12.5" fill="#8A93A3">Long-term Memory (장기 기억)</text> <rect x="20" y="30" width="200" height="64" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="120" y="56" fill="#1E3A6E">Semantic</text><text x="120" y="78" font-size="12" fill="#4A5568">사실·개념 "그게 뭔데?"</text> <rect x="250" y="30" width="200" height="64" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="350" y="56" fill="#1E3A6E">Episodic</text><text x="350" y="78" font-size="12" fill="#4A5568">경험 "그때 어땠지?"</text> <rect x="480" y="30" width="200" height="64" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="580" y="56" fill="#1E3A6E">Procedural</text><text x="580" y="78" font-size="12" fill="#4A5568">방법·스킬 "어떻게 하더라?"</text> <g stroke-width="2.2" fill="none"><path d="M300 98V146" stroke="#1E3A6E" marker-end="url(#fig-coala-a)"/><path d="M400 146V98" stroke="#C77E16" marker-end="url(#fig-coala-b)"/></g> <text x="228" y="128" font-size="12.5" fill="#1E3A6E">Retrieval ↓ 꺼내오기</text><text x="458" y="128" font-size="12.5" fill="#C77E16">Learning ↑ 저장</text> <rect x="190" y="150" width="320" height="72" rx="14" fill="#FBF0D8" stroke="#EBCF95"/><text x="350" y="180" fill="#C77E16">Working Memory (단기)</text><text x="350" y="204" font-size="12.5" fill="#4A5568">⟲ Reasoning: 안에서 가공해 새 정보 생성</text> <rect x="20" y="160" width="140" height="52" rx="12" fill="#fff" stroke="#E7E2D7"/><text x="90" y="182" font-size="13">Decision</text><text x="90" y="200" font-size="11.5" fill="#4A5568">제안→평가→선택</text> <path d="M162 186H186" stroke="#1E3A6E" stroke-width="2" marker-end="url(#fig-coala-a)" marker-start="url(#fig-coala-a)"/> <g stroke-width="2.2" fill="none"><path d="M300 226V266" stroke="#1E3A6E" marker-end="url(#fig-coala-a)"/><path d="M400 266V226" stroke="#2E7D55" marker-end="url(#fig-coala-c)"/></g> <text x="250" y="252" font-size="12.5" fill="#1E3A6E">Actions</text><text x="456" y="252" font-size="12.5" fill="#2E7D55">Observations</text> <rect x="110" y="270" width="480" height="48" rx="12" fill="#E4F2EA" stroke="#BFE0CC"/><text x="350" y="299" font-size="13.5" fill="#2E7D55">Environment: Dialogue 🗣 · Physical 🌍 · Digital 💻 (외부 행동 = Grounding)</text> </svg><figcaption>CoALA: 장기 기억 3종 ↔ 작업 기억(Retrieval·Learning), 작업 기억 안에서 Reasoning, Decision이 행동을 골라 환경과 주고받음</figcaption></figure>
+
 **CoALA** = **Co**gnitive **A**rchitectures for **L**anguage **A**gents ("코알라"라고 읽음)
 
 {: .시험 }
@@ -161,6 +165,7 @@ Cognitive Architecture (인지 아키텍처)
 
 {: .참고 }
 > **그림 읽는 법**
+>
 > - 위쪽 3개 = **장기 기억** (Procedural / Semantic / Episodic)
 > - 가운데 = **Working Memory** (지금 작업 중인 머릿속 메모장) — 여기서 **Reasoning(추론)** 이 일어남
 > - 왼쪽 = **Decision Procedure** (무엇을 할지 결정)
@@ -235,6 +240,7 @@ Cognitive Architecture (인지 아키텍처)
 
 {: .참고 }
 > **기억들이 서로 영향을 줍니다**
+>
 > - Working Memory에 "**배부름**"이 들어오자 → Semantic에서 "**1인분 양**" 지식을 떠올림 (조금만 만들자)
 > - Episodic에 "**가스불이 약했다**"는 경험 → Procedural에서 "**기다리는 동안 다른 거 하자**"로 방법을 바꿈
 >
@@ -277,6 +283,7 @@ Skill: mix_sauce()            (소스 섞기)
 
 {: .참고 }
 > 사람의 기억을 **컴퓨터가 다룰 수 있는 형태**로 바꾼 것입니다.
+>
 > - Semantic → **사실 관계** (A는 B가 필요하다)
 > - Episodic → **사건 기록** (번호, 환경, 결과)
 > - Procedural → **함수(스킬)** 이름 — 실제로 실행할 수 있는 코드
@@ -307,6 +314,7 @@ Skill: mix_sauce()            (소스 섞기)
 >                  Working Memory (작업 기억)
 >                    ⟲ Reasoning (안에서 가공하기)
 > ```
+>
 > - **Retrieval**: 장기 **→** 작업
 > - **Reasoning**: 작업 **→** 작업
 > - **Learning**: 작업 **→** 장기
@@ -317,6 +325,8 @@ Skill: mix_sauce()            (소스 섞기)
 ---
 
 ## 7. ③ Decision-making Process (의사결정) ★★★
+
+<figure class="fig" id="fig-decision"><svg viewBox="0 0 740 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Decision-making 흐름" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-decision-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-decision-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-decision-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-decision-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="10" y="75" width="112" height="50" rx="12" fill="#fff" stroke="#E7E2D7"/><text x="66" y="105" font-size="13">👀 Observation</text> <rect x="140" y="28" width="440" height="146" rx="14" fill="#F2EFE8"/><text x="360" y="48" font-size="13" fill="#8A93A3">Planning Stage</text> <rect x="160" y="70" width="120" height="60" rx="10" fill="#EAF0FA" stroke="#CBD9EE"/><text x="220" y="96" font-size="14" fill="#1E3A6E">Proposal</text><text x="220" y="116" font-size="12" fill="#4A5568">후보 내기</text> <rect x="300" y="70" width="120" height="60" rx="10" fill="#EAF0FA" stroke="#CBD9EE"/><text x="360" y="96" font-size="14" fill="#1E3A6E">Evaluation</text><text x="360" y="116" font-size="12" fill="#4A5568">점수 매기기</text> <rect x="440" y="70" width="120" height="60" rx="10" fill="#EAF0FA" stroke="#CBD9EE"/><text x="500" y="96" font-size="14" fill="#1E3A6E">Selection</text><text x="500" y="116" font-size="12" fill="#4A5568">최선 고르기</text> <rect x="600" y="75" width="130" height="50" rx="12" fill="#E4F2EA" stroke="#BFE0CC"/><text x="665" y="97" font-size="14" fill="#2E7D55">Execution</text><text x="665" y="115" font-size="11.5" fill="#4A5568">실행 + 피드백</text> <g stroke="#1E3A6E" stroke-width="2" fill="none" marker-end="url(#fig-decision-a)"><path d="M124 100H156"/><path d="M282 100H296"/><path d="M422 100H436"/><path d="M562 100H596"/></g> <path d="M500 132V150H220V136" stroke="#C0463F" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#fig-decision-d)"/> <text x="360" y="166" font-size="12" fill="#C0463F">마음에 드는 게 없으면 다시 제안</text> <path d="M665 127V192H66V129" stroke="#2E7D55" stroke-width="2" fill="none" marker-end="url(#fig-decision-c)"/> <text x="360" y="188" font-size="12" fill="#2E7D55">다음 cycle</text> </svg><figcaption>의사결정: Proposal → Evaluation → Selection(불만족 시 Proposal로) → Execution → 피드백 받아 다음 cycle</figcaption></figure>
 
 **에이전트가 주어진 목표를 달성하기 위해, 어떤 행동을 선택하고 실행할지 결정하는 과정**
 
@@ -355,6 +365,7 @@ Skill: mix_sauce()            (소스 섞기)
 
 {: .참고 }
 > **예: 점심 메뉴 고르기**
+>
 > 1. **Proposal**: "김치찌개, 파스타, 햄버거" 후보 생각
 > 2. **Evaluation**: 김치찌개(어제 먹음, 3점) / 파스타(멀어, 5점) / 햄버거(가깝고 빨라, 8점)
 > 3. **Selection**: 햄버거! (전부 별로였으면 → 다시 후보 생각)
@@ -395,6 +406,7 @@ Skill: mix_sauce()            (소스 섞기)
 > **"Long-term memory ✗ / learning, retrieval ✗ / evaluate, select ✗"**
 >
 > 즉 **ReAct는**
+>
 > - **장기 기억이 없고**
 > - 내부 행동 중 **reason(추론)만** 하고 **learning·retrieval은 안 하며**
 > - 의사결정 중 **propose(제안)만** 하고 **evaluate·select는 안 한다**
@@ -403,6 +415,7 @@ Skill: mix_sauce()            (소스 섞기)
 
 {: .참고 }
 > **다른 에이전트 간단 소개**
+>
 > - **SayCan**: 구글의 **로봇** 에이전트 (physical). 할 수 있는 행동을 **평가**해서 고름
 > - **Voyager**: **마인크래프트** 게임 에이전트. 배운 기술을 **procedural memory(스킬 라이브러리)** 에 쌓음
 > - **Generative Agents**: 가상 마을에 사는 **25명의 AI 주민**. 일화·의미 기억을 가지고 서로 대화함 (agent)

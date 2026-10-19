@@ -23,12 +23,15 @@ Prompt engineering (프롬프트 엔지니어링)
 
 {: .참고 }
 > **비유: 같은 직원에게 일 시키기**
+>
 > - "보고서 써 와" → 엉망인 보고서
 > - "다음 주 회의용으로, A 제품 매출을 작년과 비교하는 1페이지 보고서를 표 포함해서 써 와" → 훌륭한 보고서
 >
 > 직원(모델)은 똑같은데 **시키는 말(프롬프트)** 에 따라 결과가 완전히 달라집니다. 그래서 "시키는 말을 설계하는 기술"이 따로 생긴 거예요.
 
 ### Prompt의 구성 요소 4가지 ★★
+
+<figure class="fig" id="fig-prompt"><svg viewBox="0 0 740 225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="프롬프트 구성요소 4가지" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-prompt-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-prompt-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-prompt-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-prompt-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="20" y="16" width="460" height="196" rx="14" fill="#fff" stroke="#E7E2D7"/> <g font-size="13.5" text-anchor="start"> <rect x="36" y="30" width="428" height="38" rx="8" fill="#EAF0FA"/><text x="50" y="54">다음 리뷰의 감정을 분류해줘.</text> <rect x="36" y="76" width="428" height="38" rx="8" fill="#FBF0D8"/><text x="50" y="100">영화 리뷰야. 긍정/부정/중립 중 하나로 답해.</text> <rect x="36" y="122" width="428" height="38" rx="8" fill="#E4F2EA"/><text x="50" y="146">리뷰: 정말 최고의 영화였다</text> <rect x="36" y="168" width="428" height="36" rx="8" fill="#FBE9E7"/><text x="50" y="191">감정:</text> </g> <g stroke="#CBD9EE" stroke-width="1.5"><path d="M466 49H496"/><path d="M466 95H496"/><path d="M466 141H496"/><path d="M466 186H496"/></g> <g font-size="13.5" text-anchor="start"><text x="502" y="54" fill="#1E3A6E">① Instruction · 무엇을 할지</text><text x="502" y="100" fill="#C77E16">② Context · 추가 정보</text><text x="502" y="146" fill="#2E7D55">③ Input Data · 질문 대상</text><text x="502" y="191" fill="#C0463F">④ Output Indicator · 형식</text></g> </svg><figcaption>프롬프트 한 장을 4조각으로: 지시 / 맥락 / 입력 데이터 / 출력 지시자</figcaption></figure>
 
 {: .시험 }
 > 이름과 설명 모두 쓸 수 있어야 합니다. 단답·빈칸 1순위.
@@ -98,6 +101,8 @@ Cat   ⇒ ______
 
 #### 예시 — Standard vs CoT (슬라이드 그대로)
 
+<figure class="fig" id="fig-cot"><svg viewBox="0 0 740 235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="일반 프롬프트와 CoT 비교" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-cot-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-cot-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-cot-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-cot-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="8" y="8" width="354" height="218" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="185" y="34" font-size="15" fill="#C0463F">일반 프롬프트</text> <rect x="28" y="50" width="314" height="44" rx="10" fill="#F2EFE8"/><text x="185" y="77" font-size="13">사과 23개, 20개 쓰고 6개 더 사면?</text> <path d="M185 98V150" stroke="#C0463F" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#fig-cot-d)"/> <text x="200" y="128" font-size="12.5" fill="#8A93A3" text-anchor="start">한 번에 짐작</text> <rect x="78" y="154" width="214" height="44" rx="10" fill="#FBE9E7" stroke="#EFC4C1"/><text x="185" y="181" font-size="14" fill="#C0463F">The answer is 27 ❌</text> <rect x="378" y="8" width="354" height="218" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="555" y="34" font-size="15" fill="#2E7D55">Chain-of-Thought</text> <rect x="398" y="50" width="314" height="44" rx="10" fill="#F2EFE8"/><text x="555" y="77" font-size="13">사과 23개, 20개 쓰고 6개 더 사면?</text> <rect x="470" y="106" width="170" height="30" rx="8" fill="#EAF0FA"/><text x="555" y="126" font-size="13.5">23 − 20 = 3</text> <rect x="470" y="146" width="170" height="30" rx="8" fill="#EAF0FA"/><text x="555" y="166" font-size="13.5">3 + 6 = 9</text> <rect x="448" y="186" width="214" height="32" rx="10" fill="#E4F2EA" stroke="#BFE0CC"/><text x="555" y="207" font-size="14" fill="#2E7D55">The answer is 9 ✅</text> <g stroke="#2E7D55" stroke-width="2" fill="none" marker-end="url(#fig-cot-c)"><path d="M555 95V103"/><path d="M555 137V143"/><path d="M555 177V183"/></g> </svg><figcaption>풀이 과정을 보여준 예시를 주면 모델도 단계별로 푼다 (PaLM 540B 수학 정답률 17.7% → 58.1%)</figcaption></figure>
+
 **Standard Prompting (일반 프롬프트)** — 예시의 답에 **결론만** 있음
 
 ```
@@ -131,6 +136,7 @@ A: The cafeteria had 23 apples originally. They used 20 to make lunch.
 
 {: .참고 }
 > **한국어로 보면:**
+>
 > - 문제 1: 로저는 테니스공 5개. 3개들이 캔 2개를 더 샀다. 지금 몇 개? → 5 + (2×3) = **11**
 > - 문제 2: 식당에 사과 23개. 점심에 20개 쓰고 6개 더 샀다. 몇 개? → 23 − 20 + 6 = **9**
 >
@@ -285,6 +291,7 @@ A: The cafeteria had 23 apples originally. They used 20 to make lunch.
 
 {: .참고 }
 > **6가지 언어적 변화 쉽게:**
+>
 > - **형태론(Morphology)**: 단어 모양 바꾸기 ("주어진다" ↔ "주어질 것이다")
 > - **구문(Syntax)**: 문장 구조 바꾸기 ("당신은 X를 받는다" ↔ "X가 당신에게 주어진다")
 > - **어휘(Lexicon)**: 단어 바꾸기 ("과제" ↔ "작업")

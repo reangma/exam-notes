@@ -51,6 +51,7 @@
 <a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
 <ul>
 <li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
 <li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
 <li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
 <li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
@@ -63,24 +64,522 @@
 <li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
 <li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
 <li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
-<li><a href="98-exam-questions.html" class="active">예상 문제 모음 (111문항)</a></li>
+<li><a href="97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="98-exam-questions.html" class="active">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
 <li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
 </ul>
 </div>
 </nav></aside>
   <main id="main" class="content">
 <h1 id="예상-문제-모음">예상 문제 모음<a class="headerlink" href="#예상-문제-모음" title="Permanent link">#</a></h1>
-<p>노트 전체에서 <strong>시험에 나오기 좋은 것</strong>을 문제로 만들었습니다. <strong>"정답 보기"를 누르기 전에 먼저 직접 써 보세요.</strong></p>
+<p>노트 전체에서 <strong>시험에 나오기 좋은 것</strong>을 세 가지 유형으로 만들었습니다. <strong>"정답 보기"를 누르기 전에 먼저 직접 풀어 보세요.</strong></p>
+<table>
+<thead>
+<tr>
+<th>유형</th>
+<th>문항</th>
+<th>연습 목적</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#part-1-객관식-30문항">Part 1 · 객관식</a></td>
+<td>M1~M30</td>
+<td>헷갈리는 짝 구분, 함정 보기 거르기</td>
+</tr>
+<tr>
+<td><a href="#part-2-빈칸-채우기-25문항">Part 2 · 빈칸 채우기</a></td>
+<td>B1~B25</td>
+<td>정의·숫자·이름을 정확히 쓰기</td>
+</tr>
+<tr>
+<td><a href="#part-3-단답서술-111문항">Part 3 · 단답·서술</a></td>
+<td>Q1~Q111</td>
+<td>정의 + 이유 + 비교를 문장으로 쓰기</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
 <ul>
-<li><strong>단답</strong>: 용어·숫자·이름을 정확히 쓰는 문제</li>
-<li><strong>서술</strong>: 정의 + 이유 + 비교를 문장으로 쓰는 문제. 모범 답안의 <strong>굵은 글씨</strong>가 채점 키워드입니다.</li>
+<li>서술 모범 답안의 <strong>굵은 글씨</strong>가 채점 키워드입니다.</li>
 <li>문제 옆 <code>[n장]</code> 은 해당 내용이 있는 장입니다. 틀리면 그 장으로 돌아가세요.</li>
+<li>객관식 해설에 나오는 오답 이유는 <a href="97-compare.html">헷갈리는 개념 총정리</a>의 "함정 주의"와 같습니다.</li>
 </ul>
 </div>
 <hr />
-<h2 id="1장-과목-개요와-ai-agent-역사">1장 — 과목 개요와 AI Agent 역사<a class="headerlink" href="#1장-과목-개요와-ai-agent-역사" title="Permanent link">#</a></h2>
+<h2 id="part-1-객관식-30문항">Part 1 · 객관식 (30문항)<a class="headerlink" href="#part-1-객관식-30문항" title="Permanent link">#</a></h2>
+<p><strong>M1.</strong> One-hot encoding의 한계로 옳은 것을 <strong>모두</strong> 고르면? <code>[2장]</code></p>
+<ol>
+<li>벡터 대부분이 0인 희소 문제가 있다</li>
+<li>단어 사이의 유사도를 표현할 수 없다</li>
+<li>단어 사전이 커져도 벡터 차원은 일정하다</li>
+<li>문맥을 고려하지만 계산량이 많다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ①, ②</strong> — One-hot의 한계 2가지는 <strong>희소 문제</strong>와 <strong>유사도 표현 불가</strong>입니다. ③은 Dense 표현의 특징(반대로 One-hot은 사전이 커지면 차원도 커짐), ④는 해당 없음.</p>
+</details>
+<p><strong>M2.</strong> TF-IDF에 대한 설명으로 <strong>틀린</strong> 것은? <code>[2장]</code></p>
+<ol>
+<li>TF와 IDF를 곱한 값이다</li>
+<li>여러 문서에 공통으로 많이 나오는 단어는 중요도가 낮다</li>
+<li>문맥을 고려하므로 동의어·다의어를 구분할 수 있다</li>
+<li>검색 시스템에서 결과의 중요도를 정하는 데 효율적이다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — TF-IDF의 한계가 바로 <strong>문맥 무시, 희소성, 동의어/다의어 처리 불가</strong>입니다.</p>
+</details>
+<p><strong>M3.</strong> IDF 식 <code>log(n / (1 + df(t)))</code> 에 대한 설명으로 옳은 것은? <code>[2장]</code></p>
+<ol>
+<li>df(t)가 클수록 IDF도 커진다</li>
+<li>log는 값의 크기를 키우기 위해 쓴다</li>
+<li>분모의 1은 단어가 어느 문서에도 없을 때 0으로 나누는 것을 막는다</li>
+<li>n은 특정 단어가 등장한 문서의 수이다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — ① IDF는 df(t)에 <strong>반비례</strong> ② log는 가중치를 <strong>적절히 조절</strong>(눌러 주기) ④ n은 <strong>전체 문서 수</strong>, 단어가 등장한 문서 수는 df(t).</p>
+</details>
+<p><strong>M4.</strong> Dense representation의 특징이 <strong>아닌</strong> 것은? <code>[2장]</code></p>
+<ol>
+<li>사용자가 정한 차원으로 모든 단어 벡터의 크기를 맞춘다</li>
+<li>연속적인 실수값으로 표현된다</li>
+<li>단어 사전이 커질수록 벡터 차원도 함께 커진다</li>
+<li>'강아지'와 '멍멍이'를 비슷한 벡터로 표현해 일반화가 가능하다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — Dense는 사전 크기와 무관하게 <strong>차원이 일정</strong> → 공간 복잡도 개선. ③은 Sparse(One-hot)의 특징.</p>
+</details>
+<p><strong>M5.</strong> AutoEncoder에 대한 설명으로 옳은 것은? <code>[2장]</code></p>
+<ol>
+<li>정답 label이 있는 데이터로 학습하는 지도학습이다</li>
+<li>입력 X, Latent vector Z, 출력 X̃ 의 3계층으로 구성된다</li>
+<li>입력보다 더 높은 차원으로 특징을 확장한다</li>
+<li>2017년 Transformer 논문에서 처음 제안되었다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ②</strong> — <strong>비지도</strong> 학습(①✗), <strong>낮은 차원</strong>의 특성 표현 학습(③✗), <strong>1986년</strong> "Learning Internal Representation by Error Backpropagation"에서 소개(④✗).</p>
+</details>
+<p><strong>M6.</strong> Transformer가 해결한 기존 Seq2Seq/RNN의 한계가 <strong>아닌</strong> 것은? <code>[3장]</code></p>
+<ol>
+<li>고정된 크기의 벡터에 모든 정보를 압축해 생기는 정보 손실</li>
+<li>Vanishing Gradient Problem</li>
+<li>입력의 순차적 처리로 인한 병렬화 불가</li>
+<li>모델 파라미터 수가 너무 적어 표현력이 부족함</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ④</strong> — 슬라이드의 고질적 한계 3가지는 ①②③.</p>
+</details>
+<p><strong>M7.</strong> Transformer에 대한 설명으로 옳은 것은? <code>[3장]</code></p>
+<ol>
+<li>RNN을 개선한 LSTM을 인코더로 사용한다</li>
+<li>Encoder-Decoder 구조를 버리고 디코더만 사용한다</li>
+<li>단어 embedding에 Positional Encoding을 더해 입력한다</li>
+<li>단어를 한 개씩 순서대로 처리하므로 순서를 자동으로 안다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — RNN을 <strong>사용하지 않고</strong>(①✗) <strong>Encoder-Decoder 구조는 유지</strong>(②✗). 한꺼번에(병렬) 넣기 때문에 순서를 몰라서(④✗) <strong>위치 정보를 더해 줌</strong>.</p>
+</details>
+<p><strong>M8.</strong> 디코더에서 아직 생성하지 않은 뒤쪽 단어를 보지 못하게 가리는 Attention은? <code>[3장]</code></p>
+<ol>
+<li>Encoder Self-Attention</li>
+<li>Masked Decoder Self-Attention</li>
+<li>Encoder-Decoder Attention</li>
+<li>Multi-head Cross Attention</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ②</strong></p>
+</details>
+<p><strong>M9.</strong> 언어 모델 발전 단계와 대표 모델의 연결이 <strong>틀린</strong> 것은? <code>[3장]</code></p>
+<ol>
+<li>SLM — N-gram LM</li>
+<li>NLM — word2vec, LSTM, Seq2Seq</li>
+<li>PLM — BERT, GPT-2, T5</li>
+<li>LLM — Kneser-Ney Smoothing</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ④</strong> — Kneser-Ney Smoothing은 <strong>SLM</strong>. LLM의 대표는 <strong>GPT-4, PaLM 2, LLaMA 3</strong>.</p>
+</details>
+<p><strong>M10.</strong> 다음 중 BERT와 GPT의 비교로 옳은 것은? <code>[3·4장]</code></p>
+<ol>
+<li>BERT는 디코더, GPT는 인코더 기반이다</li>
+<li>GPT는 양방향으로 문장 앞뒤를 모두 본다</li>
+<li>GPT는 Autoregressive 방식으로 다음 단어를 예측한다</li>
+<li>BERT는 GPT보다 늦게 나와 Transformer LM의 시초가 되었다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — BERT = <strong>인코더·양방향</strong>, GPT = <strong>디코더·단방향</strong>. GPT-1의 혁신 포인트가 "<strong>BERT보다 먼저 나온 Transformer LM</strong>".</p>
+</details>
+<p><strong>M11.</strong> 기존 PLM과 구별되는 LLM의 가장 큰 특징은? <code>[4장]</code></p>
+<ol>
+<li>Transformer 구조를 사용한다</li>
+<li>Emergent Abilities</li>
+<li>사전학습을 한다</li>
+<li>Fine-tuning이 가능하다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ②</strong> — ①③④는 PLM도 다 해당.</p>
+</details>
+<p><strong>M12.</strong> In-context Learning에 대한 설명으로 옳은 것은? <code>[4장]</code></p>
+<ol>
+<li>소량의 정답 데이터로 모델을 미세조정한다</li>
+<li>모델 파라미터를 업데이트하지 않고 프롬프트 속 예시로 과제를 수행한다</li>
+<li>GPT-1에서 처음 공식 도입되었다</li>
+<li>예시가 많을수록 오히려 성능이 떨어지는 것이 일반적이다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ②</strong> — <strong>GPT-3</strong>가 공식 도입(③✗). Context Window k가 커질수록 성능 <strong>향상</strong>(④✗).</p>
+</details>
+<p><strong>M13.</strong> GPT-2의 목적함수로 옳은 것은? <code>[4장]</code></p>
+<ol>
+<li>P(Output | Input)</li>
+<li>P(Input | Output)</li>
+<li>P(Output | Input, Task)</li>
+<li>P(Task | Input)</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — ①은 GPT-1. GPT-2는 Task까지 조건으로 → 같은 입력도 과제에 따라 다른 출력.</p>
+</details>
+<p><strong>M14.</strong> GPT 시리즈의 연도·파라미터 연결로 옳은 것은? <code>[4장]</code></p>
+<ol>
+<li>GPT-1 — 2018 — 1.5B</li>
+<li>GPT-2 — 2019 — 1.5B</li>
+<li>GPT-3 — 2019 — 175B</li>
+<li>GPT-3 — 2020 — 117M</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ②</strong> — GPT-1 <strong>2018·117M</strong> / GPT-2 <strong>2019·1.5B</strong> / GPT-3 <strong>2020·175B</strong>.</p>
+</details>
+<p><strong>M15.</strong> GPT-3 논문이 지적한 Fine-tuning의 한계가 <strong>아닌</strong> 것은? <code>[4장]</code></p>
+<ol>
+<li>Task별 Labeled Dataset이 필요하다</li>
+<li>작은 Task 분포에 과적합되어 분포 밖 일반화 성능을 잃을 수 있다</li>
+<li>모델의 단방향성으로 자연어 추론을 잘 못한다</li>
+<li>사람처럼 적은 샘플로 Task를 수행하는 능력이 필요하다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — 단방향성은 <strong>GPT-3 자체의 한계</strong>. 두 목록을 섞은 함정.</p>
+</details>
+<p><strong>M16.</strong> LLM 학습 과정에서 Adaptation Tuning에 속하지 <strong>않는</strong> 것은? <code>[5장]</code></p>
+<ol>
+<li>Instruction tuning</li>
+<li>Alignment tuning</li>
+<li>Parameter efficient model adaptation</li>
+<li>Prompt Engineering</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ④</strong> — Prompt Engineering은 <strong>Utilization</strong> 단계.</p>
+</details>
+<p><strong>M17.</strong> FLAN(2021)의 결론으로 <strong>틀린</strong> 것은? <code>[5장]</code></p>
+<ol>
+<li>Instruction tuning 기법을 처음으로 제안했다</li>
+<li>Task cluster가 많을수록 unseen task 성능이 향상된다</li>
+<li>모델 크기와 관계없이 instruction tuning은 항상 성능을 높인다</li>
+<li>Zero-shot 성능을 향상시킨다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — <strong>작은 모델에서는 오히려 성능이 하락</strong>하며, 일정 크기 이상이어야 효과가 있다.</p>
+</details>
+<p><strong>M18.</strong> Alignment의 기준 3H가 <strong>아닌</strong> 것은? <code>[5장]</code></p>
+<ol>
+<li>Helpfulness</li>
+<li>Honesty</li>
+<li>Harmlessness</li>
+<li>High-performance</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ④</strong></p>
+</details>
+<p><strong>M19.</strong> RLHF에 대한 설명으로 옳은 것은? <code>[5장]</code></p>
+<ol>
+<li>1단계에서 Reward model을 학습한다</li>
+<li>2단계에서 사람은 각 답변에 절대 점수를 매긴다</li>
+<li>3단계에서 Reward model을 보상 함수로 사용해 PPO로 학습한다</li>
+<li>사람 평가자가 필요 없어 비용이 적게 든다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — 1단계 = <strong>SFT</strong>(①✗), 2단계 = 사람이 <strong>선호도 순위</strong>(Ranking)(②✗), annotator <strong>비용이 큰 것</strong>이 한계(④✗).</p>
+</details>
+<p><strong>M20.</strong> LoRA가 Adapter Tuning보다 나은 이유로 <strong>틀린</strong> 것은? <code>[5장]</code></p>
+<ol>
+<li>더 적은 파라미터로 빠르게 적응한다</li>
+<li>병렬로 진행되어 추가적인 추론 지연이 없다</li>
+<li>입력 시퀀스 길이를 줄이지 않고 훈련할 수 있다</li>
+<li>원래 모델의 파라미터 크기 자체를 줄여 메모리를 절약한다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ④</strong> — PEFT(LoRA 포함)는 <strong>원래 모델 크기를 줄이지 않음</strong> → 그래서 <strong>Quantization</strong>이 필요.</p>
+</details>
+<p><strong>M21.</strong> "PEFT는 ( ㉠ )을 줄이고, Quantization은 ( ㉡ )을 줄인다. 둘을 결합한 것이 ( ㉢ )이다." 에 들어갈 말로 옳은 것은? <code>[5장]</code></p>
+<ol>
+<li>㉠ 메모리 ㉡ 학습 파라미터 수 ㉢ LoRA</li>
+<li>㉠ 학습 파라미터 수 ㉡ 메모리(비트 수) ㉢ QLoRA</li>
+<li>㉠ 학습 데이터 ㉡ 추론 시간 ㉢ RLHF</li>
+<li>㉠ 학습 파라미터 수 ㉡ 메모리(비트 수) ㉢ Adapter</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ②</strong></p>
+</details>
+<p><strong>M22.</strong> Prompt의 구성 요소 4가지가 <strong>아닌</strong> 것은? <code>[6장]</code></p>
+<ol>
+<li>Instruction</li>
+<li>Context</li>
+<li>Output Indicator</li>
+<li>Reward Signal</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ④</strong> — 나머지 하나는 <strong>Input Data</strong>.</p>
+</details>
+<p><strong>M23.</strong> Chain-of-Thought에 대한 설명으로 옳은 것은? <code>[6장]</code></p>
+<ol>
+<li>예시 없이 질문만 주는 방법이다</li>
+<li>예시에 결론만 보여주는 Few-shot의 다른 이름이다</li>
+<li>추론 과정을 포함한 예제를 제공해 복잡한 산술·상식·기호 추론 성능을 높인다</li>
+<li>PaLM 540B에서 정확도가 58.1% → 17.7%로 떨어졌다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — ④는 방향이 반대(<strong>17.7% → 58.1%</strong> 상승).</p>
+</details>
+<p><strong>M24.</strong> Prompt Engineering이 여전히 어려운 이유로 슬라이드에 제시되지 <strong>않은</strong> 것은? <code>[6장]</code></p>
+<ol>
+<li>표현과 서식에 대한 민감도</li>
+<li>예시와 샘플 순서의 민감도</li>
+<li>모델 파라미터 수가 공개되지 않음</li>
+<li>모델 평가의 어려움</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — 나머지 하나는 <strong>재서술 문장 변화에 의한 성능 분산</strong>.</p>
+</details>
+<p><strong>M25.</strong> Agent / AI Agent / Agentic AI에 대한 설명으로 옳은 것은? <code>[7장]</code></p>
+<ol>
+<li>Agent는 반드시 LLM을 사용해야 한다</li>
+<li>AI Agent는 Orchestrator가 하위 에이전트 결과를 통합·검증한다</li>
+<li>Agentic AI는 상위 목표를 스스로 하위 목표로 분해하고 실패 시 재계획한다</li>
+<li>온도조절기는 Agentic AI의 예시이다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — Agent는 <strong>LLM 없이도</strong> 가능(①✗), Orchestrator는 <strong>Agentic AI</strong>(②✗), 온도조절기는 <strong>Agent</strong>(④✗).</p>
+</details>
+<p><strong>M26.</strong> LLM이 Agent에 적합한 이유 중 "Multi-modal fusion으로 지각 공간을, Embodiment·Tool로 행동 공간을 확장한다"에 해당하는 성질은? <code>[7장]</code></p>
+<ol>
+<li>자율성</li>
+<li>반응성</li>
+<li>능동성</li>
+<li>사회성</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ②</strong> — 능동성은 <strong>next token prediction → 추론·계획 능력</strong>.</p>
+</details>
+<p><strong>M27.</strong> Agent의 task 수행 필요 요건과 해결 방법의 연결로 옳은 것은? <code>[8장]</code></p>
+<ol>
+<li>Reasoning — RAG</li>
+<li>Knowledge — Tool Use</li>
+<li>Computation — Tool Use</li>
+<li>Knowledge — Chain-of-Thought</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — Reasoning–<strong>프롬프트 기법(CoT 등)</strong> / Knowledge–<strong>RAG</strong> / Computation–<strong>Tool Use</strong>.</p>
+</details>
+<p><strong>M28.</strong> CoALA의 내부 행동 중 "장기 기억에서 정보를 검색해 Working Memory로 가져오는 행동"은? <code>[11장]</code></p>
+<ol>
+<li>Retrieval</li>
+<li>Reasoning</li>
+<li>Learning</li>
+<li>Grounding</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ①</strong> — Learning은 반대 방향(→장기 기억 저장), Grounding은 <strong>외부</strong> 행동.</p>
+</details>
+<p><strong>M29.</strong> "과거에 경험했던 사건이나 상호작용을 저장하는 공간"은? <code>[11장]</code></p>
+<ol>
+<li>Working Memory</li>
+<li>Semantic Memory</li>
+<li>Episodic Memory</li>
+<li>Procedural Memory</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — Semantic = 사실·개념, Procedural = 방법·스킬, Working = 현재 처리 중.</p>
+</details>
+<p><strong>M30.</strong> Multi-Agent Architecture에 대한 설명으로 옳은 것은? <code>[12장]</code></p>
+<ol>
+<li>Vertical에서는 모든 agent가 공용 스레드에서 소통한다</li>
+<li>Horizontal에서는 리더가 과업을 배정한다</li>
+<li>MetaGPT는 structured output과 publish-subscribe를 사용하며 vertical에 가깝다</li>
+<li>DyLAN은 리더가 기여도를 평가해 팀을 고정한다</li>
+</ol>
+<details>
+<summary>정답 보기</summary>
+<p><strong>정답 ③</strong> — 공용 스레드는 <strong>Horizontal</strong>(①✗), Horizontal은 agent가 <strong>자원</strong>(②✗), DyLAN은 <strong>리더 없이</strong> round마다 LLM Ranker/peer rating으로 <strong>재편</strong>(④✗).</p>
+</details>
+<hr />
+<h2 id="part-2-빈칸-채우기-25문항">Part 2 · 빈칸 채우기 (25문항)<a class="headerlink" href="#part-2-빈칸-채우기-25문항" title="Permanent link">#</a></h2>
+<p><strong>B1.</strong> 임베딩의 두 가지 역할은 자연어의 ( ㉠ ) 함축과 자연어 간 ( ㉡ ) 계산이다. <code>[2장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>의미적인 정보</strong> ㉡ <strong>유사도</strong></p>
+</details>
+<p><strong>B2.</strong> 코사인 유사도는 ( ㉠ ) ~ ( ㉡ ) 사이의 값이며, ( ㉢ )에 가까울수록 유사하다. <code>[2장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>−1</strong> ㉡ <strong>1</strong> ㉢ <strong>1</strong></p>
+</details>
+<p><strong>B3.</strong> One-hot encoding의 한계는 ( ㉠ ) 문제와 단어의 ( ㉡ )를 표현할 수 없다는 것이다. <code>[2장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>희소(Sparsity)</strong> ㉡ <strong>유사도</strong></p>
+</details>
+<p><strong>B4.</strong> <code>idf(d,t) = log( ( ㉠ ) / (1 + ( ㉡ )) )</code> <code>[2장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>n (전체 문서 수)</strong> ㉡ <strong>df(t) (단어 t가 등장한 문서 수)</strong></p>
+</details>
+<p><strong>B5.</strong> AutoEncoder는 입력 계층 X, 입력 정보를 압축한 ( ㉠ ), 출력 계층 X̃ 로 구성되며 ( ㉡ ) 학습이다. <code>[2장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>Latent vector Z</strong> ㉡ <strong>비지도</strong></p>
+</details>
+<p><strong>B6.</strong> Seq2Seq는 ( ㉠ )이 입력을 하나의 ( ㉡ )로 압축하고, ( ㉢ )가 이를 받아 한 단어씩 출력한다. <code>[3장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>Encoder</strong> ㉡ <strong>Context vector</strong> ㉢ <strong>Decoder</strong></p>
+</details>
+<p><strong>B7.</strong> Transformer 논문의 제목은 "( )"(2017)이다. <code>[3장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p><strong>Attention Is All You Need</strong></p>
+</details>
+<p><strong>B8.</strong> Language Modeling의 목표는 단어 시퀀스의 생성 가능성을 모델링하여 ( )의 확률을 예측하는 것이다. <code>[3장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p><strong>미래 토큰</strong></p>
+</details>
+<p><strong>B9.</strong> LLM은 방대한 텍스트 데이터로 학습된 ( ㉠ ) 개의 파라미터를 가진 ( ㉡ ) 기반의 Language Model이다. <code>[4장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>수천 억</strong> ㉡ <strong>Transformer</strong></p>
+</details>
+<p><strong>B10.</strong> LLM의 Emergent Abilities 3가지: ( ㉠ ), Instruction Following, ( ㉡ ) <code>[4장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>In-context Learning</strong> ㉡ <strong>Step-by-Step Reasoning</strong></p>
+</details>
+<p><strong>B11.</strong> GPT는 ( ㉠ ) Pre-trained Transformer의 약자이며, Transformer의 생성형 ( ㉡ ) 구조 기반의 ( ㉢ ) 모델이다. <code>[4장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>Generative</strong> ㉡ <strong>Decoder</strong> ㉢ <strong>Autoregressive</strong></p>
+</details>
+<p><strong>B12.</strong> GPT Framework: Step1 ( ㉠ ) → Step2 ( ㉡ ) <code>[4장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>Unsupervised Pre-Training</strong> ㉡ <strong>Supervised Fine-tuning</strong></p>
+</details>
+<p><strong>B13.</strong> GPT-3의 논문 제목은 "Language Models are ( )"이다. <code>[4장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p><strong>Few-shot Learners</strong> (GPT-2는 "Language Models are Unsupervised Multitask Learners")</p>
+</details>
+<p><strong>B14.</strong> LLM 학습 3단계: ( ㉠ ) → Adaptation Tuning → ( ㉡ ) <code>[5장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>Pre-training</strong> ㉡ <strong>Utilization</strong></p>
+</details>
+<p><strong>B15.</strong> Instruction Tuning은 Instruction &amp; input text와 output text의 ( ㉠ ) 데이터셋으로 ( ㉡ ) 형식으로 학습시키는 것이다. <code>[5장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>pair</strong> ㉡ <strong>supervised (지도)</strong></p>
+</details>
+<p><strong>B16.</strong> RLHF 3단계: Supervised Fine-tuning → ( ㉠ ) → RL Fine-tuning. 3단계에서는 ( ㉡ ) 알고리즘을 사용한다. <code>[5장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>Reward Model Training</strong> ㉡ <strong>PPO (Proximal Policy Optimization)</strong></p>
+</details>
+<p><strong>B17.</strong> LoRA: <code>W0 + ΔW = W0 + ( )</code> <code>[5장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p><strong>AB</strong> (A ∈ ℝ^(d×m), B ∈ ℝ^(m×d))</p>
+</details>
+<p><strong>B18.</strong> Adapter Tuning에서 d=1024, m=16이면 학습 파라미터는 1,048,576개에서 ( )개로 줄어든다. <code>[5장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p><strong>32,768</strong> (= 2 × 1024 × 16)</p>
+</details>
+<p><strong>B19.</strong> Prompt의 구성 요소: Instruction, ( ㉠ ), Input Data, ( ㉡ ) <code>[6장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>Context</strong> ㉡ <strong>Output Indicator</strong></p>
+</details>
+<p><strong>B20.</strong> PaLM 540B의 수학 정답률은 CoT 적용 전 ( ㉠ )%에서 적용 후 ( ㉡ )%로 상승했다. <code>[6장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>17.7</strong> ㉡ <strong>58.1</strong></p>
+</details>
+<p><strong>B21.</strong> ReAct = ( ㉠ ) + ( ㉡ ). ( ㉠ )은 행동을 돕고, 행동은 ( ㉠ )을 돕는다. <code>[8장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>Reasoning</strong> ㉡ <strong>Acting</strong></p>
+</details>
+<p><strong>B22.</strong> RAG에서 질문과 관련된 정보를 코퍼스에서 끌어오는 부품을 ( ㉠ )라 하며, 대표적으로 ( ㉡ ), DPR이 있다. <code>[8장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>Retriever</strong> ㉡ <strong>BM25</strong></p>
+</details>
+<p><strong>B23.</strong> Memory Retrieval은 ( ㉠ ) / ( ㉡ ) / ( ㉢ ) 기반으로 자동 검색한다. <code>[9장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>Recency</strong> ㉡ <strong>Relevance</strong> ㉢ <strong>Importance</strong></p>
+</details>
+<p><strong>B24.</strong> CoALA는 Memory Modules, ( ㉠ ), ( ㉡ )로 구성된다. <code>[11장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>Action Space</strong> ㉡ <strong>Decision-making Process</strong></p>
+</details>
+<p><strong>B25.</strong> AI Agent 아키텍처의 (거의) 필수 구성요소: Components = LLM, ( ㉠ ), database / Process = reasoning, ( ㉡ ), tool calling <code>[12장]</code></p>
+<details>
+<summary>정답 보기</summary>
+<p>㉠ <strong>tool</strong> ㉡ <strong>planning</strong></p>
+</details>
+<hr />
+<h2 id="part-3-단답서술-111문항">Part 3 · 단답·서술 (111문항)<a class="headerlink" href="#part-3-단답서술-111문항" title="Permanent link">#</a></h2>
+<h3 id="1장-과목-개요와-ai-agent-역사">1장 — 과목 개요와 AI Agent 역사<a class="headerlink" href="#1장-과목-개요와-ai-agent-역사" title="Permanent link">#</a></h3>
 <p><strong>Q1.</strong> 기존 AI(챗봇)와 AI 에이전트의 차이를 예시와 함께 설명하시오. <code>[1장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -127,7 +626,7 @@ AI 에이전트는 사용자가 <strong>목표를 주면 스스로 계획을 세
 특징: 목표 기반 행동 계획(Task Planning), <strong>행동 시퀀스를 스스로 계획</strong>, 게임·로봇·로직 기반 AI에 활용, <strong>자연어는 아님</strong>, <strong>현대 Agent Planner 구조의 뿌리</strong></p>
 </details>
 <hr />
-<h2 id="2장-자연어-임베딩">2장 — 자연어 임베딩<a class="headerlink" href="#2장-자연어-임베딩" title="Permanent link">#</a></h2>
+<h3 id="2장-자연어-임베딩">2장 — 자연어 임베딩<a class="headerlink" href="#2장-자연어-임베딩" title="Permanent link">#</a></h3>
 <p><strong>Q7.</strong> 임베딩(Embedding)의 정의와 두 가지 역할을 쓰시오. <code>[2장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -252,7 +751,7 @@ AI 에이전트는 사용자가 <strong>목표를 주면 스스로 계획을 세
 <p><strong>통계 기반의 자연어처리 → 딥러닝 기반의 자연어처리 → 전이학습 기반의 자연어처리 (BERT, GPT 등)</strong></p>
 </details>
 <hr />
-<h2 id="3장-seq2seq와-transformer">3장 — Seq2Seq와 Transformer<a class="headerlink" href="#3장-seq2seq와-transformer" title="Permanent link">#</a></h2>
+<h3 id="3장-seq2seq와-transformer">3장 — Seq2Seq와 Transformer<a class="headerlink" href="#3장-seq2seq와-transformer" title="Permanent link">#</a></h3>
 <p><strong>Q21.</strong> RNN 계열 모델(RNN, LSTM, GRU)의 명확한 한계는? <code>[3장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -360,7 +859,7 @@ AI 에이전트는 사용자가 <strong>목표를 주면 스스로 계획을 세
 장점: 사전 학습된 모델을 텍스트 분류, 생성, 번역 등 <strong>다양한 downstream task에서 fine-tuning하여 사용</strong> 가능하며, <strong>task마다 end-to-end로 따로 학습하는 방식에 비해 성능을 비약적으로 끌어올림</strong>.</p>
 </details>
 <hr />
-<h2 id="4장-llm과-gpt">4장 — LLM과 GPT<a class="headerlink" href="#4장-llm과-gpt" title="Permanent link">#</a></h2>
+<h3 id="4장-llm과-gpt">4장 — LLM과 GPT<a class="headerlink" href="#4장-llm과-gpt" title="Permanent link">#</a></h3>
 <p><strong>Q32.</strong> LLM의 정의를 쓰시오. <code>[4장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -458,7 +957,7 @@ Autoregressive: <strong>주어진 입력의 일부를 사용하여 이후에 오
 </ul>
 </details>
 <hr />
-<h2 id="5장-adaptation-tuning">5장 — Adaptation Tuning<a class="headerlink" href="#5장-adaptation-tuning" title="Permanent link">#</a></h2>
+<h3 id="5장-adaptation-tuning">5장 — Adaptation Tuning<a class="headerlink" href="#5장-adaptation-tuning" title="Permanent link">#</a></h3>
 <p><strong>Q46.</strong> LLM 학습 과정(Training Process of LLMs) 3단계와 각 정의를 쓰시오. <code>[5장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -551,7 +1050,7 @@ Autoregressive: <strong>주어진 입력의 일부를 사용하여 이후에 오
 <p><strong>PEFT는 학습할 파라미터 수를 줄이고, Quantization은 파라미터의 표현 크기(메모리 사용량)를 줄인다. 이 두 가지를 결합한 QLoRA(4-bit로 양자화해 freeze한 base LLM + LoRA Adapter)는 거대한 LLM을 작은 자원으로도 효과적으로 활용할 수 있게 해준다.</strong></p>
 </details>
 <hr />
-<h2 id="6장-prompt-engineering">6장 — Prompt Engineering<a class="headerlink" href="#6장-prompt-engineering" title="Permanent link">#</a></h2>
+<h3 id="6장-prompt-engineering">6장 — Prompt Engineering<a class="headerlink" href="#6장-prompt-engineering" title="Permanent link">#</a></h3>
 <p><strong>Q60.</strong> Prompt와 Prompt engineering의 정의를 쓰시오. <code>[6장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -604,7 +1103,7 @@ Autoregressive: <strong>주어진 입력의 일부를 사용하여 이후에 오
 </ul>
 </details>
 <hr />
-<h2 id="7장-ai-agent의-개념과-분류">7장 — AI Agent의 개념과 분류<a class="headerlink" href="#7장-ai-agent의-개념과-분류" title="Permanent link">#</a></h2>
+<h3 id="7장-ai-agent의-개념과-분류">7장 — AI Agent의 개념과 분류<a class="headerlink" href="#7장-ai-agent의-개념과-분류" title="Permanent link">#</a></h3>
 <p><strong>Q66.</strong> Agent의 정의와, 정의하기 위해 필요한 두 요소는? <code>[7장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -696,7 +1195,7 @@ Autoregressive: <strong>주어진 입력의 일부를 사용하여 이후에 오
 </ul>
 </details>
 <hr />
-<h2 id="8장-react와-tool-use">8장 — ReAct와 Tool Use<a class="headerlink" href="#8장-react와-tool-use" title="Permanent link">#</a></h2>
+<h3 id="8장-react와-tool-use">8장 — ReAct와 Tool Use<a class="headerlink" href="#8장-react와-tool-use" title="Permanent link">#</a></h3>
 <p><strong>Q75.</strong> ReAct를 설명하고 시너지 효과를 쓰시오. <code>[8장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -748,7 +1247,7 @@ Autoregressive: <strong>주어진 입력의 일부를 사용하여 이후에 오
 </ul>
 </details>
 <hr />
-<h2 id="9장-llm-기반-agent의-구조">9장 — LLM 기반 Agent의 구조<a class="headerlink" href="#9장-llm-기반-agent의-구조" title="Permanent link">#</a></h2>
+<h3 id="9장-llm-기반-agent의-구조">9장 — LLM 기반 Agent의 구조<a class="headerlink" href="#9장-llm-기반-agent의-구조" title="Permanent link">#</a></h3>
 <p><strong>Q83.</strong> LLM-based Agent의 Workflow 3단계를 쓰고, 단순 LLM과의 차이점을 쓰시오. <code>[9장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -805,7 +1304,7 @@ Challenge: ① <strong>Memory 데이터의 양이 방대함</strong> (Transforme
 HuggingGPT: ① 사용자 요청을 바탕으로 <strong>Task Planning</strong> ② 각 task에 대해 <strong>Hugging Face의 model card</strong>를 바탕으로 <strong>Model Selection</strong> ③ 작업 수행 후 <strong>응답 생성</strong></p>
 </details>
 <hr />
-<h2 id="10장-agent의-실제-활용">10장 — Agent의 실제 활용<a class="headerlink" href="#10장-agent의-실제-활용" title="Permanent link">#</a></h2>
+<h3 id="10장-agent의-실제-활용">10장 — Agent의 실제 활용<a class="headerlink" href="#10장-agent의-실제-활용" title="Permanent link">#</a></h3>
 <p><strong>Q90.</strong> AI Agent의 발전 방향성 3가지는? <code>[10장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -853,7 +1352,7 @@ HuggingGPT: ① 사용자 요청을 바탕으로 <strong>Task Planning</strong> 
 </ul>
 </details>
 <hr />
-<h2 id="11장-cognitive-architecture와-coala">11장 — Cognitive Architecture와 CoALA<a class="headerlink" href="#11장-cognitive-architecture와-coala" title="Permanent link">#</a></h2>
+<h3 id="11장-cognitive-architecture와-coala">11장 — Cognitive Architecture와 CoALA<a class="headerlink" href="#11장-cognitive-architecture와-coala" title="Permanent link">#</a></h3>
 <p><strong>Q96.</strong> Cognitive Architecture가 필요해진 배경을 과거와 현재를 비교하여 쓰시오. <code>[11장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -915,7 +1414,7 @@ HuggingGPT: ① 사용자 요청을 바탕으로 <strong>Task Planning</strong> 
 필요성: Cognitive Architecture를 통해 Agent가 더 인간처럼 복잡한 Task를 수행할 수 있고, <strong>CoALA로 서로 다른 에이전트들이 기억·행동·의사결정을 어떻게 사용하는지 분석</strong>할 수 있어 <strong>에이전트 간 비교가 용이하며, 어떤 부분을 보완·발전시킬지 방향을 제시</strong>할 수 있다.</p>
 </details>
 <hr />
-<h2 id="12장-ai-agent-아키텍처-분류">12장 — AI Agent 아키텍처 분류<a class="headerlink" href="#12장-ai-agent-아키텍처-분류" title="Permanent link">#</a></h2>
+<h3 id="12장-ai-agent-아키텍처-분류">12장 — AI Agent 아키텍처 분류<a class="headerlink" href="#12장-ai-agent-아키텍처-분류" title="Permanent link">#</a></h3>
 <p><strong>Q104.</strong> "AI Agent is sort of a control system"의 의미를 설명하시오. <code>[12장]</code></p>
 <details>
 <summary>정답 보기</summary>
@@ -980,6 +1479,9 @@ RAISE: <strong>ReAct에 short/long memory mechanism을 추가</strong>해 특정
   </main>
   <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
 <ul>
+<li><a href="#part-1-객관식-30문항">Part 1 · 객관식 (30문항)</a></li>
+<li><a href="#part-2-빈칸-채우기-25문항">Part 2 · 빈칸 채우기 (25문항)</a></li>
+<li><a href="#part-3-단답서술-111문항">Part 3 · 단답·서술 (111문항)</a><ul>
 <li><a href="#1장-과목-개요와-ai-agent-역사">1장 — 과목 개요와 AI Agent 역사</a></li>
 <li><a href="#2장-자연어-임베딩">2장 — 자연어 임베딩</a></li>
 <li><a href="#3장-seq2seq와-transformer">3장 — Seq2Seq와 Transformer</a></li>
@@ -992,6 +1494,8 @@ RAISE: <strong>ReAct에 short/long memory mechanism을 추가</strong>해 특정
 <li><a href="#10장-agent의-실제-활용">10장 — Agent의 실제 활용</a></li>
 <li><a href="#11장-cognitive-architecture와-coala">11장 — Cognitive Architecture와 CoALA</a></li>
 <li><a href="#12장-ai-agent-아키텍처-분류">12장 — AI Agent 아키텍처 분류</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </aside>

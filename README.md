@@ -64,6 +64,14 @@ python build.py
 }
 ```
 
+### 지능형 소프트웨어 한 페이지판
+
+`content/isw/` 를 고쳤다면 `build.py` 다음에 이것도 돌린다. 장별 노트와 같은 내용을 `isw/onepage.html` 한 파일로 묶는다(검색되는 용어사전·예상문제 카드 포함).
+
+```bash
+python tools/build_isw_onepage.py
+```
+
 ### 3. 결과 확인
 
 ```bash

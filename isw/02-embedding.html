@@ -51,6 +51,7 @@
 <a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
 <ul>
 <li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
 <li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
 <li><a href="02-embedding.html" class="active">2. 자연어 임베딩</a></li>
 <li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
@@ -63,6 +64,8 @@
 <li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
 <li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
 <li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
 <li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
 </ul>
 </div>
@@ -238,9 +241,11 @@ Dense (밀집 표현)  → 짧고, 의미가 담긴 숫자. 비슷한 단어는 
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
 <p><strong>"벡터 공간에 끼워 넣는다"를 그림으로 상상하기</strong></p>
-<p>커다란 <strong>지도</strong>가 있다고 생각하세요. 단어 하나하나를 지도 위의 <strong>한 점</strong>에 찍습니다.
-- "강아지", "고양이", "햄스터"는 <strong>서로 가까운 곳</strong>에 (동물 동네)
-- "사과", "바나나", "포도"는 <strong>또 다른 동네</strong>에 (과일 동네)</p>
+<p>커다란 <strong>지도</strong>가 있다고 생각하세요. 단어 하나하나를 지도 위의 <strong>한 점</strong>에 찍습니다.</p>
+<ul>
+<li>"강아지", "고양이", "햄스터"는 <strong>서로 가까운 곳</strong>에 (동물 동네)</li>
+<li>"사과", "바나나", "포도"는 <strong>또 다른 동네</strong>에 (과일 동네)</li>
+</ul>
 <p>이렇게 <strong>의미가 비슷하면 가까이, 다르면 멀리</strong> 배치하는 것이 좋은 임베딩입니다.
 실제로는 2차원 지도가 아니라 <strong>수백 차원</strong> 공간이지만 원리는 같습니다.</p>
 </div>
@@ -284,8 +289,10 @@ Dense (밀집 표현)  → 짧고, 의미가 담긴 숫자. 비슷한 단어는 
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
 <p>더 유명한 예시로 이해하면 쉽습니다.
-<strong><code>왕 − 남자 + 여자 = 여왕</code></strong>
-- 왕에서 "남자다움"을 빼고 "여자다움"을 더하면 → 여왕</p>
+<strong><code>왕 − 남자 + 여자 = 여왕</code></strong></p>
+<ul>
+<li>왕에서 "남자다움"을 빼고 "여자다움"을 더하면 → 여왕</li>
+</ul>
 <p>이게 된다는 건 <strong>"성별"이라는 개념이 벡터 안에 하나의 방향으로 들어 있다</strong>는 뜻입니다. 컴퓨터가 단어의 <strong>의미 관계</strong>를 숫자로 이해하고 있는 거죠.</p>
 </div>
 <p>슬라이드 결론: <strong>"아들-딸의 관계와 소년-소녀 간 의미 차이가 임베딩에 함축되어 있으면, 성능 좋은 임베딩임을 간접적으로 확인할 수 있음"</strong> (실습: <code>word2vec.kr/search/</code>)</p>
@@ -481,6 +488,8 @@ Dense (밀집 표현)  → 짧고, 의미가 담긴 숫자. 비슷한 단어는 
 <li>활용: <strong>문서의 유사도 계산</strong>, <strong>검색 시스템에서 검색 결과의 중요도 결정</strong>, <strong>문서 내 특정 단어의 중요도 계산</strong> 등에 효율적</li>
 </ul>
 <h3 id="직관-왜-두-개를-곱하나">직관 — 왜 두 개를 곱하나?<a class="headerlink" href="#직관-왜-두-개를-곱하나" title="Permanent link">#</a></h3>
+<figure class="fig" id="fig-tfidf"><svg viewBox="0 0 660 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TF-IDF 직관" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-tfidf-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-tfidf-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-tfidf-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-tfidf-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="130" y="40" width="240" height="95" fill="#F2EFE8" stroke="#fff" stroke-width="3"/> <rect x="370" y="40" width="240" height="95" fill="#FBF0D8" stroke="#fff" stroke-width="3"/> <rect x="130" y="135" width="240" height="95" fill="#F2EFE8" stroke="#fff" stroke-width="3"/> <rect x="370" y="135" width="240" height="95" fill="#F2EFE8" stroke="#fff" stroke-width="3"/> <text x="490" y="78" font-size="16" fill="#C77E16">점수 높음 ★</text><text x="490" y="102" font-size="13" fill="#4A5568">이 문서의 핵심 키워드</text><text x="490" y="122" font-size="12" fill="#8A93A3">예: 자소서의 "드론 대회 우승"</text> <text x="250" y="80" font-size="14" fill="#4A5568">중간</text><text x="250" y="104" font-size="12.5" fill="#8A93A3">희귀하지만 한두 번만 나옴</text> <text x="490" y="175" font-size="14" fill="#4A5568">낮음</text><text x="490" y="199" font-size="12.5" fill="#8A93A3">"그리고", "했습니다"</text><text x="490" y="217" font-size="12" fill="#8A93A3">모든 문서에 다 나옴</text> <text x="250" y="175" font-size="14" fill="#4A5568">낮음</text><text x="250" y="199" font-size="12.5" fill="#8A93A3">드물고 흔한 단어</text> <path d="M130 236H612" stroke="#1E3A6E" stroke-width="2" marker-end="url(#fig-tfidf-a)"/> <path d="M124 232V38" stroke="#1E3A6E" stroke-width="2" marker-end="url(#fig-tfidf-a)"/> <text x="370" y="262" font-size="13" fill="#1E3A6E">이 문서에 자주 나오나? (TF) → 자주</text> <text x="70" y="137" font-size="13" fill="#1E3A6E" transform="rotate(-90 70 137)">다른 문서엔 드문가? (IDF) → 희귀</text> </svg><figcaption>TF(이 문서에서 자주)와 IDF(다른 문서엔 드묾)가 둘 다 높을 때만 점수가 높다 → TF × IDF</figcaption></figure>
+
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
 <p><strong>"자기소개서에서 그 사람을 대표하는 단어"를 찾는다고 해 봅시다.</strong></p>
@@ -488,9 +497,11 @@ Dense (밀집 표현)  → 짧고, 의미가 담긴 숫자. 비슷한 단어는 
 <li>"저는", "그리고", "했습니다" → <strong>모든 자소서에 다 나옴</strong> → 이 사람만의 특징이 아님 ❌</li>
 <li>"<strong>드론 대회 우승</strong>" → <strong>이 사람 자소서에만</strong> 여러 번 나옴 → 이 사람을 대표함 ✅</li>
 </ul>
-<p>즉 좋은 키워드는:
-1. <strong>이 문서에 자주 나오고</strong> (TF가 높고)
-2. <strong>다른 문서엔 잘 안 나와야</strong> 합니다 (IDF가 높고)</p>
+<p>즉 좋은 키워드는:</p>
+<ol>
+<li><strong>이 문서에 자주 나오고</strong> (TF가 높고)</li>
+<li><strong>다른 문서엔 잘 안 나와야</strong> 합니다 (IDF가 높고)</li>
+</ol>
 <p>그래서 <strong>TF × IDF</strong> 입니다. 둘 다 높아야 점수가 높아집니다.</p>
 </div>
 <h3 id="공식-슬라이드-그대로">공식 (슬라이드 그대로)<a class="headerlink" href="#공식-슬라이드-그대로" title="Permanent link">#</a></h3>
@@ -722,10 +733,12 @@ log 쓰면 :  log(1,000,000)     = 6           ← 적당한 점수
 </div>
 <div class="callout callout-warning">
 <p class="callout-title">주의</p>
-<p><strong>슬라이드 숫자의 함정 (알고만 있으세요)</strong>
-- 공식에는 분모가 <code>1 + df(t)</code> 인데, 예시 계산은 <code>+1</code> 없이 <code>log(N/df)</code> 로 했습니다.
-- 또 <code>0.176</code>은 <strong>밑이 10인 log</strong>(log₁₀ 1.5), <code>1.099</code>는 <strong>밑이 e인 자연로그</strong>(ln 3) 값이라 두 줄의 log 종류가 다릅니다.
-- <strong>시험에서 계산을 시키면 문제에 주어진 공식·조건을 따르면 되고</strong>, 이 표가 그대로 나오면 <strong>슬라이드 숫자를 그대로 쓰는 게 안전</strong>합니다. 결론(희귀 단어일수록 점수가 높다)은 어느 쪽이든 같습니다.</p>
+<p><strong>슬라이드 숫자의 함정 (알고만 있으세요)</strong></p>
+<ul>
+<li>공식에는 분모가 <code>1 + df(t)</code> 인데, 예시 계산은 <code>+1</code> 없이 <code>log(N/df)</code> 로 했습니다.</li>
+<li>또 <code>0.176</code>은 <strong>밑이 10인 log</strong>(log₁₀ 1.5), <code>1.099</code>는 <strong>밑이 e인 자연로그</strong>(ln 3) 값이라 두 줄의 log 종류가 다릅니다.</li>
+<li><strong>시험에서 계산을 시키면 문제에 주어진 공식·조건을 따르면 되고</strong>, 이 표가 그대로 나오면 <strong>슬라이드 숫자를 그대로 쓰는 게 안전</strong>합니다. 결론(희귀 단어일수록 점수가 높다)은 어느 쪽이든 같습니다.</li>
+</ul>
 </div>
 <hr />
 <h2 id="7-sparse-representation-희소-표현">7. Sparse representation (희소 표현)<a class="headerlink" href="#7-sparse-representation-희소-표현" title="Permanent link">#</a></h2>
@@ -778,19 +791,25 @@ log 쓰면 :  log(1,000,000)     = 6           ← 적당한 점수
 </table>
 <div class="callout callout-exam">
 <p class="callout-title">시험 포인트</p>
-<p>표 채우기로 나오기 좋습니다. 특히:
-- <strong>공통점</strong>: 둘 다 <strong>벡터 차원 = 어휘(단어 사전) 크기</strong>, 둘 다 <strong>희소</strong>
-- TF-IDF의 한계 단어 3개: <strong>문맥 무시 / 희소성 / 동의어·다의어 처리 불가</strong></p>
+<p>표 채우기로 나오기 좋습니다. 특히:</p>
+<ul>
+<li><strong>공통점</strong>: 둘 다 <strong>벡터 차원 = 어휘(단어 사전) 크기</strong>, 둘 다 <strong>희소</strong></li>
+<li>TF-IDF의 한계 단어 3개: <strong>문맥 무시 / 희소성 / 동의어·다의어 처리 불가</strong></li>
+</ul>
 </div>
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p><strong>용어 풀이</strong>
-- <strong>문맥 무시</strong>: "나는 <strong>배</strong>가 아프다"와 "<strong>배</strong>를 깎아 먹었다"의 "배"를 <strong>같은 단어로 취급</strong>함 (단어 횟수만 세니까)
-- <strong>동의어</strong>: 뜻이 같은 다른 단어 (강아지 = 멍멍이). TF-IDF는 이 둘을 <strong>전혀 다른 단어</strong>로 봄
-- <strong>다의어</strong>: 한 단어에 뜻이 여럿 (배 = 몸/과일/탈것). TF-IDF는 이걸 <strong>구별 못 함</strong></p>
+<p><strong>용어 풀이</strong></p>
+<ul>
+<li><strong>문맥 무시</strong>: "나는 <strong>배</strong>가 아프다"와 "<strong>배</strong>를 깎아 먹었다"의 "배"를 <strong>같은 단어로 취급</strong>함 (단어 횟수만 세니까)</li>
+<li><strong>동의어</strong>: 뜻이 같은 다른 단어 (강아지 = 멍멍이). TF-IDF는 이 둘을 <strong>전혀 다른 단어</strong>로 봄</li>
+<li><strong>다의어</strong>: 한 단어에 뜻이 여럿 (배 = 몸/과일/탈것). TF-IDF는 이걸 <strong>구별 못 함</strong></li>
+</ul>
 </div>
 <hr />
 <h2 id="8-dense-representation-밀집-표현">8. Dense representation (밀집 표현) ★★<a class="headerlink" href="#8-dense-representation-밀집-표현" title="Permanent link">#</a></h2>
+<figure class="fig" id="fig-dense"><svg viewBox="0 0 740 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One-hot과 Dense 비교" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-dense-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-dense-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-dense-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-dense-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="8" y="8" width="354" height="254" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="185" y="34" font-size="15" fill="#C0463F">One-hot: 모든 단어가 남남</text> <text x="185" y="54" font-size="12" fill="#8A93A3">세 축이 서로 직각 → 어느 둘도 '더 가깝지' 않음</text> <g stroke="#1E3A6E" stroke-width="2.2" fill="none"><path d="M150 190H288" marker-end="url(#fig-dense-a)"/><path d="M150 190V76" marker-end="url(#fig-dense-a)"/><path d="M150 190L76 236" marker-end="url(#fig-dense-a)"/></g> <g stroke="#C0463F" stroke-width="1.5" stroke-dasharray="5 5" fill="none"><path d="M290 190L150 72"/><path d="M150 72L72 238"/><path d="M72 238L290 190"/></g> <text x="300" y="180" font-size="13" text-anchor="end">중학교 [1,0,0]</text> <text x="160" y="76" font-size="13" text-anchor="start">고등학교 [0,1,0]</text> <text x="90" y="252" font-size="13" text-anchor="start">대학교 [0,0,1]</text> <rect x="378" y="8" width="354" height="254" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="555" y="34" font-size="15" fill="#2E7D55">Dense: 비슷한 단어끼리 모임</text> <text x="555" y="54" font-size="12" fill="#8A93A3">의미가 가까우면 벡터(점)도 가까움</text> <ellipse cx="460" cy="118" rx="62" ry="38" fill="#E4F2EA"/> <ellipse cx="648" cy="122" rx="62" ry="36" fill="#FBF0D8"/> <ellipse cx="555" cy="212" rx="85" ry="32" fill="#EAF0FA"/> <g fill="#1E3A6E"><circle cx="440" cy="100" r="5"/><circle cx="470" cy="118" r="5"/><circle cx="430" cy="136" r="5"/><circle cx="622" cy="106" r="5"/><circle cx="656" cy="124" r="5"/><circle cx="628" cy="140" r="5"/><circle cx="505" cy="206" r="5"/><circle cx="548" cy="226" r="5"/><circle cx="600" cy="200" r="5"/></g> <g font-size="12.5" text-anchor="start"><text x="448" y="104">강아지</text><text x="478" y="122">멍멍이</text><text x="438" y="140">고양이</text><text x="630" y="110">사과</text><text x="664" y="128">바나나</text><text x="636" y="144">포도</text><text x="513" y="210">중학교</text><text x="556" y="230">고등학교</text><text x="608" y="204">대학교</text></g> </svg><figcaption>희소 표현(왼쪽)은 유사도를 표현 못 하고, 밀집 표현(오른쪽)은 비슷한 단어가 가까이 모여 일반화가 된다</figcaption></figure>
+
 <p>딥러닝 기반 모델에서 쓰는 방식이며, <strong>희소 표현의 문제를 해결</strong>합니다.</p>
 <dl>
 <dt>밀집 표현 (Dense representation)</dt>
@@ -811,10 +830,12 @@ Dense    강아지 = [0.12, 0.84, 0.11, 0.34, 0.45]   ← 길이 5, 숫자 전�
 </div>
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p><strong>binary / 실수 / 연속적</strong>
-- <strong>binary(이진)</strong>: 0 아니면 1, 둘 중 하나
-- <strong>실수</strong>: 0.12, 0.84 처럼 <strong>소수점이 있는 숫자</strong>
-- <strong>연속적</strong>: 0과 1 사이 <strong>아무 값이나</strong> 될 수 있음</p>
+<p><strong>binary / 실수 / 연속적</strong></p>
+<ul>
+<li><strong>binary(이진)</strong>: 0 아니면 1, 둘 중 하나</li>
+<li><strong>실수</strong>: 0.12, 0.84 처럼 <strong>소수점이 있는 숫자</strong></li>
+<li><strong>연속적</strong>: 0과 1 사이 <strong>아무 값이나</strong> 될 수 있음</li>
+</ul>
 </div>
 <h3 id="dense-representation의-특징">Dense representation의 특징 ★<a class="headerlink" href="#dense-representation의-특징" title="Permanent link">#</a></h3>
 <ol>
@@ -829,9 +850,11 @@ Dense    강아지 = [0.12, 0.84, 0.11, 0.34, 0.45]   ← 길이 5, 숫자 전�
 <div class="callout callout-exam">
 <p class="callout-title">시험 포인트</p>
 <p><strong>그대로 외우면 좋은 예시</strong></p>
-<p>'강아지'는 자주 출현하고, '멍멍이'는 적게 출현한다고 할 때:
-- <strong>희소 표현</strong> → '강아지'-'멍멍이' 간의 관계가 <strong>전혀 표현되지 않음</strong> → '멍멍이'를 <strong>따로 학습</strong>해야 함
-- <strong>밀집 표현</strong> → '강아지'와 '멍멍이'가 <strong>서로 비슷한 벡터</strong>로 표현됨 → <strong>일반화 가능</strong></p>
+<p>'강아지'는 자주 출현하고, '멍멍이'는 적게 출현한다고 할 때:</p>
+<ul>
+<li><strong>희소 표현</strong> → '강아지'-'멍멍이' 간의 관계가 <strong>전혀 표현되지 않음</strong> → '멍멍이'를 <strong>따로 학습</strong>해야 함</li>
+<li><strong>밀집 표현</strong> → '강아지'와 '멍멍이'가 <strong>서로 비슷한 벡터</strong>로 표현됨 → <strong>일반화 가능</strong></li>
+</ul>
 </div>
 <p><strong>쉽게 풀면:</strong>
 - 데이터에서 "강아지"는 1만 번 나오고 "멍멍이"는 10번만 나왔다고 합시다.
@@ -960,6 +983,8 @@ Dense    강아지 = [0.12, 0.84, 0.11, 0.34, 0.45]   ← 길이 5, 숫자 전�
 </tbody>
 </table>
 <h3 id="어떻게-학습하나-요약했다가-다시-풀어쓰기">어떻게 학습하나? — "요약했다가 다시 풀어쓰기"<a class="headerlink" href="#어떻게-학습하나-요약했다가-다시-풀어쓰기" title="Permanent link">#</a></h3>
+<figure class="fig" id="fig-ae"><svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AutoEncoder 구조" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-ae-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-ae-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-ae-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-ae-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="30" y="30" width="90" height="160" rx="10" fill="#EAF0FA" stroke="#CBD9EE"/> <g fill="#1E3A6E"><circle cx="75" cy="48" r="7"/><circle cx="75" cy="73" r="7"/><circle cx="75" cy="98" r="7"/><circle cx="75" cy="123" r="7"/><circle cx="75" cy="148" r="7"/><circle cx="75" cy="173" r="7"/></g> <polygon points="124,30 300,84 300,136 124,190" fill="#F2EFE8"/> <text x="212" y="115" font-size="13" fill="#4A5568">압축 (encode)</text> <rect x="305" y="80" width="70" height="60" rx="10" fill="#FBF0D8" stroke="#EBCF95" stroke-width="2"/> <g fill="#C77E16"><circle cx="340" cy="98" r="7"/><circle cx="340" cy="122" r="7"/></g> <polygon points="380,84 556,30 556,190 380,136" fill="#F2EFE8"/> <text x="468" y="115" font-size="13" fill="#4A5568">복원 (decode)</text> <rect x="560" y="30" width="90" height="160" rx="10" fill="#E4F2EA" stroke="#BFE0CC"/> <g fill="#2E7D55"><circle cx="605" cy="48" r="7"/><circle cx="605" cy="73" r="7"/><circle cx="605" cy="98" r="7"/><circle cx="605" cy="123" r="7"/><circle cx="605" cy="148" r="7"/><circle cx="605" cy="173" r="7"/></g> <text x="75" y="212" font-size="13.5">입력 X</text> <text x="340" y="164" font-size="12.5" fill="#C77E16">Latent vector Z</text><text x="340" y="182" font-size="12" fill="#8A93A3">(핵심만 남은 압축)</text> <text x="605" y="212" font-size="13.5">출력 X̃ (복원)</text> <text x="340" y="215" font-size="12.5" fill="#C0463F">원래 입력이 곧 정답 → 정답지(label) 불필요 = 비지도</text> </svg><figcaption>AutoEncoder 3계층: 입력 X → 압축된 Latent vector Z → 복원한 출력 X̃. 복원이 잘 되면 Z에 핵심이 담긴 것</figcaption></figure>
+
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
 <p><strong>비유: 책 한 권을 3줄 요약 → 그 3줄만 보고 다시 책을 써보기</strong></p>

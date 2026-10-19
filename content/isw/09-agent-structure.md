@@ -57,6 +57,8 @@ user_query → [ Agent Runtime: Orchestration(Profile·Memory·Reasoning/Plannin
 
 ### LLM-based Agent의 Workflow ★★
 
+<figure class="fig" id="fig-pba"><svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Perception Brain Action 루프" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-pba-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-pba-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-pba-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-pba-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="250" y="10" width="180" height="62" rx="14" fill="#EAF0FA" stroke="#CBD9EE"/><text x="340" y="37" font-size="15" fill="#1E3A6E">Perception 👀</text><text x="340" y="58" font-size="12" fill="#4A5568">감지 → 벡터로 변환</text> <rect x="470" y="110" width="200" height="62" rx="14" fill="#FBF0D8" stroke="#EBCF95"/><text x="570" y="137" font-size="15" fill="#C77E16">Brain 🧠</text><text x="570" y="158" font-size="12" fill="#4A5568">기억·추론·계획·결정</text> <rect x="250" y="208" width="180" height="62" rx="14" fill="#E4F2EA" stroke="#BFE0CC"/><text x="340" y="235" font-size="15" fill="#2E7D55">Action ✋</text><text x="340" y="256" font-size="12" fill="#4A5568">글 · 도구 · 몸으로 수행</text> <rect x="10" y="110" width="200" height="62" rx="14" fill="#fff" stroke="#E7E2D7"/><text x="110" y="137" font-size="15">Environment 🌍</text><text x="110" y="158" font-size="12" fill="#4A5568">사람 · 디지털 · 물리 세계</text> <g stroke="#1E3A6E" stroke-width="2.2" fill="none" marker-end="url(#fig-pba-a)"><path d="M432 50C500 55 560 75 568 106"/><path d="M568 176C560 210 500 235 434 238"/><path d="M248 238C180 235 120 210 112 176"/><path d="M112 106C120 75 180 55 246 48"/></g> <text x="340" y="146" font-size="13" fill="#C0463F">계속 반복 + 피드백</text><text x="340" y="164" font-size="12" fill="#8A93A3">(단순 LLM과의 차이)</text> </svg><figcaption>Perception → Brain → Action을 반복하며 환경에서 피드백을 받는다. 단순 LLM은 한 번 답하고 끝</figcaption></figure>
+
 {: .시험 }
 > **Perception → Brain → Action** 정의는 반드시 외우세요.
 
@@ -188,6 +190,7 @@ Memory
 
 {: .참고 }
 > **Knowledge vs Memory 차이**
+>
 > - **Knowledge**: **세상 일반**에 대한 지식 ("첫날은 피곤하다") — 누구에게나 해당
 > - **Memory**: **이 사용자**에 대한 경험 기록 ("이 사람은 3개 넘으면 지침") — 이 사람에게만 해당
 
@@ -203,6 +206,7 @@ Memory
 
 {: .참고 }
 > **쉽게:**
+>
 > 1. 기억이 쌓이면 **너무 많아서** LLM이 한 번에 못 읽음 (LLM은 한 번에 읽을 수 있는 분량 = Context Window가 정해져 있음)
 > 2. 기억이 많으면 **지금 필요한 걸 골라내기가 어려움** (일기장 10년 치에서 "파리 여행 때 기억"만 찾기)
 
@@ -271,11 +275,13 @@ Memory
 
 {: .참고 }
 > **계획 짜는 방식 3가지**
+>
 > - **One-shot**: 처음에 **전체 계획을 한 번에** 다 짬
 > - **Step-by-Step**: **한 단계씩** 정하면서 진행
 > - **Hierarchical (계층적)**: **큰 계획 → 중간 계획 → 세부 계획**으로 나무처럼 쪼갬
 >
 > **피드백 3종류**
+>
 > - **내부적**: 스스로 점검 ("이거 동선이 꼬였네")
 > - **인간**: 사용자가 의견 ("Day 2는 너무 빡빡해요")
 > - **환경**: 실제 결과 ("그날 루브르 휴관이래")
@@ -356,6 +362,7 @@ Day 4: Departure           • 오전: 체크아웃
 
 {: .참고 }
 > 결과를 보면 앞 단계가 다 반영돼 있습니다.
+>
 > - **Knowledge**: 첫날·마지막 날 가볍게, 공항 이동 시간 넉넉히 (buffer time = 여유 시간)
 > - **Memory**: 하루 관광지 2개 이하, 쇼핑·자유시간 포함
 > - **Planning**: 루브르–오르세처럼 가까운 곳끼리 묶음
@@ -366,6 +373,7 @@ Day 4: Departure           • 오전: 체크아웃
 
 {: .시험 }
 > **3단계 동작**
+>
 > 1. **사용자의 요청을 바탕으로 Task Planning**
 > 2. **각 task에 대해 Hugging Face의 model card를 바탕으로 Model Selection**
 > 3. **작업 수행 후 응답 생성**
@@ -391,6 +399,7 @@ Day 4: Departure           • 오전: 체크아웃
 
 {: .참고 }
 > **쉽게:** ChatGPT가 **지휘자(Controller)** 역할만 하고, 실제 일(사진 설명, 물체 찾기)은 **Hugging Face에 있는 전문 AI 모델들에게 맡깁니다.**
+>
 > - **Hugging Face** = AI 모델들을 모아 둔 **거대한 공개 저장소**
 > - **model card** = 각 모델의 **설명서** ("나는 물체 찾기 모델이고 이런 걸 잘해")
 > - ChatGPT가 설명서를 읽고 **"이 일엔 이 모델이 적합하겠다"** 고 고름

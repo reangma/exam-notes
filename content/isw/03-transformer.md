@@ -76,6 +76,8 @@ je suis étudiant      (프랑스어 3단어)
 
 ### 구조 — "다 듣고, 정리하고, 말하기"
 
+<figure class="fig" id="fig-seq2seq"><svg viewBox="0 0 740 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Seq2Seq 구조" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-seq2seq-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-seq2seq-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-seq2seq-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-seq2seq-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <text x="185" y="40" font-size="13.5" fill="#1E3A6E">Encoder: 한 단어씩 읽기</text> <text x="604" y="40" font-size="13.5" fill="#2E7D55">Decoder: 한 단어씩 말하기</text> <g font-size="14"><rect x="20" y="70" width="70" height="40" rx="8" fill="#EAF0FA" stroke="#CBD9EE"/><text x="55" y="95">I</text> <rect x="105" y="70" width="70" height="40" rx="8" fill="#EAF0FA" stroke="#CBD9EE"/><text x="140" y="95">am</text> <rect x="190" y="70" width="70" height="40" rx="8" fill="#EAF0FA" stroke="#CBD9EE"/><text x="225" y="95">a</text> <rect x="275" y="70" width="70" height="40" rx="8" fill="#EAF0FA" stroke="#CBD9EE"/><text x="310" y="95">student</text></g> <g stroke="#1E3A6E" stroke-width="2" fill="none" marker-end="url(#fig-seq2seq-a)"><path d="M91 90H102"/><path d="M176 90H187"/><path d="M261 90H272"/><path d="M346 90H360"/></g> <rect x="363" y="58" width="96" height="64" rx="12" fill="#FBF0D8" stroke="#EBCF95" stroke-width="2"/><text x="411" y="85" font-size="13" fill="#C77E16">Context</text><text x="411" y="104" font-size="13" fill="#C77E16">Vector</text> <path d="M461 90H474" stroke="#2E7D55" stroke-width="2" marker-end="url(#fig-seq2seq-c)"/> <g font-size="13.5"><rect x="478" y="70" width="58" height="40" rx="8" fill="#E4F2EA" stroke="#BFE0CC"/><text x="507" y="95">je</text> <rect x="546" y="70" width="58" height="40" rx="8" fill="#E4F2EA" stroke="#BFE0CC"/><text x="575" y="95">suis</text> <rect x="614" y="70" width="64" height="40" rx="8" fill="#E4F2EA" stroke="#BFE0CC"/><text x="646" y="95" font-size="12.5">étudiant</text> <rect x="688" y="70" width="46" height="40" rx="8" fill="#F2EFE8" stroke="#E7E2D7"/><text x="711" y="95" font-size="11">&lt;eos&gt;</text></g> <g stroke="#2E7D55" stroke-width="2" fill="none" marker-end="url(#fig-seq2seq-c)"><path d="M537 90H543"/><path d="M605 90H611"/><path d="M679 90H685"/></g> <text x="507" y="132" font-size="11.5" fill="#8A93A3">&lt;sos&gt;로 시작</text> <text x="411" y="142" font-size="12" fill="#8A93A3">요약 1개 (고정 크기)</text> <text x="370" y="180" font-size="12.5" fill="#4A5568">4단어 → 3단어처럼 길이가 달라도 OK · 단점: 요약 1개에 다 넣어 긴 문장은 정보 손실</text> </svg><figcaption>Seq2Seq(Google, 2014): Encoder가 문장을 Context Vector 하나로 요약하고, Decoder가 그걸 보고 한 단어씩 출력</figcaption></figure>
+
 ```
             Encoder (인코더)                         Decoder (디코더)
    ┌──────────────────────────┐            ┌──────────────────────────────┐
@@ -101,6 +103,7 @@ Decoder (디코더)
 
 {: .참고 }
 > **비유: 동시통역사가 아니라 순차통역사**
+>
 > 1. 연사의 말을 **끝까지 다 듣고** (Encoder)
 > 2. 머릿속에 **"이 사람이 한 말의 요지"를 하나로 정리**한 뒤 (Context Vector)
 > 3. 그 요지를 보고 **다른 언어로 한 단어씩 말함** (Decoder) — "시작"(`<sos>`)부터 "끝"(`<eos>`)까지
@@ -109,6 +112,7 @@ Decoder (디코더)
 
 {: .시험 }
 > **Encoder / Context Vector / Decoder 각각의 역할**
+>
 > - **Encoder**: 입력 단어를 순차적으로 받아 **하나의 벡터로 압축**
 > - **Context Vector**: 입력 문장 **전체 정보가 압축된 고정 크기 벡터**
 > - **Decoder**: Context Vector를 받아 **출력 단어를 하나씩 순차적으로 생성** → 입출력 길이가 달라도 대응 가능
@@ -126,6 +130,8 @@ Decoder (디코더)
 기존 Seq2Seq / RNN 계열은 **시간에 의존적인 입력 sequence에 따라 hidden state를 생성하여 입력을 처리하는 구조** (= 한 단어씩 순서대로 메모장을 갱신하는 방식) 였고, 이 방식에서 고질적인 한계 3가지가 생겼습니다.
 
 ### Seq2Seq / RNN의 고질적 한계 3가지 ★★
+
+<figure class="fig" id="fig-rnn-tf"><svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RNN과 Transformer 비교" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-rnn-tf-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-rnn-tf-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-rnn-tf-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-rnn-tf-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <text x="20" y="28" text-anchor="start" fill="#C0463F" font-size="15">RNN · Seq2Seq — 한 단어씩 순서대로</text> <g><rect x="40" y="48" width="96" height="44" rx="10" fill="#fff" stroke="#E7E2D7"/><text x="88" y="76">I</text> <rect x="190" y="48" width="96" height="44" rx="10" fill="#fff" stroke="#E7E2D7"/><text x="238" y="76">am</text> <rect x="340" y="48" width="96" height="44" rx="10" fill="#fff" stroke="#E7E2D7"/><text x="388" y="76">a</text> <rect x="490" y="48" width="96" height="44" rx="10" fill="#fff" stroke="#E7E2D7"/><text x="538" y="76">student</text></g> <g stroke="#C0463F" stroke-width="2" fill="none"><path d="M138 70H186" marker-end="url(#fig-rnn-tf-d)"/><path d="M288 70H336" marker-end="url(#fig-rnn-tf-d)"/><path d="M438 70H486" marker-end="url(#fig-rnn-tf-d)"/><path d="M588 70H630" marker-end="url(#fig-rnn-tf-d)"/></g> <rect x="634" y="50" width="76" height="40" rx="10" fill="#FBE9E7" stroke="#EFC4C1"/><text x="672" y="75" font-size="12" fill="#C0463F">요약 1개</text> <g font-size="12.5" fill="#4A5568" text-anchor="start"><text x="40" y="118">① 요약 하나에 다 밀어 넣음 → 정보 손실</text><text x="40" y="138">② 뒤→앞 신호가 약해짐 → 기울기 소실</text><text x="380" y="118">③ 앞 단어를 기다려야 함 → 병렬화 불가</text></g> <text x="20" y="182" text-anchor="start" fill="#2E7D55" font-size="15">Transformer — 한꺼번에 넣고, 서로 참고 (Attention)</text> <g stroke="#2E7D55" stroke-width="1.6" fill="none" opacity=".75"> <path d="M88 240C160 200 170 200 238 240"/><path d="M88 240C200 185 320 185 388 240"/><path d="M88 240C240 170 460 170 538 240"/> <path d="M238 240C300 205 330 205 388 240"/><path d="M238 240C330 190 460 190 538 240"/><path d="M388 240C450 205 480 205 538 240"/></g> <g><rect x="40" y="240" width="96" height="44" rx="10" fill="#E4F2EA" stroke="#BFE0CC"/><text x="88" y="268">I ①</text> <rect x="190" y="240" width="96" height="44" rx="10" fill="#E4F2EA" stroke="#BFE0CC"/><text x="238" y="268">am ②</text> <rect x="340" y="240" width="96" height="44" rx="10" fill="#E4F2EA" stroke="#BFE0CC"/><text x="388" y="268">a ③</text> <rect x="490" y="240" width="96" height="44" rx="10" fill="#E4F2EA" stroke="#BFE0CC"/><text x="538" y="268">student ④</text></g> <text x="655" y="258" font-size="12.5" fill="#4A5568">①②③④ =</text><text x="655" y="276" font-size="12.5" fill="#4A5568">위치 번호표</text> </svg><figcaption>RNN은 줄 서서 귓속말 전달(한계 3가지), Transformer는 모두가 서로를 직접 본다. 동그라미 숫자 = Positional Encoding</figcaption></figure>
 
 {: .시험 }
 > **Transformer가 무엇을 해결했는가** — 거의 반드시 나옵니다. 3개를 세트로 외우세요.
@@ -163,6 +169,7 @@ Decoder (디코더)
 {: .참고 }
 > **병렬화** = 여러 일을 **동시에** 하는 것.
 > **비유:** 시험지 100장 채점
+>
 > - 순차 처리: 선생님 1명이 1장씩 → 100번 반복 (느림)
 > - 병렬 처리: 선생님 100명이 1장씩 **동시에** → 1번에 끝 (빠름)
 >
@@ -229,6 +236,7 @@ Decoder (디코더)
 
 {: .참고 }
 > **Add & Norm 쉽게:**
+>
 > - **Add (잔차 연결)**: 처리한 결과에 **처리 전 원본을 다시 더해** 줍니다. 처리하다 중요한 정보를 잃어도 원본이 남아 있게 하는 **안전장치**입니다. (기울기 소실도 줄여 줌)
 > - **Norm (정규화)**: 숫자들이 너무 커지거나 작아지지 않게 **크기를 고르게** 맞춥니다.
 >
@@ -244,6 +252,8 @@ Transformer의 핵심 아이디어입니다. 시험에서 깊은 수식은 안 �
 
 ### Attention = "중요한 데에 집중하기"
 
+<figure class="fig" id="fig-attn"><svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Self-Attention 예시" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-attn-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-attn-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-attn-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-attn-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <text x="360" y="26" font-size="14" fill="#1E3A6E">"그것이"(Query)가 다른 단어(Key)들을 얼마나 참고할까?</text> <g font-size="13.5"><rect x="20" y="44" width="105" height="36" rx="8" fill="#EAF0FA" stroke="#CBD9EE"/><text x="72" y="67">동물이</text> <rect x="135" y="44" width="105" height="36" rx="8" fill="#fff" stroke="#E7E2D7"/><text x="187" y="67">길을</text> <rect x="250" y="44" width="105" height="36" rx="8" fill="#fff" stroke="#E7E2D7"/><text x="302" y="67">건너지</text> <rect x="365" y="44" width="105" height="36" rx="8" fill="#fff" stroke="#E7E2D7"/><text x="417" y="67">않았다</text> <rect x="480" y="44" width="105" height="36" rx="8" fill="#FBF0D8" stroke="#C77E16" stroke-width="2"/><text x="532" y="67" fill="#C77E16">그것이</text> <rect x="595" y="44" width="105" height="36" rx="8" fill="#fff" stroke="#E7E2D7"/><text x="647" y="67">피곤했다</text></g> <path d="M20 222H700" stroke="#E7E2D7" stroke-width="1.5"/> <rect x="47" y="124" width="50" height="98" rx="4" fill="#1E3A6E"/><text x="72" y="116" font-size="14" fill="#1E3A6E">70%</text> <rect x="162" y="211" width="50" height="11" rx="3" fill="#CBD9EE"/><text x="187" y="203" font-size="13" fill="#4A5568">8%</text> <rect x="277" y="212" width="50" height="10" rx="3" fill="#CBD9EE"/><text x="302" y="204" font-size="13" fill="#4A5568">7%</text> <rect x="392" y="215" width="50" height="7" rx="3" fill="#CBD9EE"/><text x="417" y="207" font-size="13" fill="#4A5568">5%</text> <text x="532" y="180" font-size="12.5" fill="#C77E16">Query</text><text x="532" y="198" font-size="11.5" fill="#8A93A3">(질문하는 단어)</text> <rect x="622" y="208" width="50" height="14" rx="3" fill="#CBD9EE"/><text x="647" y="200" font-size="13" fill="#4A5568">10%</text> <text x="360" y="248" font-size="12.5" fill="#4A5568">Q·K 비교(Dot product) → softmax로 비율화 → 그 비율대로 Value를 섞음 = "그것이" ≈ "동물이"</text> </svg><figcaption>Attention = 관련 있는 단어에 더 집중하기. 비율은 이해를 돕기 위한 예시 숫자</figcaption></figure>
+
 {: .참고 }
 > 다음 문장을 보세요.
 > **"동물이 길을 건너지 않았다. 왜냐하면 그것이 너무 피곤했기 때문이다."**
@@ -251,6 +261,7 @@ Transformer의 핵심 아이디어입니다. 시험에서 깊은 수식은 안 �
 > 여기서 **"그것"** 은 뭘까요? 사람은 바로 **"동물"** 이라는 걸 압니다. "길"이 피곤할 리는 없으니까요.
 >
 > 컴퓨터도 "그것"을 이해하려면 **문장의 다른 단어들을 둘러보면서 "누가 나랑 관련 있지?"** 를 따져야 합니다.
+>
 > - "동물" ↔ "그것": **관련도 높음** ★★★
 > - "길" ↔ "그것": 관련도 낮음 ★
 > - "건너지" ↔ "그것": 관련도 낮음 ★
@@ -298,6 +309,7 @@ Query · Key  →  Dot product  →  Scaling · Mask  →  Softmax · Dropout  �
 
 {: .참고 }
 > **비유: 영화 한 편을 여러 평론가가 동시에 리뷰**
+>
 > - 1번 평론가(head): **문법** 관점 — "이 동사의 주어는 누구지?"
 > - 2번 평론가(head): **의미** 관점 — "'그것'이 가리키는 건?"
 > - 3번 평론가(head): **감정** 관점 — "긍정적인 말인가?"
@@ -433,6 +445,7 @@ Language Modeling (언어 모델링)
 
 {: .참고 }
 > **각 단계 한계가 다음 단계를 낳는 흐름**
+>
 > - SLM: **바로 앞 몇 단어만 봄** → 맥락 이해 못 함 → 신경망으로 해결 (NLM)
 > - NLM: RNN이라 **기울기 소실** → Transformer로 해결 (PLM)
 > - PLM: 작업마다 **파인튜닝 필요** → 거대화 + 프롬프트로 해결 (LLM)
@@ -467,6 +480,7 @@ Language Modeling (언어 모델링)
 
 {: .참고 }
 > **비유: 대학 교양 → 전공**
+>
 > - **Pre-training** = 대학 1~2학년 **교양 수업**. 국어, 영어, 상식 등 **두루두루** 배움 (책을 엄청 많이 읽음)
 > - **Fine-tuning** = 3~4학년 **전공 수업**. 교양을 바탕으로 **특정 분야**를 집중적으로 배움
 >

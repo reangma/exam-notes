@@ -29,6 +29,7 @@ AI Agent Architecture
 
 {: .참고 }
 > **쉽게:**
+>
 > - **"정답 설계도가 아직 없다"** — 이렇게 만들면 무조건 좋다는 공식이 없음
 > - **empirical(경험적)** = 이론보다 **"해 보니 이게 잘 되더라"** 식으로 지식이 쌓임
 > - **피상적인 논리는 직관적** = "기억이 필요하다, 도구가 필요하다" 같은 건 **누구나 당연하게** 이해함
@@ -59,6 +60,7 @@ AI Agent Architecture
 > ```
 >
 > **용어**
+>
 > - **feedback loop** = 결과를 다시 입력으로 돌려보내는 **순환 구조**
 > - **재귀적** = 자기 자신을 **반복해서 다시 부르는** 구조
 > - **Reflection** = 결과를 **돌아보고 반성**하는 단계
@@ -84,6 +86,7 @@ AI Agent Architecture
 
 {: .시험 }
 > 단답으로 나오기 아주 좋습니다.
+>
 > - **Components: LLM, tool, database**
 > - **Process: reasoning, planning, tool calling**
 
@@ -114,6 +117,7 @@ AI Agent Architecture
 
 {: .참고 }
 > **비유**
+>
 > - **Single** = **1인 사업자**. 기획·개발·영업을 혼자 다 함. 일이 단순하면 **오히려 빠르고 효율적**. 대신 **옆에서 "이거 틀렸어" 말해줄 동료가 없음** (사람이 봐줄 순 있음)
 > - **Multi** = **회사**. 각자 역할이 있음. 복잡한 일엔 유리하지만, **소통 실수**(같은 일 두 번 하기, 정보 전달 누락)가 생길 수 있음
 >
@@ -129,11 +133,13 @@ AI Agent Architecture
 
 {: .시험 }
 > **Single Agent의 한계 2가지**
+>
 > - **너무 많은 tool ⇒ 적절한 tool 선택의 난이도 상승**
 > - **많은 subtask ⇒ 정보 혼재로 인한 성능 하락, workflow 생성/관리가 어려움**
 
 {: .참고 }
 > **쉽게**
+>
 > - **도구가 너무 많으면**: 공구함에 공구가 100개면 **"이 나사엔 뭘 써야 하지?"** 고르기가 어려워짐
 > - **할 일이 너무 많으면**: 한 사람이 10가지 일을 동시에 하면 **정보가 뒤섞여서** 실수가 늘고, **일의 순서(workflow)** 를 관리하기 힘듦
 >
@@ -168,6 +174,8 @@ AI Agent Architecture
 - **조직 구성의 두 극단을 Vertical Architecture, Horizontal Architecture로 분류 가능**
 
 ### Vertical vs Horizontal ★★★
+
+<figure class="fig" id="fig-vh"><svg viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vertical과 Horizontal 비교" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-vh-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-vh-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-vh-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-vh-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="10" y="10" width="320" height="220" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="170" y="38" fill="#1E3A6E" font-size="15">Vertical (수직)</text> <circle cx="170" cy="85" r="26" fill="#FBF0D8" stroke="#EBCF95"/><text x="170" y="90" font-size="12.5" fill="#C77E16">리더</text> <circle cx="80" cy="175" r="22" fill="#EAF0FA" stroke="#CBD9EE"/><circle cx="170" cy="175" r="22" fill="#EAF0FA" stroke="#CBD9EE"/><circle cx="260" cy="175" r="22" fill="#EAF0FA" stroke="#CBD9EE"/> <g stroke="#1E3A6E" stroke-width="2" fill="none"><path d="M96 158L150 104" marker-end="url(#fig-vh-a)"/><path d="M170 152V114" marker-end="url(#fig-vh-a)"/><path d="M244 158L190 104" marker-end="url(#fig-vh-a)"/></g> <text x="170" y="220" font-size="12" fill="#4A5568">부하는 리더와만 소통 · 분업 명확 (MetaGPT)</text> <rect x="350" y="10" width="320" height="220" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="510" y="38" fill="#2E7D55" font-size="15">Horizontal (수평)</text> <rect x="400" y="95" width="220" height="40" rx="10" fill="#E4F2EA" stroke="#BFE0CC"/><text x="510" y="120" font-size="12.5" fill="#2E7D55">공용 스레드 (모두가 다 봄)</text> <g fill="#EAF0FA" stroke="#CBD9EE"><circle cx="420" cy="70" r="20"/><circle cx="600" cy="70" r="20"/><circle cx="420" cy="165" r="20"/><circle cx="600" cy="165" r="20"/><circle cx="510" cy="170" r="20"/></g> <text x="510" y="220" font-size="12" fill="#4A5568">전원 평등 · 하고 싶은 일에 자원 (DyLAN)</text> </svg><figcaption>Vertical = 팀장이 있는 회사 조직도, Horizontal = 모두가 같은 단톡방에서 의논하는 원탁 회의</figcaption></figure>
 
 {: .시험 }
 > **이 장에서 가장 출제 확률이 높습니다.** 각각 특징을 외우세요.
@@ -261,6 +269,8 @@ Vertical ●──────────────────────�
 ---
 
 ## 8. Horizontal 사례: DyLAN ★★
+
+<figure class="fig" id="fig-dylan"><svg viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DyLAN 라운드" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-dylan-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-dylan-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-dylan-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-dylan-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <g font-size="14" fill="#1E3A6E"><text x="110" y="34">Round 1</text><text x="350" y="34">Round 2</text><text x="590" y="34">Round 3</text></g> <g font-size="13"> <circle cx="30" cy="96" r="18" fill="#EAF0FA" stroke="#CBD9EE"/><text x="30" y="101">A</text> <circle cx="70" cy="96" r="18" fill="#EAF0FA" stroke="#CBD9EE"/><text x="70" y="101">B</text> <circle cx="110" cy="96" r="18" fill="#FBE9E7" stroke="#EFC4C1"/><text x="110" y="101" fill="#C0463F">C ✕</text> <circle cx="150" cy="96" r="18" fill="#EAF0FA" stroke="#CBD9EE"/><text x="150" y="101">D</text> <circle cx="190" cy="96" r="18" fill="#FBE9E7" stroke="#EFC4C1"/><text x="190" y="101" fill="#C0463F">E ✕</text> <circle cx="310" cy="96" r="18" fill="#EAF0FA" stroke="#CBD9EE"/><text x="310" y="101">A</text> <circle cx="350" cy="96" r="18" fill="#FBE9E7" stroke="#EFC4C1"/><text x="350" y="101" fill="#C0463F">B ✕</text> <circle cx="390" cy="96" r="18" fill="#EAF0FA" stroke="#CBD9EE"/><text x="390" y="101">D</text> <circle cx="570" cy="96" r="18" fill="#E4F2EA" stroke="#BFE0CC"/><text x="570" y="101" fill="#2E7D55">A</text> <circle cx="610" cy="96" r="18" fill="#E4F2EA" stroke="#BFE0CC"/><text x="610" y="101" fill="#2E7D55">D</text> </g> <g stroke="#C77E16" stroke-width="2.2" fill="none" marker-end="url(#fig-dylan-b)"><path d="M216 96H282"/><path d="M416 96H542"/></g> <g font-size="12" fill="#4A5568"><text x="110" y="140">각자 1개씩 말하고 → 평가</text><text x="350" y="140">기여 낮은 agent 탈락</text><text x="590" y="140" fill="#2E7D55">최종 팀 ✅</text></g> <text x="350" y="186" font-size="12.5" fill="#8A93A3">모두 1개씩 말하기 = 1 round · 평가는 LLM Ranker 또는 peer rating · 반복하며 팀 구성 최적화</text> </svg><figcaption>DyLAN = 서바이벌 오디션: 리더 없이 함께 일한 뒤, 기여도가 높은 에이전트만 다음 라운드로</figcaption></figure>
 
 **"A Dynamic LLM-Powered Agent Network for Task-Oriented Agent Collaboration"** (Liu et al., 2024)
 

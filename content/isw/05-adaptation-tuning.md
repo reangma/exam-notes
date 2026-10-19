@@ -14,6 +14,8 @@
 
 ## 1. 전체 지도 — Training Process of LLMs ★★
 
+<figure class="fig" id="fig-stages"><svg viewBox="0 0 740 175" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LLM 학습 3단계" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-stages-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-stages-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-stages-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-stages-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <polygon points="10,30 230,30 250,85 230,140 10,140" fill="#F2EFE8"/> <polygon points="250,30 470,30 490,85 470,140 250,140 270,85" fill="#FBF0D8"/> <polygon points="490,30 730,30 730,140 490,140 510,85" fill="#EAF0FA"/> <text x="120" y="62" font-size="15" fill="#142A52">① Pre-training</text><text x="120" y="86" font-size="13" fill="#4A5568">기본 능력 습득</text><text x="120" y="110" font-size="11.5" fill="#8A93A3">Data · Architecture · Task · 최적화</text> <text x="375" y="62" font-size="15" fill="#C77E16">② Adaptation Tuning</text><text x="375" y="86" font-size="13" fill="#4A5568">목표에 맞게 추가 적응</text><text x="375" y="110" font-size="11.5" fill="#8A93A3">Instruction · Alignment · PEFT</text> <text x="615" y="62" font-size="15" fill="#1E3A6E">③ Utilization</text><text x="615" y="86" font-size="13" fill="#4A5568">효과적으로 사용</text><text x="615" y="110" font-size="11.5" fill="#8A93A3">Prompt Engineering (6장)</text> <text x="370" y="166" font-size="12.5" fill="#4A5568">GPT-1~3은 ①로 성능 확보 → InstructGPT·ChatGPT는 ②로 성능 확보</text> </svg><figcaption>Training Process of LLMs: 이 장(5장)은 ②, 다음 장(6장)은 ③</figcaption></figure>
+
 > **"우수한 LLM 구축에는 거대한 모델과 다량의 데이터뿐만 아니라 다양한 학습 기법을 효과적으로 활용하는 것이 매우 중요"**
 
 LLM이 만들어지는 과정은 **3단계**입니다.
@@ -89,6 +91,7 @@ Instruction Tuning
 
 {: .참고 }
 > **쉽게:** "**이런 지시를 받으면 → 이렇게 답한다**" 는 **문제-정답 쌍**을 엄청 많이 보여주며 가르치는 것입니다.
+>
 > - "번역해줘: The cat…" → "고양이가…"
 > - "요약해줘: (긴 글)" → "(짧은 요약)"
 > - "한국의 수도는?" → "서울입니다."
@@ -175,6 +178,7 @@ Output: 고양이가 상자 위에 있다.                    Output: Positive
 
 {: .참고 }
 > **왜 "다른 기준"?**
+>
 > - Pre-training / Instruction Tuning은 **"정답을 맞혔나"** 가 기준입니다.
 > - Alignment는 **"착한가, 정직한가, 해롭지 않은가"** 가 기준입니다. 이건 **정답이 딱 정해진 게 아니라 사람의 가치 판단**이 필요하죠.
 
@@ -210,6 +214,8 @@ RLHF
 | **Aligned model** (정렬 모델) | **인간의 선호도를 반영하여 학습시키고자 하는 모델** | **훈련받는 학생** (최종 결과물) |
 
 #### RLHF 3단계 ★★★
+
+<figure class="fig" id="fig-rlhf"><svg viewBox="0 0 780 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RLHF 3단계" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-rlhf-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-rlhf-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-rlhf-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-rlhf-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <g><rect x="10" y="20" width="230" height="200" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="125" y="48" fill="#C77E16" font-size="13">STEP 1</text><text x="125" y="70" fill="#142A52">Supervised Fine-tuning</text> <rect x="35" y="90" width="180" height="40" rx="8" fill="#F2EFE8"/><text x="125" y="115" font-size="13" fill="#4A5568">사람이 쓴 질문 + 모범답안</text> <rect x="35" y="160" width="180" height="40" rx="8" fill="#EAF0FA"/><text x="125" y="185" font-size="13" fill="#1E3A6E">LM이 따라 쓰며 학습 🔥</text></g> <path d="M125 132V156" stroke="#1E3A6E" stroke-width="2" marker-end="url(#fig-rlhf-a)"/> <g><rect x="275" y="20" width="230" height="200" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="390" y="48" fill="#C77E16" font-size="13">STEP 2</text><text x="390" y="70" fill="#142A52">Reward Model Training</text> <rect x="300" y="90" width="180" height="40" rx="8" fill="#F2EFE8"/><text x="390" y="115" font-size="13" fill="#4A5568">답변 A·B·C·D → 사람이 순위</text> <rect x="300" y="160" width="180" height="40" rx="8" fill="#FBF0D8"/><text x="390" y="185" font-size="13" fill="#C77E16">취향 흉내 채점기 🔥</text></g> <path d="M390 132V156" stroke="#1E3A6E" stroke-width="2" marker-end="url(#fig-rlhf-a)"/> <g><rect x="540" y="20" width="230" height="200" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="655" y="48" fill="#C77E16" font-size="13">STEP 3</text><text x="655" y="70" fill="#142A52">RL Fine-tuning (PPO)</text> <rect x="565" y="90" width="180" height="40" rx="8" fill="#FBF0D8"/><text x="655" y="115" font-size="13" fill="#C77E16">채점기가 점수 👍👎 ❄</text> <rect x="565" y="160" width="180" height="40" rx="8" fill="#E4F2EA"/><text x="655" y="185" font-size="13" fill="#2E7D55">점수 높게 받도록 수정 🔥</text></g> <path d="M655 132V156" stroke="#1E3A6E" stroke-width="2" marker-end="url(#fig-rlhf-a)"/> <g stroke="#C77E16" stroke-width="2.2" fill="none"><path d="M242 120H271" marker-end="url(#fig-rlhf-b)"/><path d="M507 120H536" marker-end="url(#fig-rlhf-b)"/></g> <text x="390" y="244" font-size="12.5" fill="#8A93A3">🔥 = 학습되는 중 · ❄ = 고정(채점만 함)</text> </svg><figcaption>RLHF: 모범답안 따라 쓰기 → 사람 취향을 흉내 내는 채점기(Reward model) 만들기 → 채점기 점수를 높이도록 PPO로 강화학습</figcaption></figure>
 
 {: .시험 }
 > **3단계의 이름과 각 단계에서 하는 일** — 서술형 출제 1순위입니다.
@@ -283,6 +289,7 @@ Prompts → Aligned LM 🔥 이 답변 생성 → LM Outputs
 > **쉽게:** 이제 모델이 답을 쓰면 **채점 AI가 점수**를 줍니다. 모델은 **점수를 더 많이 받는 방향으로** 자기 말투·내용을 계속 고쳐 나갑니다. (강아지가 간식 받는 행동을 배우듯)
 >
 > **용어 풀이**
+>
 > - **정책(policy)** = 모델의 **"이런 상황에선 이렇게 답한다"는 행동 방식**
 > - **보상 함수** = 점수를 매겨 주는 기준 (여기선 Reward model)
 > - **PPO** = 강화학습 방법 이름. 핵심은 **"한 번에 너무 많이 바꾸지 말고 조금씩(proximal = 가까운)"** 바꾸게 하는 안전장치. 갑자기 확 바뀌면 이상해질 수 있으니까요.
@@ -306,6 +313,7 @@ Prompts → Aligned LM 🔥 이 답변 생성 → LM Outputs
 
 {: .중요 }
 > **RLHF의 한계** (추가 개선이 필요한 이유) — 2가지
+>
 > 1. **Human annotator를 고용해 데이터 셋을 확보하기 위한 비용이 많이 필요**
 > 2. **주관적인 요인에 따라 학습 데이터 셋의 품질 편차가 존재** (평가자마다 취향이 달라서)
 
@@ -319,6 +327,7 @@ Prompts → Aligned LM 🔥 이 답변 생성 → LM Outputs
 
 {: .참고 }
 > GPT-3는 파라미터(다이얼)가 **1,750억 개**입니다. 새 과제를 위해 이걸 **전부 다시 조절(full fine-tuning)** 하려면:
+>
 > - 엄청난 GPU와 메모리가 필요
 > - 과제마다 1,750억 개짜리 모델을 **통째로 하나씩 저장**해야 함 (번역용 1개, 요약용 1개 …)
 >
@@ -375,6 +384,8 @@ Prompts → Aligned LM 🔥 이 답변 생성 → LM Outputs
 
 ### LoRA (Low-Rank Adaptation) ★★
 
+<figure class="fig" id="fig-lora"><svg viewBox="0 0 740 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LoRA 행렬 분해" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-lora-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-lora-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-lora-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-lora-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="30" y="40" width="170" height="170" rx="8" fill="#EAF0FA" stroke="#CBD9EE" stroke-width="2"/> <text x="115" y="112" font-size="24" fill="#1E3A6E">W0</text><text x="115" y="138" font-size="13" fill="#4A5568">원래 가중치</text><text x="115" y="162" font-size="13" fill="#1E3A6E">❄ 고정</text> <text x="115" y="234" font-size="12.5" fill="#8A93A3">1024 × 1024 ≈ 100만 개</text> <text x="236" y="136" font-size="30" fill="#4A5568">+</text> <rect x="270" y="40" width="26" height="170" rx="4" fill="#FBF0D8" stroke="#C77E16" stroke-width="1.5"/> <text x="283" y="32" font-size="15" fill="#C77E16">A</text><text x="283" y="234" font-size="12" fill="#8A93A3">1024×8</text> <text x="322" y="134" font-size="22" fill="#4A5568">×</text> <rect x="345" y="112" width="170" height="26" rx="4" fill="#FBF0D8" stroke="#C77E16" stroke-width="1.5"/> <text x="430" y="104" font-size="15" fill="#C77E16">B</text><text x="430" y="160" font-size="12" fill="#8A93A3">8×1024</text> <text x="546" y="136" font-size="28" fill="#4A5568">=</text> <rect x="575" y="40" width="150" height="170" rx="8" fill="#FBF0D8" stroke="#C77E16" stroke-width="2" stroke-dasharray="7 5"/> <text x="650" y="108" font-size="24" fill="#C77E16">ΔW</text><text x="650" y="134" font-size="13" fill="#4A5568">변화량만</text><text x="650" y="158" font-size="13" fill="#C77E16">학습 🔥</text> <text x="650" y="234" font-size="12.5" fill="#C77E16">16,384개만 학습</text> </svg><figcaption>LoRA: W0 + ΔW = W0 + A·B. 원본(교과서)은 그대로 두고, 얇은 두 행렬(포스트잇)로 변화량만 학습</figcaption></figure>
+
 - **가정: Adapter Tuning과 동일** → 즉 **weight update 행렬은 low-rank(낮은 랭크) intrinsic rank를 가짐**
 - PLM 모델의 weight matrix `W0 ∈ ℝ^(d×d)` 를 `ΔW` 라는 **작은 두 개의 행렬로 분해**
 - **Adapter tuning과 유사하게, PLM 파라미터는 고정하고 분해된 행렬만 학습**
@@ -403,6 +414,7 @@ A ∈ ℝ^(d×m),   B ∈ ℝ^(m×d),   m = rank의 차원
 {: .참고 }
 > **비유: 교과서에 포스트잇 붙이기**
 > 교과서(원래 모델 `W0`)에 **직접 낙서하지 않고**, 고칠 내용을 **포스트잇(`A·B`)** 에 써서 붙입니다.
+>
 > - 원본은 깨끗하게 보존
 > - 포스트잇은 작고 가벼움
 > - 과제가 바뀌면 **포스트잇만 바꿔 붙이면** 됨
@@ -428,6 +440,7 @@ A ∈ ℝ^(d×m),   B ∈ ℝ^(m×d),   m = rank의 차원
 
 {: .참고 }
 > **2번이 무슨 뜻?**
+>
 > - **Adapter**: 원래 층 **다음에** adapter를 거쳐야 함 → 길에 **정거장이 하나 더 생긴 것** → 답 나오는 데 **조금 더 오래 걸림** (추론 지연)
 > - **LoRA**: 원래 경로 **옆에 나란히(병렬)** 붙어서 동시에 계산하고 더하기만 함. 게다가 학습이 끝나면 `W0 + A·B` 를 **미리 더해서 하나로 합쳐버릴 수 있어서**, 실제 사용할 땐 **원래 모델과 속도가 똑같음**
 >
@@ -517,6 +530,8 @@ FP32 (32 bit)  →  FP16 (16 bit)  →  INT8 (8 bit)  →  INT4 (4 bit)
 > (요약 슬라이드 버전: **"PEFT는 학습할 파라미터를 줄이고, Quantization은 메모리 사용량을 줄인다. 두 방법을 결합한 것이 QLoRA이다."**)
 
 ### 정리 그림
+
+<figure class="fig" id="fig-qlora"><svg viewBox="0 0 740 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PEFT 양자화 QLoRA 관계" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-qlora-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-qlora-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-qlora-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-qlora-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="20" y="18" width="290" height="74" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="165" y="48" font-size="15" fill="#1E3A6E">PEFT (Adapter · LoRA)</text><text x="165" y="74" font-size="13" fill="#4A5568">학습할 파라미터 수 ↓</text> <rect x="20" y="108" width="290" height="74" rx="12" fill="#E4F2EA" stroke="#BFE0CC"/><text x="165" y="138" font-size="15" fill="#2E7D55">Quantization</text><text x="165" y="164" font-size="13" fill="#4A5568">표현 크기(FP32→INT4) ↓ → 메모리 ↓</text> <g stroke="#C77E16" stroke-width="2.4" fill="none" marker-end="url(#fig-qlora-b)"><path d="M312 55L432 84"/><path d="M312 145L432 116"/></g> <rect x="436" y="40" width="284" height="120" rx="14" fill="#FBF0D8" stroke="#EBCF95" stroke-width="2"/> <text x="578" y="70" font-size="17" fill="#C77E16">QLoRA</text><text x="578" y="96" font-size="13">4-bit 양자화 LLM ❄ (고정)</text><text x="578" y="118" font-size="13">+ LoRA Adapter 🔥 (학습)</text><text x="578" y="142" font-size="12" fill="#8A93A3">큰 모델도 개인 GPU에서</text> </svg><figcaption>PEFT는 학습할 파라미터 수를, Quantization은 메모리(비트 수)를 줄인다. 둘을 합친 것이 QLoRA</figcaption></figure>
 
 ```
                     Large Language Model

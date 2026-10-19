@@ -51,6 +51,7 @@
 <a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
 <ul>
 <li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
 <li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
 <li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
 <li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
@@ -63,6 +64,8 @@
 <li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
 <li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
 <li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
 <li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
 </ul>
 </div>
@@ -102,12 +105,16 @@
 </ul>
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p><strong>비유: 같은 직원에게 일 시키기</strong>
-- "보고서 써 와" → 엉망인 보고서
-- "다음 주 회의용으로, A 제품 매출을 작년과 비교하는 1페이지 보고서를 표 포함해서 써 와" → 훌륭한 보고서</p>
+<p><strong>비유: 같은 직원에게 일 시키기</strong></p>
+<ul>
+<li>"보고서 써 와" → 엉망인 보고서</li>
+<li>"다음 주 회의용으로, A 제품 매출을 작년과 비교하는 1페이지 보고서를 표 포함해서 써 와" → 훌륭한 보고서</li>
+</ul>
 <p>직원(모델)은 똑같은데 <strong>시키는 말(프롬프트)</strong> 에 따라 결과가 완전히 달라집니다. 그래서 "시키는 말을 설계하는 기술"이 따로 생긴 거예요.</p>
 </div>
 <h3 id="prompt의-구성-요소-4가지">Prompt의 구성 요소 4가지 ★★<a class="headerlink" href="#prompt의-구성-요소-4가지" title="Permanent link">#</a></h3>
+<figure class="fig" id="fig-prompt"><svg viewBox="0 0 740 225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="프롬프트 구성요소 4가지" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-prompt-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-prompt-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-prompt-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-prompt-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="20" y="16" width="460" height="196" rx="14" fill="#fff" stroke="#E7E2D7"/> <g font-size="13.5" text-anchor="start"> <rect x="36" y="30" width="428" height="38" rx="8" fill="#EAF0FA"/><text x="50" y="54">다음 리뷰의 감정을 분류해줘.</text> <rect x="36" y="76" width="428" height="38" rx="8" fill="#FBF0D8"/><text x="50" y="100">영화 리뷰야. 긍정/부정/중립 중 하나로 답해.</text> <rect x="36" y="122" width="428" height="38" rx="8" fill="#E4F2EA"/><text x="50" y="146">리뷰: 정말 최고의 영화였다</text> <rect x="36" y="168" width="428" height="36" rx="8" fill="#FBE9E7"/><text x="50" y="191">감정:</text> </g> <g stroke="#CBD9EE" stroke-width="1.5"><path d="M466 49H496"/><path d="M466 95H496"/><path d="M466 141H496"/><path d="M466 186H496"/></g> <g font-size="13.5" text-anchor="start"><text x="502" y="54" fill="#1E3A6E">① Instruction · 무엇을 할지</text><text x="502" y="100" fill="#C77E16">② Context · 추가 정보</text><text x="502" y="146" fill="#2E7D55">③ Input Data · 질문 대상</text><text x="502" y="191" fill="#C0463F">④ Output Indicator · 형식</text></g> </svg><figcaption>프롬프트 한 장을 4조각으로: 지시 / 맥락 / 입력 데이터 / 출력 지시자</figcaption></figure>
+
 <div class="callout callout-exam">
 <p class="callout-title">시험 포인트</p>
 <p>이름과 설명 모두 쓸 수 있어야 합니다. 단답·빈칸 1순위.</p>
@@ -200,6 +207,8 @@ Cat   ⇒ ______
 <li><strong>LLM의 추론 능력을 향상시켜 복잡한 산술, 상식 및 기호 추론 작업에서도 좋은 성능</strong>을 보임</li>
 </ul>
 <h4 id="예시-standard-vs-cot-슬라이드-그대로">예시 — Standard vs CoT (슬라이드 그대로)<a class="headerlink" href="#예시-standard-vs-cot-슬라이드-그대로" title="Permanent link">#</a></h4>
+<figure class="fig" id="fig-cot"><svg viewBox="0 0 740 235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="일반 프롬프트와 CoT 비교" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-cot-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-cot-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-cot-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-cot-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="8" y="8" width="354" height="218" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="185" y="34" font-size="15" fill="#C0463F">일반 프롬프트</text> <rect x="28" y="50" width="314" height="44" rx="10" fill="#F2EFE8"/><text x="185" y="77" font-size="13">사과 23개, 20개 쓰고 6개 더 사면?</text> <path d="M185 98V150" stroke="#C0463F" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#fig-cot-d)"/> <text x="200" y="128" font-size="12.5" fill="#8A93A3" text-anchor="start">한 번에 짐작</text> <rect x="78" y="154" width="214" height="44" rx="10" fill="#FBE9E7" stroke="#EFC4C1"/><text x="185" y="181" font-size="14" fill="#C0463F">The answer is 27 ❌</text> <rect x="378" y="8" width="354" height="218" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="555" y="34" font-size="15" fill="#2E7D55">Chain-of-Thought</text> <rect x="398" y="50" width="314" height="44" rx="10" fill="#F2EFE8"/><text x="555" y="77" font-size="13">사과 23개, 20개 쓰고 6개 더 사면?</text> <rect x="470" y="106" width="170" height="30" rx="8" fill="#EAF0FA"/><text x="555" y="126" font-size="13.5">23 − 20 = 3</text> <rect x="470" y="146" width="170" height="30" rx="8" fill="#EAF0FA"/><text x="555" y="166" font-size="13.5">3 + 6 = 9</text> <rect x="448" y="186" width="214" height="32" rx="10" fill="#E4F2EA" stroke="#BFE0CC"/><text x="555" y="207" font-size="14" fill="#2E7D55">The answer is 9 ✅</text> <g stroke="#2E7D55" stroke-width="2" fill="none" marker-end="url(#fig-cot-c)"><path d="M555 95V103"/><path d="M555 137V143"/><path d="M555 177V183"/></g> </svg><figcaption>풀이 과정을 보여준 예시를 주면 모델도 단계별로 푼다 (PaLM 540B 수학 정답률 17.7% → 58.1%)</figcaption></figure>
+
 <p><strong>Standard Prompting (일반 프롬프트)</strong> — 예시의 답에 <strong>결론만</strong> 있음</p>
 <div class="codehilite"><pre><span></span><code>[Model Input]
 Q: Roger has 5 tennis balls. He buys 2 more cans of tennis balls.
@@ -229,9 +238,11 @@ A: The cafeteria had 23 apples originally. They used 20 to make lunch.
 
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p><strong>한국어로 보면:</strong>
-- 문제 1: 로저는 테니스공 5개. 3개들이 캔 2개를 더 샀다. 지금 몇 개? → 5 + (2×3) = <strong>11</strong>
-- 문제 2: 식당에 사과 23개. 점심에 20개 쓰고 6개 더 샀다. 몇 개? → 23 − 20 + 6 = <strong>9</strong></p>
+<p><strong>한국어로 보면:</strong></p>
+<ul>
+<li>문제 1: 로저는 테니스공 5개. 3개들이 캔 2개를 더 샀다. 지금 몇 개? → 5 + (2×3) = <strong>11</strong></li>
+<li>문제 2: 식당에 사과 23개. 점심에 20개 쓰고 6개 더 샀다. 몇 개? → 23 − 20 + 6 = <strong>9</strong></li>
+</ul>
 <p>일반 프롬프트에선 모델이 <strong>27</strong>이라고 틀렸습니다 (아마 23+… 대충 계산).
 CoT에선 예시에서 <strong>"먼저 이거 하고, 그다음 저거 하고"</strong> 를 보여줬더니, 모델도 <strong>따라서 단계별로</strong> 풀어서 <strong>9</strong>로 맞혔습니다.</p>
 </div>
@@ -466,13 +477,15 @@ Completion         : Functional                              (모델의 답)
 </ul>
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p><strong>6가지 언어적 변화 쉽게:</strong>
-- <strong>형태론(Morphology)</strong>: 단어 모양 바꾸기 ("주어진다" ↔ "주어질 것이다")
-- <strong>구문(Syntax)</strong>: 문장 구조 바꾸기 ("당신은 X를 받는다" ↔ "X가 당신에게 주어진다")
-- <strong>어휘(Lexicon)</strong>: 단어 바꾸기 ("과제" ↔ "작업")
-- <strong>어휘+구문</strong>: 둘 다
-- <strong>담화(Discourse)</strong>: 문장 연결 방식 바꾸기
-- <strong>기타</strong></p>
+<p><strong>6가지 언어적 변화 쉽게:</strong></p>
+<ul>
+<li><strong>형태론(Morphology)</strong>: 단어 모양 바꾸기 ("주어진다" ↔ "주어질 것이다")</li>
+<li><strong>구문(Syntax)</strong>: 문장 구조 바꾸기 ("당신은 X를 받는다" ↔ "X가 당신에게 주어진다")</li>
+<li><strong>어휘(Lexicon)</strong>: 단어 바꾸기 ("과제" ↔ "작업")</li>
+<li><strong>어휘+구문</strong>: 둘 다</li>
+<li><strong>담화(Discourse)</strong>: 문장 연결 방식 바꾸기</li>
+<li><strong>기타</strong></li>
+</ul>
 <p>결과: 같은 뜻인데 <strong>말만 바꿔도</strong> 모델마다 맞히고 틀리는 게 달라짐. 반대로 <strong>잘 바꾸면 성능이 올라갈 수도</strong> 있음 (예: Mixtral 8x7B는 6.7%, LLaMA 3 8B는 5.5% 향상 가능).</p>
 </div>
 <h3 id="어려움-4-모델-평가의-어려움">어려움 4. 모델 평가의 어려움 ★<a class="headerlink" href="#어려움-4-모델-평가의-어려움" title="Permanent link">#</a></h3>

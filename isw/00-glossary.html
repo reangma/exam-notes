@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>📖 쉬운 용어사전 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="00-glossary.html" class="active">📖 쉬운 용어사전 (173개)</a></li>
+<li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
+<li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1 id="쉬운-용어사전">📖 쉬운 용어사전<a class="headerlink" href="#쉬운-용어사전" title="Permanent link">#</a></h1>
+<p>시험에 나오는 단어를 <strong>수학·전공 지식 0</strong>이어도 알 수 있게 <strong>비유와 함께</strong> 풀었습니다. 본문을 읽다가 모르는 단어가 나오면 여기로 오세요.</p>
+<div class="callout callout-note">
+<p class="callout-title">참고</p>
+<p><strong>찾는 법</strong>: 상단 검색창에 단어를 치거나(<code>/</code> 키), 이 페이지에서 <strong>Ctrl+F</strong>. 한글·영어 아무거나 됩니다.
+각 용어 아래 💡 줄은 <strong>비유나 예시</strong>입니다.</p>
+</div>
+<h2 id="수학-기초-몰라도-ok-여기만-보면-됨">🧮 수학 기초 (몰라도 OK, 여기만 보면 됨)<a class="headerlink" href="#수학-기초-몰라도-ok-여기만-보면-됨" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>벡터</strong> · Vector</dt>
+<dd>숫자를 <strong>쭉 늘어놓은 목록</strong>. <code>[0.1, 0.5, 0.9]</code> 처럼.</dd>
+<dd>💡 단어를 벡터로 바꾼다 = 단어를 숫자 목록으로 바꾼다</dd>
+<dt><strong>차원</strong> · Dimension</dt>
+<dd>벡터 안에 <strong>숫자가 몇 개</strong> 들어 있는지. 숫자 300개면 300차원.</dd>
+<dt><strong>코사인 유사도</strong> · Cosine similarity</dt>
+<dd>두 벡터(화살표)가 <strong>얼마나 같은 방향</strong>을 보는지. <strong>−1~1</strong>, 1에 가까울수록 비슷.</dd>
+<dd>💡 같은 방향 1, 직각 0, 반대 −1</dd>
+<dt><strong>내적</strong> · Dot product</dt>
+<dd>두 벡터를 곱해 <strong>비슷한 정도를 점수 하나로</strong> 내는 계산. Attention에서 Q·K 비교에 사용.</dd>
+<dt><strong>log</strong> · 로그</dt>
+<dd>"몇 번 곱해야 이 숫자가 되나". <strong>큰 숫자를 작게 눌러주는</strong> 도구. log(10)=1, log(1,000,000)=6.</dd>
+<dd>💡 TF-IDF에서 점수 폭발을 막으려고 씀</dd>
+<dt><strong>확률</strong> · P(A)</dt>
+<dd>어떤 일이 일어날 가능성. P(비) = 비 올 확률.</dd>
+<dt><strong>조건부 확률</strong> · P(A|B)</dt>
+<dd><strong>"B일 때 A일 확률"</strong>. 세로줄은 "~일 때".</dd>
+<dd>💡 P(going|Where are we) = 그 뒤에 going이 올 확률</dd>
+<dt><strong>시그마</strong> · Σ</dt>
+<dd><strong>"전부 더해라"</strong> 라는 기호.</dd>
+<dt><strong>행렬</strong> · Matrix</dt>
+<dd>숫자를 <strong>엑셀 표처럼</strong> 가로·세로로 늘어놓은 것. 1024×1024 = 약 100만 칸.</dd>
+<dt><strong>희소</strong> · Sparse</dt>
+<dd><strong>대부분이 0</strong>인 것. One-hot 벡터가 대표적.</dd>
+<dd>💡 2만 칸 중 1칸만 체크된 서류</dd>
+<dt><strong>밀집</strong> · Dense</dt>
+<dd><strong>모든 칸에 의미 있는 숫자</strong>가 차 있는 것.</dd>
+<dd>💡 [0.12, 0.84, 0.11 …]</dd>
+<dt><strong>차원 축소</strong> · t-SNE, PCA</dt>
+<dd>수백 차원 벡터를 <strong>2~3차원으로 줄여 그림</strong>으로 보는 기법.</dd>
+<dd>💡 입체를 벽에 비춘 그림자</dd>
+<dt><strong>반비례</strong> · Inverse</dt>
+<dd>하나가 커지면 다른 하나는 작아지는 관계. IDF는 df에 반비례.</dd>
+</dl>
+<h2 id="학습의-기초-ai가-배운다는-게-뭐야">🧠 학습의 기초 (AI가 '배운다'는 게 뭐야?)<a class="headerlink" href="#학습의-기초-ai가-배운다는-게-뭐야" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>파라미터</strong> · Parameter</dt>
+<dd>모델 안의 <strong>다이얼(숫자)</strong>. 학습 = 이 다이얼을 맞추는 것. GPT-3는 1,750억 개.</dd>
+<dd>💡 M = 백만, B = 십억</dd>
+<dt><strong>가중치</strong> · Weight</dt>
+<dd>파라미터 하나하나의 값. 거의 같은 말.</dd>
+<dt><strong>학습</strong> · Training</dt>
+<dd>답 내기 → 정답과 비교 → 틀린 만큼 다이얼 조정, 을 <strong>수십억 번 반복</strong>.</dd>
+<dd>💡 문제집 반복 풀기</dd>
+<dt><strong>손실</strong> · Loss</dt>
+<dd>모델 답이 정답과 <strong>얼마나 틀렸는지</strong> 점수. 작을수록 좋음.</dd>
+<dt><strong>역전파</strong> · Backpropagation</dt>
+<dd>틀린 정도를 <strong>거꾸로 따라가며</strong> 어느 다이얼을 고칠지 계산.</dd>
+<dt><strong>기울기</strong> · Gradient</dt>
+<dd>다이얼을 <strong>어느 방향으로 돌려야</strong> 손실이 줄어드는지 알려주는 화살표.</dd>
+<dt><strong>경사하강법</strong> · Gradient Descent</dt>
+<dd>기울기를 따라 <strong>한 걸음씩</strong> 손실이 낮은 쪽으로 내려가기.</dd>
+<dd>💡 안갯속 산에서 골짜기 찾아 내려가기</dd>
+<dt><strong>기울기 소실</strong> · Vanishing Gradient</dt>
+<dd>수정 신호가 뒤→앞으로 가며 <strong>점점 약해져</strong> 앞부분을 못 배우는 문제. RNN의 약점.</dd>
+<dd>💡 귓속말 전달 게임</dd>
+<dt><strong>과적합</strong> · Overfitting</dt>
+<dd>학습 데이터만 <strong>달달 외워</strong> 처음 보는 데이터는 못 푸는 상태.</dd>
+<dd>💡 기출만 외운 학생</dd>
+<dt><strong>일반화</strong> · Generalization</dt>
+<dd><strong>처음 보는 문제도</strong> 잘 푸는 능력. 과적합의 반대.</dd>
+<dt><strong>분포 밖</strong> · Out-of-distribution</dt>
+<dd>학습 때 본 것과 <strong>다른 종류</strong>의 데이터.</dd>
+<dt><strong>지도학습</strong> · Supervised</dt>
+<dd><strong>문제 + 정답지</strong>로 배우기. Fine-tuning, Instruction Tuning.</dd>
+<dt><strong>비지도학습</strong> · Unsupervised</dt>
+<dd><strong>정답 없이</strong> 자료만 보고 패턴 찾기. Pre-training, AutoEncoder.</dd>
+<dt><strong>준지도학습</strong> · Semi-supervised</dt>
+<dd>비지도 + 지도를 <strong>섞은</strong> 것. GPT-1이 제시.</dd>
+<dt><strong>강화학습</strong> · Reinforcement</dt>
+<dd>해보고 <strong>점수(보상)</strong> 받으며 점수 높은 쪽으로 배우기. RLHF.</dd>
+<dd>💡 강아지 간식 훈련</dd>
+<dt><strong>레이블</strong> · Label</dt>
+<dd>데이터에 붙은 <strong>정답</strong>. "이 리뷰 = 긍정".</dd>
+<dt><strong>드롭아웃</strong> · Dropout</dt>
+<dd>학습 때 연결 일부를 <strong>일부러 끊어</strong> 외우기(과적합)를 막는 기법.</dd>
+<dt><strong>소프트맥스</strong> · Softmax</dt>
+<dd>여러 점수를 <strong>합이 100%인 확률</strong>로 바꾸는 함수. Transformer 맨 마지막.</dd>
+<dd>💡 고양이 66%, 강아지 24% …</dd>
+<dt><strong>시그모이드</strong> · Sigmoid</dt>
+<dd>어떤 숫자든 <strong>0~1 사이</strong>로 눌러주는 S자 함수. 둘 중 하나 고를 때.</dd>
+<dt><strong>정규화</strong> · Normalization</dt>
+<dd>숫자들의 크기를 <strong>고르게</strong> 맞추는 것. Add &amp; Norm의 Norm.</dd>
+<dt><strong>추론(사용)</strong> · Inference</dt>
+<dd>학습이 끝난 모델로 <strong>실제 답을 내는 것</strong>. 걸리는 시간 = latency.</dd>
+</dl>
+<h2 id="자연어-처리-임베딩-2장">📝 자연어 처리 · 임베딩 (2장)<a class="headerlink" href="#자연어-처리-임베딩-2장" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>자연어</strong> · Natural Language</dt>
+<dd>사람이 쓰는 말. 한국어, 영어 등.</dd>
+<dt><strong>토큰 / 토큰화</strong> · Token / Tokenization</dt>
+<dd>글을 자르는 단위(대략 단어 조각) / 글을 토큰으로 자르기.</dd>
+<dt><strong>단어 사전</strong> · Vocabulary</dt>
+<dd>토큰들을 모은 전체 목록.</dd>
+<dt><strong>코퍼스</strong> · Corpus</dt>
+<dd>학습에 쓰는 <strong>대량의 글 모음</strong>. 말뭉치.</dd>
+<dt><strong>표제어</strong> · Lemma</dt>
+<dd>단어의 <strong>겉모양</strong>. 하나의 표제어에 여러 뜻이 들어 있음.</dd>
+<dd>💡 "배" = 몸·과일·탈것</dd>
+<dt><strong>중의성</strong> · Ambiguity</dt>
+<dd>한 단어에 <strong>뜻이 여럿</strong>이라 헷갈리는 문제.</dd>
+<dt><strong>특징 추출</strong> · Feature extraction</dt>
+<dd>데이터의 특징을 찾아 <strong>벡터로 바꾸는</strong> 작업.</dd>
+<dt><strong>임베딩</strong> · Embedding</dt>
+<dd>특징 추출로 <strong>자연어를 벡터로</strong> 수치화하는 것. 2003년 처음 소개. 역할: 의미 함축 + 유사도 계산.</dd>
+<dt><strong>단어 유추 평가</strong> · Word analogy test</dt>
+<dd>벡터 덧셈·뺄셈으로 짝을 찾아 임베딩 성능을 보는 평가.</dd>
+<dd>💡 아들 − 딸 + 소년 = 소녀</dd>
+<dt><strong>One-hot 인코딩</strong> · One-hot encoding</dt>
+<dd>단어 자리만 <strong>1</strong>, 나머지 0. 한계: <strong>희소 문제 + 유사도 표현 불가</strong>.</dd>
+<dd>💡 출석부 한 칸에만 체크</dd>
+<dt><strong>TF</strong> · Term Frequency</dt>
+<dd>이 단어가 <strong>이 문서에</strong> 얼마나 자주 나오나.</dd>
+<dt><strong>IDF</strong> · Inverse Document Frequency</dt>
+<dd>이 단어가 <strong>전체 문서 중</strong> 얼마나 희귀한가. log(n / (1+df)).</dd>
+<dt><strong>TF-IDF</strong></dt>
+<dd>TF × IDF. <strong>이 문서를 특징짓는 단어</strong>에 높은 점수. 한계: 문맥 무시, 희소, 동의어·다의어 불가.</dd>
+<dd>💡 자소서의 "드론 대회 우승"</dd>
+<dt><strong>희소 표현</strong> · Sparse representation</dt>
+<dd>벡터·행렬 <strong>대부분이 0</strong>인 표현. One-hot, TF-IDF.</dd>
+<dt><strong>밀집 표현</strong> · Dense representation</dt>
+<dd>사용자가 정한 <strong>작은 차원의 실수 벡터</strong>. 의미 담김, 공간 일정, 일반화 가능.</dd>
+<dd>💡 강아지 ≈ 멍멍이</dd>
+<dt><strong>오토인코더</strong> · AutoEncoder</dt>
+<dd>입력 X → <strong>Latent vector Z(압축)</strong> → 출력 X̃ 복원, 3계층. <strong>비지도</strong>. 1986년.</dd>
+<dd>💡 책 3줄 요약 후 다시 쓰기</dd>
+<dt><strong>잠재 벡터</strong> · Latent vector</dt>
+<dd>AutoEncoder 가운데의 <strong>압축된 핵심</strong> 벡터.</dd>
+<dt><strong>N-gram</strong></dt>
+<dd><strong>앞의 N−1개 단어만</strong> 보고 다음 단어를 맞히는 통계 모델(SLM).</dd>
+<dt><strong>최대우도추정</strong> · MLE</dt>
+<dd>데이터에서 <strong>가장 자주 나온 것</strong>을 정답으로 추정하는 통계 방법.</dd>
+</dl>
+<h2 id="모델-구조-트랜스포머-3장">🔁 모델 구조 · 트랜스포머 (3장)<a class="headerlink" href="#모델-구조-트랜스포머-3장" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>RNN</strong> · Recurrent Neural Network</dt>
+<dd><strong>한 단어씩 순서대로</strong> 읽으며 메모(hidden state)를 넘기는 모델. 입출력 길이 고정이 한계.</dd>
+<dt><strong>LSTM / GRU</strong></dt>
+<dd>RNN의 기억력 개선판 / LSTM을 더 단순화한 것.</dd>
+<dt><strong>은닉 상태</strong> · Hidden state</dt>
+<dd>RNN이 앞에서 읽은 내용을 적어 두는 <strong>메모장</strong>.</dd>
+<dt><strong>Seq2Seq</strong> · Sequence to Sequence</dt>
+<dd><strong>Encoder → Context vector → Decoder</strong> 구조. Google 2014. 가변 길이 입출력 해결.</dd>
+<dd>💡 순차통역사</dd>
+<dt><strong>인코더</strong> · Encoder</dt>
+<dd>입력을 받아 <strong>벡터로 압축</strong>하는 부분.</dd>
+<dt><strong>디코더</strong> · Decoder</dt>
+<dd>벡터를 받아 <strong>한 단어씩 출력</strong>하는 부분.</dd>
+<dt><strong>문맥 벡터</strong> · Context vector</dt>
+<dd>입력 문장 전체가 <strong>압축된 벡터 1개</strong>. 고정 크기라 정보 손실.</dd>
+<dt><strong>sos / eos</strong> · start / end of sentence</dt>
+<dd>디코더의 <strong>시작 신호 / 종료 신호</strong> 토큰.</dd>
+<dt><strong>트랜스포머</strong> · Transformer</dt>
+<dd><strong>Attention만으로</strong> 만든 Encoder-Decoder. 2017 "Attention Is All You Need". RNN 한계 3가지 해결.</dd>
+<dt><strong>어텐션</strong> · Attention</dt>
+<dd>문장의 다른 단어들 중 <strong>중요한 데에 집중</strong>하는 계산.</dd>
+<dd>💡 "그것"이 "동물"을 가리킴을 찾기</dd>
+<dt><strong>셀프 어텐션</strong> · Self-Attention</dt>
+<dd><strong>같은 문장 안에서</strong> 단어끼리 서로 참고.</dd>
+<dt><strong>Query / Key / Value</strong> · Q / K / V</dt>
+<dd>찾는 것 / 각 단어의 이름표 / 실제 내용. Q·K로 점수 → softmax → V를 섞음.</dd>
+<dd>💡 도서관: 질문·책 제목·책 내용</dd>
+<dt><strong>멀티헤드</strong> · Multi-head</dt>
+<dd>Attention을 <strong>여러 관점으로 동시에</strong>.</dd>
+<dd>💡 평론가 여러 명이 동시에 리뷰</dd>
+<dt><strong>마스킹</strong> · Masked</dt>
+<dd>디코더에서 <strong>아직 안 쓴 뒤쪽 단어를 가림</strong>.</dd>
+<dd>💡 받아쓰기에서 다음 문장 가리기</dd>
+<dt><strong>위치 인코딩</strong> · Positional Encoding</dt>
+<dd>한꺼번에 넣으니 순서를 모름 → <strong>위치 번호표</strong>를 더해 줌.</dd>
+<dd>💡 단체 사진 번호표</dd>
+<dt><strong>Add &amp; Norm</strong> · 잔차 연결 + 정규화</dt>
+<dd>결과에 <strong>원본을 다시 더하고</strong>(안전장치) 숫자 크기를 고르게.</dd>
+<dt><strong>FFNN</strong> · Feed-Forward Neural Network</dt>
+<dd>각 위치마다 적용하는 <strong>일반 신경망</strong>. Attention으로 모은 정보를 한 번 더 가공.</dd>
+<dt><strong>병렬화</strong> · Parallelization</dt>
+<dd>여러 계산을 <strong>동시에</strong>. RNN은 불가, Transformer는 가능.</dd>
+<dd>💡 채점자 100명이 동시에 채점</dd>
+<dt><strong>BERT</strong></dt>
+<dd>Transformer <strong>인코더</strong> 계열. <strong>양방향</strong>, 이해에 강함.</dd>
+<dt><strong>GPT</strong> · Generative Pre-trained Transformer</dt>
+<dd>Transformer <strong>디코더</strong> 계열. <strong>단방향, Autoregressive</strong>, 생성에 강함.</dd>
+<dt><strong>자기회귀</strong> · Autoregressive</dt>
+<dd><strong>자기가 방금 쓴 단어를 다시 보며</strong> 다음 단어 예측.</dd>
+<dt><strong>언어 모델링</strong> · Language Modeling</dt>
+<dd>단어 시퀀스의 생성 가능성을 모델링해 <strong>미래 토큰의 확률 예측</strong>.</dd>
+<dt><strong>SLM → NLM → PLM → LLM</strong></dt>
+<dd>통계(1990s) → 신경망(2010s) → 사전학습(2018+) → 거대(2020+) 언어모델.</dd>
+</dl>
+<h2 id="llm-gpt-4장">🚀 LLM · GPT (4장)<a class="headerlink" href="#llm-gpt-4장" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>LLM</strong> · Large Language Model</dt>
+<dd>방대한 텍스트로 학습된 <strong>수천 억 파라미터</strong>의 <strong>Transformer 기반</strong> 언어 모델.</dd>
+<dt><strong>PLM</strong> · Pre-trained Language Model</dt>
+<dd>대량의 글로 <strong>일반적 언어 이해</strong>를 사전학습한 모델.</dd>
+<dt><strong>사전학습</strong> · Pre-training</dt>
+<dd>정답 없는 대량의 글로 <strong>기본기</strong>를 익히는 단계.</dd>
+<dd>💡 교양 수업</dd>
+<dt><strong>미세조정</strong> · Fine-tuning</dt>
+<dd>정답 있는 특정 데이터로 <strong>그 과제에 맞추는</strong> 단계.</dd>
+<dd>💡 전공 수업</dd>
+<dt><strong>SFT</strong> · Supervised Fine-Tuning</dt>
+<dd><strong>지도</strong> 미세조정.</dd>
+<dt><strong>다운스트림 태스크</strong> · Downstream task</dt>
+<dd>사전학습 <strong>다음에</strong> 하는 실제 목표 과제(분류, 번역 등).</dd>
+<dt><strong>창발적 능력</strong> · Emergent Abilities</dt>
+<dd>모델이 <strong>일정 크기를 넘으면 갑자기 생기는</strong> 능력. <strong>PLM과 구별되는 LLM의 가장 큰 특징</strong>.</dd>
+<dd>💡 물이 100도에서 끓기</dd>
+<dt><strong>In-context Learning</strong> · 문맥 내 학습</dt>
+<dd>프롬프트 속 <strong>예시만 보고</strong> 과제 수행. <strong>모델 파라미터는 안 바뀜</strong>. GPT-3가 공식 도입.</dd>
+<dd>💡 알바생에게 예시 보여주기</dd>
+<dt><strong>Zero / One / Few-shot</strong></dt>
+<dd>예시 <strong>0개 / 1개 / 몇 개</strong>를 주고 시키기.</dd>
+<dt><strong>컨텍스트 윈도우</strong> · Context Window</dt>
+<dd>모델이 <strong>한 번에 읽을 수 있는 분량</strong>.</dd>
+<dt><strong>태스크 컨디셔닝</strong> · Task conditioning</dt>
+<dd>GPT-2: P(Output|Input, <strong>Task</strong>). 과제까지 조건으로 받음.</dd>
+<dt><strong>할루시네이션</strong> · Hallucination</dt>
+<dd>AI가 <strong>모르는 걸 그럴듯하게 지어내는</strong> 현상. RAG로 줄임.</dd>
+<dt><strong>멀티모달</strong> · Multimodal</dt>
+<dd>글뿐 아니라 <strong>이미지·소리</strong>까지 다룸.</dd>
+<dt><strong>MoE</strong> · Mixture of Experts</dt>
+<dd>모델 안 <strong>전문가 여럿</strong> 중 필요한 것만 불러 쓰는 구조.</dd>
+<dt><strong>추론 모델</strong> · Reasoning Model</dt>
+<dd>답하기 전 <strong>속으로 CoT를 거쳐</strong> 검토 후 답함(o1, o3 등). ↔ 비추론 모델은 바로 답함.</dd>
+<dd>💡 수학자 vs 퀴즈 달인</dd>
+</dl>
+<h2 id="튜닝-효율화-5장">🛠 튜닝 · 효율화 (5장)<a class="headerlink" href="#튜닝-효율화-5장" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>Adaptation Tuning</strong></dt>
+<dd>사전학습된 LLM을 <strong>특정 목적에 맞게 추가로 적응</strong>시키기. GPT-3 → ChatGPT의 핵심 변화.</dd>
+<dt><strong>Instruction Tuning</strong></dt>
+<dd><strong>지시문 + 입력 → 출력 쌍</strong>으로 지도학습. 사용자 의도대로 답하게 + zero-shot 향상.</dd>
+<dt><strong>FLAN</strong></dt>
+<dd>2021, instruction tuning 최초 제안. task cluster 많을수록 좋고, <strong>작은 모델엔 역효과</strong>.</dd>
+<dt><strong>태스크 클러스터</strong> · Task cluster</dt>
+<dd>비슷한 과제끼리 묶은 <strong>과제 그룹</strong>.</dd>
+<dt><strong>얼라인먼트</strong> · Alignment</dt>
+<dd>AI 행동을 <strong>인간 가치에 맞추기</strong>. 기준: 3H.</dd>
+<dt><strong>3H</strong> · Helpful · Honest · Harmless</dt>
+<dd><strong>도움 되기 · 정직하기 · 해롭지 않기</strong>.</dd>
+<dt><strong>RLHF</strong> · Reinforcement Learning with Human Feedback</dt>
+<dd>사람 피드백으로 강화학습. <strong>SFT → Reward Model → RL(PPO)</strong> 3단계.</dd>
+<dt><strong>보상 모델</strong> · Reward model</dt>
+<dd><strong>사람 취향을 흉내 내는 채점 AI</strong>. 사람이 매긴 순위로 학습.</dd>
+<dt><strong>PPO</strong> · Proximal Policy Optimization</dt>
+<dd>"<strong>조금씩만 바꿔라</strong>" 안전장치가 있는 강화학습 방법. RLHF 3단계에서 사용.</dd>
+<dt><strong>정책</strong> · Policy</dt>
+<dd>모델의 "이런 상황엔 이렇게 답한다" <strong>행동 방식</strong>.</dd>
+<dt><strong>PEFT</strong> · Parameter-Efficient Fine-Tuning</dt>
+<dd><strong>학습할 파라미터 수를 줄인</strong> 미세조정. Adapter, LoRA.</dd>
+<dt><strong>내재 차원</strong> · Intrinsic dimension</dt>
+<dd>진짜로 필요한 자유도. PLM은 <strong>낮음</strong> → 조금만 학습해도 됨(RoBERTa 200개로 90%).</dd>
+<dd>💡 계기판 버튼 1000개 중 핸들·엑셀·브레이크만 씀</dd>
+<dt><strong>Adapter</strong></dt>
+<dd>기존 층 위에 작은 층 추가, <strong>Down → Up Projection</strong>. 원본 freeze. 1,048,576 → 32,768개.</dd>
+<dd>💡 건물 옆 작은 별채</dd>
+<dt><strong>LoRA</strong> · Low-Rank Adaptation</dt>
+<dd><strong>W0 + ΔW = W0 + A·B</strong>. 변화량만 얇은 두 행렬로 학습. 병렬이라 <strong>추론 지연 없음</strong>. 16,384개.</dd>
+<dd>💡 교과서에 포스트잇</dd>
+<dt><strong>랭크</strong> · Rank (m)</dt>
+<dd>LoRA에서 행렬을 <strong>얼마나 얇게</strong> 쪼갤지. 작을수록 싸다.</dd>
+<dt><strong>프리즈</strong> · Freeze</dt>
+<dd>원래 파라미터를 <strong>고정</strong>(학습 안 함).</dd>
+<dt><strong>양자화</strong> · Quantization</dt>
+<dd>숫자를 <strong>더 적은 비트로</strong> 저장(FP32→FP16→INT8→INT4). <strong>메모리 절감</strong>.</dd>
+<dd>💡 사진 화질 낮추기</dd>
+<dt><strong>비트</strong> · bit</dt>
+<dd>숫자 하나를 저장하는 <strong>칸 수</strong>. 많을수록 정밀, 적을수록 가벼움.</dd>
+<dt><strong>QLoRA</strong> · Quantization + LoRA</dt>
+<dd><strong>4-bit로 양자화해 freeze한 LLM + LoRA</strong>. 작은 GPU로도 학습.</dd>
+</dl>
+<h2 id="프롬프트-6장">💬 프롬프트 (6장)<a class="headerlink" href="#프롬프트-6장" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>프롬프트</strong> · Prompt</dt>
+<dd>LLM에게 <strong>넣는 입력값</strong>.</dd>
+<dt><strong>프롬프트 엔지니어링</strong> · Prompt Engineering</dt>
+<dd>결과 품질을 높이는 <strong>입력값 조합 찾기</strong>. 구성: Instruction · Context · Input Data · Output Indicator.</dd>
+<dt><strong>Chain-of-Thought</strong> · CoT</dt>
+<dd>예시에 <strong>풀이 과정</strong>을 넣어 단계별로 생각하게 함. PaLM 540B <strong>17.7% → 58.1%</strong>.</dd>
+<dd>💡 연습장에 풀기</dd>
+<dt><strong>Zero-shot CoT</strong></dt>
+<dd>예시 없이 "<strong>단계별로 생각해보자</strong>" 한마디로 CoT 효과.</dd>
+<dt><strong>Self-consistency</strong></dt>
+<dd>여러 번 풀고 <strong>가장 많이 나온 답</strong> 선택(다수결).</dd>
+<dt><strong>Self-refine</strong> · Self-polish</dt>
+<dd>자기 답을 <strong>스스로 검토·수정</strong> 반복(퇴고).</dd>
+<dt><strong>Selection-inference</strong></dt>
+<dd>후보 추론 중 <strong>가장 적절한 것을 골라</strong> 결론.</dd>
+<dt><strong>ToT / GoT</strong> · Tree / Graph of Thoughts</dt>
+<dd>생각을 <strong>나무처럼 갈래</strong> / <strong>그물처럼 합치며</strong> 펼치기.</dd>
+<dt><strong>프롬프트 인젝션</strong> · Prompt Injection</dt>
+<dd>악의적 지시를 <strong>몰래 끼워 넣어</strong> AI를 속이는 공격.</dd>
+<dt><strong>오버 프롬프팅</strong> · Over-prompting</dt>
+<dd>예시를 <strong>너무 많이</strong> 넣어 오히려 성능이 떨어지는 현상.</dd>
+<dt><strong>민감도</strong> · Sensitivity</dt>
+<dd>작은 변화에 결과가 <strong>얼마나 흔들리나</strong>. 서식만 바꿔도 최대 76%p.</dd>
+<dt><strong>재현성</strong> · Reproducibility</dt>
+<dd>똑같이 다시 하면 <strong>똑같은 결과</strong>가 나오는 성질.</dd>
+</dl>
+<h2 id="에이전트-기초-78장">🤖 에이전트 기초 (7·8장)<a class="headerlink" href="#에이전트-기초-78장" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>에이전트</strong> · Agent</dt>
+<dd><strong>특정 환경과 상호작용</strong>하는 지능적 시스템. 정의엔 지능 + 환경 필요.</dd>
+<dt><strong>환경</strong> · Environment</dt>
+<dd>에이전트가 보고 움직이는 세계(물리·디지털·인간).</dd>
+<dt><strong>관찰 / 행동</strong> · Observation / Action</dt>
+<dd>환경을 <strong>보고</strong> 얻는 정보 / 환경에 <strong>영향</strong>을 주는 것.</dd>
+<dt><strong>AI 에이전트</strong> · AI Agent</dt>
+<dd><strong>LLM으로 추론</strong>하고 도구·메모리로 목표를 수행하는 개체. ReAct 루프.</dd>
+<dd>💡 똑똑한 직원 한 명</dd>
+<dt><strong>에이전틱 AI</strong> · Agentic AI</dt>
+<dd>여러 에이전트를 <strong>조율</strong>해 복잡한 목표를 자율 수행하는 시스템. Orchestrator, 재계획.</dd>
+<dd>💡 팀장 있는 회사</dd>
+<dt><strong>오케스트레이터</strong> · Orchestrator</dt>
+<dd>일을 <strong>나눠 주고 결과를 모으는</strong> 지휘자 에이전트.</dd>
+<dt><strong>에이전트 런타임</strong> · Agent Runtime</dt>
+<dd>Orchestration(Profile·Memory·Reasoning/Planning) + Model + Tools 구조(Google).</dd>
+<dt><strong>멀티턴</strong> · Multi-turn</dt>
+<dd>여러 번 <strong>주고받는</strong> 대화. 에이전트는 세션 기록으로 가능.</dd>
+<dt><strong>Text / LLM / Reasoning Agent</strong></dt>
+<dd>언어로 상호작용 ⊃ LLM으로 행동 ⊃ LLM으로 <strong>추론까지</strong>.</dd>
+<dt><strong>ELIZA</strong></dt>
+<dd>MIT의 초기 <strong>룰 기반</strong> 챗봇. 한계: task-specific 규칙, 단순 도메인만.</dd>
+<dt><strong>인지적 제어</strong> · Cognitive control</dt>
+<dd>자기 생각을 <strong>스스로 점검·조절</strong>. Reasoning Agent의 특징.</dd>
+<dt><strong>자율성</strong> · Autonomy</dt>
+<dd>행동·내부 상태 <strong>통제권</strong> 보유. 단계별 지침 없이도 수행.</dd>
+<dt><strong>반응성</strong> · Reactivity</dt>
+<dd>환경 변화에 <strong>신속 대응</strong>. Multi-modal(지각) + Embodiment·Tool(행동) 확장.</dd>
+<dt><strong>능동성</strong> · Pro-activeness</dt>
+<dd><strong>주도적으로 목표 지향</strong> 행동. next token prediction → 추론·계획.</dd>
+<dt><strong>사회성</strong> · Social ability</dt>
+<dd>다른 에이전트와 <strong>상호작용</strong>. NLU·NLG.</dd>
+<dt><strong>NLU / NLG</strong> · Natural Language Understanding / Generation</dt>
+<dd>자연어 <strong>이해</strong> / 자연어 <strong>생성</strong>.</dd>
+<dt><strong>ReAct</strong> · Reasoning + Acting</dt>
+<dd><strong>생각 ↔ 행동</strong>을 번갈아 생성. 추론은 행동을, 행동은 추론을 도움.</dd>
+<dt><strong>그라운딩</strong> · Grounding</dt>
+<dd>생각을 <strong>실제 세계(외부 정보·행동)에 연결</strong>. 외부 행동 = Grounding.</dd>
+<dt><strong>RAG</strong> · Retrieval-Augmented Generation</dt>
+<dd><strong>먼저 검색</strong>해서 찾은 자료를 넣고 생성. 할루시네이션 방지.</dd>
+<dd>💡 오픈북 시험</dd>
+<dt><strong>리트리버</strong> · Retriever</dt>
+<dd>관련 자료를 찾아오는 부품. <strong>BM25</strong>(단어 겹침), <strong>DPR</strong>(의미 벡터).</dd>
+<dt><strong>툴 사용</strong> · Tool Use</dt>
+<dd>특수 토큰으로 <strong>도구 호출</strong>을 생성. 계산기·검색·날씨 API·코드 실행.</dd>
+<dt><strong>API</strong> · Application Programming Interface</dt>
+<dd><strong>프로그램끼리 대화하는 창구</strong>.</dd>
+<dt><strong>Extension / Function</strong></dt>
+<dd>API를 <strong>에이전트가 직접 호출</strong>(Agent-Side) / <strong>클라이언트가 호출</strong>(Client-Side).</dd>
+<dd>💡 비서에게 카드 주기 vs 메모만 받기</dd>
+</dl>
+<h2 id="에이전트-구조-아키텍처-912장">🧩 에이전트 구조 · 아키텍처 (9~12장)<a class="headerlink" href="#에이전트-구조-아키텍처-912장" title="Permanent link">#</a></h2>
+<dl>
+<dt><strong>Perception · Brain · Action</strong></dt>
+<dd><strong>감지·변환 → 기억·추론·결정 → 수행</strong>. 반복하며 피드백 받는 게 LLM과의 차이.</dd>
+<dt><strong>Embodiment</strong> · 체화</dt>
+<dd>로봇 몸처럼 <strong>물리적으로 행동</strong>하는 능력.</dd>
+<dt><strong>메모리 검색 기준</strong> · Recency · Relevance · Importance</dt>
+<dd><strong>최근인가 · 관련 있나 · 중요한가</strong> 점수로 기억 골라오기.</dd>
+<dt><strong>계획 수립 / 반성</strong> · Plan formulation / reflection</dt>
+<dd>하위 작업으로 <strong>분해</strong>(One-shot·Step-by-Step·Hierarchical) / 계획을 <strong>피드백</strong>(내부·인간·환경).</dd>
+<dt><strong>Continual learning</strong> · 지속 학습</dt>
+<dd>새로 배워도 <strong>예전 걸 잊지 않기</strong>(Forgetting 완화).</dd>
+<dt><strong>HuggingGPT</strong></dt>
+<dd>ChatGPT가 지휘: <strong>Task Planning → Model Selection(model card) → 응답 생성</strong>.</dd>
+<dt><strong>Task / Innovation / Lifecycle</strong></dt>
+<dd>Single Agent 3단계: 시킨 일 / 새 지식 창출 / 스스로 성장(<strong>AGI 목표</strong>).</dd>
+<dt><strong>AGI</strong> · Artificial General Intelligence</dt>
+<dd>사람처럼 <strong>무엇이든</strong> 하는 범용 인공지능.</dd>
+<dt><strong>The Society of Mind</strong> · 마음의 사회</dt>
+<dd>Minsky 1986: 지능은 <strong>작은 에이전트들의 상호작용</strong>에서 생긴다 → Multi-Agent 근거.</dd>
+<dt><strong>ChatDev / ChatEval</strong></dt>
+<dd><strong>협력형</strong>(Design→Coding→Testing) / <strong>적대형</strong>(토론으로 평가).</dd>
+<dt><strong>Instructor-Executor / Equal Partnership</strong></dt>
+<dd>사람이 지시·AI 수행(<strong>현재 기본</strong>) / 대칭 관계의 동료.</dd>
+<dt><strong>인지 아키텍처</strong> · Cognitive Architecture</dt>
+<dd>인간이 <strong>인식·기억·추론·행동 결정</strong>하는 기본 구조. Newell, Simon.</dd>
+<dt><strong>CoALA</strong> · Cognitive Architectures for Language Agents</dt>
+<dd><strong>Memory · Action Space · Decision-making</strong> 3요소 프레임워크.</dd>
+<dt><strong>작업 기억</strong> · Working Memory</dt>
+<dd><strong>지금 처리 중인</strong> 정보(단기).</dd>
+<dt><strong>의미 기억</strong> · Semantic Memory</dt>
+<dd><strong>사실·개념·지식</strong>(장기).</dd>
+<dd>💡 파스타 = 면 + 소스</dd>
+<dt><strong>일화 기억</strong> · Episodic Memory</dt>
+<dd><strong>과거 경험·사건</strong>(장기).</dd>
+<dd>💡 전에 물이 적어서 실패</dd>
+<dt><strong>절차 기억</strong> · Procedural Memory</dt>
+<dd><strong>방법·규칙·스킬</strong>(장기).</dd>
+<dd>💡 boil_water()</dd>
+<dt><strong>Retrieval / Reasoning / Learning</strong> · 내부 행동</dt>
+<dd>장기→작업으로 <strong>꺼내기</strong> / 작업 기억 <strong>가공</strong> / →장기에 <strong>저장</strong>.</dd>
+<dt><strong>Proposal → Evaluation → Selection</strong> · 의사결정</dt>
+<dd>후보 <strong>제안</strong> → <strong>평가</strong>(휴리스틱·시뮬레이션) → <strong>선택</strong>(없으면 다시 제안) → Execution.</dd>
+<dd>💡 점심 메뉴 고르기</dd>
+<dt><strong>휴리스틱</strong> · Heuristic</dt>
+<dd>경험상 <strong>대충 맞는</strong> 판단 규칙.</dd>
+<dt><strong>피드백 루프</strong> · Feedback loop</dt>
+<dd>결과를 <strong>다시 입력으로</strong> 돌리는 순환. Agent = 제어 시스템.</dd>
+<dd>💡 에어컨 온도 조절</dd>
+<dt><strong>Single / Multi-Agent</strong></dt>
+<dd>모델 하나가 전부 / 여러 모델이 <strong>페르소나·역할</strong>을 나눠 협력.</dd>
+<dt><strong>페르소나</strong> · Persona</dt>
+<dd>AI에게 준 <strong>캐릭터·역할</strong>.</dd>
+<dt><strong>Vertical / Horizontal</strong> · 수직 / 수평</dt>
+<dd><strong>리더에게 보고</strong>, 분업 명확 / <strong>전원 평등</strong>, 공용 스레드, 자원.</dd>
+<dt><strong>Publish-subscribe</strong> · 발행-구독</dt>
+<dd>모두 게시판에 올리고 <strong>자기 일에 필요한 것만 읽기</strong>. MetaGPT.</dd>
+<dd>💡 신문 구독</dd>
+<dt><strong>MetaGPT</strong></dt>
+<dd><strong>structured output 강제</strong> + publish-subscribe → Vertical.</dd>
+<dt><strong>DyLAN</strong></dt>
+<dd>round마다 <strong>기여도 평가 → 높은 agent만 진출</strong> → Horizontal.</dd>
+<dd>💡 서바이벌 오디션</dd>
+<dt><strong>RAISE</strong></dt>
+<dd>ReAct + short/long memory. 그러나 역할 혼동·할루시네이션(세일즈 시켰더니 코드 작성).</dd>
+</dl>
+  <footer class="page-footer"><code>content/isw/00-glossary.md</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc">
+<ul>
+<li><a href="#수학-기초-몰라도-ok-여기만-보면-됨">🧮 수학 기초 (몰라도 OK, 여기만 보면 됨)</a></li>
+<li><a href="#학습의-기초-ai가-배운다는-게-뭐야">🧠 학습의 기초 (AI가 '배운다'는 게 뭐야?)</a></li>
+<li><a href="#자연어-처리-임베딩-2장">📝 자연어 처리 · 임베딩 (2장)</a></li>
+<li><a href="#모델-구조-트랜스포머-3장">🔁 모델 구조 · 트랜스포머 (3장)</a></li>
+<li><a href="#llm-gpt-4장">🚀 LLM · GPT (4장)</a></li>
+<li><a href="#튜닝-효율화-5장">🛠 튜닝 · 효율화 (5장)</a></li>
+<li><a href="#프롬프트-6장">💬 프롬프트 (6장)</a></li>
+<li><a href="#에이전트-기초-78장">🤖 에이전트 기초 (7·8장)</a></li>
+<li><a href="#에이전트-구조-아키텍처-912장">🧩 에이전트 구조 · 아키텍처 (9~12장)</a></li>
+</ul>
+</div>
+</aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

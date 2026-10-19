@@ -1,15 +1,622 @@
 # 예상 문제 모음
 
-노트 전체에서 **시험에 나오기 좋은 것**을 문제로 만들었습니다. **"정답 보기"를 누르기 전에 먼저 직접 써 보세요.**
+노트 전체에서 **시험에 나오기 좋은 것**을 세 가지 유형으로 만들었습니다. **"정답 보기"를 누르기 전에 먼저 직접 풀어 보세요.**
+
+| 유형 | 문항 | 연습 목적 |
+|---|---|---|
+| [Part 1 · 객관식](#part-1-객관식-30문항) | M1~M30 | 헷갈리는 짝 구분, 함정 보기 거르기 |
+| [Part 2 · 빈칸 채우기](#part-2-빈칸-채우기-25문항) | B1~B25 | 정의·숫자·이름을 정확히 쓰기 |
+| [Part 3 · 단답·서술](#part-3-단답서술-111문항) | Q1~Q111 | 정의 + 이유 + 비교를 문장으로 쓰기 |
 
 {: .참고 }
-> - **단답**: 용어·숫자·이름을 정확히 쓰는 문제
-> - **서술**: 정의 + 이유 + 비교를 문장으로 쓰는 문제. 모범 답안의 **굵은 글씨**가 채점 키워드입니다.
+> - 서술 모범 답안의 **굵은 글씨**가 채점 키워드입니다.
 > - 문제 옆 `[n장]` 은 해당 내용이 있는 장입니다. 틀리면 그 장으로 돌아가세요.
+> - 객관식 해설에 나오는 오답 이유는 [헷갈리는 개념 총정리](97-compare.html)의 "함정 주의"와 같습니다.
 
 ---
 
-## 1장 — 과목 개요와 AI Agent 역사
+## Part 1 · 객관식 (30문항)
+
+**M1.** One-hot encoding의 한계로 옳은 것을 **모두** 고르면? `[2장]`
+
+1. 벡터 대부분이 0인 희소 문제가 있다
+2. 단어 사이의 유사도를 표현할 수 없다
+3. 단어 사전이 커져도 벡터 차원은 일정하다
+4. 문맥을 고려하지만 계산량이 많다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ①, ②** — One-hot의 한계 2가지는 **희소 문제**와 **유사도 표현 불가**입니다. ③은 Dense 표현의 특징(반대로 One-hot은 사전이 커지면 차원도 커짐), ④는 해당 없음.
+
+</details>
+
+**M2.** TF-IDF에 대한 설명으로 **틀린** 것은? `[2장]`
+
+1. TF와 IDF를 곱한 값이다
+2. 여러 문서에 공통으로 많이 나오는 단어는 중요도가 낮다
+3. 문맥을 고려하므로 동의어·다의어를 구분할 수 있다
+4. 검색 시스템에서 결과의 중요도를 정하는 데 효율적이다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — TF-IDF의 한계가 바로 **문맥 무시, 희소성, 동의어/다의어 처리 불가**입니다.
+
+</details>
+
+**M3.** IDF 식 `log(n / (1 + df(t)))` 에 대한 설명으로 옳은 것은? `[2장]`
+
+1. df(t)가 클수록 IDF도 커진다
+2. log는 값의 크기를 키우기 위해 쓴다
+3. 분모의 1은 단어가 어느 문서에도 없을 때 0으로 나누는 것을 막는다
+4. n은 특정 단어가 등장한 문서의 수이다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — ① IDF는 df(t)에 **반비례** ② log는 가중치를 **적절히 조절**(눌러 주기) ④ n은 **전체 문서 수**, 단어가 등장한 문서 수는 df(t).
+
+</details>
+
+**M4.** Dense representation의 특징이 **아닌** 것은? `[2장]`
+
+1. 사용자가 정한 차원으로 모든 단어 벡터의 크기를 맞춘다
+2. 연속적인 실수값으로 표현된다
+3. 단어 사전이 커질수록 벡터 차원도 함께 커진다
+4. '강아지'와 '멍멍이'를 비슷한 벡터로 표현해 일반화가 가능하다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — Dense는 사전 크기와 무관하게 **차원이 일정** → 공간 복잡도 개선. ③은 Sparse(One-hot)의 특징.
+
+</details>
+
+**M5.** AutoEncoder에 대한 설명으로 옳은 것은? `[2장]`
+
+1. 정답 label이 있는 데이터로 학습하는 지도학습이다
+2. 입력 X, Latent vector Z, 출력 X̃ 의 3계층으로 구성된다
+3. 입력보다 더 높은 차원으로 특징을 확장한다
+4. 2017년 Transformer 논문에서 처음 제안되었다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ②** — **비지도** 학습(①✗), **낮은 차원**의 특성 표현 학습(③✗), **1986년** "Learning Internal Representation by Error Backpropagation"에서 소개(④✗).
+
+</details>
+
+**M6.** Transformer가 해결한 기존 Seq2Seq/RNN의 한계가 **아닌** 것은? `[3장]`
+
+1. 고정된 크기의 벡터에 모든 정보를 압축해 생기는 정보 손실
+2. Vanishing Gradient Problem
+3. 입력의 순차적 처리로 인한 병렬화 불가
+4. 모델 파라미터 수가 너무 적어 표현력이 부족함
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ④** — 슬라이드의 고질적 한계 3가지는 ①②③.
+
+</details>
+
+**M7.** Transformer에 대한 설명으로 옳은 것은? `[3장]`
+
+1. RNN을 개선한 LSTM을 인코더로 사용한다
+2. Encoder-Decoder 구조를 버리고 디코더만 사용한다
+3. 단어 embedding에 Positional Encoding을 더해 입력한다
+4. 단어를 한 개씩 순서대로 처리하므로 순서를 자동으로 안다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — RNN을 **사용하지 않고**(①✗) **Encoder-Decoder 구조는 유지**(②✗). 한꺼번에(병렬) 넣기 때문에 순서를 몰라서(④✗) **위치 정보를 더해 줌**.
+
+</details>
+
+**M8.** 디코더에서 아직 생성하지 않은 뒤쪽 단어를 보지 못하게 가리는 Attention은? `[3장]`
+
+1. Encoder Self-Attention
+2. Masked Decoder Self-Attention
+3. Encoder-Decoder Attention
+4. Multi-head Cross Attention
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ②**
+
+</details>
+
+**M9.** 언어 모델 발전 단계와 대표 모델의 연결이 **틀린** 것은? `[3장]`
+
+1. SLM — N-gram LM
+2. NLM — word2vec, LSTM, Seq2Seq
+3. PLM — BERT, GPT-2, T5
+4. LLM — Kneser-Ney Smoothing
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ④** — Kneser-Ney Smoothing은 **SLM**. LLM의 대표는 **GPT-4, PaLM 2, LLaMA 3**.
+
+</details>
+
+**M10.** 다음 중 BERT와 GPT의 비교로 옳은 것은? `[3·4장]`
+
+1. BERT는 디코더, GPT는 인코더 기반이다
+2. GPT는 양방향으로 문장 앞뒤를 모두 본다
+3. GPT는 Autoregressive 방식으로 다음 단어를 예측한다
+4. BERT는 GPT보다 늦게 나와 Transformer LM의 시초가 되었다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — BERT = **인코더·양방향**, GPT = **디코더·단방향**. GPT-1의 혁신 포인트가 "**BERT보다 먼저 나온 Transformer LM**".
+
+</details>
+
+**M11.** 기존 PLM과 구별되는 LLM의 가장 큰 특징은? `[4장]`
+
+1. Transformer 구조를 사용한다
+2. Emergent Abilities
+3. 사전학습을 한다
+4. Fine-tuning이 가능하다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ②** — ①③④는 PLM도 다 해당.
+
+</details>
+
+**M12.** In-context Learning에 대한 설명으로 옳은 것은? `[4장]`
+
+1. 소량의 정답 데이터로 모델을 미세조정한다
+2. 모델 파라미터를 업데이트하지 않고 프롬프트 속 예시로 과제를 수행한다
+3. GPT-1에서 처음 공식 도입되었다
+4. 예시가 많을수록 오히려 성능이 떨어지는 것이 일반적이다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ②** — **GPT-3**가 공식 도입(③✗). Context Window k가 커질수록 성능 **향상**(④✗).
+
+</details>
+
+**M13.** GPT-2의 목적함수로 옳은 것은? `[4장]`
+
+1. P(Output \| Input)
+2. P(Input \| Output)
+3. P(Output \| Input, Task)
+4. P(Task \| Input)
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — ①은 GPT-1. GPT-2는 Task까지 조건으로 → 같은 입력도 과제에 따라 다른 출력.
+
+</details>
+
+**M14.** GPT 시리즈의 연도·파라미터 연결로 옳은 것은? `[4장]`
+
+1. GPT-1 — 2018 — 1.5B
+2. GPT-2 — 2019 — 1.5B
+3. GPT-3 — 2019 — 175B
+4. GPT-3 — 2020 — 117M
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ②** — GPT-1 **2018·117M** / GPT-2 **2019·1.5B** / GPT-3 **2020·175B**.
+
+</details>
+
+**M15.** GPT-3 논문이 지적한 Fine-tuning의 한계가 **아닌** 것은? `[4장]`
+
+1. Task별 Labeled Dataset이 필요하다
+2. 작은 Task 분포에 과적합되어 분포 밖 일반화 성능을 잃을 수 있다
+3. 모델의 단방향성으로 자연어 추론을 잘 못한다
+4. 사람처럼 적은 샘플로 Task를 수행하는 능력이 필요하다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — 단방향성은 **GPT-3 자체의 한계**. 두 목록을 섞은 함정.
+
+</details>
+
+**M16.** LLM 학습 과정에서 Adaptation Tuning에 속하지 **않는** 것은? `[5장]`
+
+1. Instruction tuning
+2. Alignment tuning
+3. Parameter efficient model adaptation
+4. Prompt Engineering
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ④** — Prompt Engineering은 **Utilization** 단계.
+
+</details>
+
+**M17.** FLAN(2021)의 결론으로 **틀린** 것은? `[5장]`
+
+1. Instruction tuning 기법을 처음으로 제안했다
+2. Task cluster가 많을수록 unseen task 성능이 향상된다
+3. 모델 크기와 관계없이 instruction tuning은 항상 성능을 높인다
+4. Zero-shot 성능을 향상시킨다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — **작은 모델에서는 오히려 성능이 하락**하며, 일정 크기 이상이어야 효과가 있다.
+
+</details>
+
+**M18.** Alignment의 기준 3H가 **아닌** 것은? `[5장]`
+
+1. Helpfulness
+2. Honesty
+3. Harmlessness
+4. High-performance
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ④**
+
+</details>
+
+**M19.** RLHF에 대한 설명으로 옳은 것은? `[5장]`
+
+1. 1단계에서 Reward model을 학습한다
+2. 2단계에서 사람은 각 답변에 절대 점수를 매긴다
+3. 3단계에서 Reward model을 보상 함수로 사용해 PPO로 학습한다
+4. 사람 평가자가 필요 없어 비용이 적게 든다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — 1단계 = **SFT**(①✗), 2단계 = 사람이 **선호도 순위**(Ranking)(②✗), annotator **비용이 큰 것**이 한계(④✗).
+
+</details>
+
+**M20.** LoRA가 Adapter Tuning보다 나은 이유로 **틀린** 것은? `[5장]`
+
+1. 더 적은 파라미터로 빠르게 적응한다
+2. 병렬로 진행되어 추가적인 추론 지연이 없다
+3. 입력 시퀀스 길이를 줄이지 않고 훈련할 수 있다
+4. 원래 모델의 파라미터 크기 자체를 줄여 메모리를 절약한다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ④** — PEFT(LoRA 포함)는 **원래 모델 크기를 줄이지 않음** → 그래서 **Quantization**이 필요.
+
+</details>
+
+**M21.** "PEFT는 ( ㉠ )을 줄이고, Quantization은 ( ㉡ )을 줄인다. 둘을 결합한 것이 ( ㉢ )이다." 에 들어갈 말로 옳은 것은? `[5장]`
+
+1. ㉠ 메모리 ㉡ 학습 파라미터 수 ㉢ LoRA
+2. ㉠ 학습 파라미터 수 ㉡ 메모리(비트 수) ㉢ QLoRA
+3. ㉠ 학습 데이터 ㉡ 추론 시간 ㉢ RLHF
+4. ㉠ 학습 파라미터 수 ㉡ 메모리(비트 수) ㉢ Adapter
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ②**
+
+</details>
+
+**M22.** Prompt의 구성 요소 4가지가 **아닌** 것은? `[6장]`
+
+1. Instruction
+2. Context
+3. Output Indicator
+4. Reward Signal
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ④** — 나머지 하나는 **Input Data**.
+
+</details>
+
+**M23.** Chain-of-Thought에 대한 설명으로 옳은 것은? `[6장]`
+
+1. 예시 없이 질문만 주는 방법이다
+2. 예시에 결론만 보여주는 Few-shot의 다른 이름이다
+3. 추론 과정을 포함한 예제를 제공해 복잡한 산술·상식·기호 추론 성능을 높인다
+4. PaLM 540B에서 정확도가 58.1% → 17.7%로 떨어졌다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — ④는 방향이 반대(**17.7% → 58.1%** 상승).
+
+</details>
+
+**M24.** Prompt Engineering이 여전히 어려운 이유로 슬라이드에 제시되지 **않은** 것은? `[6장]`
+
+1. 표현과 서식에 대한 민감도
+2. 예시와 샘플 순서의 민감도
+3. 모델 파라미터 수가 공개되지 않음
+4. 모델 평가의 어려움
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — 나머지 하나는 **재서술 문장 변화에 의한 성능 분산**.
+
+</details>
+
+**M25.** Agent / AI Agent / Agentic AI에 대한 설명으로 옳은 것은? `[7장]`
+
+1. Agent는 반드시 LLM을 사용해야 한다
+2. AI Agent는 Orchestrator가 하위 에이전트 결과를 통합·검증한다
+3. Agentic AI는 상위 목표를 스스로 하위 목표로 분해하고 실패 시 재계획한다
+4. 온도조절기는 Agentic AI의 예시이다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — Agent는 **LLM 없이도** 가능(①✗), Orchestrator는 **Agentic AI**(②✗), 온도조절기는 **Agent**(④✗).
+
+</details>
+
+**M26.** LLM이 Agent에 적합한 이유 중 "Multi-modal fusion으로 지각 공간을, Embodiment·Tool로 행동 공간을 확장한다"에 해당하는 성질은? `[7장]`
+
+1. 자율성
+2. 반응성
+3. 능동성
+4. 사회성
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ②** — 능동성은 **next token prediction → 추론·계획 능력**.
+
+</details>
+
+**M27.** Agent의 task 수행 필요 요건과 해결 방법의 연결로 옳은 것은? `[8장]`
+
+1. Reasoning — RAG
+2. Knowledge — Tool Use
+3. Computation — Tool Use
+4. Knowledge — Chain-of-Thought
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — Reasoning–**프롬프트 기법(CoT 등)** / Knowledge–**RAG** / Computation–**Tool Use**.
+
+</details>
+
+**M28.** CoALA의 내부 행동 중 "장기 기억에서 정보를 검색해 Working Memory로 가져오는 행동"은? `[11장]`
+
+1. Retrieval
+2. Reasoning
+3. Learning
+4. Grounding
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ①** — Learning은 반대 방향(→장기 기억 저장), Grounding은 **외부** 행동.
+
+</details>
+
+**M29.** "과거에 경험했던 사건이나 상호작용을 저장하는 공간"은? `[11장]`
+
+1. Working Memory
+2. Semantic Memory
+3. Episodic Memory
+4. Procedural Memory
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — Semantic = 사실·개념, Procedural = 방법·스킬, Working = 현재 처리 중.
+
+</details>
+
+**M30.** Multi-Agent Architecture에 대한 설명으로 옳은 것은? `[12장]`
+
+1. Vertical에서는 모든 agent가 공용 스레드에서 소통한다
+2. Horizontal에서는 리더가 과업을 배정한다
+3. MetaGPT는 structured output과 publish-subscribe를 사용하며 vertical에 가깝다
+4. DyLAN은 리더가 기여도를 평가해 팀을 고정한다
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**정답 ③** — 공용 스레드는 **Horizontal**(①✗), Horizontal은 agent가 **자원**(②✗), DyLAN은 **리더 없이** round마다 LLM Ranker/peer rating으로 **재편**(④✗).
+
+</details>
+
+---
+
+## Part 2 · 빈칸 채우기 (25문항)
+
+**B1.** 임베딩의 두 가지 역할은 자연어의 ( ㉠ ) 함축과 자연어 간 ( ㉡ ) 계산이다. `[2장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **의미적인 정보** ㉡ **유사도**
+
+</details>
+
+**B2.** 코사인 유사도는 ( ㉠ ) ~ ( ㉡ ) 사이의 값이며, ( ㉢ )에 가까울수록 유사하다. `[2장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **−1** ㉡ **1** ㉢ **1**
+
+</details>
+
+**B3.** One-hot encoding의 한계는 ( ㉠ ) 문제와 단어의 ( ㉡ )를 표현할 수 없다는 것이다. `[2장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **희소(Sparsity)** ㉡ **유사도**
+
+</details>
+
+**B4.** `idf(d,t) = log( ( ㉠ ) / (1 + ( ㉡ )) )` `[2장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **n (전체 문서 수)** ㉡ **df(t) (단어 t가 등장한 문서 수)**
+
+</details>
+
+**B5.** AutoEncoder는 입력 계층 X, 입력 정보를 압축한 ( ㉠ ), 출력 계층 X̃ 로 구성되며 ( ㉡ ) 학습이다. `[2장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **Latent vector Z** ㉡ **비지도**
+
+</details>
+
+**B6.** Seq2Seq는 ( ㉠ )이 입력을 하나의 ( ㉡ )로 압축하고, ( ㉢ )가 이를 받아 한 단어씩 출력한다. `[3장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **Encoder** ㉡ **Context vector** ㉢ **Decoder**
+
+</details>
+
+**B7.** Transformer 논문의 제목은 "( )"(2017)이다. `[3장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**Attention Is All You Need**
+
+</details>
+
+**B8.** Language Modeling의 목표는 단어 시퀀스의 생성 가능성을 모델링하여 ( )의 확률을 예측하는 것이다. `[3장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**미래 토큰**
+
+</details>
+
+**B9.** LLM은 방대한 텍스트 데이터로 학습된 ( ㉠ ) 개의 파라미터를 가진 ( ㉡ ) 기반의 Language Model이다. `[4장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **수천 억** ㉡ **Transformer**
+
+</details>
+
+**B10.** LLM의 Emergent Abilities 3가지: ( ㉠ ), Instruction Following, ( ㉡ ) `[4장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **In-context Learning** ㉡ **Step-by-Step Reasoning**
+
+</details>
+
+**B11.** GPT는 ( ㉠ ) Pre-trained Transformer의 약자이며, Transformer의 생성형 ( ㉡ ) 구조 기반의 ( ㉢ ) 모델이다. `[4장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **Generative** ㉡ **Decoder** ㉢ **Autoregressive**
+
+</details>
+
+**B12.** GPT Framework: Step1 ( ㉠ ) → Step2 ( ㉡ ) `[4장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **Unsupervised Pre-Training** ㉡ **Supervised Fine-tuning**
+
+</details>
+
+**B13.** GPT-3의 논문 제목은 "Language Models are ( )"이다. `[4장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**Few-shot Learners** (GPT-2는 "Language Models are Unsupervised Multitask Learners")
+
+</details>
+
+**B14.** LLM 학습 3단계: ( ㉠ ) → Adaptation Tuning → ( ㉡ ) `[5장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **Pre-training** ㉡ **Utilization**
+
+</details>
+
+**B15.** Instruction Tuning은 Instruction & input text와 output text의 ( ㉠ ) 데이터셋으로 ( ㉡ ) 형식으로 학습시키는 것이다. `[5장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **pair** ㉡ **supervised (지도)**
+
+</details>
+
+**B16.** RLHF 3단계: Supervised Fine-tuning → ( ㉠ ) → RL Fine-tuning. 3단계에서는 ( ㉡ ) 알고리즘을 사용한다. `[5장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **Reward Model Training** ㉡ **PPO (Proximal Policy Optimization)**
+
+</details>
+
+**B17.** LoRA: `W0 + ΔW = W0 + ( )` `[5장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**AB** (A ∈ ℝ^(d×m), B ∈ ℝ^(m×d))
+
+</details>
+
+**B18.** Adapter Tuning에서 d=1024, m=16이면 학습 파라미터는 1,048,576개에서 ( )개로 줄어든다. `[5장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+**32,768** (= 2 × 1024 × 16)
+
+</details>
+
+**B19.** Prompt의 구성 요소: Instruction, ( ㉠ ), Input Data, ( ㉡ ) `[6장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **Context** ㉡ **Output Indicator**
+
+</details>
+
+**B20.** PaLM 540B의 수학 정답률은 CoT 적용 전 ( ㉠ )%에서 적용 후 ( ㉡ )%로 상승했다. `[6장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **17.7** ㉡ **58.1**
+
+</details>
+
+**B21.** ReAct = ( ㉠ ) + ( ㉡ ). ( ㉠ )은 행동을 돕고, 행동은 ( ㉠ )을 돕는다. `[8장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **Reasoning** ㉡ **Acting**
+
+</details>
+
+**B22.** RAG에서 질문과 관련된 정보를 코퍼스에서 끌어오는 부품을 ( ㉠ )라 하며, 대표적으로 ( ㉡ ), DPR이 있다. `[8장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **Retriever** ㉡ **BM25**
+
+</details>
+
+**B23.** Memory Retrieval은 ( ㉠ ) / ( ㉡ ) / ( ㉢ ) 기반으로 자동 검색한다. `[9장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **Recency** ㉡ **Relevance** ㉢ **Importance**
+
+</details>
+
+**B24.** CoALA는 Memory Modules, ( ㉠ ), ( ㉡ )로 구성된다. `[11장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **Action Space** ㉡ **Decision-making Process**
+
+</details>
+
+**B25.** AI Agent 아키텍처의 (거의) 필수 구성요소: Components = LLM, ( ㉠ ), database / Process = reasoning, ( ㉡ ), tool calling `[12장]`
+
+<details markdown="1"><summary>정답 보기</summary>
+
+㉠ **tool** ㉡ **planning**
+
+</details>
+
+---
+
+## Part 3 · 단답·서술 (111문항)
+
+
+### 1장 — 과목 개요와 AI Agent 역사
 
 **Q1.** 기존 AI(챗봇)와 AI 에이전트의 차이를 예시와 함께 설명하시오. `[1장]`
 
@@ -72,7 +679,7 @@ AI 에이전트는 사용자가 **목표를 주면 스스로 계획을 세우고
 
 ---
 
-## 2장 — 자연어 임베딩
+### 2장 — 자연어 임베딩
 
 **Q7.** 임베딩(Embedding)의 정의와 두 가지 역할을 쓰시오. `[2장]`
 
@@ -206,7 +813,7 @@ AI 에이전트는 사용자가 **목표를 주면 스스로 계획을 세우고
 
 ---
 
-## 3장 — Seq2Seq와 Transformer
+### 3장 — Seq2Seq와 Transformer
 
 **Q21.** RNN 계열 모델(RNN, LSTM, GRU)의 명확한 한계는? `[3장]`
 
@@ -314,7 +921,7 @@ PLM: **많은 양의 텍스트 데이터를 활용해 일반적인 수준의 '�
 
 ---
 
-## 4장 — LLM과 GPT
+### 4장 — LLM과 GPT
 
 **Q32.** LLM의 정의를 쓰시오. `[4장]`
 
@@ -448,7 +1055,7 @@ GPT-1: **2018, 117M** / GPT-2: **2019, 1.5B** / GPT-3: **2020, 175B**
 
 ---
 
-## 5장 — Adaptation Tuning
+### 5장 — Adaptation Tuning
 
 **Q46.** LLM 학습 과정(Training Process of LLMs) 3단계와 각 정의를 쓰시오. `[5장]`
 
@@ -581,7 +1188,7 @@ PLM은 **low intrinsic dimension**을 가짐 → **모델이 크고 복잡하지
 
 ---
 
-## 6장 — Prompt Engineering
+### 6장 — Prompt Engineering
 
 **Q60.** Prompt와 Prompt engineering의 정의를 쓰시오. `[6장]`
 
@@ -648,7 +1255,7 @@ PaLM 540B의 수학 문제 정확도가 **단일 샷(CoT 없이) 17.7% → CoT �
 
 ---
 
-## 7장 — AI Agent의 개념과 분류
+### 7장 — AI Agent의 개념과 분류
 
 **Q66.** Agent의 정의와, 정의하기 위해 필요한 두 요소는? `[7장]`
 
@@ -743,7 +1350,7 @@ PaLM 540B의 수학 문제 정확도가 **단일 샷(CoT 없이) 17.7% → CoT �
 
 ---
 
-## 8장 — ReAct와 Tool Use
+### 8장 — ReAct와 Tool Use
 
 **Q75.** ReAct를 설명하고 시너지 효과를 쓰시오. `[8장]`
 
@@ -817,7 +1424,7 @@ Task를 더 간단한 subtask로 나누어 **각각을 다른 prompt에 넣고 �
 
 ---
 
-## 9장 — LLM 기반 Agent의 구조
+### 9장 — LLM 기반 Agent의 구조
 
 **Q83.** LLM-based Agent의 Workflow 3단계를 쓰고, 단순 LLM과의 차이점을 쓰시오. `[9장]`
 
@@ -889,7 +1496,7 @@ HuggingGPT: ① 사용자 요청을 바탕으로 **Task Planning** ② 각 task�
 
 ---
 
-## 10장 — Agent의 실제 활용
+### 10장 — Agent의 실제 활용
 
 **Q90.** AI Agent의 발전 방향성 3가지는? `[10장]`
 
@@ -949,7 +1556,7 @@ HuggingGPT: ① 사용자 요청을 바탕으로 **Task Planning** ② 각 task�
 
 ---
 
-## 11장 — Cognitive Architecture와 CoALA
+### 11장 — Cognitive Architecture와 CoALA
 
 **Q96.** Cognitive Architecture가 필요해진 배경을 과거와 현재를 비교하여 쓰시오. `[11장]`
 
@@ -1034,7 +1641,7 @@ ReAct는 **Long-term memory가 없고(✗)**, 내부 행동 중 reason만 하며
 
 ---
 
-## 12장 — AI Agent 아키텍처 분류
+### 12장 — AI Agent 아키텍처 분류
 
 **Q104.** "AI Agent is sort of a control system"의 의미를 설명하시오. `[12장]`
 

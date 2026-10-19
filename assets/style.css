@@ -348,6 +348,15 @@ code, kbd, pre, samp {
 .callout-warning { background: var(--c-warning-bg); border-color: var(--c-warning-bd); }
 .callout-warning .callout-title { color: var(--c-warning-fg); }
 
+/* 개념 그림 (SVG). 그림 색이 밝은 바탕 기준이라 다크 모드에서도 흰 카드 위에 그린다 */
+figure.fig { margin: 1.6rem 0; text-align: center; }
+figure.fig svg {
+  width: 100%; max-width: 760px; height: auto;
+  background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 10px;
+  font-family: inherit;
+}
+figure.fig figcaption { margin-top: .5rem; font-size: .88rem; color: var(--fg-muted); }
+
 /* 예상 문제의 "정답 보기" 접기 */
 details {
   margin: .4rem 0 1.4rem;

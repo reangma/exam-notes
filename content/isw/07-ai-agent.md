@@ -63,6 +63,8 @@ Agent (에이전트)
 
 ### 먼저 한 줄씩
 
+<figure class="fig" id="fig-agents3"><svg viewBox="0 0 740 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Agent AI Agent Agentic AI" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-agents3-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-agents3-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-agents3-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-agents3-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="8" y="8" width="232" height="214" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="124" y="36" font-size="16" fill="#4A5568">Agent</text><text x="124" y="92" font-size="38">🌡️</text> <text x="124" y="128" font-size="13">관찰 → 행동</text><text x="124" y="150" font-size="13">규칙·정책으로 반응</text><text x="124" y="172" font-size="12.5" fill="#8A93A3">LLM 없어도 됨</text> <text x="124" y="206" font-size="12" fill="#8A93A3">온도조절기 · 로봇청소기 · ELIZA</text> <rect x="254" y="8" width="232" height="214" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="370" y="36" font-size="16" fill="#1E3A6E">AI Agent</text><text x="370" y="92" font-size="38">🤖</text> <text x="370" y="128" font-size="13">LLM 두뇌 + 도구·메모리</text><text x="370" y="150" font-size="13">ReAct 루프로 task 수행</text><text x="370" y="172" font-size="12.5" fill="#8A93A3">똑똑한 직원 한 명</text> <text x="370" y="206" font-size="12" fill="#8A93A3">항공권 예약 · 코드 Copilot</text> <rect x="500" y="8" width="232" height="214" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="616" y="36" font-size="16" fill="#C77E16">Agentic AI</text> <g stroke="#CBD9EE" stroke-width="2"><path d="M616 72L571 104"/><path d="M616 72V104"/><path d="M616 72L661 104"/></g> <circle cx="616" cy="62" r="17" fill="#FBF0D8" stroke="#EBCF95"/><text x="616" y="67" font-size="11" fill="#C77E16">총괄</text> <g font-size="14"><circle cx="571" cy="110" r="14" fill="#EAF0FA"/><text x="571" y="115">🤖</text><circle cx="616" cy="110" r="14" fill="#EAF0FA"/><text x="616" y="115">🤖</text><circle cx="661" cy="110" r="14" fill="#EAF0FA"/><text x="661" y="115">🤖</text></g> <text x="616" y="150" font-size="13">여러 에이전트를 조율</text><text x="616" y="172" font-size="12.5" fill="#8A93A3">분해·분배·통합·재계획</text> <text x="616" y="206" font-size="12" fill="#8A93A3">연구 에이전트 · ChatDev · MetaGPT</text> </svg><figcaption>Agent(일하는 존재 전부) → AI Agent(LLM 두뇌의 한 명) → Agentic AI(팀장이 있는 팀)</figcaption></figure>
+
 | 용어 | 한 줄 요약 | 비유 |
 |---|---|---|
 | **Agent** | **환경을 관찰·행동하는 개념** | **일하는 존재 전부** (로봇청소기 포함) |
@@ -71,6 +73,7 @@ Agent (에이전트)
 
 {: .참고 }
 > **포함 관계로 생각하면 쉽습니다**
+>
 > - **Agent**: 가장 넓은 개념. 온도조절기도 "온도를 관찰하고 → 히터를 켜는 행동"을 하니 Agent입니다. **LLM이 없어도 됨.**
 > - **AI Agent**: 그중에서 **LLM으로 생각하는** 것. 한 명이 **주어진 일을 처리**.
 > - **Agentic AI**: AI Agent **여러 명을 팀으로 조직**해서, **큰 목표를 스스로 쪼개고 나눠 맡기는** 시스템.
@@ -115,6 +118,7 @@ Agent (에이전트)
 > **번호 3개를 그대로 쓰는 문제**가 나오기 좋습니다.
 >
 > **인간이 설정한 목표를 달성하기 위해**
+>
 > 1. **LLM으로 추론을 실행하고**
 > 2. **외부 도구(API, database)를 연동해 작업을 자동화하며**
 > 3. **실시간 환경 변화에 따라 실행 계획을 동적으로 조정하는**
@@ -266,6 +270,7 @@ Tools: **Flights, Search, Code, Calc** 등
 {: .중요 }
 > 포인트: **검색(Knowledge) + 추론(Reasoning) + 계산(Computation)** 세 가지가 모두 필요.
 > 이게 [8장](08-react-tool.html)의 **"Agent의 task 수행의 필요 요건 3가지"** 와 정확히 대응합니다.
+>
 > - 최신 금리는 LLM이 모름 → **검색**
 > - 어느 쪽이 나은지 판단 → **추론**
 > - 정확한 숫자 계산 → **Python 도구**
@@ -273,6 +278,8 @@ Tools: **Flights, Search, Code, Calc** 등
 ---
 
 ## 5. Agent의 분류 (3단계) ★★
+
+<figure class="fig" id="fig-nested"><svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Text LLM Reasoning Agent 포함관계" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-nested-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-nested-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-nested-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-nested-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <ellipse cx="320" cy="135" rx="300" ry="120" fill="#F2EFE8" stroke="#E7E2D7"/> <ellipse cx="320" cy="152" rx="212" ry="84" fill="#EAF0FA" stroke="#CBD9EE"/> <ellipse cx="320" cy="172" rx="124" ry="46" fill="#FBF0D8" stroke="#EBCF95"/> <text x="320" y="42" font-size="15" fill="#4A5568">Text Agent</text><text x="320" y="60" font-size="12" fill="#8A93A3">관찰·행동이 모두 언어 (LLM 없어도 됨, 예: ELIZA)</text> <text x="320" y="94" font-size="15" fill="#1E3A6E">LLM Agent</text><text x="320" y="112" font-size="12" fill="#4A5568">LLM으로 행동 · 프롬프트 엔지니어링이 중요</text> <text x="320" y="166" font-size="15" fill="#C77E16">Reasoning Agent</text><text x="320" y="186" font-size="12" fill="#4A5568">스스로 생각·계획·검증 (ReAct)</text> </svg><figcaption>Text Agent ⊃ LLM Agent ⊃ Reasoning Agent (안으로 갈수록 더 똑똑함)</figcaption></figure>
 
 {: .시험 }
 > **Text Agent ⊃ LLM Agent ⊃ Reasoning Agent** — **포함 관계**(큰 원 안에 작은 원)로 그려져 있습니다.
@@ -322,6 +329,7 @@ Tools: **Flights, Search, Code, Calc** 등
 
 {: .중요 }
 > **LLM ≠ LLM Agent**
+>
 > - **LLM**: 그냥 **다음 단어를 예측하는 모델** (엔진)
 > - **LLM Agent**: 그 모델을 이용해 **환경에서 행동하는 주체** (엔진을 단 자동차)
 
@@ -421,6 +429,8 @@ P(S) = P(Where) × P(are | Where) × P(we | Where are) × P(going | Where are we
 
 ## 7. LLM이 AI Agent에 적합한 이유 — 4가지 성질 ★★★
 
+<figure class="fig" id="fig-4props"><svg viewBox="0 0 740 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LLM이 Agent에 적합한 4가지 성질" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-4props-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-4props-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-4props-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-4props-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <g text-anchor="start"> <rect x="10" y="10" width="355" height="110" rx="14" fill="#EAF0FA" stroke="#CBD9EE"/> <text x="28" y="42" font-size="16" fill="#1E3A6E">🧭 자율성 Autonomy</text><text x="28" y="70" font-size="13">스스로: 행동·내부 상태의 통제권</text><text x="28" y="96" font-size="12.5" fill="#4A5568">LLM: 단계별 지침 없이도 작업 수행</text> <rect x="375" y="10" width="355" height="110" rx="14" fill="#E4F2EA" stroke="#BFE0CC"/> <text x="393" y="42" font-size="16" fill="#2E7D55">⚡ 반응성 Reactivity</text><text x="393" y="70" font-size="13">대응: 환경 변화에 신속히</text><text x="393" y="96" font-size="12.5" fill="#4A5568">LLM: Multi-modal(지각↑) + Embodiment·Tool(행동↑)</text> <rect x="10" y="130" width="355" height="110" rx="14" fill="#FBF0D8" stroke="#EBCF95"/> <text x="28" y="162" font-size="16" fill="#C77E16">🎯 능동성 Pro-activeness</text><text x="28" y="190" font-size="13">주도: 목표 지향 행동을 먼저</text><text x="28" y="216" font-size="12.5" fill="#4A5568">LLM: next token prediction → 추론·계획</text> <rect x="375" y="130" width="355" height="110" rx="14" fill="#FBE9E7" stroke="#EFC4C1"/> <text x="393" y="162" font-size="16" fill="#C0463F">💬 사회성 Social ability</text><text x="393" y="190" font-size="13">소통: 다른 에이전트와 상호작용</text><text x="393" y="216" font-size="12.5" fill="#4A5568">LLM: NLU · NLG (사람이 읽을 수 있는 말)</text> </g> </svg><figcaption>자·반·능·사: 스스로 / 대응 / 주도 / 소통</figcaption></figure>
+
 {: .시험 }
 > **자율성 / 반응성 / 능동성 / 사회성** — 이름, 정의, **LLM의 어떤 능력이 그걸 가능하게 하는지**까지 세트로. 서술형 1순위입니다.
 
@@ -461,5 +471,6 @@ P(S) = P(Where) × P(are | Where) × P(we | Where are) × P(going | Where are we
 
 {: .중요 }
 > **반응성 vs 능동성 헷갈리지 않기**
+>
 > - **반응성**: 환경이 **바뀌면 → 대응** (수동적, 바깥에서 시작)
 > - **능동성**: **목표가 있으니 → 먼저 행동** (주도적, 안에서 시작)

@@ -23,6 +23,8 @@
 
 ### 세 가지 방식 비교 (슬라이드 그림)
 
+<figure class="fig" id="fig-react"><svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ReAct 루프" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-react-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-react-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-react-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-react-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="245" y="20" width="190" height="58" rx="14" fill="#EAF0FA" stroke="#CBD9EE"/><text x="340" y="45" font-size="15" fill="#1E3A6E">💭 Thought (생각)</text><text x="340" y="66" font-size="12.5" fill="#4A5568">무엇을 할까?</text> <rect x="450" y="160" width="210" height="58" rx="14" fill="#FBF0D8" stroke="#EBCF95"/><text x="555" y="185" font-size="15" fill="#C77E16">🛠 Action (행동)</text><text x="555" y="206" font-size="12.5" fill="#4A5568">검색 · 도구 호출</text> <rect x="20" y="160" width="210" height="58" rx="14" fill="#E4F2EA" stroke="#BFE0CC"/><text x="125" y="185" font-size="15" fill="#2E7D55">👀 Observation (관찰)</text><text x="125" y="206" font-size="12.5" fill="#4A5568">결과 확인</text> <g stroke="#1E3A6E" stroke-width="2.2" fill="none" marker-end="url(#fig-react-a)"><path d="M437 56C510 70 548 110 553 154"/><path d="M446 192H236"/><path d="M127 156C132 110 170 70 241 56"/></g> <text x="590" y="96" font-size="12.5" fill="#1E3A6E">추론이 행동을 돕고</text> <text x="90" y="96" font-size="12.5" fill="#1E3A6E">행동 결과가 추론을 돕는다</text> <text x="340" y="184" font-size="12" fill="#8A93A3">환경 🌍</text> <text x="340" y="130" font-size="13" fill="#C77E16">반복하다가 → Final Answer</text> </svg><figcaption>ReAct = Reasoning + Acting: 생각 → 행동 → 관찰을 번갈아 반복 (시너지)</figcaption></figure>
+
 ```
 ① Reasoning (update internal belief)        ② Acting (obtain external feedback)
    Question                                      Action
@@ -81,6 +83,8 @@
 ---
 
 ## 2. Agent의 task 수행의 필요 요건 3가지 ★★★
+
+<figure class="fig" id="fig-3req"><svg viewBox="0 0 740 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Agent 필요 요건 3가지" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-3req-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-3req-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-3req-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-3req-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <g font-size="13"> <rect x="10" y="12" width="230" height="74" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="125" y="42" font-size="15" fill="#1E3A6E">🧩 Reasoning</text><text x="125" y="66" fill="#4A5568">복잡한 문제는 생각이 필요</text> <rect x="10" y="118" width="230" height="74" rx="12" fill="#FBF0D8" stroke="#EBCF95"/><text x="125" y="148" font-size="15" fill="#C77E16">프롬프트 기법</text><text x="125" y="172" font-size="11.5" fill="#4A5568">Instruction·Few-shot·CoT·과제 분해</text> <rect x="255" y="12" width="230" height="74" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="370" y="42" font-size="15" fill="#1E3A6E">📰 Knowledge</text><text x="370" y="66" fill="#4A5568">학습 이후 정보는 모름</text> <rect x="255" y="118" width="230" height="74" rx="12" fill="#FBF0D8" stroke="#EBCF95"/><text x="370" y="148" font-size="15" fill="#C77E16">RAG</text><text x="370" y="172" font-size="12" fill="#4A5568">먼저 검색해서 넣어주기</text> <rect x="500" y="12" width="230" height="74" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="615" y="42" font-size="15" fill="#1E3A6E">🧮 Computation</text><text x="615" y="66" fill="#4A5568">정확한 계산은 못 함</text> <rect x="500" y="118" width="230" height="74" rx="12" fill="#FBF0D8" stroke="#EBCF95"/><text x="615" y="148" font-size="15" fill="#C77E16">Tool Use</text><text x="615" y="172" font-size="12" fill="#4A5568">계산기·검색·코드 실행</text> </g> <g stroke="#C77E16" stroke-width="2.2" fill="none" marker-end="url(#fig-3req-b)"><path d="M125 88V114"/><path d="M370 88V114"/><path d="M615 88V114"/></g> </svg><figcaption>필요한 것(위) → 해결책(아래). 짝지어 외우기: Reasoning–프롬프트 / Knowledge–RAG / Computation–Tool</figcaption></figure>
 
 {: .시험 }
 > **Reasoning / Knowledge / Computation** 과 각 해결책을 **짝지어** 외우세요.
@@ -171,6 +175,7 @@ Prompt 4  + Previous result 3   → SubTask 4
 
 {: .참고 }
 > **비유: 보고서 쓰기를 한 번에 시키지 말고 나눠서**
+>
 > 1. "주제에 대한 자료 정리해줘" → 결과 1
 > 2. "결과 1을 보고 목차 짜줘" → 결과 2
 > 3. "결과 2 목차대로 본문 써줘" → 결과 3
@@ -203,14 +208,18 @@ RAG (Retrieval-Augmented Generation, 검색 증강 생성)
 
 {: .참고 }
 > **비유: 오픈북 시험**
+>
 > - RAG 없는 LLM = **클로즈드북 시험**. 외운 것만으로 답해야 함 → 모르면 지어냄 (할루시네이션)
 > - RAG 있는 LLM = **오픈북 시험**. 관련 페이지를 **먼저 찾아서 펼쳐 놓고** 답함 → 정확
 >
 > **Retriever(검색기)** = 관련 자료를 찾아오는 부품
+>
 > - **BM25** = 단어가 **겹치는 정도**로 찾는 전통적 방식 (2장 TF-IDF의 친척, sparse)
 > - **DPR (Dense Passage Retrieval)** = **의미가 비슷한 걸** 벡터로 찾는 방식 (2장 Dense 표현)
 
 ### RAG 프레임워크 플로우 (5단계) ★
+
+<figure class="fig" id="fig-rag"><svg viewBox="0 0 740 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RAG 흐름" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-rag-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-rag-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-rag-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-rag-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="20" y="95" width="120" height="60" rx="12" fill="#F2EFE8" stroke="#E7E2D7"/><text x="80" y="130" font-size="15">🙋 사용자</text> <rect x="280" y="95" width="150" height="60" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="355" y="130" font-size="15" fill="#1E3A6E">⚙ 시스템</text> <rect x="560" y="12" width="160" height="72" rx="12" fill="#FBF0D8" stroke="#EBCF95"/><text x="640" y="42" font-size="15" fill="#C77E16">📚 지식 저장소</text><text x="640" y="64" font-size="12" fill="#4A5568">문서 · DB · 웹</text> <rect x="560" y="165" width="160" height="60" rx="12" fill="#E4F2EA" stroke="#BFE0CC"/><text x="640" y="200" font-size="15" fill="#2E7D55">🧠 LLM</text> <g stroke="#1E3A6E" stroke-width="2" fill="none" marker-end="url(#fig-rag-a)"><path d="M142 125H276"/><path d="M432 104L556 42"/><path d="M556 70L436 118"/><path d="M432 140L556 190"/></g> <path d="M600 227V240H80V158" stroke="#2E7D55" stroke-width="2" fill="none" marker-end="url(#fig-rag-c)"/> <g font-size="12.5"><text x="209" y="116" fill="#1E3A6E">① 질문</text><text x="470" y="58" fill="#1E3A6E">② 검색</text><text x="520" y="114" fill="#C77E16">③ 관련 정보</text><text x="470" y="186" fill="#1E3A6E" text-anchor="end">④ 질문+찾은 정보</text><text x="340" y="234" fill="#2E7D55">⑤ 생성된 답변</text></g> </svg><figcaption>RAG: 먼저 검색(②③)해서 찾은 자료를 질문과 함께 LLM에 넣고(④) 답을 만든다(⑤) = 오픈북 시험</figcaption></figure>
 
 ```
  ① 사용자 ──── Prompt와 Query ────→ [시스템]
@@ -245,6 +254,7 @@ Agent ──→ Data Store ──┬──→ Private Docs     (사내 문서 �
 > 질문을 받자마자 답하는 게 아니라 **① 관련 자료 찾기 → ② 질문에 끼워 넣기 → ③ 생성**.
 >
 > **RAG가 필요한 이유 (서술형용)**
+>
 > - LLM은 **학습 시점 이후의 정보를 모름**
 > - 모르는 걸 **그럴듯하게 지어냄 (할루시네이션)**
 > - RAG는 **모델을 다시 학습시키지 않고도** 최신·전문 지식을 넣어줄 수 있음
@@ -324,6 +334,8 @@ A weather task:
 
 ### Extension / Function을 이용해서 Agent와 API를 연동 ★
 
+<figure class="fig" id="fig-extfn"><svg viewBox="0 0 740 215" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Extension과 Function 비교" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-extfn-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-extfn-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-extfn-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-extfn-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="8" y="8" width="354" height="198" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="185" y="34" font-size="14" fill="#1E3A6E">Extension · Agent-Side Control</text> <rect x="22" y="84" width="76" height="44" rx="10" fill="#F2EFE8"/><text x="60" y="111" font-size="13">📱 앱</text> <rect x="128" y="84" width="104" height="44" rx="10" fill="#FBF0D8" stroke="#EBCF95"/><text x="180" y="111" font-size="13">🤖 에이전트</text> <rect x="268" y="84" width="80" height="44" rx="10" fill="#EAF0FA"/><text x="308" y="111" font-size="13">✈ API</text> <g stroke-width="2" fill="none"><path d="M100 106H124" stroke="#1E3A6E" marker-end="url(#fig-extfn-a)"/><path d="M234 106H264" stroke="#C77E16" marker-end="url(#fig-extfn-b)"/></g> <text x="249" y="76" font-size="12" fill="#C77E16">직접 호출</text> <text x="185" y="180" font-size="12.5" fill="#8A93A3">에이전트가 직접 부름 (비서에게 카드 맡기기)</text> <rect x="378" y="8" width="354" height="198" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="555" y="34" font-size="14" fill="#2E7D55">Function · Client-Side Control</text> <rect x="510" y="48" width="110" height="40" rx="10" fill="#FBF0D8" stroke="#EBCF95"/><text x="565" y="73" font-size="13">🤖 에이전트</text> <rect x="398" y="128" width="90" height="44" rx="10" fill="#F2EFE8"/><text x="443" y="155" font-size="13">📱 앱</text> <rect x="622" y="128" width="96" height="44" rx="10" fill="#EAF0FA"/><text x="670" y="155" font-size="13">✈ API</text> <g stroke-width="2" fill="none"><path d="M440 126L520 90" stroke="#1E3A6E" marker-end="url(#fig-extfn-a)"/><path d="M548 90L478 128" stroke="#1E3A6E" marker-end="url(#fig-extfn-a)"/><path d="M490 150H618" stroke="#2E7D55" marker-end="url(#fig-extfn-c)"/></g> <text x="452" y="100" font-size="11.5" fill="#1E3A6E" text-anchor="end">① 요청</text> <text x="566" y="114" font-size="11.5" fill="#1E3A6E" text-anchor="start">② "이 함수를 이 값으로"</text> <text x="554" y="190" font-size="12" fill="#2E7D55">③ 앱이 직접 호출 (메모만 받고 내가 결제)</text> </svg><figcaption>차이 = 실제로 API를 누가 부르나: Extension은 에이전트, Function은 클라이언트(앱)</figcaption></figure>
+
 ```
 ┌──────────── Agent ────────────┐
 │  Reasoning Loop               │
@@ -355,6 +367,7 @@ B. Function (Client-Side Control)
 
 {: .참고 }
 > **비유: 비서에게 항공권 예약 시키기**
+>
 > - **Extension** = 비서에게 **내 카드를 주고** "알아서 예약해" → 비서가 직접 결제
 > - **Function** = 비서는 **"이 항공편을 이 날짜로 예약하세요"라고 메모만** 써주고, **결제는 내가** 직접
 >
@@ -362,6 +375,7 @@ B. Function (Client-Side Control)
 
 {: .시험 }
 > **Extension과 Function의 차이 = 누가 실제로 API를 호출하는가**
+>
 > - **Extension**: **Agent-Side Control** — 에이전트가 직접 호출
 > - **Function**: **Client-Side Control** — 클라이언트가 호출
 

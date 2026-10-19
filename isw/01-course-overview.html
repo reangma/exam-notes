@@ -51,6 +51,7 @@
 <a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
 <ul>
 <li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
 <li><a href="01-course-overview.html" class="active">1. 과목 개요와 AI Agent 역사</a></li>
 <li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
 <li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
@@ -63,6 +64,8 @@
 <li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
 <li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
 <li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
 <li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
 </ul>
 </div>
@@ -235,12 +238,16 @@
 </table>
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p>강의에서 <strong>The Synthesist</strong>에 빨간 박스를 쳤습니다. 이유는 이 과목 주제와 직결되기 때문입니다.
-- <strong>Multiagent systems</strong> = 여러 AI가 팀을 이뤄 일하는 것 → <a href="12-agent-architectures.html">12장</a>
-- <strong>Domain-specific language models</strong> = 특정 분야(법률, 의료 등)에 특화된 언어 모델
-- <strong>Physical AI</strong> = 로봇처럼 실제 세상에서 몸을 움직이는 AI</p>
+<p>강의에서 <strong>The Synthesist</strong>에 빨간 박스를 쳤습니다. 이유는 이 과목 주제와 직결되기 때문입니다.</p>
+<ul>
+<li><strong>Multiagent systems</strong> = 여러 AI가 팀을 이뤄 일하는 것 → <a href="12-agent-architectures.html">12장</a></li>
+<li><strong>Domain-specific language models</strong> = 특정 분야(법률, 의료 등)에 특화된 언어 모델</li>
+<li><strong>Physical AI</strong> = 로봇처럼 실제 세상에서 몸을 움직이는 AI</li>
+</ul>
 </div>
 <h3 id="기존-ai-챗봇-vs-ai-에이전트">기존 AI (챗봇) vs AI 에이전트 ★<a class="headerlink" href="#기존-ai-챗봇-vs-ai-에이전트" title="Permanent link">#</a></h3>
+<figure class="fig" id="fig-chatbot"><svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="챗봇과 에이전트 비교" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-chatbot-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-chatbot-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-chatbot-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-chatbot-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="8" y="8" width="300" height="224" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="158" y="36" font-size="15" fill="#4A5568">기존 AI (챗봇)</text> <rect x="28" y="54" width="260" height="40" rx="20" fill="#F2EFE8"/><text x="158" y="79" font-size="13.5">🙋 "내일 날씨 어때?"</text> <path d="M158 98V128" stroke="#1E3A6E" stroke-width="2" marker-end="url(#fig-chatbot-a)"/> <rect x="38" y="132" width="240" height="44" rx="10" fill="#EAF0FA" stroke="#CBD9EE"/><text x="158" y="159" font-size="13.5" fill="#1E3A6E">📖 "서울 날씨는 맑습니다."</text> <text x="158" y="214" font-size="13" fill="#8A93A3">답 한 번 하고 끝 = 백과사전</text> <rect x="330" y="8" width="422" height="224" rx="14" fill="#fff" stroke="#E7E2D7"/> <text x="541" y="36" font-size="15" fill="#C77E16">AI 에이전트</text> <rect x="348" y="54" width="186" height="40" rx="20" fill="#F2EFE8"/><text x="441" y="79" font-size="13">🙋 "시애틀행 예약해 줘"</text> <path d="M441 98V128" stroke="#1E3A6E" stroke-width="2" marker-end="url(#fig-chatbot-a)"/> <rect x="386" y="132" width="110" height="44" rx="10" fill="#FBF0D8" stroke="#EBCF95"/><text x="441" y="159" font-size="13.5" fill="#C77E16">🤖 에이전트</text> <path d="M498 150L556 120" stroke="#C77E16" stroke-width="2" marker-end="url(#fig-chatbot-b)"/> <g font-size="12.5" text-anchor="start"> <rect x="562" y="50" width="176" height="24" rx="6" fill="#FBF0D8"/><text x="572" y="67">① 목표 수립</text> <rect x="562" y="80" width="176" height="24" rx="6" fill="#FBF0D8"/><text x="572" y="97">② 비행기 검색 ✓</text> <rect x="562" y="110" width="176" height="24" rx="6" fill="#FBF0D8"/><text x="572" y="127">③ 가격 비교 ✓</text> <rect x="562" y="140" width="176" height="24" rx="6" fill="#FBF0D8"/><text x="572" y="157">④ 최적 옵션 선택 ✓</text> <rect x="562" y="170" width="176" height="24" rx="6" fill="#E4F2EA"/><text x="572" y="187" fill="#2E7D55">⑤ 예약 완료 ✓</text> </g> <text x="541" y="222" font-size="13" fill="#8A93A3">목표만 주면 계획 → 실행까지 = 비서</text> </svg><figcaption>챗봇은 '답'을 주고 끝, 에이전트는 '일'을 끝낸다 (Orientation 슬라이드 예시)</figcaption></figure>
+
 <div class="callout callout-exam">
 <p class="callout-title">시험 포인트</p>
 <p><strong>이 비교가 과목 전체의 출발점</strong>입니다. "AI 에이전트란 무엇인가"를 가장 쉽게 설명하는 방법이기도 합니다.</p>
@@ -508,6 +515,8 @@
 </div>
 <hr />
 <h2 id="ai-agent의-기본-구조-이-과목의-뼈대">AI Agent의 기본 구조 (이 과목의 뼈대) ★<a class="headerlink" href="#ai-agent의-기본-구조-이-과목의-뼈대" title="Permanent link">#</a></h2>
+<figure class="fig" id="fig-parts"><svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI Agent 4대 구성요소" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-parts-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-parts-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-parts-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-parts-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <g stroke="#CBD9EE" stroke-width="2.5"><path d="M250 60L318 104"/><path d="M470 60L402 104"/><path d="M250 200L318 156"/><path d="M470 200L402 156"/></g> <circle cx="360" cy="130" r="54" fill="#FBF0D8" stroke="#EBCF95" stroke-width="2"/> <text x="360" y="124" font-size="24">🤖</text><text x="360" y="150" font-size="15" fill="#C77E16">AI Agent</text> <rect x="20" y="20" width="230" height="80" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="135" y="52" font-size="15" fill="#1E3A6E">🧠 LLM Model</text><text x="135" y="78" font-size="13" fill="#4A5568">머리: 이해하고 추론</text> <rect x="470" y="20" width="230" height="80" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="585" y="52" font-size="15" fill="#1E3A6E">🛠 Tool / Public API</text><text x="585" y="78" font-size="13" fill="#4A5568">손발: 검색·계산·예약</text> <rect x="20" y="160" width="230" height="80" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="135" y="192" font-size="15" fill="#1E3A6E">💾 DB / Memory</text><text x="135" y="218" font-size="13" fill="#4A5568">기억: Short term · Long term</text> <rect x="470" y="160" width="230" height="80" rx="12" fill="#EAF0FA" stroke="#CBD9EE"/><text x="585" y="192" font-size="15" fill="#1E3A6E">🗺 Planning</text><text x="585" y="218" font-size="13" fill="#4A5568">계획: 큰 목표 → 작은 작업</text> </svg><figcaption>이 과목의 뼈대: 머리(LLM) + 손발(Tool) + 기억(Memory) + 계획(Planning)</figcaption></figure>
+
 <p><strong>이 표가 학기 전체의 지도</strong>입니다. 앞으로 나오는 모든 내용은 이 4개 중 하나를 깊게 파는 것입니다.</p>
 <table>
 <thead>
@@ -551,9 +560,11 @@
 </blockquote>
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p><strong>Short-term vs Long-term 메모리</strong> 쉬운 예:
-- <strong>Short-term</strong>: 지금 친구와 대화하면서 "아까 네가 말한 그 식당" 하고 기억하는 것 (대화 끝나면 잊어도 됨)
-- <strong>Long-term</strong>: "이 친구는 매운 걸 못 먹는다"처럼 <strong>오래 기억하는 것</strong></p>
+<p><strong>Short-term vs Long-term 메모리</strong> 쉬운 예:</p>
+<ul>
+<li><strong>Short-term</strong>: 지금 친구와 대화하면서 "아까 네가 말한 그 식당" 하고 기억하는 것 (대화 끝나면 잊어도 됨)</li>
+<li><strong>Long-term</strong>: "이 친구는 매운 걸 못 먹는다"처럼 <strong>오래 기억하는 것</strong></li>
+</ul>
 </div>
 <div class="callout callout-exam">
 <p class="callout-title">시험 포인트</p>

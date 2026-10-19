@@ -51,6 +51,7 @@
 <a class="nav-section-title" href="index.html">지능형 소프트웨어</a>
 <ul>
 <li><a href="00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
 <li><a href="01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
 <li><a href="02-embedding.html">2. 자연어 임베딩</a></li>
 <li><a href="03-transformer.html">3. Seq2Seq와 Transformer</a></li>
@@ -63,6 +64,8 @@
 <li><a href="10-agent-practice.html">10. Agent의 실제 활용</a></li>
 <li><a href="11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
 <li><a href="12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
 <li><a href="99-cheatsheet.html">핵심 암기 치트시트</a></li>
 </ul>
 </div>
@@ -128,6 +131,8 @@
 </code></pre></div>
 
 <h3 id="llm-based-agent의-workflow">LLM-based Agent의 Workflow ★★<a class="headerlink" href="#llm-based-agent의-workflow" title="Permanent link">#</a></h3>
+<figure class="fig" id="fig-pba"><svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Perception Brain Action 루프" font-weight="700" text-anchor="middle" font-size="14" fill="#16243F"><defs><marker id="fig-pba-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E3A6E"/></marker><marker id="fig-pba-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C77E16"/></marker><marker id="fig-pba-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E7D55"/></marker><marker id="fig-pba-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C0463F"/></marker></defs> <rect x="250" y="10" width="180" height="62" rx="14" fill="#EAF0FA" stroke="#CBD9EE"/><text x="340" y="37" font-size="15" fill="#1E3A6E">Perception 👀</text><text x="340" y="58" font-size="12" fill="#4A5568">감지 → 벡터로 변환</text> <rect x="470" y="110" width="200" height="62" rx="14" fill="#FBF0D8" stroke="#EBCF95"/><text x="570" y="137" font-size="15" fill="#C77E16">Brain 🧠</text><text x="570" y="158" font-size="12" fill="#4A5568">기억·추론·계획·결정</text> <rect x="250" y="208" width="180" height="62" rx="14" fill="#E4F2EA" stroke="#BFE0CC"/><text x="340" y="235" font-size="15" fill="#2E7D55">Action ✋</text><text x="340" y="256" font-size="12" fill="#4A5568">글 · 도구 · 몸으로 수행</text> <rect x="10" y="110" width="200" height="62" rx="14" fill="#fff" stroke="#E7E2D7"/><text x="110" y="137" font-size="15">Environment 🌍</text><text x="110" y="158" font-size="12" fill="#4A5568">사람 · 디지털 · 물리 세계</text> <g stroke="#1E3A6E" stroke-width="2.2" fill="none" marker-end="url(#fig-pba-a)"><path d="M432 50C500 55 560 75 568 106"/><path d="M568 176C560 210 500 235 434 238"/><path d="M248 238C180 235 120 210 112 176"/><path d="M112 106C120 75 180 55 246 48"/></g> <text x="340" y="146" font-size="13" fill="#C0463F">계속 반복 + 피드백</text><text x="340" y="164" font-size="12" fill="#8A93A3">(단순 LLM과의 차이)</text> </svg><figcaption>Perception → Brain → Action을 반복하며 환경에서 피드백을 받는다. 단순 LLM은 한 번 답하고 끝</figcaption></figure>
+
 <div class="callout callout-exam">
 <p class="callout-title">시험 포인트</p>
 <p><strong>Perception → Brain → Action</strong> 정의는 반드시 외우세요.</p>
@@ -396,9 +401,11 @@
 <p>→ <strong>결론: "사용자는 여유로운 여행을 선호하기에, 일정의 밀도를 낮출 필요가 있음"</strong></p>
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p><strong>Knowledge vs Memory 차이</strong>
-- <strong>Knowledge</strong>: <strong>세상 일반</strong>에 대한 지식 ("첫날은 피곤하다") — 누구에게나 해당
-- <strong>Memory</strong>: <strong>이 사용자</strong>에 대한 경험 기록 ("이 사람은 3개 넘으면 지침") — 이 사람에게만 해당</p>
+<p><strong>Knowledge vs Memory 차이</strong></p>
+<ul>
+<li><strong>Knowledge</strong>: <strong>세상 일반</strong>에 대한 지식 ("첫날은 피곤하다") — 누구에게나 해당</li>
+<li><strong>Memory</strong>: <strong>이 사용자</strong>에 대한 경험 기록 ("이 사람은 3개 넘으면 지침") — 이 사람에게만 해당</li>
+</ul>
 </div>
 <h4 id="memory의-두-가지-challenge와-해결-방안">Memory의 두 가지 Challenge와 해결 방안 ★★<a class="headerlink" href="#memory의-두-가지-challenge와-해결-방안" title="Permanent link">#</a></h4>
 <div class="callout callout-exam">
@@ -412,9 +419,11 @@
 </ol>
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p><strong>쉽게:</strong>
-1. 기억이 쌓이면 <strong>너무 많아서</strong> LLM이 한 번에 못 읽음 (LLM은 한 번에 읽을 수 있는 분량 = Context Window가 정해져 있음)
-2. 기억이 많으면 <strong>지금 필요한 걸 골라내기가 어려움</strong> (일기장 10년 치에서 "파리 여행 때 기억"만 찾기)</p>
+<p><strong>쉽게:</strong></p>
+<ol>
+<li>기억이 쌓이면 <strong>너무 많아서</strong> LLM이 한 번에 못 읽음 (LLM은 한 번에 읽을 수 있는 분량 = Context Window가 정해져 있음)</li>
+<li>기억이 많으면 <strong>지금 필요한 걸 골라내기가 어려움</strong> (일기장 10년 치에서 "파리 여행 때 기억"만 찾기)</li>
+</ol>
 </div>
 <p><strong>해결 방안</strong></p>
 <table>
@@ -543,14 +552,18 @@
 </table>
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p><strong>계획 짜는 방식 3가지</strong>
-- <strong>One-shot</strong>: 처음에 <strong>전체 계획을 한 번에</strong> 다 짬
-- <strong>Step-by-Step</strong>: <strong>한 단계씩</strong> 정하면서 진행
-- <strong>Hierarchical (계층적)</strong>: <strong>큰 계획 → 중간 계획 → 세부 계획</strong>으로 나무처럼 쪼갬</p>
-<p><strong>피드백 3종류</strong>
-- <strong>내부적</strong>: 스스로 점검 ("이거 동선이 꼬였네")
-- <strong>인간</strong>: 사용자가 의견 ("Day 2는 너무 빡빡해요")
-- <strong>환경</strong>: 실제 결과 ("그날 루브르 휴관이래")</p>
+<p><strong>계획 짜는 방식 3가지</strong></p>
+<ul>
+<li><strong>One-shot</strong>: 처음에 <strong>전체 계획을 한 번에</strong> 다 짬</li>
+<li><strong>Step-by-Step</strong>: <strong>한 단계씩</strong> 정하면서 진행</li>
+<li><strong>Hierarchical (계층적)</strong>: <strong>큰 계획 → 중간 계획 → 세부 계획</strong>으로 나무처럼 쪼갬</li>
+</ul>
+<p><strong>피드백 3종류</strong></p>
+<ul>
+<li><strong>내부적</strong>: 스스로 점검 ("이거 동선이 꼬였네")</li>
+<li><strong>인간</strong>: 사용자가 의견 ("Day 2는 너무 빡빡해요")</li>
+<li><strong>환경</strong>: 실제 결과 ("그날 루브르 휴관이래")</li>
+</ul>
 </div>
 <p><strong>파리 예시 — Planning 과정 (4단계)</strong></p>
 <table>
@@ -676,19 +689,23 @@ Day 4: Departure           • 오전: 체크아웃
 
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p>결과를 보면 앞 단계가 다 반영돼 있습니다.
-- <strong>Knowledge</strong>: 첫날·마지막 날 가볍게, 공항 이동 시간 넉넉히 (buffer time = 여유 시간)
-- <strong>Memory</strong>: 하루 관광지 2개 이하, 쇼핑·자유시간 포함
-- <strong>Planning</strong>: 루브르–오르세처럼 가까운 곳끼리 묶음</p>
+<p>결과를 보면 앞 단계가 다 반영돼 있습니다.</p>
+<ul>
+<li><strong>Knowledge</strong>: 첫날·마지막 날 가볍게, 공항 이동 시간 넉넉히 (buffer time = 여유 시간)</li>
+<li><strong>Memory</strong>: 하루 관광지 2개 이하, 쇼핑·자유시간 포함</li>
+<li><strong>Planning</strong>: 루브르–오르세처럼 가까운 곳끼리 묶음</li>
+</ul>
 </div>
 <h3 id="tool-using-예시-hugginggpt-2023">Tool Using 예시 — HuggingGPT (2023) ★<a class="headerlink" href="#tool-using-예시-hugginggpt-2023" title="Permanent link">#</a></h3>
 <p>논문: <strong>"HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hugging Face"</strong> (Shen et al., 2023)</p>
 <div class="callout callout-exam">
 <p class="callout-title">시험 포인트</p>
-<p><strong>3단계 동작</strong>
-1. <strong>사용자의 요청을 바탕으로 Task Planning</strong>
-2. <strong>각 task에 대해 Hugging Face의 model card를 바탕으로 Model Selection</strong>
-3. <strong>작업 수행 후 응답 생성</strong></p>
+<p><strong>3단계 동작</strong></p>
+<ol>
+<li><strong>사용자의 요청을 바탕으로 Task Planning</strong></li>
+<li><strong>각 task에 대해 Hugging Face의 model card를 바탕으로 Model Selection</strong></li>
+<li><strong>작업 수행 후 응답 생성</strong></li>
+</ol>
 </div>
 <p><strong>슬라이드 그림 (4단계로 그려져 있음)</strong></p>
 <div class="codehilite"><pre><span></span><code>사용자: "Can you describe this picture and count how many objects in the picture?"
@@ -709,10 +726,12 @@ Day 4: Departure           • 오전: 체크아웃
 
 <div class="callout callout-note">
 <p class="callout-title">참고</p>
-<p><strong>쉽게:</strong> ChatGPT가 <strong>지휘자(Controller)</strong> 역할만 하고, 실제 일(사진 설명, 물체 찾기)은 <strong>Hugging Face에 있는 전문 AI 모델들에게 맡깁니다.</strong>
-- <strong>Hugging Face</strong> = AI 모델들을 모아 둔 <strong>거대한 공개 저장소</strong>
-- <strong>model card</strong> = 각 모델의 <strong>설명서</strong> ("나는 물체 찾기 모델이고 이런 걸 잘해")
-- ChatGPT가 설명서를 읽고 <strong>"이 일엔 이 모델이 적합하겠다"</strong> 고 고름</p>
+<p><strong>쉽게:</strong> ChatGPT가 <strong>지휘자(Controller)</strong> 역할만 하고, 실제 일(사진 설명, 물체 찾기)은 <strong>Hugging Face에 있는 전문 AI 모델들에게 맡깁니다.</strong></p>
+<ul>
+<li><strong>Hugging Face</strong> = AI 모델들을 모아 둔 <strong>거대한 공개 저장소</strong></li>
+<li><strong>model card</strong> = 각 모델의 <strong>설명서</strong> ("나는 물체 찾기 모델이고 이런 걸 잘해")</li>
+<li>ChatGPT가 설명서를 읽고 <strong>"이 일엔 이 모델이 적합하겠다"</strong> 고 고름</li>
+</ul>
 <p>→ <strong>LLM이 도구로 "다른 AI 모델"을 쓰는</strong> 대표 사례</p>
 </div>
 <hr />

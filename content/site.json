@@ -39,6 +39,7 @@
       "index": "isw/index.md",
       "pages": [
         { "file": "isw/00-math-basics.md",            "title": "0. 수학·용어 기초 (먼저 읽기)" },
+        { "file": "isw/00-glossary.md",               "title": "📖 쉬운 용어사전 (173개)" },
         { "file": "isw/01-course-overview.md",        "title": "1. 과목 개요와 AI Agent 역사" },
         { "file": "isw/02-embedding.md",              "title": "2. 자연어 임베딩" },
         { "file": "isw/03-transformer.md",            "title": "3. Seq2Seq와 Transformer" },
@@ -51,6 +52,8 @@
         { "file": "isw/10-agent-practice.md",         "title": "10. Agent의 실제 활용" },
         { "file": "isw/11-cognitive-architecture.md", "title": "11. Cognitive Architecture와 CoALA" },
         { "file": "isw/12-agent-architectures.md",    "title": "12. AI Agent 아키텍처 분류" },
+        { "file": "isw/97-compare.md",                "title": "헷갈리는 개념 총정리" },
+        { "file": "isw/98-exam-questions.md",         "title": "예상 문제 (객관식·빈칸·서술 166문항)" },
         { "file": "isw/99-cheatsheet.md",             "title": "핵심 암기 치트시트" }
       ]
     },
