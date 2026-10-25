@@ -1,0 +1,75 @@
+<h1>4. 오류 역전파를 한 줄씩</h1>
+<p class="source">출처: ## Neural Network_EBPA.pdf pp. 2~14. 계산 예시는 별도 표시한 학습용 예시입니다.</p>
+<div class="callout callout-note"><p class="callout-title">한 문장부터</p><p><strong>역전파는 마지막에서 확인한 오차를 바탕으로, 앞쪽의 각 가중치가 손실에 얼마나 영향을 주었는지 거꾸로 계산하는 방법</strong>입니다. 정답을 입력층으로 그대로 보내는 일이 아닙니다.</p></div>
+<h2 id="notation">이 PDF의 기호부터 번역</h2>
+<table><thead><tr><th>기호</th><th>의미</th></tr></thead><tbody><tr><td>xᵢ</td><td>i번째 입력값</td></tr><tr><td>hⱼ</td><td>j번째 은닉 노드의 출력</td></tr><tr><td>oₖ</td><td>k번째 출력 노드의 예측값</td></tr><tr><td>tₖ</td><td>k번째 출력의 실제 정답</td></tr><tr><td>wⱼᵢ</td><td>입력 i에서 은닉 j로 가는 가중치</td></tr><tr><td>wₖⱼ</td><td>은닉 j에서 출력 k로 가는 가중치</td></tr><tr><td>wⱼ₀, wₖ₀</td><td>은닉·출력 노드의 편향</td></tr><tr><td>netⱼ, netₖ</td><td>활성화 함수를 통과하기 전 가중합</td></tr><tr><td>α</td><td>학습률</td></tr><tr><td>Δw</td><td>기존 가중치에 더할 수정량</td></tr></tbody></table>
+<p><strong>아래첨자 첫 번째는 도착 노드, 두 번째는 출발 노드</strong>로 읽으면 EBPA의 식을 따라가기 쉽습니다. n은 샘플 번호, i는 입력, j는 은닉, k는 출력을 가리킵니다.</p>
+<h2 id="forward">먼저 앞으로 계산해야 뒤로 계산할 수 있다</h2>
+<p class="source">출처: EBPA pp. 3~7.</p>
+<pre>은닉층:
+  netⱼ = wⱼ₀ + Σᵢ wⱼᵢxᵢ
+  hⱼ = sigmoid(netⱼ)
+
+출력층:
+  netₖ = wₖ₀ + Σⱼ wₖⱼhⱼ
+  oₖ = sigmoid(netₖ)
+
+한 샘플의 손실:
+  E = (1/2) Σₖ (tₖ−oₖ)²</pre>
+<p>이 자료의 유도는 <strong>sigmoid 활성화 + 제곱오차</strong>를 전제로 합니다. 앞의 1/2은 제곱을 미분할 때 나오는 2를 없애 계산을 간단히 합니다. 전체 데이터의 비용 E(w)는 각 샘플의 Eₙ(w)를 합한 것입니다. MSE처럼 평균을 내면 기울기에도 그 평균 계수가 붙습니다.</p>
+<h2 id="output-gradient">출력층 가중치: 세 조각으로 나누기</h2>
+<p class="source">출처: EBPA pp. 8~9.</p>
+<p>은닉 j에서 출력 k로 가는 wₖⱼ를 바꾸면 <strong>가중합 netₖ → 예측 oₖ → 손실 E</strong> 순서로 영향이 전달됩니다. 복잡한 전체 식을 한 번에 미분하지 않고 경로를 따라 세 조각을 곱합니다.</p>
+<pre>∂E/∂wₖⱼ
+ = (∂E/∂oₖ) × (∂oₖ/∂netₖ) × (∂netₖ/∂wₖⱼ)
+ = (oₖ−tₖ) × oₖ(1−oₖ) × hⱼ</pre>
+<table><thead><tr><th>조각</th><th>값</th><th>뜻</th></tr></thead><tbody><tr><td>손실의 변화</td><td>oₖ−tₖ</td><td>예측이 정답과 얼마나 차이 나는가</td></tr><tr><td>sigmoid의 변화</td><td>oₖ(1−oₖ)</td><td>가중합 변화가 출력에 얼마나 전달되는가</td></tr><tr><td>가중합의 변화</td><td>hⱼ</td><td>이 가중치에 곱해져 들어온 값은 무엇인가</td></tr></tbody></table>
+<p>마지막 조각이 hⱼ인 이유는 <code>netₖ=…+wₖⱼhⱼ+…</code>이기 때문입니다. wₖⱼ로 미분할 때 곱해진 hⱼ가 남습니다.</p>
+<h3 id="delta-sign">마이너스가 플러스로 바뀌는 이유</h3>
+<pre>Δwₖⱼ = −α × ∂E/∂wₖⱼ
+      = −α(oₖ−tₖ)oₖ(1−oₖ)hⱼ
+      =  α(tₖ−oₖ)oₖ(1−oₖ)hⱼ
+
+w새값 = w기존값 + Δw</pre>
+<p><code>−(o−t)=t−o</code>라서 표현이 바뀐 것입니다. <strong>경사하강법의 방향이 바뀐 것이 아닙니다.</strong></p>
+<div class="callout callout-exam"><p class="callout-title">출력층 공식 기억법</p><p><strong>수정량 = 학습률 × (정답−예측) × sigmoid 기울기 × 들어온 은닉값</strong></p></div>
+<h2 id="output-example">출력층 계산 예제</h2>
+<p>보충 예시: 정답 t=1, 예측 o=0.6, 은닉값 h=0.5, 학습률 α=0.1, 현재 가중치 w=0.2라고 합시다.</p>
+<ol><li>정답−예측 = 1−0.6 = <strong>0.4</strong>.</li><li>sigmoid 기울기 = 0.6×0.4 = <strong>0.24</strong>.</li><li>수정량 = 0.1×0.4×0.24×0.5 = <strong>0.0048</strong>.</li><li>새 가중치 = 0.2+0.0048 = <strong>0.2048</strong>.</li></ol>
+<p>입력 h가 양수이고 예측값을 키워야 하므로 가중치를 조금 올렸습니다. 편향의 경우 들어오는 값이 1이므로 <code>Δb=0.1×0.4×0.24=0.0096</code>입니다.</p>
+<h2 id="hidden-gradient">은닉층: 정답이 직접 없으니 뒤쪽의 영향을 모은다</h2>
+<p class="source">출처: EBPA pp. 10~12.</p>
+<p>출력층에는 정답 t가 있지만, 은닉 노드에 ‘너의 정답은 0.7’ 같은 값은 없습니다. 대신 <strong>이 은닉 노드가 연결된 모든 출력의 손실에 끼친 영향을 합쳐</strong> 계산합니다.</p>
+<p>읽기 쉽게 출력의 오차 신호를 <code>δₖ=(tₖ−oₖ)oₖ(1−oₖ)</code>라고 이름 붙이겠습니다. 이는 이 노트에서 사용하는 <strong>‘정답−예측’ 부호의 정의</strong>입니다.</p>
+<pre>출력 오차 신호:
+  δₖ = (tₖ−oₖ)oₖ(1−oₖ)
+
+은닉 오차 신호:
+  δⱼ = hⱼ(1−hⱼ) × Σₖ wₖⱼδₖ
+
+입력→은닉 가중치 수정량:
+  Δwⱼᵢ = α × δⱼ × xᵢ
+
+펼쳐 쓰면:
+  Δwⱼᵢ = αxᵢhⱼ(1−hⱼ)Σₖ wₖⱼoₖ(1−oₖ)(tₖ−oₖ)</pre>
+<ol><li>출력 노드별 오차 신호 δₖ를 구합니다.</li><li>각 신호에 은닉→출력 가중치 wₖⱼ를 곱합니다.</li><li>출력이 여러 개이면 모두 더합니다.</li><li>은닉 노드의 sigmoid 기울기 hⱼ(1−hⱼ)를 곱합니다.</li><li>학습률과 원래 입력 xᵢ를 곱해 수정량을 얻습니다.</li></ol>
+<div class="callout callout-important"><p class="callout-title">출력층과 은닉층 공식의 차이</p><p>출력층은 <strong>정답과 예측을 직접 비교</strong>합니다. 은닉층은 <strong>뒤쪽 오차 신호에 연결 가중치를 곱해 합친 것</strong>을 사용합니다. 둘 다 마지막에 ‘그 가중치로 들어온 값’을 곱합니다.</p></div>
+<h2 id="hidden-example">숫자로 뒤쪽에서 앞쪽까지 이어 보기</h2>
+<p>위 예시를 이어 사용합니다. 이 은닉 노드로 들어온 x=2, 입력→은닉 가중치는 0.3이며, 은닉→출력 가중치의 <strong>갱신 전 값은 0.2</strong>입니다. 다른 입력·편향이 있어 앞서 계산된 h=0.5, o=0.6인 상황이라고 둡니다.</p>
+<pre>δ출력 = (1−0.6)×0.6×0.4 = 0.096
+δ은닉 = 0.5×0.5×(0.2×0.096) = 0.0048
+Δw입력→은닉 = 0.1×0.0048×2 = 0.00096
+w입력→은닉 새값 = 0.3 + 0.00096 = 0.30096</pre>
+<p>만약 출력 노드가 두 개였다면 <code>0.2×δ₁</code>만 쓰지 않고 <code>w₁ⱼδ₁+w₂ⱼδ₂</code>처럼 두 경로를 합칩니다.</p>
+<div class="callout callout-warning"><p class="callout-title">계산 문제에서 자주 틀리는 순서</p><p><strong>한 번의 순전파에 대한 모든 기울기는 같은 갱신 전 가중치로 구합니다.</strong> 출력층 가중치를 0.2048로 바꿨다고 해서 은닉층의 기울기를 구할 때 그 새 값을 넣지 않습니다. 기울기를 모두 구해둔 뒤 업데이트하는 것으로 이해하세요.</p></div>
+<h2 id="algorithm">EBPA 전체 순서</h2>
+<p class="source">출처: EBPA pp. 13~14. 업데이트 시점은 위 원칙에 맞게 풀어 적었습니다.</p>
+<ol><li>가중치를 적절한 임의의 작은 값으로 초기화합니다.</li><li>입력으로 은닉층 값을 계산합니다.</li><li>은닉층 값으로 출력값을 계산합니다.</li><li>정답과 비교해 손실을 구합니다.</li><li>출력층에서 앞쪽으로 역전파하여 각 가중치의 기울기를 계산합니다.</li><li>학습률과 기울기를 이용해 가중치를 갱신합니다.</li><li>정해진 epoch 수나 종료 조건까지 반복합니다.</li></ol>
+<p>앞으로 갈 때는 <strong>예측값</strong>, 뒤로 갈 때는 <strong>기울기 정보</strong>를 계산합니다.</p>
+<h2 id="pitfalls">그대로 외우면 위험한 것</h2>
+<ul><li><strong>w새값=w기존값±오차</strong>는 직관적인 축약입니다. 정확하게는 학습률과 가중치별 기울기가 필요합니다.</li><li>여기 나온 식은 <strong>sigmoid+제곱오차</strong>용입니다. 활성화 함수나 손실을 바꾸면 미분식도 달라집니다.</li><li>교재에 따라 δ를 반대 부호로 정의하기도 합니다. <strong>δ의 정의와 업데이트의 +/−를 한 세트</strong>로 확인합니다.</li><li>역전파한다고 항상 전역 최적해를 찾는 것은 아닙니다.</li></ul>
+<h2 id="check">스스로 확인</h2>
+<details><summary>Q. 출력층 수정량의 마지막에는 x를 곱할까, h를 곱할까?</summary><p>은닉→출력 연결이면 <strong>h</strong>입니다. 입력→은닉 연결이면 <strong>x</strong>입니다. 그 연결에 들어온 값을 곱합니다.</p></details>
+<details><summary>Q. 은닉층 공식에 Σ가 있는 이유는?</summary><p>은닉 노드 하나가 여러 출력에 영향을 주므로 <strong>각 출력으로 이어지는 경로의 영향을 합쳐야 하기 때문</strong>입니다.</p></details>
+<details><summary>Q. 오류 역전파를 서술형 한 문장으로 쓰면?</summary><p>오류 역전파는 순전파로 계산한 예측의 손실에 대해 연쇄법칙을 적용하여 출력층부터 입력에 가까운 층 방향으로 각 가중치의 기울기를 효율적으로 계산하는 알고리즘이다.</p></details>
+<p class="chapter-next">다음: <a href="05-seq2seq-attention.html">5. Seq2Seq와 Attention</a></p>

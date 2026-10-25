@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>헷갈리는 개념과 함정 선지 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="../isw/98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">심층학습</a>
+<ul>
+<li><a href="00-basics.html">0. 수학·기호부터 아주 쉽게</a></li>
+<li><a href="01-learning.html">1. AI·데이터·머신러닝의 기본</a></li>
+<li><a href="02-neural-network.html">2. 신경망과 행렬 계산</a></li>
+<li><a href="03-training.html">3. 손실 함수와 학습 방법</a></li>
+<li><a href="04-backprop.html">4. 오류 역전파를 한 줄씩</a></li>
+<li><a href="05-seq2seq-attention.html">5. Seq2Seq와 Attention</a></li>
+<li><a href="06-self-attention.html">6. Self-Attention과 Multi-head</a></li>
+<li><a href="07-transformer.html">7. Transformer 구조와 마스킹</a></li>
+<li><a href="97-compare.html" class="active">헷갈리는 개념과 함정 선지</a></li>
+<li><a href="98-exam.html">모의시험 (객관식 15·서술형 2)</a></li>
+<li><a href="99-cheatsheet.html">시험 직전 핵심 암기</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1>헷갈리는 개념과 함정 선지</h1>
+<p>객관식 15문제를 대비하는 구분 노트입니다. ‘대충 비슷해 보이는 말’의 차이를 먼저 정리하고, 틀린 선지를 말로 고쳐보세요.</p>
+<h2 id="learning-pairs">데이터·학습에서 구분할 것</h2>
+<table><thead><tr><th>비교</th><th>앞의 개념</th><th>뒤의 개념</th></tr></thead><tbody><tr><td>분류 / 회귀</td><td>범주 예측</td><td>수치 예측</td></tr><tr><td>분류 / 군집화</td><td>정답 범주로 지도학습</td><td>정답 없이 구조를 찾는 비지도학습</td></tr><tr><td>파라미터 / 하이퍼파라미터</td><td>학습하는 w, b</td><td>학습률·층 수·head 수 등 설정</td></tr><tr><td>순전파 / 역전파</td><td>입력에서 예측 계산</td><td>손실에서 가중치별 기울기 계산</td></tr><tr><td>역전파 / optimizer</td><td>기울기를 구함</td><td>기울기로 업데이트를 수행</td></tr><tr><td>Loss / activation</td><td>예측의 틀린 정도 측정</td><td>노드의 계산값 변환</td></tr><tr><td>MSE / CE</td><td>제곱오차 평균, 회귀의 대표 손실</td><td>정답 확률을 평가, 분류의 대표 손실</td></tr><tr><td>Epoch / iteration</td><td>전체 데이터 1회 통과</td><td>일반적인 학습의 batch 처리·업데이트 1회</td></tr><tr><td>Momentum / RMSProp</td><td>기울기 방향의 관성</td><td>기울기 제곱 평균에 따른 크기 조절</td></tr></tbody></table>
+<h2 id="attention-pairs">Attention·Transformer에서 구분할 것</h2>
+<table><thead><tr><th>비교</th><th>구별 기준</th></tr></thead><tbody><tr><td>Attention score / weight / value</td><td>원점수 / 정규화한 참고 비율 / 정보를 가중합한 결과</td></tr><tr><td>Q / K / V</td><td>필요한 정보 / 비교용 특징 / 실제 섞을 내용</td></tr><tr><td>Self / Cross Attention</td><td>Q·K·V가 같은 시퀀스 출처 / Q와 K·V가 서로 다른 시퀀스 출처</td></tr><tr><td>Self / Multi-head</td><td>참고 정보의 출처 / 여러 head를 병렬 사용하는 구조. 동시에 성립 가능</td></tr><tr><td>Head 수 / layer 수</td><td>한 블록 안의 병렬 Attention 개수 / 블록을 쌓은 깊이</td></tr><tr><td>d_model / seq_len</td><td>토큰 하나의 표현 폭 / 토큰 개수</td></tr><tr><td>Embedding / positional encoding</td><td>토큰의 벡터 표현 / 토큰 위치의 표현</td></tr><tr><td>Concat / add</td><td>이어 붙여 폭 증가 / 같은 크기끼리 더하여 폭 유지</td></tr><tr><td>Attention / FFNN</td><td>위치 간 정보를 섞음 / 각 위치의 특징을 가공</td></tr><tr><td>Teacher forcing / look-ahead mask</td><td>이전 정답을 입력 / 미래 정답 참고 방지</td></tr></tbody></table>
+<h2 id="false-statements">틀린 선지를 고쳐 말하기</h2>
+<details><summary>① ‘0/1로 저장한 정답은 수치이므로 회귀 문제이다.’</summary><p>0/1이 종류를 나타내는 이름표라면 <strong>분류</strong> 문제입니다. 데이터의 의미를 봅니다.</p></details>
+<details><summary>② ‘편향 b는 사람이 정하므로 하이퍼파라미터이다.’</summary><p>일반적인 신경망의 b는 가중치처럼 <strong>학습하는 파라미터</strong>입니다.</p></details>
+<details><summary>③ ‘층을 많이 쌓으면 활성화 함수가 없어도 비선형 표현이 된다.’</summary><p>선형·아핀 변환만 합성하면 하나의 선형·아핀 변환으로 합쳐집니다. <strong>비선형 활성화</strong>가 필요합니다.</p></details>
+<details><summary>④ ‘경사하강법은 가중치를 항상 줄인다.’</summary><p>손실을 줄이는 방향으로 이동합니다. 기울기가 음수이면 <strong>가중치는 커집니다.</strong></p></details>
+<details><summary>⑤ ‘기울기가 0이면 무조건 전역 최솟값이다.’</summary><p>지역 최솟값·최댓값·안장점 등일 수 있어 <strong>전역 최솟값을 보장하지 않습니다.</strong></p></details>
+<details><summary>⑥ ‘sigmoid 입력이 1.6이면 출력은 0.472다.’</summary><p>공식으로 계산하면 <strong>약 0.8320</strong>입니다. 양수 입력이므로 출력이 0.5보다 커야 한다는 점으로도 검산할 수 있습니다.</p></details>
+<details><summary>⑦ ‘Attention은 가장 중요한 단어 하나만 선택해 사용한다.’</summary><p>일반적인 soft attention은 여러 value에 <strong>비율을 곱해 가중합</strong>합니다. 가장 큰 비율 하나만 고르는 연산과 다릅니다.</p></details>
+<details><summary>⑧ ‘Self-Attention은 Q, K, V의 값이 동일하다.’</summary><p>같은 시퀀스에서 출발하지만 <strong>서로 다른 학습 행렬</strong>로 변환하므로 값은 일반적으로 다릅니다.</p></details>
+<details><summary>⑨ ‘scaled attention은 문장 길이의 제곱근으로 나눈다.’</summary><p><strong>Key의 차원 d_k의 제곱근</strong>으로 나눕니다.</p></details>
+<details><summary>⑩ ‘softmax는 원래 점수를 그 점수의 합으로 나눈다.’</summary><p>먼저 <strong>지수 함수 e^점수</strong>를 적용하고, 그 지수값들의 합으로 나눕니다.</p></details>
+<details><summary>⑪ ‘Attention 비율 행렬이 바로 한 head의 최종 출력이다.’</summary><p>비율 행렬에 <strong>V를 곱해 가중합</strong>해야 head 출력이 됩니다. n×n과 n×d_v를 구분합니다.</p></details>
+<details><summary>⑫ ‘Multi-head는 head 출력을 단순 합산한다.’</summary><p>강의 구조에서는 <strong>이어 붙인 다음 Wᴼ로 변환</strong>합니다.</p></details>
+<details><summary>⑬ ‘위치 인코딩은 홀수 단어에는 cos만 더한다.’</summary><p>짝수·홀수는 <strong>단어의 번호가 아니라 벡터 안의 차원 번호</strong>를 말합니다.</p></details>
+<details><summary>⑭ ‘Decoder의 Cross-Attention에서 Q는 encoder에서 온다.’</summary><p>반대입니다. <strong>Q는 decoder, K·V는 encoder</strong>에서 옵니다.</p></details>
+<details><summary>⑮ ‘미래 위치의 점수를 0으로 바꾸면 softmax 확률도 0이다.’</summary><p>e⁰=1이라 그렇지 않습니다. 보통 점수에 <strong>−∞를 더해</strong> 최종 참고 비율을 0으로 만듭니다.</p></details>
+<details><summary>⑯ ‘Transformer는 병렬 구조이므로 생성할 때 미래 단어도 한 번에 안다.’</summary><p>학습의 위치별 병렬 계산과 생성 과정은 다릅니다. 강의의 자기회귀 디코더는 <strong>앞선 출력으로 다음 토큰을 순서대로 생성</strong>합니다.</p></details>
+<h2 id="source-cautions">원자료와 함께 볼 때의 주의점</h2>
+<p>아래는 범위를 바꾼 것이 아니라, 원자료의 축약·숫자 표기를 그대로 외워 생길 혼동을 줄이기 위한 설명입니다.</p>
+<table><thead><tr><th>원자료</th><th>이 노트의 처리</th></tr></thead><tbody><tr><td>2주차 pp. 62~63: sigmoid 계산 수치</td><td>표시된 공식과 입력으로 재계산하고 원자료와 차이를 명시</td></tr><tr><td>2주차 p. 98: SGD와 batch 표현</td><td>샘플 하나의 SGD와 mini-batch 용법을 구별</td></tr><tr><td>2주차 p. 101: Adam 의사코드</td><td>제곱 평균 v는 이전 v로 갱신하는 표준 식 사용</td></tr><tr><td>Transformer p. 38: 예시 softmax 비율</td><td>도식상 비율과 실제 지수 계산 결과를 구별</td></tr><tr><td>Transformer p. 53: ‘값을 0’</td><td>점수와 최종 Attention 비율의 차이 설명</td></tr><tr><td>Transformer pp. 55~57: self 표기</td><td>Q·K·V의 출처를 기준으로 구분</td></tr></tbody></table>
+<p class="chapter-next">다음: <a href="98-exam.html">객관식 15문제·서술형 2문제 모의시험</a></p>
+
+  <footer class="page-footer"><code>content/deep/97-compare.html</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc"><ul><li><a href="#learning-pairs">데이터·학습에서 구분할 것</a></li><li><a href="#attention-pairs">Attention·Transformer에서 구분할 것</a></li><li><a href="#false-statements">틀린 선지를 고쳐 말하기</a></li><li><a href="#source-cautions">원자료와 함께 볼 때의 주의점</a></li></ul></div></aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

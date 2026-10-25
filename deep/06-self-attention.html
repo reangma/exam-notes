@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6. Self-Attention과 Multi-head 계산 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="../isw/98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">심층학습</a>
+<ul>
+<li><a href="00-basics.html">0. 수학·기호부터 아주 쉽게</a></li>
+<li><a href="01-learning.html">1. AI·데이터·머신러닝의 기본</a></li>
+<li><a href="02-neural-network.html">2. 신경망과 행렬 계산</a></li>
+<li><a href="03-training.html">3. 손실 함수와 학습 방법</a></li>
+<li><a href="04-backprop.html">4. 오류 역전파를 한 줄씩</a></li>
+<li><a href="05-seq2seq-attention.html">5. Seq2Seq와 Attention</a></li>
+<li><a href="06-self-attention.html" class="active">6. Self-Attention과 Multi-head</a></li>
+<li><a href="07-transformer.html">7. Transformer 구조와 마스킹</a></li>
+<li><a href="97-compare.html">헷갈리는 개념과 함정 선지</a></li>
+<li><a href="98-exam.html">모의시험 (객관식 15·서술형 2)</a></li>
+<li><a href="99-cheatsheet.html">시험 직전 핵심 암기</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1>6. Self-Attention과 Multi-head 계산</h1>
+<p class="source">출처: #3 Transformer.pdf pp. 24~46. 위치 정보·전체 구조는 다음 장에서 이어집니다.</p>
+<div class="callout callout-note"><p class="callout-title">한 문장부터</p><p><strong>Self-Attention은 같은 문장 안의 단어들이 서로를 참고하여 자기 표현을 고치는 것</strong>입니다. Multi-head는 이를 서로 다른 학습 가중치로 여러 번 병렬 수행합니다.</p></div>
+<h2 id="transformer">Transformer가 바꾼 것</h2>
+<p class="source">출처: Transformer pp. 24~27.</p>
+<p>2017년 <em>Attention Is All You Need</em>에서 제시된 Transformer는 인코더·디코더 구조를 유지하면서 <strong>RNN의 순환 계산을 사용하지 않고 Attention을 핵심으로</strong> 사용합니다.</p>
+<p>RNN은 앞 단어의 상태 계산이 끝나야 다음 단어의 상태를 계산할 수 있습니다. Transformer는 입력 토큰들의 관계를 행렬로 계산하여 여러 위치를 병렬로 처리할 수 있습니다. 단, <strong>생성 시 다음 단어가 앞선 출력에 의존하는 것까지 없어지는 것은 아닙니다.</strong></p>
+<p>‘Attention만 있으면 된다’는 제목 때문에 FFNN·정규화·임베딩 등이 없다고 생각하지 마세요. 실제 구조에는 이 구성요소들도 들어갑니다.</p>
+<h2 id="self">Self는 ‘나 하나만 본다’가 아니다</h2>
+<p class="source">출처: Transformer pp. 31~35.</p>
+<p>예를 들어 ‘The animal … it …’에서 it이 무엇을 가리키는지 알려면 앞의 animal 등을 참고해야 합니다. Self-Attention은 <strong>같은 입력 시퀀스 안의 다른 단어들까지</strong> 비교합니다. 자기 자신도 참고 후보에 포함할 수 있습니다.</p>
+<div class="callout callout-important"><p class="callout-title">Q=K=V라는 축약의 정확한 뜻</p><p>Self-Attention은 <strong>Q, K, V의 출처가 같은 시퀀스</strong>라는 뜻입니다. 서로 다른 W<sup>Q</sup>, W<sup>K</sup>, W<sup>V</sup>를 곱하므로 <strong>Q, K, V의 숫자가 반드시 같은 것은 아닙니다.</strong> pp. 55~56의 ‘Q==K==V’는 이 출처를 강조한 축약으로 읽습니다.</p></div>
+<h2 id="projection">같은 입력에서 Q, K, V를 따로 만들기</h2>
+<p class="source">출처: Transformer pp. 35~36, 39.</p>
+<pre>Q = XWQ
+K = XWK
+V = XWV</pre>
+<p>X는 여러 단어 벡터를 <strong>행으로 쌓은 표</strong>입니다. W<sup>Q</sup>, W<sup>K</sup>, W<sup>V</sup>는 학습하는 변환 행렬입니다. 단어마다 완전히 별개의 W를 갖는 것이 아니라 <strong>한 head 안에서는 같은 W를 모든 위치에 적용</strong>합니다.</p>
+<table><thead><tr><th>기호</th><th>뜻</th><th>강의 예시</th></tr></thead><tbody><tr><td>n 또는 seq_len</td><td>입력 단어·토큰 수</td><td>I am a student → 4</td></tr><tr><td>d_model</td><td>모델 내부 단어 표현의 폭</td><td>512</td></tr><tr><td>num_heads 또는 H</td><td>동시에 수행할 head 개수</td><td>8</td></tr><tr><td>d_k, d_v</td><td>한 head의 K·V 차원</td><td>512/8=64</td></tr></tbody></table>
+<p>Q와 K는 내적해야 하므로 한 head에서 차원이 맞아야 합니다. 강의 기본 구조는 d<sub>k</sub>=d<sub>v</sub>=64를 사용합니다. 512·8·64는 예시 설정이며 모든 Transformer에 고정된 숫자가 아닙니다.</p>
+<h2 id="scaled-attention">Scaled dot-product Attention 한 줄 읽기</h2>
+<p class="source">출처: Transformer pp. 37~39.</p>
+<pre>Attention(Q,K,V) = softmax(QKᵀ / √d_k)V</pre>
+<ol><li><strong>QKᵀ:</strong> 각 질의 Q와 모든 키 K의 내적 점수를 구합니다.</li><li><strong>/√d_k:</strong> 점수의 크기를 조절합니다.</li><li><strong>softmax:</strong> 각 질의에 대해 키들을 참고할 비율을 만듭니다. <strong>행별 합이 1</strong>입니다.</li><li><strong>×V:</strong> 비율대로 V들을 가중합하여 새로운 표현을 만듭니다.</li></ol>
+<h3 id="why-scale">왜 √d_k로 나누나?</h3>
+<p>차원이 커지면 내적값의 크기가 커질 수 있습니다. 너무 큰 점수를 softmax에 넣으면 일부 값에 확률이 지나치게 몰리고 기울기가 작아져 학습이 어려워질 수 있습니다. <strong>점수 크기를 조절해 학습을 안정화하려는 것</strong>입니다. 문장 길이의 제곱근으로 나누는 것이 아닙니다.</p>
+<p>강의의 d<sub>k</sub>=64이면 √64=8입니다. 내적 128은 16, 내적 32는 4가 됩니다.</p>
+<h2 id="small-example">작은 숫자로 Attention 끝까지 계산</h2>
+<p>아래는 이해를 위한 보충 예제입니다. 한 query에 대해 계산하며 d<sub>k</sub>=1입니다.</p>
+<pre>Q = [1]
+K₁ = [0], K₂ = [ln 3]
+V₁ = [2,0], V₂ = [0,4]</pre>
+<ol><li>내적 점수: <code>[0, ln 3]</code>.</li><li>√d<sub>k</sub>=1로 나누므로 그대로입니다.</li><li>지수값: <code>[e⁰,e^(ln 3)]=[1,3]</code>.</li><li>softmax 비율: <code>[1/4,3/4]=[0.25,0.75]</code>.</li><li>가중합: <code>0.25[2,0]+0.75[0,4]=<strong>[0.5,3]</strong></code>.</li></ol>
+<p>Q·K로 <strong>비율</strong>을 정하고 V로 <strong>결과 벡터</strong>를 만들었습니다. K와 V는 꼭 같은 숫자·차원을 가질 필요는 없습니다. 이 예시도 K는 1차원, V는 2차원으로 역할을 구분했습니다.</p>
+<div class="callout callout-warning"><p class="callout-title">p. 38의 예시 비율은 정확한 softmax 계산값이 아닙니다</p><p>슬라이드에는 점수 [16,4,4,16] 뒤에 [0.4,0.1,0.1,0.4]가 제시되어 있지만, 실제 softmax는 약 <strong>[0.499997,0.000003,0.000003,0.499997]</strong>입니다. 슬라이드의 비율은 가중합을 설명하는 도식으로 구분하고, 직접 계산 문제에서는 지수 함수를 사용하세요.</p></div>
+<h2 id="shapes">행렬 크기: 객관식으로 나오면 차근차근</h2>
+<p class="source">출처: Transformer pp. 36~39. n=4인 문장에 강의의 512·8 설정을 적용했습니다.</p>
+<table><thead><tr><th>단계</th><th>행렬 곱</th><th>결과 크기</th></tr></thead><tbody><tr><td>입력 X</td><td>단어 4개, 각 512차원</td><td>4×512</td></tr><tr><td>W<sup>Q</sup>, W<sup>K</sup>, W<sup>V</sup></td><td>512차원을 64차원으로 변환</td><td>각 512×64</td></tr><tr><td>Q, K, V</td><td>(4×512)(512×64)</td><td>각 4×64</td></tr><tr><td>Kᵀ</td><td>K의 행·열 교환</td><td>64×4</td></tr><tr><td>QKᵀ</td><td>(4×64)(64×4)</td><td>4×4</td></tr><tr><td>Attention 비율 A</td><td>스케일링 후 행별 softmax</td><td>4×4</td></tr><tr><td>한 head의 출력 AV</td><td>(4×4)(4×64)</td><td>4×64</td></tr></tbody></table>
+<p><strong>4×4 비율 행렬</strong>은 단어 4개 각각이 다른 4개를 얼마나 참고하는지 담습니다. <strong>4×64 head 출력</strong>은 참고를 마친 단어별 새 표현입니다. 둘은 다른 행렬입니다.</p>
+<h2 id="multi-head">Multi-head: 여러 관점으로 참고하기</h2>
+<p class="source">출처: Transformer pp. 40~46.</p>
+<p>한 명의 독자가 보는 관계와 여러 독자가 보는 관계가 다를 수 있습니다. Multi-head는 <strong>각 head가 서로 다른 학습 가중치로 Q·K·V를 만들어 Attention을 병렬로 수행</strong>합니다. 문법·지시 관계 등 여러 관계를 담을 수 있지만, head별 역할을 사람이 미리 지정하는 것은 아닙니다.</p>
+<pre>headᵢ = Attention(XWᵢQ, XWᵢK, XWᵢV)
+MultiHead = Concat(head₁, …, head_H)WO</pre>
+<ol><li>같은 입력 X로 8개의 서로 다른 Q·K·V 세트를 만듭니다.</li><li>각 head는 64차원의 공간에서 Attention을 수행합니다.</li><li>head 출력 8개를 <strong>옆으로 연결(concat)</strong>합니다.</li><li>출력 가중치 W<sup>O</sup>를 곱해 합쳐진 정보를 변환합니다.</li></ol>
+<pre>한 head 출력: 4×64
+8개 연결:    4×(64×8) = 4×512
+WO:          512×512
+최종 출력:   (4×512)(512×512) = 4×512</pre>
+<p>처음 들어온 X도 4×512, 끝난 결과도 4×512입니다. <strong>모양은 유지되고 내용은 바뀝니다.</strong> 그래야 다음 층에 같은 폭으로 전달하고 입력과 덧셈도 할 수 있습니다.</p>
+<div class="callout callout-exam"><p class="callout-title">오답 선지 구분</p><ul><li>‘같은 Attention을 같은 가중치로 반복’ → 틀림. head별 가중치가 다릅니다.</li><li>‘head가 8개면 문장도 8개로 나눔’ → 틀림. 각 head가 같은 시퀀스의 관계를 봅니다.</li><li>‘head 출력을 평균내서 합침’ → 강의 구조는 <strong>concat 후 출력 변환</strong>입니다.</li><li>‘Self-Attention과 Multi-head는 반대 개념’ → 틀림. 출처와 병렬 구조라는 서로 다른 기준입니다.</li></ul></div>
+<h2 id="check">스스로 확인</h2>
+<details><summary>Q. d_model=256, head=8이면 한 head의 d_k는?</summary><p>강의처럼 균등하게 나누는 설정에서 <strong>256/8=32</strong>입니다.</p></details>
+<details><summary>Q. 토큰이 6개이면 Attention 비율 행렬은?</summary><p>한 self-attention head에서 <strong>6×6</strong>입니다. d_model이 아니라 토큰 수끼리 비교합니다.</p></details>
+<details><summary>Q. Self-Attention은 자기 단어만 참고하므로 문맥을 알 수 없다. O/X?</summary><p><strong>X.</strong> 같은 시퀀스의 다른 토큰도 참고하므로 문맥을 반영할 수 있습니다.</p></details>
+<p class="chapter-next">다음: <a href="07-transformer.html">7. Transformer 전체 구조와 마스킹</a></p>
+
+  <footer class="page-footer"><code>content/deep/06-self-attention.html</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc"><ul><li><a href="#transformer">Transformer가 바꾼 것</a></li><li><a href="#self">Self는 ‘나 하나만 본다’가 아니다</a></li><li><a href="#projection">같은 입력에서 Q, K, V를 따로 만들기</a></li><li><a href="#scaled-attention">Scaled dot-product Attention 한 줄 읽기</a></li><li><a href="#why-scale">왜 √d_k로 나누나?</a></li><li><a href="#small-example">작은 숫자로 Attention 끝까지 계산</a></li><li><a href="#shapes">행렬 크기: 객관식으로 나오면 차근차근</a></li><li><a href="#multi-head">Multi-head: 여러 관점으로 참고하기</a></li><li><a href="#check">스스로 확인</a></li></ul></div></aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

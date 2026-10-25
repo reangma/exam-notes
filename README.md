@@ -72,6 +72,16 @@ python build.py
 python tools/build_isw_onepage.py
 ```
 
+### 심층학습 HTML 노트
+
+심층학습은 Markdown 변환 없이 `content/deep/*.html`에 HTML 본문으로 작성한다. `content/site.json`에도 `.html` 파일을 등록하며, `python build.py`는 본문을 그대로 사용하고 공통 메뉴·목차·검색 인덱스를 붙여 `deep/*.html`을 만든다.
+
+- 시작 페이지: `deep/index.html`
+- 범위: 2주차 PDF 전체, EBPA PDF 전체, Transformer PDF 1~57페이지(57페이지의 ‘여기까지’ 표시 포함)
+- 시험 구성: 객관식 15문제, 서술형 2문제. 같은 구성의 연습시험은 `deep/98-exam.html`.
+- 본문 제목은 `<h2 id="unique-id">` 또는 `<h3 id="unique-id">`처럼 고유 ID를 부여해야 목차와 검색에 연결된다.
+- 변경은 출력물 `deep/`가 아니라 HTML 원본 `content/deep/`에서 한다.
+
 ### 3. 결과 확인
 
 ```bash
@@ -122,5 +132,5 @@ python tools/pdf2md.py "고성능컴퓨팅/Lec_2_CUDA_개요.pdf" --images 7,12,
 
 ## 주의
 
-- **`.html` 파일을 직접 고치지 말 것.** 다음 빌드 때 덮어써진다. 항상 `content/` 의 마크다운을 고친다.
+- **출력 `.html` 파일을 직접 고치지 말 것.** 다음 빌드 때 덮어써진다. `content/`의 원본을 고친다(기존 과목은 Markdown, 심층학습은 HTML 본문).
 - 강의 원본 PDF는 저작권 문제로 `.gitignore` 에 넣어 공개 저장소에 올리지 않는다.

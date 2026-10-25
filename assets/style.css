@@ -374,6 +374,13 @@ details > summary {
 details[open] > summary { border-bottom: 1px solid var(--border); }
 details > :not(summary) { margin-left: .9rem; margin-right: .9rem; }
 
+/* ── 강의 출처와 학습 순서 ───────────────── */
+.content .source { color: var(--fg-muted); font-size: .875rem; overflow-wrap: anywhere; }
+.content .chapter-next { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--border); }
+.content .process-list > li { margin-bottom: 14px; }
+.content .process-list p { margin: 2px 0 0; color: var(--fg-muted); }
+.content :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
 /* ── 푸터 ────────────────────────────────── */
 .page-footer {
   margin-top: 64px; padding-top: 18px;

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5. Seq2Seq와 Attention · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="../isw/98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">심층학습</a>
+<ul>
+<li><a href="00-basics.html">0. 수학·기호부터 아주 쉽게</a></li>
+<li><a href="01-learning.html">1. AI·데이터·머신러닝의 기본</a></li>
+<li><a href="02-neural-network.html">2. 신경망과 행렬 계산</a></li>
+<li><a href="03-training.html">3. 손실 함수와 학습 방법</a></li>
+<li><a href="04-backprop.html">4. 오류 역전파를 한 줄씩</a></li>
+<li><a href="05-seq2seq-attention.html" class="active">5. Seq2Seq와 Attention</a></li>
+<li><a href="06-self-attention.html">6. Self-Attention과 Multi-head</a></li>
+<li><a href="07-transformer.html">7. Transformer 구조와 마스킹</a></li>
+<li><a href="97-compare.html">헷갈리는 개념과 함정 선지</a></li>
+<li><a href="98-exam.html">모의시험 (객관식 15·서술형 2)</a></li>
+<li><a href="99-cheatsheet.html">시험 직전 핵심 암기</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1>5. Seq2Seq와 Attention</h1>
+<p class="source">출처: #3 Transformer.pdf pp. 2~23.</p>
+<div class="callout callout-note"><p class="callout-title">이 장의 이야기</p><p>긴 글을 번역할 때 <strong>작은 메모 하나만 보고 번역</strong>하면 내용을 놓치기 쉽습니다. 그래서 <strong>단어를 하나 만들 때마다 원문에서 필요한 부분을 다시 참고</strong>하게 만든 것이 Attention의 핵심 아이디어입니다.</p></div>
+<h2 id="sequence">순서가 중요한 데이터</h2>
+<p class="source">출처: Transformer pp. 2~3.</p>
+<p>문장·음성·시간에 따른 측정값처럼 앞뒤 순서가 중요한 데이터가 있습니다. ‘나는 너를 좋아해’와 ‘너는 나를 좋아해’는 같은 단어가 있어도 순서에 따라 뜻이 달라집니다.</p>
+<ul><li><strong>RNN:</strong> 앞 단계의 상태를 다음 단계로 넘기며 순서대로 읽는 신경망.</li><li><strong>Hidden state:</strong> 지금까지 읽은 정보를 담은 중간 상태 벡터.</li><li><strong>LSTM·GRU:</strong> 오래된 정보를 더 잘 다루도록 RNN을 개선한 계열. 이 자료에서는 배경으로 등장합니다.</li></ul>
+<div class="callout callout-warning"><p class="callout-title">자료의 ‘가변 길이 한계’ 읽는 법</p><p>RNN 자체가 길이가 다른 입력을 전혀 못 받는 것은 아닙니다. 여기서 중요한 문제는 <strong>입력 문장과 출력 문장의 길이가 서로 다른 변환을 어떻게 구성할 것인가</strong>입니다. Seq2Seq가 인코더와 디코더를 분리하여 이를 다룹니다.</p></div>
+<h2 id="seq2seq">Seq2Seq: 읽는 역할과 쓰는 역할 나누기</h2>
+<p class="source">출처: Transformer pp. 3~7.</p>
+<p><strong>Sequence to Sequence</strong>는 하나의 순서 있는 입력을 다른 순서 있는 출력으로 바꾸는 구조입니다. 강의 예시는 영어 <code>I am a student</code>를 프랑스어 <code>je suis étudiant</code>로 번역합니다. 입력은 4단어, 출력은 3단어로 길이가 다릅니다.</p>
+<ol><li><strong>Encoder(인코더):</strong> 입력 문장을 순서대로 읽습니다.</li><li><strong>Context vector(문맥 벡터):</strong> 입력 내용을 고정 길이의 벡터로 요약합니다. 기본 설명에서는 마지막 hidden state를 사용합니다.</li><li><strong>Decoder(디코더):</strong> 요약 정보를 바탕으로 출력 단어를 한 개씩 만듭니다.</li></ol>
+<p>LSTM 구현에서는 hidden state뿐 아니라 cell state도 전달할 수 있지만, 여기서는 강의의 문맥 벡터 설명에 집중하면 됩니다.</p>
+<h3 id="sos-eos">sos와 eos</h3>
+<table><thead><tr><th>토큰</th><th>뜻</th><th>역할</th></tr></thead><tbody><tr><td>&lt;sos&gt;</td><td>Start of Sequence</td><td>생성을 시작하라는 표시</td></tr><tr><td>&lt;eos&gt;</td><td>End of Sequence</td><td>문장 생성이 끝났다는 표시</td></tr></tbody></table>
+<pre>첫 입력 &lt;sos&gt; → je 예측
+이전 출력 je   → suis 예측
+이전 출력 suis → étudiant 예측
+étudiant      → &lt;eos&gt; 예측 → 종료</pre>
+<p>이처럼 자신의 앞선 출력을 이용해 다음 출력을 만드는 방식을 자기회귀적 생성이라고 부릅니다. 위 설명은 생성 시점 기준이고, 학습 때 정답 이전 단어를 넣는 방식은 뒤에서 다룹니다.</p>
+<h2 id="embedding">글자는 계산할 수 없으니 숫자 목록으로</h2>
+<p class="source">출처: Transformer p. 8.</p>
+<p><strong>임베딩(Embedding)</strong>은 단어·토큰을 숫자 벡터로 표현하는 것입니다. 예를 들어 student를 <code>[0.2, −0.5, 0.7]</code> 같은 벡터로 나타냅니다. 이 수치는 설명용이며 실제 값은 학습에 따라 달라집니다.</p>
+<p>벡터의 각 숫자가 반드시 ‘나이, 성별’처럼 사람이 이름 붙인 의미와 일대일로 대응하지는 않습니다. <strong>단어를 신경망이 처리할 수 있는 표현으로 바꾼다</strong>가 핵심입니다.</p>
+<h2 id="softmax">Softmax: 점수를 비율로 바꾸기</h2>
+<p class="source">출처: Transformer p. 9.</p>
+<pre>softmax(z)ᵢ = e^(zᵢ) / Σⱼ e^(zⱼ)</pre>
+<p>분자는 지금 후보의 지수값, 분모는 모든 후보의 지수값 합입니다. 결과는 각각 양수이고 <strong>전부 더하면 1</strong>입니다. 큰 점수일수록 큰 확률을 받습니다.</p>
+<p>보충 예시: 후보 점수가 [0, ln 3]이면 지수값은 [1,3], 전체 합은 4이므로 softmax는 <strong>[0.25,0.75]</strong>입니다. 점수 자체를 단순히 합으로 나누는 것과는 다릅니다.</p>
+<p>디코더 출력은 보통 Dense(선형 변환)로 단어 후보별 점수를 만든 후 softmax로 확률을 구합니다. 강의에서는 확률이 가장 큰 단어를 고르는 예를 사용합니다.</p>
+<h2 id="bottleneck">기본 Seq2Seq의 두 문제</h2>
+<p class="source">출처: Transformer pp. 10~11.</p>
+<ol><li><strong>정보 병목:</strong> 문장이 길어져도 같은 크기의 문맥 벡터 하나에 모든 내용을 넣어야 하므로 중요한 정보가 손실될 수 있습니다.</li><li><strong>기울기 소실:</strong> 긴 순환 계산을 거슬러 기울기를 전달할 때 값이 작아져 오래전 정보의 학습이 어려워질 수 있습니다.</li></ol>
+<p>두 문제는 관련이 있지만 같은 말은 아닙니다. 하나는 <strong>정보를 한곳에 압축하는 문제</strong>, 다른 하나는 <strong>학습 신호가 약해지는 문제</strong>입니다.</p>
+<h2 id="attention">Attention: 매번 필요한 원문을 다시 보기</h2>
+<p class="source">출처: Transformer pp. 11~20.</p>
+<p>‘étudiant’를 만들려는 순간에는 원문의 student가 중요합니다. ‘suis’를 만들 때와 참고 비율이 달라질 수 있습니다. Attention은 매 출력 시점마다 인코더의 <strong>모든 hidden state를 비교하고, 관련된 부분에 큰 비중</strong>을 줍니다.</p>
+<h3 id="attention-steps">계산은 ‘점수 → 비율 → 가중합’</h3>
+<ol><li><strong>점수:</strong> 현재 디코더 상태 sₜ와 각 인코더 상태 hᵢ의 내적을 구합니다. <code>eᵢ=sₜᵀhᵢ</code>.</li><li><strong>비율:</strong> 점수 목록에 softmax를 적용해 αᵢ를 구합니다. α들의 합은 1입니다.</li><li><strong>가중합:</strong> 각 hᵢ에 αᵢ를 곱해 모두 더합니다. <code>aₜ=Σᵢαᵢhᵢ</code>.</li><li><strong>연결:</strong> aₜ와 현재 디코더 상태 sₜ를 이어 붙입니다. <code>[aₜ;sₜ]</code>.</li><li><strong>예측:</strong> 연결 벡터를 변환하고 출력층·softmax를 거쳐 다음 단어를 예측합니다.</li></ol>
+<p><strong>Concatenation(연결)</strong>은 더하기가 아니라 이어 붙이기입니다. [1,2]와 [3,4]를 연결하면 [1,2,3,4], 원소별로 더하면 [4,6]입니다.</p>
+<h3 id="weighted-example">가중합 계산 예제</h3>
+<p>보충 예시: 두 입력 상태가 <code>h₁=[2,0]</code>, <code>h₂=[0,4]</code>이고 softmax 비율이 [0.25,0.75]라고 주어졌다고 합시다.</p>
+<pre>a = 0.25[2,0] + 0.75[0,4]
+  = [0.5,0] + [0,3]
+  = [0.5,3]</pre>
+<p>두 번째 정보가 더 큰 비율로 반영됩니다. 모든 벡터를 같은 비율로 평균내는 것이 아닙니다. 이 a는 <strong>숫자 하나가 아닌 벡터</strong>입니다.</p>
+<h2 id="qkv">Q, K, V는 질문·검색표·내용</h2>
+<p class="source">출처: Transformer pp. 21~22.</p>
+<p>도서관에서 책을 찾는다고 생각해봅시다.</p>
+<ul><li><strong>Q(Query):</strong> ‘지금 어떤 정보가 필요하지?’라는 검색 요청.</li><li><strong>K(Key):</strong> 요청과 비교하는 각 항목의 특징.</li><li><strong>V(Value):</strong> 비율을 정한 뒤 실제로 가져와 섞는 내용.</li></ul>
+<table><thead><tr><th>역할</th><th>이 장의 RNN 기반 Attention</th></tr></thead><tbody><tr><td>Q</td><td>현재 디코더의 hidden state</td></tr><tr><td>K</td><td>인코더의 모든 hidden state</td></tr><tr><td>V</td><td>인코더의 모든 hidden state</td></tr></tbody></table>
+<pre>Attention(Q,K,V) = softmax(QKᵀ)V</pre>
+<p><strong>Q와 K는 ‘얼마나 참고할지’를 결정</strong>하고, <strong>V는 실제로 섞을 정보</strong>입니다. 이 기본 예시는 K와 V에 같은 인코더 상태를 사용합니다. 다음 장의 Transformer에서는 서로 다른 학습 행렬로 K와 V를 만듭니다.</p>
+<h2 id="score-types">강의 p. 23의 Attention 종류</h2>
+<p>차이는 주로 <strong>연관성 점수를 계산하는 방식</strong>입니다. 우선 dot과 scaled dot의 차이를 확실히 이해하고 나머지는 구분해둡니다.</p>
+<table><thead><tr><th>방식</th><th>핵심 계산</th></tr></thead><tbody><tr><td>Dot</td><td>sᵀh: 두 벡터의 내적</td></tr><tr><td>Scaled dot</td><td>sᵀh/√d: 내적을 차원의 제곱근으로 나눔</td></tr><tr><td>General</td><td>sᵀWh: 학습 가중치 행렬을 사이에 넣음</td></tr><tr><td>Concat / additive</td><td>두 상태를 연결하거나 변환해 합한 뒤 tanh와 학습 가중치로 점수 계산</td></tr><tr><td>Location-based</td><td>디코더 상태 s로 위치별 비율 계산</td></tr></tbody></table>
+<h2 id="check">스스로 확인</h2>
+<details><summary>Q. Attention score, weight, value는 각각 무엇인가?</summary><p><strong>Score</strong>는 연관성 원점수, <strong>weight</strong>는 softmax로 만든 참고 비율, <strong>attention value</strong>는 그 비율로 정보를 섞은 최종 벡터입니다.</p></details>
+<details><summary>Q. Attention은 인코더의 마지막 상태만 보는가?</summary><p>이 장의 Attention은 <strong>인코더의 모든 시점 상태를 참고</strong>합니다. 마지막 벡터 하나에만 의존하는 병목을 완화합니다.</p></details>
+<details><summary>Q. Context vector는 항상 하나로 고정될까?</summary><p>기본 Seq2Seq에서는 입력 요약 벡터 하나를 전달합니다. Attention에서는 <strong>디코더 시점마다 비율이 달라지므로 문맥 벡터도 달라질 수 있습니다.</strong></p></details>
+<p class="chapter-next">다음: <a href="06-self-attention.html">6. Self-Attention과 Multi-head 계산</a></p>
+
+  <footer class="page-footer"><code>content/deep/05-seq2seq-attention.html</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc"><ul><li><a href="#sequence">순서가 중요한 데이터</a></li><li><a href="#seq2seq">Seq2Seq: 읽는 역할과 쓰는 역할 나누기</a></li><li><a href="#sos-eos">sos와 eos</a></li><li><a href="#embedding">글자는 계산할 수 없으니 숫자 목록으로</a></li><li><a href="#softmax">Softmax: 점수를 비율로 바꾸기</a></li><li><a href="#bottleneck">기본 Seq2Seq의 두 문제</a></li><li><a href="#attention">Attention: 매번 필요한 원문을 다시 보기</a></li><li><a href="#attention-steps">계산은 ‘점수 → 비율 → 가중합’</a></li><li><a href="#weighted-example">가중합 계산 예제</a></li><li><a href="#qkv">Q, K, V는 질문·검색표·내용</a></li><li><a href="#score-types">강의 p. 23의 Attention 종류</a></li><li><a href="#check">스스로 확인</a></li></ul></div></aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

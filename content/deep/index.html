@@ -1,0 +1,27 @@
+<h1>심층학습 시험 정리</h1>
+<p><strong>거의 처음 배우는 사람을 위한 시험 대비 노트</strong>입니다. 어려운 용어는 뜻부터, 공식은 기호부터, 계산은 중간 단계부터 설명합니다. 모든 새 노트는 Markdown 변환 없이 <strong>HTML로 작성</strong>했습니다.</p>
+<div class="callout callout-exam"><p class="callout-title">확인된 시험 구성</p><p><strong>객관식 15문제 · 서술형 2문제.</strong> 사용자 안내를 반영했습니다. 실제 배점과 제한 시간은 확인되지 않았습니다. <a href="98-exam.html">같은 구성의 모의시험 풀기</a></p></div>
+<h2 id="scope">시험 범위</h2>
+<table><thead><tr><th>제공 자료</th><th>정리 범위</th><th>주요 내용</th></tr></thead><tbody><tr><td>심층학습_2주차_수업자료.pdf</td><td>전체 105페이지</td><td>데이터·ML 기초, MLP, 행렬, 손실, 최적화</td></tr><tr><td>## Neural Network_EBPA.pdf</td><td>전체 15페이지</td><td>오류 역전파의 출력층·은닉층 미분과 갱신</td></tr><tr><td>#3 Transformer.pdf</td><td><strong>1~57페이지, 57페이지 포함</strong></td><td>Seq2Seq, Attention, Transformer 전체 구조</td></tr></tbody></table>
+<p><strong>세 번째 PDF 57페이지 ‘Transformer summary’의 빨간 손글씨 ‘여기까지’와 동그라미 친 페이지 번호를 직접 확인했습니다.</strong> 58페이지 이후 및 ViT·PatchTST 같은 뒤쪽 응용은 제외했습니다. 첫 자료의 강의 계획에 이름만 등장하는 VAE·GAN·Diffusion 등도 그 이름만을 근거로 시험 정리에 추가하지 않았습니다.</p>
+<p>첫 자료의 과목 소개·수업 운영 페이지와 마지막 종료 슬라이드는 행정 안내이므로 개념 암기 내용으로 늘리지 않았습니다. 이 노트의 쪽수는 PDF 뷰어의 <strong>1부터 시작하는 실제 페이지 순서</strong>입니다.</p>
+<h2 id="reading-order">처음이면 이 순서대로</h2>
+<table><thead><tr><th>순서</th><th>읽을 내용</th><th>끝나면 할 수 있어야 하는 것</th></tr></thead><tbody>
+<tr><td>0</td><td><a href="00-basics.html">수학·기호부터 아주 쉽게</a></td><td>벡터·행렬·내적·미분 기호 읽기</td></tr>
+<tr><td>1</td><td><a href="01-learning.html">AI·데이터·머신러닝의 기본</a></td><td>지도/비지도, 분류/회귀, 모델/파라미터 구분</td></tr>
+<tr><td>2</td><td><a href="02-neural-network.html">신경망과 행렬 계산</a></td><td>뉴런 계산, XOR 한계, W 크기와 파라미터 수 계산</td></tr>
+<tr><td>3</td><td><a href="03-training.html">손실 함수와 학습 방법</a></td><td>MSE·CE, 경사하강법, batch·epoch·optimizer 이해</td></tr>
+<tr><td>4</td><td><a href="04-backprop.html">오류 역전파를 한 줄씩</a></td><td>출력층 수정량 계산, 은닉층에 합이 필요한 이유 설명</td></tr>
+<tr><td>5</td><td><a href="05-seq2seq-attention.html">Seq2Seq와 Attention</a></td><td>문맥 벡터의 병목, 점수·비율·가중합 구분</td></tr>
+<tr><td>6</td><td><a href="06-self-attention.html">Self-Attention과 Multi-head</a></td><td>Q·K·V 역할, 스케일링, 행렬 크기 계산</td></tr>
+<tr><td>7</td><td><a href="07-transformer.html">Transformer 전체 구조와 마스킹</a></td><td>인코더·디코더 순서, 위치 정보, 미래 마스크 설명</td></tr>
+</tbody></table>
+<h2 id="exam-route">시험 대비 복습 순서</h2>
+<ol><li><a href="97-compare.html"><strong>헷갈리는 개념과 함정 선지</strong></a>에서 비슷한 용어를 구분합니다.</li><li><a href="98-exam.html"><strong>객관식 15문제·서술형 2문제</strong></a>를 답을 보지 않고 풀어봅니다.</li><li>틀린 문제의 해설에 연결된 본문으로 돌아갑니다.</li><li><a href="99-cheatsheet.html"><strong>시험 직전 핵심 암기</strong></a>로 정의·공식·답안 뼈대를 복습합니다.</li></ol>
+<div class="callout callout-note"><p class="callout-title">시간이 부족해도 이것은 구분하기</p><p><strong>객관식:</strong> 용어 비교, 행렬 크기, 손실 계산, 학습률 부호, head와 layer, Q·K·V 출처.<br><strong>서술형:</strong> 원리의 이유와 계산 순서를 말로 설명하기. 본문의 ‘시험 답안용’ 문장을 자기 말로 다시 써보세요.</p></div>
+<h2 id="how-to">노트 읽는 법</h2>
+<ul><li><strong>쉬운 비유 → 정의 → 공식 → 예제</strong> 순서입니다. 첫 회독에서는 식의 모든 글자를 외우기보다 무엇을 계산하는지 파악하세요.</li><li>각 장의 <strong>출처</strong>로 원자료 쪽수를 확인할 수 있습니다.</li><li><strong>보충 예시</strong>는 이해를 돕기 위해 새로 만든 숫자나 설명입니다. 원자료의 실제 예제와 구분했습니다.</li><li>접힌 <strong>정답·해설</strong>은 클릭하거나 키보드로 열 수 있습니다.</li><li>기존 과목과 동일한 사이드바·목차·상단 검색·테마 전환을 사용합니다.</li></ul>
+<h2 id="accuracy">원자료의 계산·축약 표기 주의</h2>
+<p>2주차 pp. 62~63의 sigmoid 숫자, Transformer p. 38의 softmax 비율처럼 <strong>표시된 공식과 예시 결과가 맞지 않는 부분은 검산한 값과 주의 설명을 함께</strong> 넣었습니다. 또한 ‘Self-Attention의 Q=K=V’, ‘마스크는 0’ 같은 축약은 출처와 계산 단계를 나눠 설명했습니다.</p>
+<p>원자료의 표기를 숨기거나 임의의 출제 정보를 붙이지 않았습니다. 노란 시험 포인트·모의문제는 <strong>중요 개념을 연습하기 위한 구성</strong>이지 교수자의 출제 확정 안내는 아닙니다.</p>
+<p class="chapter-next"><a href="00-basics.html"><strong>0. 수학·기호부터 시작하기 →</strong></a></p>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>심층학습 시험 정리 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="../isw/98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title active" href="index.html">심층학습</a>
+<ul>
+<li><a href="00-basics.html">0. 수학·기호부터 아주 쉽게</a></li>
+<li><a href="01-learning.html">1. AI·데이터·머신러닝의 기본</a></li>
+<li><a href="02-neural-network.html">2. 신경망과 행렬 계산</a></li>
+<li><a href="03-training.html">3. 손실 함수와 학습 방법</a></li>
+<li><a href="04-backprop.html">4. 오류 역전파를 한 줄씩</a></li>
+<li><a href="05-seq2seq-attention.html">5. Seq2Seq와 Attention</a></li>
+<li><a href="06-self-attention.html">6. Self-Attention과 Multi-head</a></li>
+<li><a href="07-transformer.html">7. Transformer 구조와 마스킹</a></li>
+<li><a href="97-compare.html">헷갈리는 개념과 함정 선지</a></li>
+<li><a href="98-exam.html">모의시험 (객관식 15·서술형 2)</a></li>
+<li><a href="99-cheatsheet.html">시험 직전 핵심 암기</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1>심층학습 시험 정리</h1>
+<p><strong>거의 처음 배우는 사람을 위한 시험 대비 노트</strong>입니다. 어려운 용어는 뜻부터, 공식은 기호부터, 계산은 중간 단계부터 설명합니다. 모든 새 노트는 Markdown 변환 없이 <strong>HTML로 작성</strong>했습니다.</p>
+<div class="callout callout-exam"><p class="callout-title">확인된 시험 구성</p><p><strong>객관식 15문제 · 서술형 2문제.</strong> 사용자 안내를 반영했습니다. 실제 배점과 제한 시간은 확인되지 않았습니다. <a href="98-exam.html">같은 구성의 모의시험 풀기</a></p></div>
+<h2 id="scope">시험 범위</h2>
+<table><thead><tr><th>제공 자료</th><th>정리 범위</th><th>주요 내용</th></tr></thead><tbody><tr><td>심층학습_2주차_수업자료.pdf</td><td>전체 105페이지</td><td>데이터·ML 기초, MLP, 행렬, 손실, 최적화</td></tr><tr><td>## Neural Network_EBPA.pdf</td><td>전체 15페이지</td><td>오류 역전파의 출력층·은닉층 미분과 갱신</td></tr><tr><td>#3 Transformer.pdf</td><td><strong>1~57페이지, 57페이지 포함</strong></td><td>Seq2Seq, Attention, Transformer 전체 구조</td></tr></tbody></table>
+<p><strong>세 번째 PDF 57페이지 ‘Transformer summary’의 빨간 손글씨 ‘여기까지’와 동그라미 친 페이지 번호를 직접 확인했습니다.</strong> 58페이지 이후 및 ViT·PatchTST 같은 뒤쪽 응용은 제외했습니다. 첫 자료의 강의 계획에 이름만 등장하는 VAE·GAN·Diffusion 등도 그 이름만을 근거로 시험 정리에 추가하지 않았습니다.</p>
+<p>첫 자료의 과목 소개·수업 운영 페이지와 마지막 종료 슬라이드는 행정 안내이므로 개념 암기 내용으로 늘리지 않았습니다. 이 노트의 쪽수는 PDF 뷰어의 <strong>1부터 시작하는 실제 페이지 순서</strong>입니다.</p>
+<h2 id="reading-order">처음이면 이 순서대로</h2>
+<table><thead><tr><th>순서</th><th>읽을 내용</th><th>끝나면 할 수 있어야 하는 것</th></tr></thead><tbody>
+<tr><td>0</td><td><a href="00-basics.html">수학·기호부터 아주 쉽게</a></td><td>벡터·행렬·내적·미분 기호 읽기</td></tr>
+<tr><td>1</td><td><a href="01-learning.html">AI·데이터·머신러닝의 기본</a></td><td>지도/비지도, 분류/회귀, 모델/파라미터 구분</td></tr>
+<tr><td>2</td><td><a href="02-neural-network.html">신경망과 행렬 계산</a></td><td>뉴런 계산, XOR 한계, W 크기와 파라미터 수 계산</td></tr>
+<tr><td>3</td><td><a href="03-training.html">손실 함수와 학습 방법</a></td><td>MSE·CE, 경사하강법, batch·epoch·optimizer 이해</td></tr>
+<tr><td>4</td><td><a href="04-backprop.html">오류 역전파를 한 줄씩</a></td><td>출력층 수정량 계산, 은닉층에 합이 필요한 이유 설명</td></tr>
+<tr><td>5</td><td><a href="05-seq2seq-attention.html">Seq2Seq와 Attention</a></td><td>문맥 벡터의 병목, 점수·비율·가중합 구분</td></tr>
+<tr><td>6</td><td><a href="06-self-attention.html">Self-Attention과 Multi-head</a></td><td>Q·K·V 역할, 스케일링, 행렬 크기 계산</td></tr>
+<tr><td>7</td><td><a href="07-transformer.html">Transformer 전체 구조와 마스킹</a></td><td>인코더·디코더 순서, 위치 정보, 미래 마스크 설명</td></tr>
+</tbody></table>
+<h2 id="exam-route">시험 대비 복습 순서</h2>
+<ol><li><a href="97-compare.html"><strong>헷갈리는 개념과 함정 선지</strong></a>에서 비슷한 용어를 구분합니다.</li><li><a href="98-exam.html"><strong>객관식 15문제·서술형 2문제</strong></a>를 답을 보지 않고 풀어봅니다.</li><li>틀린 문제의 해설에 연결된 본문으로 돌아갑니다.</li><li><a href="99-cheatsheet.html"><strong>시험 직전 핵심 암기</strong></a>로 정의·공식·답안 뼈대를 복습합니다.</li></ol>
+<div class="callout callout-note"><p class="callout-title">시간이 부족해도 이것은 구분하기</p><p><strong>객관식:</strong> 용어 비교, 행렬 크기, 손실 계산, 학습률 부호, head와 layer, Q·K·V 출처.<br><strong>서술형:</strong> 원리의 이유와 계산 순서를 말로 설명하기. 본문의 ‘시험 답안용’ 문장을 자기 말로 다시 써보세요.</p></div>
+<h2 id="how-to">노트 읽는 법</h2>
+<ul><li><strong>쉬운 비유 → 정의 → 공식 → 예제</strong> 순서입니다. 첫 회독에서는 식의 모든 글자를 외우기보다 무엇을 계산하는지 파악하세요.</li><li>각 장의 <strong>출처</strong>로 원자료 쪽수를 확인할 수 있습니다.</li><li><strong>보충 예시</strong>는 이해를 돕기 위해 새로 만든 숫자나 설명입니다. 원자료의 실제 예제와 구분했습니다.</li><li>접힌 <strong>정답·해설</strong>은 클릭하거나 키보드로 열 수 있습니다.</li><li>기존 과목과 동일한 사이드바·목차·상단 검색·테마 전환을 사용합니다.</li></ul>
+<h2 id="accuracy">원자료의 계산·축약 표기 주의</h2>
+<p>2주차 pp. 62~63의 sigmoid 숫자, Transformer p. 38의 softmax 비율처럼 <strong>표시된 공식과 예시 결과가 맞지 않는 부분은 검산한 값과 주의 설명을 함께</strong> 넣었습니다. 또한 ‘Self-Attention의 Q=K=V’, ‘마스크는 0’ 같은 축약은 출처와 계산 단계를 나눠 설명했습니다.</p>
+<p>원자료의 표기를 숨기거나 임의의 출제 정보를 붙이지 않았습니다. 노란 시험 포인트·모의문제는 <strong>중요 개념을 연습하기 위한 구성</strong>이지 교수자의 출제 확정 안내는 아닙니다.</p>
+<p class="chapter-next"><a href="00-basics.html"><strong>0. 수학·기호부터 시작하기 →</strong></a></p>
+
+  <footer class="page-footer"><code>content/deep/index.html</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc"><ul><li><a href="#scope">시험 범위</a></li><li><a href="#reading-order">처음이면 이 순서대로</a></li><li><a href="#exam-route">시험 대비 복습 순서</a></li><li><a href="#how-to">노트 읽는 법</a></li><li><a href="#accuracy">원자료의 계산·축약 표기 주의</a></li></ul></div></aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3. 손실 함수와 학습 방법 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="../isw/98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">심층학습</a>
+<ul>
+<li><a href="00-basics.html">0. 수학·기호부터 아주 쉽게</a></li>
+<li><a href="01-learning.html">1. AI·데이터·머신러닝의 기본</a></li>
+<li><a href="02-neural-network.html">2. 신경망과 행렬 계산</a></li>
+<li><a href="03-training.html" class="active">3. 손실 함수와 학습 방법</a></li>
+<li><a href="04-backprop.html">4. 오류 역전파를 한 줄씩</a></li>
+<li><a href="05-seq2seq-attention.html">5. Seq2Seq와 Attention</a></li>
+<li><a href="06-self-attention.html">6. Self-Attention과 Multi-head</a></li>
+<li><a href="07-transformer.html">7. Transformer 구조와 마스킹</a></li>
+<li><a href="97-compare.html">헷갈리는 개념과 함정 선지</a></li>
+<li><a href="98-exam.html">모의시험 (객관식 15·서술형 2)</a></li>
+<li><a href="99-cheatsheet.html">시험 직전 핵심 암기</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1>3. 손실 함수와 학습 방법</h1>
+<p class="source">출처: 2주차 PDF pp. 88~104.</p>
+<div class="callout callout-note"><p class="callout-title">한 문장부터</p><p><strong>예측하고 → 얼마나 틀렸는지 계산하고 → 어느 숫자를 어떻게 고칠지 구하고 → 조금 고치는 것</strong>을 반복하면 학습입니다.</p></div>
+<h2 id="training-loop">학습의 네 단계</h2>
+<ol><li><strong>순전파:</strong> 입력부터 출력까지 계산하여 예측 ŷ를 얻습니다.</li><li><strong>손실 계산:</strong> 실제 정답 y와 예측 ŷ를 비교합니다.</li><li><strong>역전파:</strong> 손실을 각 가중치로 미분한 기울기를 구합니다.</li><li><strong>업데이트:</strong> optimizer가 기울기를 이용해 가중치를 바꿉니다.</li></ol>
+<p><strong>역전파는 기울기를 계산하는 방법, optimizer는 그 기울기로 가중치를 수정하는 방법</strong>입니다. 둘을 완전히 같은 뜻으로 쓰지 않도록 합니다.</p>
+<h2 id="mse">MSE: 틀린 차이를 제곱해서 평균</h2>
+<p class="source">출처: 2주차 PDF p. 89.</p>
+<pre>MSE = (1/n) Σᵢ (예측ᵢ − 정답ᵢ)²</pre>
+<p>가격·온도처럼 <strong>수치를 예측하는 회귀</strong>에서 대표적으로 사용합니다. 제곱하므로 음수와 양수 오차가 서로 지워지지 않고, 큰 오차에 더 큰 벌점을 줍니다.</p>
+<table><thead><tr><th>정답</th><th>예측</th><th>예측−정답</th><th>제곱</th></tr></thead><tbody><tr><td>10</td><td>11</td><td>1</td><td>1</td></tr><tr><td>20</td><td>19</td><td>−1</td><td>1</td></tr><tr><td>30</td><td>30</td><td>0</td><td>0</td></tr><tr><td>40</td><td>43</td><td>3</td><td>9</td></tr><tr><td>50</td><td>47</td><td>−3</td><td>9</td></tr></tbody></table>
+<p>강의 예시의 MSE는 <code>(1+1+0+9+9)/5 = <strong>4</strong></code>입니다. 손실은 보통 작을수록 좋습니다.</p>
+<h2 id="cross-entropy">교차 엔트로피: 정답에 확신이 낮으면 큰 벌점</h2>
+<p class="source">출처: 2주차 PDF p. 90. 아래 한 샘플 예시는 보충입니다.</p>
+<p>고양이 사진의 정답이 ‘고양이’라고 해봅시다. 고양이일 확률을 0.9라고 예측하면 좋은 예측이고, 0.01이라고 하면 나쁜 예측입니다.</p>
+<pre>다중 클래스: L = −Σₖ tₖ ln(pₖ)
+t: 정답을 나타내는 one-hot 벡터
+p: 모델의 클래스별 확률</pre>
+<p><strong>One-hot</strong>은 정답 위치만 1, 나머지는 0인 표시입니다. 정답이 둘째 클래스면 <code>t=[0,1,0]</code>입니다. p=[0.1,0.7,0.2]이면 <code>L=−ln(0.7)≈0.357</code>입니다. 다른 항은 0을 곱하므로 사라집니다.</p>
+<ul><li>정답 확률 0.9 → 손실 약 0.105.</li><li>정답 확률 0.1 → 손실 약 2.303.</li><li>정답 확률이 1에 가까워질수록 손실은 0에 가까워집니다.</li></ul>
+<h3 id="binary-ce">이진 분류의 교차 엔트로피</h3>
+<pre>L = −[y ln(p) + (1−y) ln(1−p)]</pre>
+<p>y는 0 또는 1, p는 ‘1일 확률’입니다. <strong>y=1이면 −ln(p), y=0이면 −ln(1−p)</strong>만 남습니다. 예를 들어 정답이 0이고 p=0.2이면 정답 범주의 확률은 0.8이므로 손실은 −ln(0.8)≈0.223입니다.</p>
+<div class="callout callout-important"><p class="callout-title">softmax와 교차 엔트로피는 다른 역할</p><p><strong>softmax</strong>는 점수들을 확률 분포로 바꾸는 함수이고, <strong>교차 엔트로피</strong>는 그 확률이 정답과 얼마나 맞는지 평가하는 손실 함수입니다.</p></div>
+<h2 id="gradient-descent">경사하강법: 기울기의 반대 방향으로</h2>
+<p class="source">출처: 2주차 PDF pp. 96~98, 102~103.</p>
+<p>안개 낀 산에서 내려간다고 생각해봅시다. 지금 발밑의 경사를 보고 낮아지는 쪽으로 한 걸음 움직입니다. 가중치를 바꿔 손실을 낮추는 것도 비슷합니다.</p>
+<pre>w새값 = w기존값 − α × ∂L/∂w</pre>
+<ul><li><strong>w:</strong> 고칠 숫자.</li><li><strong>∂L/∂w:</strong> 손실이 증가하는 방향과 변화율.</li><li><strong>−:</strong> 증가 방향의 반대로 움직이기.</li><li><strong>α:</strong> 얼마나 크게 움직일지 정하는 학습률.</li></ul>
+<p>보충 계산: w=2, 기울기=3, α=0.1이면 <code>w새값=2−0.1×3=1.7</code>. 기울기가 −3이면 <code>2−0.1×(−3)=2.3</code>이 됩니다. <strong>항상 w를 줄이는 알고리즘이 아니라 손실을 줄이는 방향을 찾는 알고리즘</strong>입니다.</p>
+<h3 id="learning-rate">학습률이 너무 크거나 작으면?</h3>
+<ul><li><strong>너무 작음:</strong> 조금씩 움직이므로 학습이 오래 걸릴 수 있습니다.</li><li><strong>너무 큼:</strong> 좋은 지점을 지나쳐 진동하거나 발산할 수 있습니다.</li></ul>
+<p>강의는 0&lt;α&lt;1인 예를 제시합니다. 일반적인 정의에서 학습률이 반드시 1보다 작아야 하는 것은 아니며, 적절한 크기는 문제·스케일·optimizer에 따라 달라집니다.</p>
+<h3 id="quartic-example">강의 계산: L(w)=w⁴, w₀=2</h3>
+<pre>미분: L′(w)=4w³
+α=0.01:
+  w₁ = 2 − 0.01×4×2³ = 1.68
+  w₂ = 1.68 − 0.01×4×1.68³ ≈ 1.4903
+
+α=0.02:
+  w₁ = 2 − 0.02×32 = 1.36
+  w₂ = 1.36 − 0.02×4×1.36³ ≈ 1.1588</pre>
+<p>이 예에서는 첫걸음이 더 크지만, 이것만 보고 ‘학습률은 클수록 무조건 좋다’고 일반화하면 안 됩니다.</p>
+<h3 id="local-global">지역 최솟값과 전역 최솟값</h3>
+<p><strong>지역 최솟값</strong>은 주변보다 낮은 곳, <strong>전역 최솟값</strong>은 전체에서 가장 낮은 곳입니다. 기울기가 0인 지점이 항상 최솟값은 아닙니다. 깊은 신경망의 손실은 일반적으로 비볼록이므로 경사하강법이 언제나 전역 최적해를 찾는다고 보장할 수 없습니다.</p>
+<h2 id="batch-epoch">Batch, epoch, iteration</h2>
+<p class="source">출처: 2주차 PDF pp. 98, 104.</p>
+<p>문제집 1,000문제를 64문제씩 나눠 공부한다고 해봅시다.</p>
+<table><thead><tr><th>말</th><th>뜻</th><th>예시</th></tr></thead><tbody><tr><td>Batch</td><td>한 번에 처리하는 데이터 묶음</td><td>이번에 풀 64문제</td></tr><tr><td>Batch size</td><td>묶음의 크기</td><td>64</td></tr><tr><td>Iteration</td><td>일반적인 학습에서 한 batch로 업데이트 한 번</td><td>한 묶음 처리</td></tr><tr><td>Epoch</td><td>전체 학습 데이터를 한 번 통과</td><td>문제집 전체 1회독</td></tr></tbody></table>
+<pre>마지막 작은 batch도 사용한다면:
+1 epoch의 iteration 수 = ceil(데이터 수 / batch size)
+ceil = 소수점이 있으면 올림
+
+1000 / 64 = 15.625 → 16회
+15묶음은 64개씩, 마지막 묶음은 40개
+3 epoch이면 16×3 = 48회 업데이트
+
+500개, batch size=10 → 1 epoch에 50회</pre>
+<p>마지막 작은 batch를 버리도록 설정한 경우에는 내림을 씁니다. 문제가 따로 말하지 않으면 강의 예시처럼 마지막 묶음도 사용한다고 두면 됩니다.</p>
+<h2 id="optimizers">Optimizer 종류를 느낌으로 구별하기</h2>
+<p class="source">출처: 2주차 PDF pp. 98~101.</p>
+<table><thead><tr><th>방법</th><th>핵심</th><th>쉬운 기억법</th></tr></thead><tbody><tr><td>Batch GD</td><td>전체 데이터의 기울기로 한 번 업데이트</td><td>문제집 전부 보고 한 번 수정</td></tr><tr><td>SGD</td><td>엄밀하게는 샘플 하나로 업데이트</td><td>한 문제 보고 수정</td></tr><tr><td>Mini-batch SGD</td><td>일부 묶음의 기울기로 업데이트</td><td>몇 문제씩 묶어 수정</td></tr><tr><td>Momentum</td><td>이전 기울기 방향을 누적하여 관성 반영</td><td>가던 방향을 어느 정도 유지</td></tr><tr><td>Adagrad</td><td>과거 기울기 제곱의 누적으로 크기 조정</td><td>자주 크게 움직인 좌표는 보폭 축소</td></tr><tr><td>RMSProp</td><td>기울기 제곱의 이동평균으로 크기 조정</td><td>최근 경사를 보고 좌표별 보폭 조절</td></tr><tr><td>Adam</td><td>기울기 평균과 제곱 평균을 모두 사용</td><td>관성 + 적응적인 보폭</td></tr></tbody></table>
+<p>실무·강의에서는 mini-batch 방식도 넓게 SGD라고 부르는 경우가 많습니다. 강의의 ‘SGD는 batch에 따라 업데이트’는 이 용법입니다.</p>
+<h3 id="adam">Adam 식 읽기: 평균 m, 제곱 평균 v</h3>
+<p>p. 101에는 수식 전개 예시가 있으므로 이름만 외우지 말고 <strong>m과 v의 차이</strong>를 알아둡니다. gₜ는 현재 기울기입니다.</p>
+<pre>mₜ = β₁mₜ₋₁ + (1−β₁)gₜ
+vₜ = β₂vₜ₋₁ + (1−β₂)gₜ²
+
+초기값 0에 따른 편향 보정:
+m̂ₜ = mₜ/(1−β₁ᵗ)
+v̂ₜ = vₜ/(1−β₂ᵗ)
+
+wₜ = wₜ₋₁ − α × m̂ₜ/(√v̂ₜ + ε)</pre>
+<p>β는 과거 정보를 얼마나 남길지 정하는 설정이며, ε는 0으로 나누는 문제를 막는 작은 양수입니다. 벡터일 때 제곱·나눗셈은 원소별로 합니다. <strong>v는 이전 v와 현재 기울기의 제곱을 섞습니다.</strong> 슬라이드 왼쪽 의사코드의 v 갱신에 이전 m처럼 보이는 표기가 있지만 표준 Adam은 위 식입니다.</p>
+<details><summary>보충 계산: β₁=β₂=0.5, m₀=v₀=0, 첫 기울기 g₁=2</summary><ol><li>m₁=0.5×0+0.5×2=<strong>1</strong>.</li><li>v₁=0.5×0+0.5×2²=<strong>2</strong>.</li><li>m̂₁=1/(1−0.5)=<strong>2</strong>.</li><li>v̂₁=2/(1−0.5)=<strong>4</strong>.</li><li>ε를 무시하면 수정량은 α×2/√4=<strong>α</strong>.</li></ol><p>문제가 보정 전의 단순화 식을 제시하면 그 식을 따릅니다. 여기서는 표준 Adam의 편향 보정까지 계산했습니다.</p></details>
+<h2 id="check">스스로 확인</h2>
+<details><summary>Q. 120개 데이터, batch size 16, 5 epoch면 업데이트는 몇 번?</summary><p>마지막 묶음을 사용하면 ceil(120/16)=8회/epoch. <strong>8×5=40회</strong>입니다.</p></details>
+<details><summary>Q. 정답이 1인데 예측 확률이 0.8에서 0.2로 낮아지면 CE는?</summary><p><strong>커집니다.</strong> 정답에 대한 확신이 낮아져 −ln(p)가 커집니다.</p></details>
+<details><summary>Q. w=1, α=0.1, 기울기 −2이면 다음 w는?</summary><p>1−0.1×(−2)=<strong>1.2</strong>입니다.</p></details>
+<p class="chapter-next">다음: <a href="04-backprop.html">4. 오류 역전파를 한 줄씩</a></p>
+
+  <footer class="page-footer"><code>content/deep/03-training.html</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc"><ul><li><a href="#training-loop">학습의 네 단계</a></li><li><a href="#mse">MSE: 틀린 차이를 제곱해서 평균</a></li><li><a href="#cross-entropy">교차 엔트로피: 정답에 확신이 낮으면 큰 벌점</a></li><li><a href="#binary-ce">이진 분류의 교차 엔트로피</a></li><li><a href="#gradient-descent">경사하강법: 기울기의 반대 방향으로</a></li><li><a href="#learning-rate">학습률이 너무 크거나 작으면?</a></li><li><a href="#quartic-example">강의 계산: L(w)=w⁴, w₀=2</a></li><li><a href="#local-global">지역 최솟값과 전역 최솟값</a></li><li><a href="#batch-epoch">Batch, epoch, iteration</a></li><li><a href="#optimizers">Optimizer 종류를 느낌으로 구별하기</a></li><li><a href="#adam">Adam 식 읽기: 평균 m, 제곱 평균 v</a></li><li><a href="#check">스스로 확인</a></li></ul></div></aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

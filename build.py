@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-content/ 의 마크다운을 정적 HTML 사이트로 변환한다.
+content/ 의 마크다운 또는 HTML 본문을 공통 레이아웃의 정적 HTML 사이트로 만든다.
 
 사용법:
     pip install markdown pygments        # 최초 1회
@@ -14,6 +14,7 @@ content/ 의 마크다운을 정적 HTML 사이트로 변환한다.
 자세한 내용은 README.md 참고.
 """
 
+import html
 import json
 import re
 import shutil
@@ -208,9 +209,17 @@ def main() -> None:
         out_path.parent.mkdir(parents=True, exist_ok=True)
 
         raw = md_path.read_text(encoding="utf-8")
-        md = make_md()
-        body = md.convert(expand_callouts(raw))
-        toc = md.toc if md.toc_tokens else ""
+        if md_path.suffix.lower() == ".html":
+            body = raw
+            headings = re.findall(r'<h([23])\b[^>]*\bid="([^"]+)"[^>]*>(.*?)</h\1>', body, re.S)
+            toc = '<div class="toc"><ul>' + "".join(
+                f'<li><a href="#{html.escape(anchor, quote=True)}">{html.escape(strip_tags(label))}</a></li>'
+                for _, anchor, label in headings
+            ) + '</ul></div>' if headings else ""
+        else:
+            md = make_md()
+            body = md.convert(expand_callouts(raw))
+            toc = md.toc if md.toc_tokens else ""
 
         m = re.search(r"<h1[^>]*>(.*?)</h1>", body, re.S)
         # 제목 안의 퍼머링크 앵커(<a class="headerlink">#</a>)는 빼고 읽는다
@@ -226,7 +235,7 @@ def main() -> None:
             else f'{page_title} · {site["title"]}'
         )
 
-        html = TEMPLATE.format(
+        document = TEMPLATE.format(
             title=full_title,
             site_title=site["title"],
             description=site.get("description", ""),
@@ -239,7 +248,7 @@ def main() -> None:
             toc=(f'<div class="toc-title">목차</div>{toc}' if toc.strip() else ""),
             footer=f"<code>content/{src}</code> 에서 생성됨",
         )
-        out_path.write_text(html, encoding="utf-8")
+        out_path.write_text(document, encoding="utf-8")
         built += 1
 
         # 검색 인덱스: 섹션(h2/h3) 단위로 쪼갬

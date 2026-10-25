@@ -1,0 +1,66 @@
+<h1>7. Transformer 전체 구조와 마스킹</h1>
+<p class="source">출처: #3 Transformer.pdf pp. 25~32, 47~57. <strong>57페이지의 손글씨 ‘여기까지’ 표시를 확인했으며 이 페이지까지가 시험 범위입니다.</strong></p>
+<div class="callout callout-note"><p class="callout-title">먼저 전체 느낌</p><p><strong>인코더는 입력 문장을 서로 참고하며 이해하고, 디코더는 이미 쓴 부분과 입력 문장을 참고해 다음 단어를 만듭니다.</strong> 양쪽 모두 Attention 뒤에 FFNN으로 표현을 더 가공합니다.</p></div>
+<h2 id="position">Positional Encoding: 단어 뜻에 자리 정보를 더하기</h2>
+<p class="source">출처: Transformer pp. 28~30.</p>
+<p>Transformer의 Attention 계산만으로는 단어가 첫째인지 셋째인지 알 수 없습니다. 그래서 임베딩 벡터에 <strong>위치를 나타내는 벡터를 더합니다.</strong></p>
+<pre>입력 표현 = 단어 임베딩 + 위치 인코딩</pre>
+<p>같은 student라도 첫 번째 위치와 네 번째 위치에 놓이면 위치 벡터가 달라져 입력 표현이 달라집니다. <strong>이어 붙이는 concat이 아니라 같은 차원 벡터의 덧셈</strong>입니다. 원래 Transformer는 임베딩 스케일링도 사용하지만 여기서는 강의의 위치 덧셈 원리를 중심으로 봅니다.</p>
+<h3 id="position-formula">sin·cos 식에서 알아야 할 것</h3>
+<pre>PE(pos, 2k)   = sin(pos / 10000^(2k/d_model))
+PE(pos, 2k+1) = cos(pos / 10000^(2k/d_model))</pre>
+<ul><li><strong>pos:</strong> 문장 안의 토큰 위치.</li><li><strong>2k, 2k+1:</strong> 벡터 안의 차원 번호. 0부터 세어 짝수 차원은 sin, 홀수 차원은 cos.</li><li><strong>d_model:</strong> 단어 표현의 전체 차원.</li></ul>
+<p>보충 예시: pos=0이면 모든 sin 항은 0, cos 항은 1이므로 <code>[0,1,0,1,…]</code> 형태입니다. ‘짝수 번째 단어에 sin’이 아니라 <strong>각 단어 벡터 안의 짝수 차원에 sin</strong>이라는 점에 주의합니다.</p>
+<p>서로 다른 주기의 파동을 섞어 위치와 상대적 위치를 구분할 단서를 제공합니다. p. 30의 가까운 위치 설명을 <strong>거리가 멀어지면 모든 경우 유사도가 반드시 계속 감소한다</strong>는 법칙으로 외우지는 않습니다.</p>
+<h2 id="encoder">Encoder 한 층의 순서</h2>
+<p class="source">출처: Transformer pp. 47~51, 57.</p>
+<ol class="process-list"><li><strong>Multi-head Self-Attention</strong><p>입력 문장 안의 토큰들이 서로를 참고합니다.</p></li><li><strong>Add &amp; Norm</strong><p>들어왔던 입력을 더하고 표현의 스케일을 정돈합니다.</p></li><li><strong>Position-wise FFNN</strong><p>각 위치의 벡터를 비선형 신경망으로 가공합니다.</p></li><li><strong>Add &amp; Norm</strong><p>FFNN 입력을 다시 더하고 정규화합니다.</p></li></ol>
+<p>이 인코더 블록을 N개 쌓습니다. 강의의 원 논문 예시는 <strong>N=6</strong>입니다. head 개수 8과 layer 개수 6을 구분하세요.</p>
+<h3 id="ffnn">Position-wise FFNN은 무엇을 하나?</h3>
+<pre>FFNN(x) = activation(xW₁+b₁)W₂+b₂</pre>
+<p>첫 선형 변환, 비선형 활성화, 두 번째 선형 변환으로 구성됩니다. 원 논문은 ReLU를 사용합니다. <strong>같은 FFNN을 각 토큰 위치에 독립적으로 적용</strong>합니다. 한 층 안에서 위치마다 다른 네트워크를 새로 배우는 뜻이 아닙니다.</p>
+<p><strong>Attention은 위치 사이의 정보를 섞고, FFNN은 각 위치에 담긴 정보를 가공</strong>한다고 구분하면 쉽습니다. FFNN의 최종 출력 폭은 d_model로 돌아옵니다. 중간의 숨은 폭까지 반드시 d_model인 것은 아닙니다.</p>
+<h3 id="residual">Add = 원래 입력을 더하기</h3>
+<pre>Residual connection: H(x) = x + F(x)</pre>
+<p>원래 정보 x를 보존하는 경로를 두고, 층에서 계산한 F(x)를 더합니다. <strong>서로 같은 크기여야</strong> 원소별 덧셈이 가능합니다. 정보와 기울기가 지나갈 직접 경로를 제공하여 깊은 모델의 학습을 돕습니다.</p>
+<h3 id="layernorm">Norm = Layer Normalization</h3>
+<p>한 토큰의 특징 값들이 지나치게 크거나 작아지지 않도록 평균·분산을 이용해 정규화하고, 학습 가능한 크기·이동 파라미터로 조절합니다. <strong>일반적인 Transformer의 LayerNorm은 각 토큰의 특징 차원 방향</strong>으로 계산합니다.</p>
+<details><summary>보충 수식으로 읽기</summary><pre>LayerNorm(x) = γ × (x−μ)/√(분산+ε) + β</pre><p>μ와 분산은 정규화할 특징들에서 구합니다. γ, β는 학습하는 파라미터입니다. 이 식의 β는 Adam의 이동평균 설정 β와 문맥이 다릅니다.</p></details>
+<p>강의의 구조는 <code>LayerNorm(x+Sublayer(x))</code>인 <strong>덧셈 후 정규화</strong> 순서입니다. 범위 밖의 변형 구조와 섞지 않습니다.</p>
+<h2 id="decoder">Decoder 한 층의 순서</h2>
+<p class="source">출처: Transformer pp. 52~57.</p>
+<ol class="process-list"><li><strong>Masked Multi-head Self-Attention</strong><p>이미 알려진 출력 쪽 토큰을 참고하되 미래 토큰은 못 보게 합니다.</p></li><li><strong>Add &amp; Norm</strong></li><li><strong>Encoder–Decoder Attention</strong><p>인코더가 이해한 입력 문장을 참고합니다. Cross-Attention이라고도 부릅니다.</p></li><li><strong>Add &amp; Norm</strong></li><li><strong>Position-wise FFNN</strong></li><li><strong>Add &amp; Norm</strong></li></ol>
+<p>이 디코더 블록도 N개 쌓습니다. 마지막 디코더 출력에 <strong>Dense/Linear와 softmax</strong>를 적용하여 어휘의 각 후보에 대한 확률을 만듭니다.</p>
+<div class="callout callout-warning"><p class="callout-title">57페이지 그림의 이름 주의</p><p>디코더 가운데 블록은 인코더에서 정보를 받는 <strong>Encoder–Decoder Attention</strong>입니다. 그림의 상자 안에 Self-Attention이라는 글자가 있어도, <strong>Q의 출처와 K·V의 출처가 다르므로 self-attention은 아닙니다.</strong> 옆의 빨간 설명과 연결 방향을 기준으로 이해합니다.</p></div>
+<h2 id="three-attentions">세 종류 Attention을 확실히 구별</h2>
+<p class="source">출처: Transformer pp. 31~32, 55~57.</p>
+<table><thead><tr><th>종류</th><th>Q의 출처</th><th>K·V의 출처</th><th>역할</th></tr></thead><tbody><tr><td>Encoder Self-Attention</td><td>인코더 쪽 표현</td><td>같은 인코더 쪽 표현</td><td>입력 문장 안의 관계 파악</td></tr><tr><td>Masked Decoder Self-Attention</td><td>디코더 쪽 표현</td><td>같은 디코더 쪽 표현</td><td>미래를 가리고 출력 문맥 파악</td></tr><tr><td>Encoder–Decoder Attention</td><td>디코더 쪽 표현</td><td>최종 인코더 출력</td><td>출력 생성에 필요한 입력 정보 참고</td></tr></tbody></table>
+<p><strong>Q는 ‘지금 무엇이 필요한가’, K·V는 ‘어디서 내용을 가져오는가’</strong>로 생각하면 Cross-Attention의 출처를 기억하기 쉽습니다.</p>
+<h3 id="cross-shape">입력·출력 길이가 달라도 괜찮다</h3>
+<p>보충 예: 인코더 토큰이 4개, 디코더 토큰이 3개라면, Q는 3×d_k, K는 4×d_k입니다. 따라서 <code>QKᵀ</code>는 <strong>3×4</strong>입니다. 각 출력 위치 3개가 입력 위치 4개를 참고합니다. Attention 비율 행렬은 항상 정사각형인 것이 아닙니다.</p>
+<h2 id="teacher-forcing">Teacher forcing: 학습할 때 이전 정답을 넣기</h2>
+<p class="source">출처: Transformer p. 52. 표는 학습 정렬을 이해하기 위한 재구성입니다.</p>
+<p>학습 때는 모델이 직전에 틀리게 만든 단어 대신 <strong>정답 문장의 이전 토큰</strong>을 입력으로 넣을 수 있습니다. Transformer는 이를 한 칸 밀린 문장으로 넣어 여러 위치를 병렬 학습합니다.</p>
+<table><thead><tr><th>위치</th><th>디코더 입력</th><th>예측해야 할 정답</th></tr></thead><tbody><tr><td>1</td><td>&lt;sos&gt;</td><td>je</td></tr><tr><td>2</td><td>je</td><td>suis</td></tr><tr><td>3</td><td>suis</td><td>étudiant</td></tr><tr><td>4</td><td>étudiant</td><td>&lt;eos&gt;</td></tr></tbody></table>
+<p>그런데 입력 문장을 한꺼번에 넣으면 위치 1이 뒤에 있는 je까지 보고 정답을 베낄 위험이 있습니다. 그래서 마스크가 필요합니다.</p>
+<h2 id="mask">Look-ahead mask: 미래 정답 훔쳐보기 금지</h2>
+<p class="source">출처: Transformer p. 53.</p>
+<p><strong>각 디코더 위치는 자기 위치까지의 입력만 참고하고, 뒤쪽 위치는 참고하지 못하도록</strong> 막습니다. 위 표에서 입력 ‘je’의 위치는 정답 ‘suis’를 예측하므로, 자기 입력 je를 보는 것은 정답 누출이 아닙니다. 한 칸 밀려 있다는 점이 중요합니다.</p>
+<table><thead><tr><th>질의 위치 / 참고 위치</th><th>&lt;sos&gt;</th><th>je</th><th>suis</th><th>étudiant</th></tr></thead><tbody><tr><th>&lt;sos&gt; → je 예측</th><td>허용</td><td>차단</td><td>차단</td><td>차단</td></tr><tr><th>je → suis 예측</th><td>허용</td><td>허용</td><td>차단</td><td>차단</td></tr><tr><th>suis → étudiant 예측</th><td>허용</td><td>허용</td><td>허용</td><td>차단</td></tr><tr><th>étudiant → eos 예측</th><td>허용</td><td>허용</td><td>허용</td><td>허용</td></tr></tbody></table>
+<p>미래에 해당하는 <strong>윗삼각 영역</strong>이 차단됩니다.</p>
+<h3 id="mask-zero">‘0으로 만든다’는 어느 값을 0으로 만든다는 뜻일까?</h3>
+<p>차단할 위치의 <strong>최종 Attention 비율을 0</strong>으로 만듭니다. 일반적인 구현에서는 softmax <strong>전의 점수에 −∞ 또는 매우 큰 음수를 더합니다.</strong></p>
+<pre>masked attention = softmax(QKᵀ/√d_k + M)V
+M: 허용 위치는 0, 차단 위치는 −∞</pre>
+<p>점수 자체를 0으로만 바꾸면 e⁰=1이므로 softmax 확률이 0이 되지 않습니다. 강의 p. 53의 ‘값을 0으로 설정’은 <strong>참고 비율을 없앤다는 목적</strong>과 함께 이해해야 합니다.</p>
+<h2 id="train-inference">병렬 학습과 순차 생성은 모순이 아니다</h2>
+<ul><li><strong>학습:</strong> 정답 문장이 있으므로 한 칸 밀린 입력과 마스크로 여러 위치를 병렬 계산할 수 있습니다.</li><li><strong>생성:</strong> 앞으로 나올 정답이 없으므로 앞에서 생성한 토큰을 바탕으로 다음 토큰을 차례로 만듭니다.</li></ul>
+<p>따라서 ‘Transformer는 병렬 처리가 가능하다’는 말은 맞지만, ‘문장 생성 시 모든 미래 단어를 의존성 없이 한 번에 만든다’는 말은 강의의 자기회귀 디코더에 맞지 않습니다.</p>
+<h2 id="summary">57페이지 구조를 말로 설명해 보기</h2>
+<div class="callout callout-exam"><p class="callout-title">서술형 연습 문장</p><p>Transformer는 RNN을 사용하지 않는 인코더–디코더 구조로, 임베딩에 위치 정보를 더해 입력한다. 인코더는 Multi-head Self-Attention과 Position-wise FFNN으로 구성된다. 디코더는 미래 토큰을 차단하는 Masked Self-Attention, 인코더 출력을 참고하는 Encoder–Decoder Attention, FFNN으로 구성된다. 각 서브층에는 잔차 연결과 Layer Normalization을 적용하며, 최종 디코더 출력은 선형 변환과 softmax를 거쳐 다음 토큰의 확률을 만든다.</p></div>
+<p><strong>여기까지가 지정 범위입니다.</strong> 58페이지 이후의 내용, ViT·PatchTST 등의 응용은 이 정리에 포함하지 않았습니다.</p>
+<h2 id="check">스스로 확인</h2>
+<details><summary>Q. Encoder–Decoder Attention의 Q는 어디서 오나?</summary><p><strong>디코더</strong>에서 옵니다. K와 V는 <strong>인코더 출력</strong>에서 옵니다.</p></details>
+<details><summary>Q. 위치 인코딩은 벡터 길이를 두 배로 늘릴까?</summary><p>아닙니다. 같은 길이 벡터를 <strong>더하므로 d_model을 유지</strong>합니다.</p></details>
+<details><summary>Q. 디코더에는 인코더보다 어떤 Attention이 추가되어 있나?</summary><p>디코더는 자기 출력 문맥을 보는 <strong>마스킹된 self-attention</strong>에 더해 입력 문장을 참고하는 <strong>encoder–decoder attention</strong>을 갖습니다.</p></details>
+<p class="chapter-next">다음: <a href="97-compare.html">헷갈리는 개념과 함정 선지</a></p>

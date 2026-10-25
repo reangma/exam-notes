@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모의시험: 객관식 15 · 서술형 2 · 3학년 2학기 시험 정리</title>
+<meta name="description" content="강의 자료 기반 시험 대비 요약 노트">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128218;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="menu-btn" aria-label="메뉴" aria-expanded="false">&#9776;</button>
+  <a class="brand" href="../index.html">3학년 2학기 시험 정리</a>
+  <div class="spacer"></div>
+  <input type="search" id="search" placeholder="검색 ( / )" aria-label="검색" autocomplete="off">
+  <button class="theme-btn" aria-label="테마 전환" title="테마 전환">&#9681;</button>
+</header>
+<div class="search-results" id="search-results" hidden></div>
+<div class="layout">
+  <aside class="sidebar"><nav class="nav">
+<a class="nav-home" href="../index.html">홈</a>
+<div class="nav-section">
+<a class="nav-section-title" href="../embedded/index.html">임베디드 IoT 프로그래밍</a>
+<ul>
+<li><a href="../embedded/01-iot-opensource.html">1. IoT와 오픈소스</a></li>
+<li><a href="../embedded/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../embedded/03-linux.html">3. 리눅스 기초</a></li>
+<li><a href="../embedded/04-circuit.html">4. 전자회로 기초</a></li>
+<li><a href="../embedded/05-gpio-sensor.html">5. GPIO 및 센서 활용</a></li>
+<li><a href="../embedded/98-code.html">코드 모음</a></li>
+<li><a href="../embedded/99-cheatsheet.html">실기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../hpc/index.html">고성능 컴퓨팅</a>
+<ul>
+<li><a href="../hpc/01-hpc-overview.html">1. HPC 개요</a></li>
+<li><a href="../hpc/02-dev-env.html">2. 개발 환경 구축</a></li>
+<li><a href="../hpc/03-gpgpu-parallel.html">3. GPGPU 및 병렬처리</a></li>
+<li><a href="../hpc/04-cuda-intro.html">4. CUDA 개요</a></li>
+<li><a href="../hpc/05-cuda-flow.html">5. CUDA 프로그램의 기본 흐름</a></li>
+<li><a href="../hpc/06-cuda-thread-hierarchy.html">6. CUDA 스레드 계층</a></li>
+<li><a href="../hpc/07-cuda-thread-indexing.html">7. 스레드 레이아웃과 인덱싱</a></li>
+<li><a href="../hpc/98-code.html">코드 모음</a></li>
+<li><a href="../hpc/99-cheatsheet.html">CUDA 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../isw/index.html">지능형 소프트웨어</a>
+<ul>
+<li><a href="../isw/00-math-basics.html">0. 수학·용어 기초 (먼저 읽기)</a></li>
+<li><a href="../isw/00-glossary.html">📖 쉬운 용어사전 (173개)</a></li>
+<li><a href="../isw/01-course-overview.html">1. 과목 개요와 AI Agent 역사</a></li>
+<li><a href="../isw/02-embedding.html">2. 자연어 임베딩</a></li>
+<li><a href="../isw/03-transformer.html">3. Seq2Seq와 Transformer</a></li>
+<li><a href="../isw/04-llm-gpt.html">4. LLM과 GPT 시리즈</a></li>
+<li><a href="../isw/05-adaptation-tuning.html">5. Adaptation Tuning</a></li>
+<li><a href="../isw/06-prompt-engineering.html">6. Prompt Engineering</a></li>
+<li><a href="../isw/07-ai-agent.html">7. AI Agent의 개념과 분류</a></li>
+<li><a href="../isw/08-react-tool.html">8. ReAct와 Tool Use</a></li>
+<li><a href="../isw/09-agent-structure.html">9. LLM 기반 Agent의 구조</a></li>
+<li><a href="../isw/10-agent-practice.html">10. Agent의 실제 활용</a></li>
+<li><a href="../isw/11-cognitive-architecture.html">11. Cognitive Architecture와 CoALA</a></li>
+<li><a href="../isw/12-agent-architectures.html">12. AI Agent 아키텍처 분류</a></li>
+<li><a href="../isw/97-compare.html">헷갈리는 개념 총정리</a></li>
+<li><a href="../isw/98-exam-questions.html">예상 문제 (객관식·빈칸·서술 166문항)</a></li>
+<li><a href="../isw/99-cheatsheet.html">핵심 암기 치트시트</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="index.html">심층학습</a>
+<ul>
+<li><a href="00-basics.html">0. 수학·기호부터 아주 쉽게</a></li>
+<li><a href="01-learning.html">1. AI·데이터·머신러닝의 기본</a></li>
+<li><a href="02-neural-network.html">2. 신경망과 행렬 계산</a></li>
+<li><a href="03-training.html">3. 손실 함수와 학습 방법</a></li>
+<li><a href="04-backprop.html">4. 오류 역전파를 한 줄씩</a></li>
+<li><a href="05-seq2seq-attention.html">5. Seq2Seq와 Attention</a></li>
+<li><a href="06-self-attention.html">6. Self-Attention과 Multi-head</a></li>
+<li><a href="07-transformer.html">7. Transformer 구조와 마스킹</a></li>
+<li><a href="97-compare.html">헷갈리는 개념과 함정 선지</a></li>
+<li><a href="98-exam.html" class="active">모의시험 (객관식 15·서술형 2)</a></li>
+<li><a href="99-cheatsheet.html">시험 직전 핵심 암기</a></li>
+</ul>
+</div>
+<div class="nav-section">
+<a class="nav-section-title" href="../lang/index.html">언어와 사회</a>
+<ul>
+<li><a href="../lang/01-sociolinguistics.html">1. 사회언어학과 지금 시대의 대화</a></li>
+<li><a href="../lang/02-language-user.html">2. 언어 능력과 세대</a></li>
+<li><a href="../lang/03-language-instinct.html">3. 언어 본능 vs 언어 게임</a></li>
+<li><a href="../lang/04-social-change.html">4. 사회변화와 언어변화</a></li>
+<li><a href="../lang/05-language-culture.html">5. 언어와 문화, 언어와 사고</a></li>
+<li><a href="../lang/99-cheatsheet.html">핵심 암기 치트시트 + 연습문제</a></li>
+</ul>
+</div>
+</nav></aside>
+  <main id="main" class="content">
+<h1>모의시험: 객관식 15 · 서술형 2</h1>
+<p><strong>사용자가 알려준 실제 시험 구성인 객관식 15문제·서술형 2문제에 맞춘 연습 세트</strong>입니다. 기출이나 출제 예고가 아니며, 제공된 PDF의 지정 범위에서 재구성했습니다. 실제 배점·제한 시간은 확인되지 않아 정하지 않았습니다.</p>
+<div class="callout callout-note"><p class="callout-title">사용 방법</p><p>각 문항 아래의 정답을 열기 전에 답을 먼저 골라보세요. 서술형은 완벽한 문장보다 <strong>핵심 용어를 빠뜨리지 않고 원인과 과정을 연결</strong>하는 연습이 중요합니다.</p></div>
+<h2 id="mcq">객관식 15문제</h2>
+<h3 id="q1">1. 학습 종류</h3>
+<p>제품의 측정값 X와 정상/불량 정답 Y를 함께 제공해 분류 모델을 학습했다. 가장 알맞은 설명은?</p>
+<ol type="A"><li>비지도학습이다. 제품을 나누기 때문이다.</li><li>지도학습이다. 입력과 정답이 함께 주어졌기 때문이다.</li><li>강화학습이다. 오답을 수정하기 때문이다.</li><li>정답이 0/1이므로 반드시 회귀이다.</li></ol>
+<details><summary>정답·해설</summary><p><strong>B.</strong> X와 Y가 함께 주어지는 지도학습입니다. A: 군집화와 분류를 혼동했습니다. C: 오답 수정만으로 강화학습이 되지 않습니다. D: 0/1은 범주를 표시한 값입니다.</p><p>복습: <a href="01-learning.html#learning-types">학습 종류</a> · 2주차 pp. 13~17.</p></details>
+<h3 id="q2">2. 데이터와 평가</h3>
+<p>다음 중 올바른 것은?</p>
+<ol type="A"><li>학습 데이터 성능이 좋으면 새로운 데이터의 성능도 반드시 좋다.</li><li>테스트 정답을 반복 확인하며 모델을 수정하면 공정한 최종 평가가 된다.</li><li>데이터 한 건을 관측치라 하고, 그 건의 특성 항목을 변수라고 한다.</li><li>비지도학습에는 입력 X도 없다.</li></ol>
+<details><summary>정답·해설</summary><p><strong>C.</strong> 학생 한 명이 관측치이고 키·몸무게 등이 변수입니다. A: 과적합 가능성이 있습니다. B: 테스트셋에 간접적으로 맞추게 됩니다. D: 비지도학습에도 X는 있습니다.</p><p>복습: <a href="01-learning.html#sample-feature-label">관측치·변수</a> · 2주차 pp. 14, 16, 18; 평가 설명의 일부는 보충.</p></details>
+<h3 id="q3">3. 파라미터</h3>
+<p>일반적인 신경망에서 학습하는 파라미터만 묶은 것은?</p>
+<ol type="A"><li>학습률과 batch size</li><li>은닉층 수와 활성화 함수 종류</li><li>head 수와 epoch 수</li><li>가중치 W와 편향 b</li></ol>
+<details><summary>정답·해설</summary><p><strong>D.</strong> W와 b는 학습을 통해 조정합니다. 나머지 선택지는 학습 방법이나 구조를 정하는 하이퍼파라미터입니다.</p><p>복습: <a href="02-neural-network.html#parameters">파라미터 구분</a> · 2주차 p. 93.</p></details>
+<h3 id="q4">4. XOR과 비선형성</h3>
+<p>단층 퍼셉트론의 한계와 다층 신경망에 대한 설명으로 가장 적절한 것은?</p>
+<ol type="A"><li>XOR은 직선 하나로 분리할 수 없으며, 은닉층과 비선형 활성화가 이를 표현하는 데 필요하다.</li><li>XOR은 입력이 두 개라서 어떤 신경망으로도 해결할 수 없다.</li><li>선형 변환만 여러 번 쌓으면 반드시 비선형 모델이 된다.</li><li>활성화 함수는 학습률과 같은 개념이다.</li></ol>
+<details><summary>정답·해설</summary><p><strong>A.</strong> XOR은 선형 분리가 되지 않습니다. B: 다층 비선형 모델로 표현할 수 있습니다. C: 선형·아핀 변환의 합성은 하나의 선형·아핀 변환으로 합쳐집니다. D: 활성화는 값 변환, 학습률은 업데이트 크기 설정입니다.</p><p>복습: <a href="02-neural-network.html#perceptron">XOR</a> · 2주차 pp. 53~55, 94.</p></details>
+<h3 id="q5">5. 행렬 크기와 파라미터 수</h3>
+<p>열벡터 x가 10×1이고 은닉 노드가 20개이다. h=σ(Wx+b)일 때 W의 크기와 이 층의 총 파라미터 수는? 편향을 포함한다.</p>
+<ol type="A"><li>10×20, 210개</li><li>20×10, 220개</li><li>20×20, 420개</li><li>10×1, 30개</li></ol>
+<details><summary>정답·해설</summary><p><strong>B.</strong> (20×10)(10×1)=20×1. 가중치 200개와 편향 20개로 총 220개입니다. A는 곱셈 방향과 편향 개수가 맞지 않습니다.</p><p>복습: <a href="02-neural-network.html#shapes">행렬 크기</a> · 2주차 pp. 74~80의 구조 활용.</p></details>
+<h3 id="q6">6. 활성화 함수</h3>
+<p>ReLU(−3), ReLU(2), sigmoid(0)을 순서대로 바르게 나열한 것은?</p>
+<ol type="A"><li>−3, 2, 0</li><li>0, 1, 1</li><li>0, 2, 0.5</li><li>−0.3, 2, 0.5</li></ol>
+<details><summary>정답·해설</summary><p><strong>C.</strong> ReLU=max(0,z)이므로 음수는 0, 양수는 그대로입니다. sigmoid(0)=1/(1+1)=0.5입니다. D의 첫 값은 기울기 0.1의 Leaky ReLU와 혼동한 값입니다.</p><p>복습: <a href="02-neural-network.html#activation">활성화 함수</a> · 2주차 pp. 94~95.</p></details>
+<h3 id="q7">7. 손실 함수</h3>
+<p>정답이 [2,4], 예측이 [1,6]일 때 MSE와, 분류의 교차 엔트로피에 대한 설명이 모두 맞는 것은?</p>
+<ol type="A"><li>MSE=2.5, 정답 클래스의 예측 확률이 커질수록 교차 엔트로피는 작아진다.</li><li>MSE=5, 정답 클래스의 예측 확률이 커질수록 교차 엔트로피는 작아진다.</li><li>MSE=0.5, 교차 엔트로피는 항상 0~1이다.</li><li>MSE=2.5, softmax 자체가 교차 엔트로피 손실이다.</li></ol>
+<details><summary>정답·해설</summary><p><strong>A.</strong> MSE=[(1−2)²+(6−4)²]/2=5/2=2.5. B는 평균을 빠뜨렸습니다. C: 교차 엔트로피는 1보다 클 수 있습니다. D: softmax는 확률 변환, CE는 손실입니다.</p><p>복습: <a href="03-training.html#mse">손실 함수</a> · 2주차 pp. 89~90의 식 활용.</p></details>
+<h3 id="q8">8. 경사하강법과 optimizer</h3>
+<p>w=2, α=0.1, ∂L/∂w=−3일 때 경사하강법의 새 w와 Adam 설명이 맞는 것은?</p>
+<ol type="A"><li>w=1.7, Adam은 항상 전역 최적해를 보장한다.</li><li>w=2.3, Adam은 기울기를 사용하지 않는다.</li><li>w=1.7, Adam은 손실 함수이다.</li><li>w=2.3, Adam은 기울기의 평균과 제곱 평균을 이용한다.</li></ol>
+<details><summary>정답·해설</summary><p><strong>D.</strong> w새값=2−0.1×(−3)=2.3입니다. Adam은 optimizer이며 방향 정보와 적응적인 크기 조정을 함께 사용합니다. 전역 최적해를 보장하지 않습니다.</p><p>복습: <a href="03-training.html#gradient-descent">경사하강법</a>, <a href="03-training.html#adam">Adam</a> · 2주차 pp. 96~103.</p></details>
+<h3 id="q9">9. Epoch와 iteration</h3>
+<p>학습 데이터 1,000개, batch size 64, 3 epoch이다. 마지막 작은 batch도 사용하며 batch마다 한 번 업데이트한다. 총 업데이트 횟수는?</p>
+<ol type="A"><li>45회</li><li>48회</li><li>64회</li><li>3,000회</li></ol>
+<details><summary>정답·해설</summary><p><strong>B.</strong> ceil(1000/64)=16회/epoch이므로 16×3=48회입니다. A는 마지막 40개 묶음을 버린 계산이고, D는 데이터 처리 횟수와 업데이트 횟수를 혼동했습니다.</p><p>복습: <a href="03-training.html#batch-epoch">Batch·epoch·iteration</a> · 2주차 p. 104.</p></details>
+<h3 id="q10">10. 출력층 역전파</h3>
+<p>sigmoid 출력과 E=(1/2)(t−o)²를 사용한다. α=0.1, t=1, o=0.6, h=0.5일 때 은닉→출력 가중치에 더할 수정량 Δw는?</p>
+<ol type="A"><li>0.04</li><li>−0.0048</li><li>0.0048</li><li>0.0096</li></ol>
+<details><summary>정답·해설</summary><p><strong>C.</strong> Δw=α(t−o)o(1−o)h=0.1×0.4×0.6×0.4×0.5=0.0048. A는 미분 계수와 입력을 빠뜨렸고 B는 부호를 뒤집었습니다. D는 h 대신 1을 곱한 편향 수정량입니다.</p><p>복습: <a href="04-backprop.html#output-gradient">출력층 역전파</a> · EBPA pp. 8~9의 식 활용.</p></details>
+<h3 id="q11">11. Seq2Seq와 Attention</h3>
+<p>기본 Seq2Seq의 정보 병목을 Attention이 완화하는 방법은?</p>
+<ol type="A"><li>출력 시점마다 인코더의 모든 상태를 참고하고 필요한 정보에 큰 비율을 부여한다.</li><li>인코더의 마지막 상태만 더 작은 벡터로 만든다.</li><li>모든 입력 단어를 항상 동일한 비율로 사용한다.</li><li>출력 문장의 길이를 입력 문장과 같게 고정한다.</li></ol>
+<details><summary>정답·해설</summary><p><strong>A.</strong> 고정 요약 하나에만 의존하지 않고 현재 출력에 맞는 정보를 다시 참고합니다. B는 병목을 해소하는 방법이 아니고, C는 Attention 비율이 달라진다는 점을 놓쳤습니다. D: 입력과 출력 길이는 달라도 됩니다.</p><p>복습: <a href="05-seq2seq-attention.html#bottleneck">Seq2Seq의 한계</a> · Transformer pp. 10~18.</p></details>
+<h3 id="q12">12. Scaled dot-product Attention</h3>
+<p>Attention(Q,K,V)=softmax(QKᵀ/√d_k)V에 대한 설명 중 맞는 것은?</p>
+<ol type="A"><li>Q와 V를 비교해 K를 가중합한다.</li><li>d_k는 문장 속 단어의 개수이다.</li><li>softmax를 적용한 전체 행렬 원소의 합은 항상 1이다.</li><li>Q·K로 연관성 점수를 만들고, 행별로 정규화한 비율로 V를 가중합한다.</li></ol>
+<details><summary>정답·해설</summary><p><strong>D.</strong> A는 K·V 역할이 바뀌었습니다. B: d_k는 key 벡터 차원입니다. C: <strong>각 행의 합</strong>이 1이며, 행이 여러 개면 전체 합은 일반적으로 1이 아닙니다.</p><p>복습: <a href="06-self-attention.html#scaled-attention">Scaled attention</a> · Transformer pp. 37~39.</p></details>
+<h3 id="q13">13. Multi-head 행렬 크기</h3>
+<p>토큰 4개, d_model=512, head 수 8, d_k=d_v=64이다. 한 head의 비율 행렬, 한 head의 출력, 8개 head를 연결한 결과의 크기는 차례대로?</p>
+<ol type="A"><li>4×64, 4×4, 4×512</li><li>4×4, 4×64, 4×512</li><li>512×512, 4×64, 32×64</li><li>4×4, 4×512, 4×4096</li></ol>
+<details><summary>정답·해설</summary><p><strong>B.</strong> QKᵀ는 (4×64)(64×4)=4×4, 여기에 V(4×64)를 곱하면 4×64입니다. 8개를 특징 방향으로 연결하면 4×512입니다. 토큰 행을 이어 붙이는 것이 아닙니다.</p><p>복습: <a href="06-self-attention.html#shapes">Attention 행렬 크기</a> · Transformer pp. 36~45.</p></details>
+<h3 id="q14">14. 위치 인코딩과 FFNN</h3>
+<p>강의의 Transformer 구조에 대한 설명으로 올바른 것은?</p>
+<ol type="A"><li>위치 벡터를 임베딩에 이어 붙여 d_model을 두 배로 만든다.</li><li>홀수 번째 단어에는 cos, 짝수 번째 단어에는 sin만 사용한다.</li><li>위치 벡터는 임베딩에 더하며, position-wise FFNN은 각 위치에 동일한 변환을 독립 적용한다.</li><li>Add는 서로 다른 크기의 벡터도 자동으로 이어 붙이는 연산이다.</li></ol>
+<details><summary>정답·해설</summary><p><strong>C.</strong> 위치 인코딩은 같은 차원 벡터의 덧셈입니다. sin·cos의 짝수/홀수는 <strong>벡터 안 차원 번호</strong>이고, residual의 Add도 같은 크기끼리 더하는 것입니다.</p><p>복습: <a href="07-transformer.html#position">위치 인코딩</a>, <a href="07-transformer.html#ffnn">FFNN</a> · Transformer pp. 28~29, 48~50.</p></details>
+<h3 id="q15">15. 디코더와 마스킹</h3>
+<p>다음 중 올바른 것은?</p>
+<ol type="A"><li>Cross-Attention의 Q는 디코더, K·V는 인코더 출력에서 오며, look-ahead mask는 미래 출력 토큰의 참고를 막는다.</li><li>Cross-Attention의 Q·K·V는 모두 인코더 출력에서 온다.</li><li>미래 위치의 softmax 전 점수를 0으로 바꾸면 확률이 반드시 0이 된다.</li><li>학습 시 정답을 입력하므로 look-ahead mask는 필요 없다.</li></ol>
+<details><summary>정답·해설</summary><p><strong>A.</strong> 디코더가 질의하고 인코더 정보를 참고합니다. B는 self-attention과 혼동했습니다. C: e⁰=1이므로 0 확률이 보장되지 않습니다. D: 정답을 한꺼번에 입력하므로 미래 정답 누출을 막는 마스크가 필요합니다.</p><p>복습: <a href="07-transformer.html#three-attentions">세 종류 Attention</a>, <a href="07-transformer.html#mask">마스킹</a> · Transformer pp. 52~57.</p></details>
+<h2 id="written">서술형 2문제</h2>
+<p>아래 두 주제는 주요 내용을 연결해 쓰기 위한 <strong>연습 주제</strong>이며 실제 출제 주제를 확정한 것이 아닙니다.</p>
+<h3 id="essay1">서술형 1. 신경망의 학습과 오류 역전파</h3>
+<p>sigmoid를 사용하는 입력–은닉–출력 신경망에서 손실이 E=(1/2)Σₖ(tₖ−oₖ)²일 때, 학습 과정을 설명하시오. 순전파·손실·연쇄법칙·경사하강법을 포함하고, 은닉→출력 가중치의 수정식을 쓰시오. 은닉층의 오차를 구할 때 여러 출력의 영향을 합치는 이유도 설명하시오.</p>
+<details><summary>답안에 꼭 들어갈 키워드</summary><ul><li>순전파: 가중합 후 활성화, 예측 o 계산</li><li>손실: 실제 t와 예측 o 차이</li><li>연쇄법칙으로 가중치별 기울기 계산</li><li>출력층부터 앞쪽으로 역전파</li><li>Δwₖⱼ=α(tₖ−oₖ)oₖ(1−oₖ)hⱼ</li><li>은닉 노드는 여러 출력에 영향을 주므로 경로별 영향을 합산</li><li>학습률에 따라 기울기 반대 방향으로 갱신</li></ul></details>
+<details><summary>답안 예시</summary><p>먼저 입력값에 가중치를 곱해 더하고 sigmoid를 적용하여 은닉값과 출력 예측값을 순전파로 계산한다. 실제 정답과 예측값의 제곱오차를 손실로 구한 다음, 연쇄법칙을 이용해 출력층부터 앞쪽으로 각 가중치에 대한 손실의 기울기를 계산한다. 은닉→출력 가중치의 기울기는 (oₖ−tₖ)oₖ(1−oₖ)hⱼ이므로 경사하강법의 수정량은 Δwₖⱼ=α(tₖ−oₖ)oₖ(1−oₖ)hⱼ이고, 이를 기존 가중치에 더한다. 은닉층에는 직접 주어진 정답이 없으므로 연결된 출력들의 오차 신호에 해당 연결 가중치를 곱해 합하고, 은닉층 활성화 함수의 미분을 곱해 기울기를 구한다. 모든 기울기를 같은 갱신 전 가중치로 계산한 후 파라미터를 갱신하며 이 과정을 반복한다.</p></details>
+<details><summary>자기 점검과 짧은 답안 틀</summary><p><strong>핵심 틀:</strong> ‘순전파로 예측 → 손실 계산 → 연쇄법칙으로 역전파 → 학습률을 곱해 기울기 반대로 갱신’.</p><p>공식의 (t−o) 부호와 업데이트의 +를 맞췄는지, 출력층 식의 마지막에 x가 아니라 h를 썼는지 확인하세요. ‘오차만큼 그냥 뺀다’는 설명으로 끝내지 않습니다.</p></details>
+<h3 id="essay2">서술형 2. Transformer의 구조와 Attention</h3>
+<p>기본 Seq2Seq의 한계를 제시하고 Transformer의 인코더·디코더 구조를 설명하시오. Self-Attention의 Q·K·V, Multi-head, 위치 인코딩, look-ahead mask, Encoder–Decoder Attention의 Q·K·V 출처를 포함하시오.</p>
+<details><summary>답안에 꼭 들어갈 키워드</summary><ul><li>기본 Seq2Seq의 고정 문맥 벡터 병목, 순환 계산의 장거리 학습·병렬화 한계</li><li>RNN 대신 Attention을 핵심으로 사용</li><li>같은 시퀀스에서 서로 다른 변환으로 Q·K·V 생성</li><li>softmax(QKᵀ/√d_k)V</li><li>head별 가중치, 병렬 계산, concat, 출력 변환</li><li>임베딩에 위치 정보 덧셈</li><li>인코더: Self-Attention + FFNN</li><li>디코더: Masked Self-Attention + Cross-Attention + FFNN</li><li>Cross-Attention의 Q는 디코더, K·V는 인코더</li><li>미래 정답 누출 차단, Add &amp; Norm</li></ul></details>
+<details><summary>답안 예시</summary><p>기본 Seq2Seq는 입력 전체를 고정 크기의 문맥 벡터 하나로 압축해 긴 문장에서 정보 손실이 발생할 수 있고, RNN의 순차 처리 때문에 병렬화와 장거리 정보 학습에 한계가 있다. Transformer는 RNN 없이 Attention을 핵심으로 입력 위치들의 관계를 계산하며, 순서 정보를 위해 임베딩에 위치 인코딩을 더한다. Self-Attention은 같은 시퀀스를 서로 다른 가중치로 변환하여 Q·K·V를 만들고, softmax(QKᵀ/√d_k)V로 관련 정보의 가중합을 구한다. Multi-head는 서로 다른 가중치를 가진 Attention을 병렬 수행하고 결과를 연결한 뒤 출력 변환한다.</p><p>인코더는 Multi-head Self-Attention과 FFNN으로 구성된다. 디코더는 Masked Self-Attention, Encoder–Decoder Attention, FFNN으로 구성된다. look-ahead mask는 미래 출력 토큰의 정보를 참고하지 못하게 하여 학습 중 정답 누출을 막는다. Encoder–Decoder Attention의 Q는 디코더에서, K·V는 인코더 출력에서 온다. 각 서브층에는 잔차 연결과 Layer Normalization이 적용되고, 최종 출력은 선형 변환과 softmax를 통해 다음 토큰 확률로 바뀐다.</p></details>
+<details><summary>자기 점검과 짧은 답안 틀</summary><p><strong>핵심 틀:</strong> ‘고정 요약의 한계 → Attention으로 필요한 정보 참고 → RNN 없는 Transformer → 위치 정보 추가 → 인코더/디코더 구성 → 미래 마스크와 Cross-Attention 출처’.</p><p>Q=K=V를 ‘숫자도 동일’이라고 쓰지 않았는지, 위치 인코딩을 concat이라 하지 않았는지, 학습 병렬화와 순차 생성을 구분했는지 확인하세요.</p></details>
+<h2 id="answer-key">객관식 답만 한 번에 확인</h2>
+<details><summary>15문항 정답표 펼치기</summary><p><strong>1 B · 2 C · 3 D · 4 A · 5 B · 6 C · 7 A · 8 D · 9 B · 10 C · 11 A · 12 D · 13 B · 14 C · 15 A</strong></p><p>틀린 번호의 해설에서 연결된 본문으로 돌아가 ‘틀린 선택지를 올바르게 고쳐 말하기’까지 해보세요.</p></details>
+<p class="chapter-next">다음: <a href="99-cheatsheet.html">시험 직전 핵심 암기</a></p>
+
+  <footer class="page-footer"><code>content/deep/98-exam.html</code> 에서 생성됨</footer>
+  </main>
+  <aside class="toc-rail"><div class="toc-title">목차</div><div class="toc"><ul><li><a href="#mcq">객관식 15문제</a></li><li><a href="#q1">1. 학습 종류</a></li><li><a href="#q2">2. 데이터와 평가</a></li><li><a href="#q3">3. 파라미터</a></li><li><a href="#q4">4. XOR과 비선형성</a></li><li><a href="#q5">5. 행렬 크기와 파라미터 수</a></li><li><a href="#q6">6. 활성화 함수</a></li><li><a href="#q7">7. 손실 함수</a></li><li><a href="#q8">8. 경사하강법과 optimizer</a></li><li><a href="#q9">9. Epoch와 iteration</a></li><li><a href="#q10">10. 출력층 역전파</a></li><li><a href="#q11">11. Seq2Seq와 Attention</a></li><li><a href="#q12">12. Scaled dot-product Attention</a></li><li><a href="#q13">13. Multi-head 행렬 크기</a></li><li><a href="#q14">14. 위치 인코딩과 FFNN</a></li><li><a href="#q15">15. 디코더와 마스킹</a></li><li><a href="#written">서술형 2문제</a></li><li><a href="#essay1">서술형 1. 신경망의 학습과 오류 역전파</a></li><li><a href="#essay2">서술형 2. Transformer의 구조와 Attention</a></li><li><a href="#answer-key">객관식 답만 한 번에 확인</a></li></ul></div></aside>
+</div>
+<script>window.SEARCH_INDEX_URL = "../search-index.json";</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

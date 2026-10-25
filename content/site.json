@@ -58,6 +58,24 @@
       ]
     },
     {
+      "id": "deep",
+      "title": "심층학습",
+      "index": "deep/index.html",
+      "pages": [
+        { "file": "deep/00-basics.html", "title": "0. 수학·기호부터 아주 쉽게" },
+        { "file": "deep/01-learning.html", "title": "1. AI·데이터·머신러닝의 기본" },
+        { "file": "deep/02-neural-network.html", "title": "2. 신경망과 행렬 계산" },
+        { "file": "deep/03-training.html", "title": "3. 손실 함수와 학습 방법" },
+        { "file": "deep/04-backprop.html", "title": "4. 오류 역전파를 한 줄씩" },
+        { "file": "deep/05-seq2seq-attention.html", "title": "5. Seq2Seq와 Attention" },
+        { "file": "deep/06-self-attention.html", "title": "6. Self-Attention과 Multi-head" },
+        { "file": "deep/07-transformer.html", "title": "7. Transformer 구조와 마스킹" },
+        { "file": "deep/97-compare.html", "title": "헷갈리는 개념과 함정 선지" },
+        { "file": "deep/98-exam.html", "title": "모의시험 (객관식 15·서술형 2)" },
+        { "file": "deep/99-cheatsheet.html", "title": "시험 직전 핵심 암기" }
+      ]
+    },
+    {
       "id": "lang",
       "title": "언어와 사회",
       "index": "lang/index.md",
